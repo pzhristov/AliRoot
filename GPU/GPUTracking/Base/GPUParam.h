@@ -27,20 +27,21 @@
 #include "GPUTPCGeometry.h"
 #include "GPUTPCGMPolynomialField.h"
 
-namespace o2
+#if !defined(GPUCA_GPUCODE) && defined(GPUCA_NOCOMPAT)
+namespace o2::base
 {
-namespace base
-{
-class Propagator;
-} // namespace base
-} // namespace o2
+template <typename>
+class PropagatorImpl;
+using Propagator = PropagatorImpl<float>;
+} // namespace o2::base
+#endif
 
 namespace GPUCA_NAMESPACE
 {
 namespace gpu
 {
 struct GPUSettingsRec;
-struct GPUSettingsEvent;
+struct GPUSettingsGTP;
 struct GPURecoStepConfiguration;
 
 struct GPUParamSlice {
@@ -68,14 +69,14 @@ struct GPUParam_t {
 };
 } // namespace internal
 
-#if !(defined(__CINT__) || defined(__ROOTCINT__)) || defined(__CLING__) // Hide from ROOT 5 CINT since it triggers a CINT but
+#if !(defined(__CINT__) || defined(__ROOTCINT__)) || defined(__CLING__) // Hide from ROOT 5 CINT
 MEM_CLASS_PRE()
 struct GPUParam : public internal::GPUParam_t<GPUSettingsRec, GPUSettingsParam> {
 
 #ifndef GPUCA_GPUCODE
   void SetDefaults(float solenoidBz);
-  void SetDefaults(const GPUSettingsEvent* e, const GPUSettingsRec* r = nullptr, const GPUSettingsProcessing* p = nullptr, const GPURecoStepConfiguration* w = nullptr);
-  void UpdateEventSettings(const GPUSettingsEvent* e, const GPUSettingsProcessing* p = nullptr);
+  void SetDefaults(const GPUSettingsGRP* g, const GPUSettingsRec* r = nullptr, const GPUSettingsProcessing* p = nullptr, const GPURecoStepConfiguration* w = nullptr);
+  void UpdateGRPSettings(const GPUSettingsGRP* g, const GPUSettingsProcessing* p = nullptr);
   void LoadClusterErrors(bool Print = 0);
   o2::base::Propagator* GetDefaultO2Propagator(bool useGPUField = false) const;
 #endif

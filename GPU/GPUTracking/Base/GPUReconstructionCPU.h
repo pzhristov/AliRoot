@@ -46,6 +46,7 @@
 #include "GPUTPCCompressionKernels.h"
 #include "GPUTPCClusterFinderKernels.h"
 #include "GPUTrackingRefitKernel.h"
+#include "GPUTPCGMO2Output.h"
 #endif
 
 namespace GPUCA_NAMESPACE
@@ -142,7 +143,7 @@ class GPUReconstructionCPU : public GPUReconstructionKernels<GPUReconstructionCP
   template <class T, int I>
   constexpr static const char* GetKernelName();
 
-  virtual int GPUDebug(const char* state = "UNKNOWN", int stream = -1);
+  virtual int GPUDebug(const char* state = "UNKNOWN", int stream = -1, bool force = false);
   int registerMemoryForGPU(const void* ptr, size_t size) override { return 0; }
   int unregisterMemoryForGPU(const void* ptr) override { return 0; }
   int GPUStuck() { return mGPUStuck; }
@@ -286,7 +287,7 @@ inline int GPUReconstructionCPU::runKernel(const krnlExec& x, const krnlRunRange
   }
   if (mProcessingSettings.debugLevel >= 1) {
     t = &getKernelTimer<S, I, J>(myStep, !IsGPU() || cpuFallback ? getOMPThreadNum() : x.stream);
-    if (!mProcessingSettings.deviceTimers || !IsGPU() || cpuFallback) {
+    if ((!mProcessingSettings.deviceTimers || !IsGPU() || cpuFallback) && (mNestedLoopOmpFactor < 2 || getOMPThreadNum() == 0)) {
       t->Start();
     }
   }
@@ -305,10 +306,10 @@ inline int GPUReconstructionCPU::runKernel(const krnlExec& x, const krnlRunRange
   }
   if (mProcessingSettings.debugLevel >= 1) {
     if (t) {
-      if (!mProcessingSettings.deviceTimers || !IsGPU() || cpuFallback) {
-        t->Stop();
-      } else {
+      if (!(!mProcessingSettings.deviceTimers || !IsGPU() || cpuFallback)) {
         t->AddTime(setup.t);
+      } else if (mNestedLoopOmpFactor < 2 || getOMPThreadNum() == 0) {
+        t->Stop();
       }
     }
     if (CheckErrorCodes(cpuFallback)) {

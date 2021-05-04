@@ -17,11 +17,6 @@
 /// \file GPUChainTrackingIO.cxx
 /// \author David Rohr
 
-#ifdef HAVE_O2HEADERS
-#include "SimulationDataFormat/MCCompLabel.h"
-#include "SimulationDataFormat/MCTruthContainer.h"
-#endif
-
 #include "GPUChainTracking.h"
 #include "GPUTPCClusterData.h"
 #include "GPUTPCSliceOutput.h"
@@ -45,6 +40,8 @@
 #include "GPUTrackingInputProvider.h"
 
 #ifdef HAVE_O2HEADERS
+#include "SimulationDataFormat/MCCompLabel.h"
+#include "SimulationDataFormat/MCTruthContainer.h"
 #include "GPUTPCClusterStatistics.h"
 #include "DataFormatsTPC/ZeroSuppression.h"
 #include "GPUHostDataTypes.h"
@@ -64,6 +61,7 @@ using namespace GPUCA_NAMESPACE::gpu;
 
 using namespace o2::tpc;
 using namespace o2::trd;
+using namespace o2::dataformats;
 
 static constexpr unsigned int DUMP_HEADER_SIZE = 4;
 static constexpr char DUMP_HEADER[DUMP_HEADER_SIZE + 1] = "CAv1";
@@ -83,12 +81,28 @@ void GPUChainTracking::DumpData(const char* filename)
   fwrite(&GPUReconstruction::geometryType, sizeof(GPUReconstruction::geometryType), 1, fp);
   DumpData(fp, mIOPtrs.clusterData, mIOPtrs.nClusterData, InOutPointerType::CLUSTER_DATA);
   DumpData(fp, mIOPtrs.rawClusters, mIOPtrs.nRawClusters, InOutPointerType::RAW_CLUSTERS);
+#ifdef HAVE_O2HEADERS
   if (mIOPtrs.clustersNative) {
-    DumpData(fp, &mIOPtrs.clustersNative->clustersLinear, &mIOPtrs.clustersNative->nClustersTotal, InOutPointerType::CLUSTERS_NATIVE);
-    fwrite(&mIOPtrs.clustersNative->nClusters[0][0], sizeof(mIOPtrs.clustersNative->nClusters[0][0]), NSLICES * GPUCA_ROW_COUNT, fp);
+    if (DumpData(fp, &mIOPtrs.clustersNative->clustersLinear, &mIOPtrs.clustersNative->nClustersTotal, InOutPointerType::CLUSTERS_NATIVE)) {
+      fwrite(&mIOPtrs.clustersNative->nClusters[0][0], sizeof(mIOPtrs.clustersNative->nClusters[0][0]), NSLICES * GPUCA_ROW_COUNT, fp);
+      if (mIOPtrs.clustersNative->clustersMCTruth) {
+        const auto& buffer = mIOPtrs.clustersNative->clustersMCTruth->getBuffer();
+        std::pair<const char*, size_t> tmp = {buffer.data(), buffer.size()};
+        DumpData(fp, &tmp.first, &tmp.second, InOutPointerType::CLUSTER_NATIVE_MC);
+      }
+    }
   }
   if (mIOPtrs.tpcPackedDigits) {
-    DumpData(fp, mIOPtrs.tpcPackedDigits->tpcDigits, mIOPtrs.tpcPackedDigits->nTPCDigits, InOutPointerType::TPC_DIGIT);
+    if (DumpData(fp, mIOPtrs.tpcPackedDigits->tpcDigits, mIOPtrs.tpcPackedDigits->nTPCDigits, InOutPointerType::TPC_DIGIT) && mIOPtrs.tpcPackedDigits->tpcDigitsMC) {
+      const char* ptrs[NSLICES];
+      size_t sizes[NSLICES];
+      for (unsigned int i = 0; i < NSLICES; i++) {
+        const auto& buffer = mIOPtrs.tpcPackedDigits->tpcDigitsMC->v[i]->getBuffer();
+        ptrs[i] = buffer.data();
+        sizes[i] = buffer.size();
+      }
+      DumpData(fp, ptrs, sizes, InOutPointerType::TPC_DIGIT_MC);
+    }
   }
   if (mIOPtrs.tpcZS) {
     size_t total = 0;
@@ -113,9 +127,11 @@ void GPUChainTracking::DumpData(const char* filename)
       }
     }
     total *= TPCZSHDR::TPC_ZS_PAGE_SIZE;
-    DumpData(fp, &ptr, &total, InOutPointerType::TPC_ZS);
-    fwrite(&counts, sizeof(counts), 1, fp);
+    if (DumpData(fp, &ptr, &total, InOutPointerType::TPC_ZS)) {
+      fwrite(&counts, sizeof(counts), 1, fp);
+    }
   }
+#endif
   DumpData(fp, mIOPtrs.sliceTracks, mIOPtrs.nSliceTracks, InOutPointerType::SLICE_OUT_TRACK);
   DumpData(fp, mIOPtrs.sliceClusters, mIOPtrs.nSliceClusters, InOutPointerType::SLICE_OUT_CLUSTER);
   DumpData(fp, &mIOPtrs.mcLabelsTPC, &mIOPtrs.nMCLabelsTPC, InOutPointerType::MC_LABEL_TPC);
@@ -124,7 +140,11 @@ void GPUChainTracking::DumpData(const char* filename)
   DumpData(fp, &mIOPtrs.mergedTrackHits, &mIOPtrs.nMergedTrackHits, InOutPointerType::MERGED_TRACK_HIT);
   DumpData(fp, &mIOPtrs.trdTracks, &mIOPtrs.nTRDTracks, InOutPointerType::TRD_TRACK);
   DumpData(fp, &mIOPtrs.trdTracklets, &mIOPtrs.nTRDTracklets, InOutPointerType::TRD_TRACKLET);
-  DumpData(fp, &mIOPtrs.trdTrackletsMC, &mIOPtrs.nTRDTrackletsMC, InOutPointerType::TRD_TRACKLET_MC);
+  if (mIOPtrs.trdSpacePoints) {
+    DumpData(fp, &mIOPtrs.trdSpacePoints, &mIOPtrs.nTRDTracklets, InOutPointerType::TRD_SPACEPOINT);
+  }
+  DumpData(fp, &mIOPtrs.trdTriggerTimes, &mIOPtrs.nTRDTriggerRecords, InOutPointerType::TRD_TRIGGERRECORDS);
+  DumpData(fp, &mIOPtrs.trdTrackletIdxFirst, &mIOPtrs.nTRDTriggerRecords, InOutPointerType::TRD_TRIGGERRECORDS);
   fclose(fp);
 }
 
@@ -161,10 +181,26 @@ int GPUChainTracking::ReadData(const char* filename)
     r = fread(&mIOMem.clusterNativeAccess->nClusters[0][0], sizeof(mIOMem.clusterNativeAccess->nClusters[0][0]), NSLICES * GPUCA_ROW_COUNT, fp);
     mIOMem.clusterNativeAccess->setOffsetPtrs();
     mIOPtrs.clustersNative = mIOMem.clusterNativeAccess.get();
+    std::pair<const char*, size_t> tmp = {nullptr, 0};
+    if (ReadData(fp, &tmp.first, &tmp.second, &mIOMem.clusterNativeMC, InOutPointerType::CLUSTER_NATIVE_MC)) {
+      mIOMem.clusterNativeMCView = std::make_unique<ConstMCLabelContainerView>(gsl::span<const char>(tmp.first, tmp.first + tmp.second));
+      mIOMem.clusterNativeAccess->clustersMCTruth = mIOMem.clusterNativeMCView.get();
+    }
   }
   mIOMem.digitMap.reset(new GPUTrackingInOutDigits);
   if (ReadData(fp, mIOMem.digitMap->tpcDigits, mIOMem.digitMap->nTPCDigits, mIOMem.tpcDigits, InOutPointerType::TPC_DIGIT)) {
     mIOPtrs.tpcPackedDigits = mIOMem.digitMap.get();
+    const char* ptrs[NSLICES];
+    size_t sizes[NSLICES];
+    if (ReadData(fp, ptrs, sizes, mIOMem.tpcDigitsMC, InOutPointerType::TPC_DIGIT_MC)) {
+      mIOMem.tpcDigitMCMap = std::make_unique<GPUTPCDigitsMCInput>();
+      mIOMem.tpcDigitMCView.reset(new ConstMCLabelContainerView[NSLICES]);
+      for (unsigned int i = 0; i < NSLICES; i++) {
+        mIOMem.tpcDigitMCView.get()[i] = gsl::span<const char>(ptrs[i], ptrs[i] + sizes[i]);
+        mIOMem.tpcDigitMCMap->v[i] = mIOMem.tpcDigitMCView.get() + i;
+      }
+      mIOMem.digitMap->tpcDigitsMC = mIOMem.tpcDigitMCMap.get();
+    }
   }
   const char* ptr;
   size_t total;
@@ -196,8 +232,19 @@ int GPUChainTracking::ReadData(const char* filename)
   ReadData(fp, &mIOPtrs.mergedTrackHits, &mIOPtrs.nMergedTrackHits, &mIOMem.mergedTrackHits, InOutPointerType::MERGED_TRACK_HIT);
   ReadData(fp, &mIOPtrs.trdTracks, &mIOPtrs.nTRDTracks, &mIOMem.trdTracks, InOutPointerType::TRD_TRACK);
   ReadData(fp, &mIOPtrs.trdTracklets, &mIOPtrs.nTRDTracklets, &mIOMem.trdTracklets, InOutPointerType::TRD_TRACKLET);
-  ReadData(fp, &mIOPtrs.trdTrackletsMC, &mIOPtrs.nTRDTrackletsMC, &mIOMem.trdTrackletsMC, InOutPointerType::TRD_TRACKLET_MC);
+  unsigned int dummy = 0;
+  ReadData(fp, &mIOPtrs.trdSpacePoints, &dummy, &mIOMem.trdSpacePoints, InOutPointerType::TRD_SPACEPOINT);
+  ReadData(fp, &mIOPtrs.trdTriggerTimes, &mIOPtrs.nTRDTriggerRecords, &mIOMem.trdTriggerTimes, InOutPointerType::TRD_TRIGGERRECORDS);
+  ReadData(fp, &mIOPtrs.trdTrackletIdxFirst, &mIOPtrs.nTRDTriggerRecords, &mIOMem.trdTrackletIdxFirst, InOutPointerType::TRD_TRIGGERRECORDS);
+
+  size_t fptr = ftell(fp);
+  fseek(fp, 0, SEEK_END);
+  size_t fend = ftell(fp);
   fclose(fp);
+  if (fptr != fend) {
+    GPUError("Error reading data file, reading incomplete");
+    return 1;
+  }
   (void)r;
   for (unsigned int i = 0; i < NSLICES; i++) {
     for (unsigned int j = 0; j < mIOPtrs.nClusterData[i]; j++) {
