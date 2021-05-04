@@ -26,27 +26,26 @@
 #include "GPUParam.inc"
 #include "GPUQA.h"
 #include "GPUOutputControl.h"
+#include "TPCPadGainCalib.h"
+#include "TPCdEdxCalibrationSplines.h"
 #include <iostream>
 #include <fstream>
-#ifdef WITH_OPENMP
-#include <omp.h>
-#endif
 
 using namespace o2::gpu;
 
 #include "DataFormatsTPC/ClusterNative.h"
 
-GPUTPCO2Interface::GPUTPCO2Interface() = default;
+GPUO2Interface::GPUO2Interface() = default;
 
-GPUTPCO2Interface::~GPUTPCO2Interface() { Deinitialize(); }
+GPUO2Interface::~GPUO2Interface() { Deinitialize(); }
 
-int GPUTPCO2Interface::Initialize(const GPUO2InterfaceConfiguration& config)
+int GPUO2Interface::Initialize(const GPUO2InterfaceConfiguration& config)
 {
   if (mInitialized) {
     return (1);
   }
   mConfig.reset(new GPUO2InterfaceConfiguration(config));
-  mContinuous = mConfig->configEvent.continuousMaxTimeBin != 0;
+  mContinuous = mConfig->configGRP.continuousMaxTimeBin != 0;
   mRec.reset(GPUReconstruction::CreateInstance(mConfig->configDeviceBackend));
   if (mRec == nullptr) {
     GPUError("Error obtaining instance of GPUReconstruction");
@@ -56,9 +55,9 @@ int GPUTPCO2Interface::Initialize(const GPUO2InterfaceConfiguration& config)
   mChain->mConfigDisplay = &mConfig->configDisplay;
   mChain->mConfigQA = &mConfig->configQA;
   if (mConfig->configWorkflow.inputs.isSet(GPUDataTypes::InOutType::TPCRaw)) {
-    mConfig->configEvent.needsClusterer = 1;
+    mConfig->configGRP.needsClusterer = 1;
   }
-  mRec->SetSettings(&mConfig->configEvent, &mConfig->configReconstruction, &mConfig->configProcessing, &mConfig->configWorkflow);
+  mRec->SetSettings(&mConfig->configGRP, &mConfig->configReconstruction, &mConfig->configProcessing, &mConfig->configWorkflow);
   mChain->SetCalibObjects(mConfig->configCalib);
   mOutputRegions.reset(new GPUTrackingOutputs);
   if (mConfig->configInterface.outputToExternalBuffers) {
@@ -81,7 +80,7 @@ int GPUTPCO2Interface::Initialize(const GPUO2InterfaceConfiguration& config)
   return (0);
 }
 
-void GPUTPCO2Interface::Deinitialize()
+void GPUO2Interface::Deinitialize()
 {
   if (mInitialized) {
     mRec->Finalize();
@@ -90,7 +89,7 @@ void GPUTPCO2Interface::Deinitialize()
   mInitialized = false;
 }
 
-int GPUTPCO2Interface::RunTracking(GPUTrackingInOutPointers* data, GPUInterfaceOutputs* outputs)
+int GPUO2Interface::RunTracking(GPUTrackingInOutPointers* data, GPUInterfaceOutputs* outputs)
 {
   if (!mInitialized) {
     return (1);
@@ -98,15 +97,20 @@ int GPUTPCO2Interface::RunTracking(GPUTrackingInOutPointers* data, GPUInterfaceO
   if (mConfig->configInterface.dumpEvents) {
     static int nEvent = 0;
     mChain->ClearIOPointers();
-    mChain->mIOPtrs.clustersNative = data->clustersNative;
-    mChain->mIOPtrs.tpcPackedDigits = data->tpcPackedDigits;
-    mChain->mIOPtrs.tpcZS = data->tpcZS;
+    mChain->mIOPtrs = *data;
 
     char fname[1024];
     sprintf(fname, "event.%d.dump", nEvent);
     mChain->DumpData(fname);
     if (nEvent == 0) {
       mRec->DumpSettings();
+#ifdef GPUCA_BUILD_QA
+      if (mConfig->configProcessing.runMC) {
+        mChain->ForceInitQA();
+        sprintf(fname, "mc.%d.dump", nEvent);
+        mChain->GetQA()->DumpO2MCData(fname);
+      }
+#endif
     }
     nEvent++;
     if (mConfig->configInterface.dumpEvents >= 2) {
@@ -145,20 +149,35 @@ int GPUTPCO2Interface::RunTracking(GPUTrackingInOutPointers* data, GPUInterfaceO
   return 0;
 }
 
-void GPUTPCO2Interface::Clear(bool clearOutputs) { mRec->ClearAllocatedMemory(clearOutputs); }
+void GPUO2Interface::Clear(bool clearOutputs) { mRec->ClearAllocatedMemory(clearOutputs); }
 
-void GPUTPCO2Interface::GetClusterErrors2(int row, float z, float sinPhi, float DzDs, short clusterState, float& ErrY2, float& ErrZ2) const
+void GPUO2Interface::GetClusterErrors2(int row, float z, float sinPhi, float DzDs, short clusterState, float& ErrY2, float& ErrZ2) const
 {
   mRec->GetParam().GetClusterErrors2(row, z, sinPhi, DzDs, ErrY2, ErrZ2);
   mRec->GetParam().UpdateClusterError2ByState(clusterState, ErrY2, ErrZ2);
 }
 
-int GPUTPCO2Interface::registerMemoryForGPU(const void* ptr, size_t size)
+int GPUO2Interface::registerMemoryForGPU(const void* ptr, size_t size)
 {
   return mRec->registerMemoryForGPU(ptr, size);
 }
 
-int GPUTPCO2Interface::unregisterMemoryForGPU(const void* ptr)
+int GPUO2Interface::unregisterMemoryForGPU(const void* ptr)
 {
   return mRec->unregisterMemoryForGPU(ptr);
+}
+
+std::unique_ptr<TPCPadGainCalib> GPUO2Interface::getPadGainCalibDefault()
+{
+  return std::make_unique<TPCPadGainCalib>();
+}
+
+std::unique_ptr<TPCPadGainCalib> GPUO2Interface::getPadGainCalib(const o2::tpc::CalDet<float>& in)
+{
+  return std::make_unique<TPCPadGainCalib>(in);
+}
+
+std::unique_ptr<TPCdEdxCalibrationSplines> GPUO2Interface::getdEdxCalibrationSplinesDefault()
+{
+  return std::make_unique<TPCdEdxCalibrationSplines>();
 }

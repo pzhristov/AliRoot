@@ -39,6 +39,8 @@ namespace o2::tpc
 {
 struct ClusterNativeAccess;
 struct ClusterNative;
+template <class T>
+class CalDet;
 } // namespace o2::tpc
 
 namespace o2::gpu
@@ -49,11 +51,11 @@ struct GPUO2InterfaceConfiguration;
 struct GPUInterfaceOutputs;
 struct GPUTrackingOutputs;
 
-class GPUTPCO2Interface
+class GPUO2Interface
 {
  public:
-  GPUTPCO2Interface();
-  ~GPUTPCO2Interface();
+  GPUO2Interface();
+  ~GPUO2Interface();
 
   int Initialize(const GPUO2InterfaceConfiguration& config);
   void Deinitialize();
@@ -64,14 +66,18 @@ class GPUTPCO2Interface
   bool GetParamContinuous() { return (mContinuous); }
   void GetClusterErrors2(int row, float z, float sinPhi, float DzDs, short clusterState, float& ErrY2, float& ErrZ2) const;
 
+  static std::unique_ptr<TPCPadGainCalib> getPadGainCalibDefault();
+  static std::unique_ptr<TPCPadGainCalib> getPadGainCalib(const o2::tpc::CalDet<float>& in);
+  static std::unique_ptr<TPCdEdxCalibrationSplines> getdEdxCalibrationSplinesDefault();
+
   int registerMemoryForGPU(const void* ptr, size_t size);
   int unregisterMemoryForGPU(const void* ptr);
 
   const GPUO2InterfaceConfiguration& getConfig() const { return *mConfig; }
 
  private:
-  GPUTPCO2Interface(const GPUTPCO2Interface&);
-  GPUTPCO2Interface& operator=(const GPUTPCO2Interface&);
+  GPUO2Interface(const GPUO2Interface&);
+  GPUO2Interface& operator=(const GPUO2Interface&);
 
   bool mInitialized = false;
   bool mContinuous = false;

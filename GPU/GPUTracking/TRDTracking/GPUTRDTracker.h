@@ -22,12 +22,12 @@
 #ifndef GPUTRDTRACKER_H
 #define GPUTRDTRACKER_H
 
-
 #include "GPUCommonDef.h"
 #include "GPUProcessor.h"
 #include "GPUTRDDef.h"
 #include "GPUDef.h"
 #include "GPUTRDTrack.h"
+#include "GPUTRDSpacePoint.h"
 #include "GPULogging.h"
 
 #ifndef GPUCA_GPUCODE_DEVICE
@@ -85,21 +85,10 @@ class GPUTRDTracker_t : public GPUProcessor
                         kNSectors = 18,
                         kNChambers = 540 };
 
-  // struct to hold the information on the space points
-  struct GPUTRDSpacePointInternal {
-    float mR;                 // x position (3.5 mm above anode wires) - radial offset due to t0 mis-calibration, measured -1 mm for run 245353
-    float mX[2];              // y and z position (sector coordinates)
-    My_Float mCov[3];         // sigma_y^2, sigma_yz, sigma_z^2
-    float mDy;                // deflection over drift length
-    int mId;                  // index
-    int mLabel[3];            // MC labels
-    unsigned short mVolumeId; // basically derived from TRD chamber number
-  };
-
   struct Hypothesis {
     int mLayers;      // number of layers with TRD space point
     int mCandidateId; // to which track candidate the hypothesis belongs
-    int mTrackletId;  // tracklet index to be used for update
+    int mTrackletId;  // tracklet index to be used for update (global index within tracklet array)
     float mChi2;      // predicted chi2 for given space point
 
     GPUd() float GetReducedChi2() { return mLayers > 0 ? mChi2 / mLayers : mChi2; }
@@ -113,7 +102,6 @@ class GPUTRDTracker_t : public GPUProcessor
 
   GPUhd() void OverrideGPUGeometry(TRD_GEOMETRY_CONST GPUTRDGeometry* geo) { mGeo = geo; }
   void Reset();
-  GPUd() int LoadTracklet(const GPUTRDTrackletWord& tracklet, const int* labels = nullptr);
   template <class T>
   GPUd() bool PreCheckTrackTRDCandidate(const T& trk) const
   {
@@ -123,10 +111,14 @@ class GPUTRDTracker_t : public GPUProcessor
   GPUd() bool CheckTrackTRDCandidate(const TRDTRK& trk) const;
   GPUd() int LoadTrack(const TRDTRK& trk, const int label = -1, const int* nTrkltsOffline = nullptr, const int labelOffline = -1, int tpcTrackId = -1, bool checkTrack = true);
 
-  GPUd() int GetCollisionID(float trkTime) const;
+  GPUd() int GetCollisionIDs(TRDTRK& trk, int* collisionIds) const;
   GPUd() void DoTrackingThread(int iTrk, int threadId = 0);
+  static GPUd() bool ConvertTrkltToSpacePoint(const GPUTRDGeometry& geo, GPUTRDTrackletWord& trklt, GPUTRDSpacePoint& sp);
   GPUd() bool CalculateSpacePoints(int iCollision = 0);
   GPUd() bool FollowProlongation(PROP* prop, TRDTRK* t, int threadId, int collisionId);
+  GPUd() int FillImpactAngleHistograms(PROP* prop, TRDTRK* t);
+  GPUd() void ResetImpactAngleHistograms();
+  GPUd() int PropagateToLayerAndUpdate(PROP* prop, TRDTRK* trkWork, int iLayer, bool doUpdate = true);
   GPUd() int GetDetectorNumber(const float zPos, const float alpha, const int layer) const;
   GPUd() bool AdjustSector(PROP* prop, TRDTRK* t) const;
   GPUd() int GetSector(float alpha) const;
@@ -139,24 +131,19 @@ class GPUTRDTracker_t : public GPUProcessor
   GPUd() void CheckTrackRefs(const int trackID, bool* findableMC) const;
   GPUd() void FindChambersInRoad(const TRDTRK* t, const float roadY, const float roadZ, const int iLayer, int* det, const float zMax, const float alpha) const;
   GPUd() bool IsGeoFindable(const TRDTRK* t, const int layer, const float alpha) const;
-  GPUd() void SwapTracklets(const int left, const int right);
-  GPUd() int PartitionTracklets(const int left, const int right);
-  GPUd() void Quicksort(const int left, const int right, const int size);
   GPUd() void InsertHypothesis(Hypothesis hypo, int& nCurrHypothesis, int idxOffset);
 
-  // input from TRD trigger record
-  GPUd() void SetNMaxCollisions(int nColl) { mNMaxCollisions = nColl; } // can this be fixed to a sufficiently large value?
-  GPUd() void SetNCollisions(int nColl);
-  GPUd() void SetTriggerRecordIndices(int* indices) { mTriggerRecordIndices = indices; }
-  GPUd() void SetTriggerRecordTimes(float* times) { mTriggerRecordTimes = times; }
 
   // settings
-  GPUd() void SetProcessPerTimeFrame() { mProcessPerTimeFrame = true; }
+  GPUd() void SetGenerateSpacePoints(bool flag) { mGenerateSpacePoints = flag; }
+  GPUd() void SetProcessPerTimeFrame(bool flag) { mProcessPerTimeFrame = flag; }
+  GPUd() void SetDoImpactAngleHistograms(bool flag) { mDoImpactAngleHistograms = flag; }
   GPUd() void SetMCEvent(AliMCEvent* mc) { mMCEvent = mc; }
   GPUd() void EnableDebugOutput() { mDebugOutput = true; }
   GPUd() void SetMaxEta(float maxEta) { mMaxEta = maxEta; }
   GPUd() void SetExtraRoadY(float extraRoadY) { mExtraRoadY = extraRoadY; }
   GPUd() void SetRoadZ(float roadZ) { mRoadZ = roadZ; }
+  GPUd() void SetTPCVdrift(float vDrift) { mTPCVdrift = vDrift; }
 
   GPUd() AliMCEvent* GetMCEvent() const { return mMCEvent; }
   GPUd() bool GetIsDebugOutputOn() const { return mDebugOutput; }
@@ -167,16 +154,23 @@ class GPUTRDTracker_t : public GPUProcessor
 
   // output
   GPUd() int NTracks() const { return mNTracks; }
+  GPUd() GPUTRDSpacePoint* SpacePoints() const { return mSpacePoints; }
   GPUd() TRDTRK* Tracks() const { return mTracks; }
-  GPUd() int NTracklets() const { return mNTracklets; }
-  GPUd() GPUTRDSpacePointInternal* SpacePoints() const { return mSpacePoints; }
-  GPUd() GPUTRDTrackletWord* Tracklets() const { return mTracklets; }
+  GPUd() float* AngleDiffSums() const { return mAngleDiffSums; }
+  GPUd() short* AngleDiffCounters() const { return mAngleDiffCounters; }
   GPUd() void DumpTracks();
+
+  // utility
+  GPUd() const typename PROP::propagatorParam* getPropagatorParam();
 
  protected:
   float* mR;                               // radial position of each TRD chamber, alignment taken into account, radial spread within chambers < 7mm
   bool mIsInitialized;                     // flag is set upon initialization
-  bool mProcessPerTimeFrame;               // if true, tracking is done per time frame instead of on a single events basis //FIXME is this needed??
+  bool mGenerateSpacePoints;               // if true, only tracklets are provided as input and they will be converted into space points by the tracker
+  bool mProcessPerTimeFrame;               // if true, tracking is done per time frame instead of on a single events basis
+  bool mDoImpactAngleHistograms;           // if true, impact angle vs angle difference histograms are filled
+  short mNAngleHistogramBins;              // number of bins per chamber for the angular difference histograms
+  float mAngleHistogramRange;              // range of impact angles covered by each histogram
   short mMemoryPermanent;                  // size of permanent memory for the tracker
   short mMemoryTracklets;                  // size of memory for TRD tracklets
   short mMemoryTracks;                     // size of memory for tracks (used for i/o)
@@ -185,18 +179,18 @@ class GPUTRDTracker_t : public GPUProcessor
   int mNMaxSpacePoints;                    // max number of space points hold by the tracker (per event)
   TRDTRK* mTracks;                         // array of trd-updated tracks
   int mNCandidates;                        // max. track hypothesis per layer
-  int mNCollisions;                        // number of collisions with TRD tracklet data
   int mNTracks;                            // number of TPC tracks to be matched
   int mNEvents;                            // number of processed events
-  int* mTriggerRecordIndices;              // index of first tracklet for each collision
-  float* mTriggerRecordTimes;              // time in us for each collision
-  GPUTRDTrackletWord* mTracklets;          // array of all tracklets, later sorted by HCId
   int mMaxThreads;                         // maximum number of supported threads
-  int mNTracklets;                         // total number of tracklets in event
-  int* mTrackletIndexArray;                // index of first tracklet for each chamber, last entry is the total amount of tracklets
+  // index of first tracklet for each chamber within tracklets array, last entry is total number of tracklets for given collision
+  // the array has (kNChambers + 1) * numberOfCollisions entries
+  // note, that for collision iColl one has to add an offset corresponding to the index of the first tracklet of iColl to the index stored in mTrackletIndexArray
+  int* mTrackletIndexArray;
   Hypothesis* mHypothesis;                 // array with multiple track hypothesis
   TRDTRK* mCandidates;                     // array of tracks for multiple hypothesis tracking
-  GPUTRDSpacePointInternal* mSpacePoints;  // array with tracklet coordinates in global tracking frame
+  GPUTRDSpacePoint* mSpacePoints;          // array with tracklet coordinates in global tracking frame
+  float* mAngleDiffSums;                   // array with sum of angular differences for a given bin
+  short* mAngleDiffCounters;               // array with number of entries for a given bin
   int* mTrackletLabels;                    // array with MC tracklet labels
   TRD_GEOMETRY_CONST GPUTRDGeometry* mGeo; // TRD geometry
   /// ---- error parametrization depending on magnetic field ----
@@ -210,15 +204,15 @@ class GPUTRDTracker_t : public GPUProcessor
   float mAngleToDyB; // parameterization for conversion track angle -> tracklet deflection
   float mAngleToDyC; // parameterization for conversion track angle -> tracklet deflection
   /// ---- end error parametrization ----
-  bool mDebugOutput;                       // store debug output
-  float mTimeWindow;                       // max. deviation of the ITS-TPC track time w.r.t. TRD trigger record time stamp (in us, default is 100 ns)
-  float mRadialOffset;                     // due to mis-calibration of t0
-  float mMaxEta;                           // TPC tracks with higher eta are ignored
-  float mExtraRoadY;                       // addition to search road in r-phi to account for not exact radial match of tracklets and tracks in first iteration
-  float mRoadZ;                            // in z, a constant search road is used
-  float mZCorrCoefNRC;                     // tracklet z-position depends linearly on track dip angle
-  AliMCEvent* mMCEvent;                    //! externaly supplied optional MC event
-  GPUTRDTrackerDebug<TRDTRK>* mDebug;      // debug output
+  bool mDebugOutput;                  // store debug output
+  static CONSTEXPR float sRadialOffset GPUCA_CPP11_INIT(= -0.1f); // due to (possible) mis-calibration of t0 -> will become obsolete when tracklet conversion is done outside of the tracker
+  float mMaxEta;                      // TPC tracks with higher eta are ignored
+  float mExtraRoadY;                  // addition to search road in r-phi to account for not exact radial match of tracklets and tracks in first iteration
+  float mRoadZ;                       // in z, a constant search road is used
+  float mZCorrCoefNRC;                // tracklet z-position depends linearly on track dip angle
+  float mTPCVdrift;                   // TPC drift velocity used for shifting TPC tracks along Z
+  AliMCEvent* mMCEvent;               //! externaly supplied optional MC event
+  GPUTRDTrackerDebug<TRDTRK>* mDebug; // debug output
 };
 } // namespace gpu
 } // namespace GPUCA_NAMESPACE

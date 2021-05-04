@@ -20,6 +20,7 @@
 #include "GPUTPCCompression.h"
 #include "GPUReconstruction.h"
 #include "GPUO2DataTypes.h"
+#include "GPUMemorySizeScalers.h"
 
 using namespace GPUCA_NAMESPACE::gpu;
 
@@ -45,7 +46,7 @@ void* GPUTPCCompression::SetPointersScratch(void* mem)
     computePointerWithAlignment(mem, mAttachedClusterFirstIndex, mMaxTracks);
   }
   if (mRec->GetProcessingSettings().tpcCompressionGatherMode != 1) {
-    SetPointersCompressedClusters(mem, mPtrs, mMaxTrackClusters, mMaxTracks, mMaxClusters, false);
+    SetPointersCompressedClusters(mem, mPtrs, mMaxTrackClusters, mMaxTracks, mMaxClustersInCache, false);
   }
   return mem;
 }
@@ -54,7 +55,7 @@ void* GPUTPCCompression::SetPointersOutput(void* mem)
 {
   computePointerWithAlignment(mem, mAttachedClusterFirstIndex, mMaxTrackClusters);
   if (mRec->GetProcessingSettings().tpcCompressionGatherMode == 1) {
-    SetPointersCompressedClusters(mem, mPtrs, mMaxTrackClusters, mMaxTracks, mMaxClusters, false);
+    SetPointersCompressedClusters(mem, mPtrs, mMaxTrackClusters, mMaxTracks, mMaxClustersInCache, false);
   }
   return mem;
 }
@@ -121,6 +122,8 @@ void GPUTPCCompression::RegisterMemoryAllocation()
 void GPUTPCCompression::SetMaxData(const GPUTrackingInOutPointers& io)
 {
   mMaxClusters = io.clustersNative->nClustersTotal;
+  mMaxClusterFactorBase1024 = mMaxClusters > 100000000 ? mRec->MemoryScalers()->tpcCompressedUnattachedHitsBase1024[mRec->GetParam().rec.tpcRejectionMode] : 1024;
+  mMaxClustersInCache = mMaxClusters * mMaxClusterFactorBase1024 / 1024;
   mMaxTrackClusters = mRec->GetConstantMem().tpcMerger.NOutputTrackClusters();
   mMaxTracks = mRec->GetConstantMem().tpcMerger.NOutputTracks();
   if (mMaxClusters % 16) {

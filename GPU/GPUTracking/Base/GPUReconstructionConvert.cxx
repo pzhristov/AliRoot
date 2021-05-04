@@ -18,7 +18,6 @@
 /// \author David Rohr
 
 #ifdef GPUCA_O2_LIB
-#include "DetectorsRaw/HBFUtils.h"
 #include "DetectorsRaw/RawFileWriter.h"
 #include "TPCBase/Sector.h"
 #include "DataFormatsTPC/Digit.h"
@@ -201,10 +200,10 @@ void GPUReconstructionConvert::ZSstreamOut(unsigned short* bufIn, unsigned int& 
 }
 
 #ifdef HAVE_O2HEADERS
-void GPUReconstructionConvert::ZSfillEmpty(void* ptr, int shift, unsigned int feeId)
+void GPUReconstructionConvert::ZSfillEmpty(void* ptr, int shift, unsigned int feeId, int orbit)
 {
   RAWDataHeaderGPU* rdh = (RAWDataHeaderGPU*)ptr;
-  o2::raw::RDHUtils::setHeartBeatOrbit(*rdh, 0);
+  o2::raw::RDHUtils::setHeartBeatOrbit(*rdh, orbit);
   o2::raw::RDHUtils::setHeartBeatBC(*rdh, shift);
   o2::raw::RDHUtils::setMemorySize(*rdh, sizeof(RAWDataHeaderGPU));
   o2::raw::RDHUtils::setVersion(*rdh, o2::raw::RDHUtils::getVersion<o2::gpu::RAWDataHeaderGPU>());
@@ -248,9 +247,11 @@ void GPUReconstructionConvert::RunZSEncoder(const S& in, std::unique_ptr<unsigne
 #ifdef GPUCA_O2_LIB
     int rawlnk = rdh_utils::UserLogicLinkID;
     int bcShiftInFirstHBF = ir ? ir->bc : 0;
+    int orbitShift = ir ? ir->orbit : 0;
 #else
     int rawlnk = 15;
     int bcShiftInFirstHBF = 0;
+    int orbitShift = 0;
 #endif
     int rawcru = 0;
     int rawendpoint = 0;
@@ -316,6 +317,9 @@ void GPUReconstructionConvert::RunZSEncoder(const S& in, std::unique_ptr<unsigne
         }
         if (ZSEncoderGetTime(tmpBuffer[k]) != lastTime) {
           nexthbf = ((long)ZSEncoderGetTime(tmpBuffer[k]) * LHCBCPERTIMEBIN + bcShiftInFirstHBF) / o2::constants::lhc::LHCMaxBunches;
+          if (nexthbf < 0) {
+            throw std::runtime_error("Received digit before the defined first orbit");
+          }
           if (hbf != nexthbf) {
             lastEndpoint = -2;
           }
@@ -357,7 +361,7 @@ void GPUReconstructionConvert::RunZSEncoder(const S& in, std::unique_ptr<unsigne
           if (raw) {
             size_t size = (padding || lastEndpoint == -1) ? TPCZSHDR::TPC_ZS_PAGE_SIZE : (pagePtr - (unsigned char*)page);
             size = CAMath::nextMultipleOf<o2::raw::RDHUtils::GBTWord>(size);
-            raw->addData(rawfeeid, rawcru, rawlnk, rawendpoint, *ir + hbf * o2::constants::lhc::LHCMaxBunches, gsl::span<char>((char*)page + sizeof(RAWDataHeaderGPU), (char*)page + size), true);
+            raw->addData(rawfeeid, rawcru, rawlnk, rawendpoint, *ir + (hbf - orbitShift) * o2::constants::lhc::LHCMaxBunches, gsl::span<char>((char*)page + sizeof(RAWDataHeaderGPU), (char*)page + size), true);
           } else
 #endif
           {
@@ -377,10 +381,10 @@ void GPUReconstructionConvert::RunZSEncoder(const S& in, std::unique_ptr<unsigne
         if (raw) {
           page = &singleBuffer;
         } else {
-          if (buffer[i][endpoint].size() == 0 && nexthbf != 0) {
+          if (buffer[i][endpoint].size() == 0 && nexthbf > orbitShift) {
             // Emplace empty page with RDH containing beginning of TFgpuDigitsMap
             buffer[i][endpoint].emplace_back();
-            ZSfillEmpty(&buffer[i][endpoint].back(), bcShiftInFirstHBF, rdh_utils::getFEEID(i * 10 + endpoint / 2, endpoint & 1, rawlnk));
+            ZSfillEmpty(&buffer[i][endpoint].back(), bcShiftInFirstHBF, rdh_utils::getFEEID(i * 10 + endpoint / 2, endpoint & 1, rawlnk), orbitShift);
             totalPages++;
           }
           buffer[i][endpoint].emplace_back();
@@ -396,7 +400,7 @@ void GPUReconstructionConvert::RunZSEncoder(const S& in, std::unique_ptr<unsigne
         hdr->cruID = i * 10 + region;
         rawcru = i * 10 + region;
         rawendpoint = endpoint & 1;
-        hdr->timeOffset = ZSEncoderGetTime(tmpBuffer[k]) * LHCBCPERTIMEBIN - (hbf - 0) * o2::constants::lhc::LHCMaxBunches;
+        hdr->timeOffset = (long)ZSEncoderGetTime(tmpBuffer[k]) * LHCBCPERTIMEBIN - (long)hbf * o2::constants::lhc::LHCMaxBunches;
         lastTime = -1;
         tbHdr = nullptr;
         lastEndpoint = endpoint;
@@ -441,7 +445,7 @@ void GPUReconstructionConvert::RunZSEncoder(const S& in, std::unique_ptr<unsigne
       for (unsigned int j = 0; j < GPUTrackingInOutZS::NENDPOINTS; j++) {
         if (buffer[i][j].size() == 0) {
           buffer[i][j].emplace_back();
-          ZSfillEmpty(&buffer[i][j].back(), bcShiftInFirstHBF, rdh_utils::getFEEID(i * 10 + j / 2, j & 1, rawlnk));
+          ZSfillEmpty(&buffer[i][j].back(), bcShiftInFirstHBF, rdh_utils::getFEEID(i * 10 + j / 2, j & 1, rawlnk), orbitShift);
           totalPages++;
         }
       }
@@ -481,7 +485,7 @@ void GPUReconstructionConvert::RunZSEncoder(const S& in, std::unique_ptr<unsigne
           }
           int nRowsRegion = param.tpcGeometry.GetRegionRows(region);
 
-          int timeBin = (hdr->timeOffset + (o2::raw::RDHUtils::getHeartBeatOrbit(*rdh) - firstOrbit) * o2::constants::lhc::LHCMaxBunches) / LHCBCPERTIMEBIN;
+          int timeBin = (hdr->timeOffset + (unsigned long)(o2::raw::RDHUtils::getHeartBeatOrbit(*rdh) - firstOrbit) * o2::constants::lhc::LHCMaxBunches) / LHCBCPERTIMEBIN;
           for (int l = 0; l < hdr->nTimeBins; l++) {
             if ((pagePtr - reinterpret_cast<unsigned char*>(page)) & 1) {
               pagePtr++;

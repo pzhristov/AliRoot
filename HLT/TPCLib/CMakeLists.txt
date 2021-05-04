@@ -34,8 +34,10 @@ else()
                         ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/Merger
                         ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/Global
                         ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/Base
+                        ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/Definitions
+                        ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/DataTypes
                         ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/DataCompression
-                        ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/Standalone
+                        ${AliRoot_SOURCE_DIR}/GPU/GPUTracking
                         ${AliRoot_SOURCE_DIR}/GPU/TPCFastTransformation)
     add_definitions(-DHAVE_ALIGPU)
     add_definitions(-DGPUCA_ALIROOT_LIB)

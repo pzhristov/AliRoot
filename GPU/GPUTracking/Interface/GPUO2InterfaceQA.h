@@ -52,8 +52,8 @@ struct ClusterNativeAccess;
 namespace o2::gpu
 {
 class GPUQA;
-class GPUParam;
-class GPUO2InterfaceConfiguration;
+struct GPUParam;
+struct GPUO2InterfaceConfiguration;
 class GPUO2InterfaceQA
 {
  public:
