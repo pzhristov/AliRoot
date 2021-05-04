@@ -51,6 +51,7 @@ if(NOT ALIROOT_ONLINE_MODE)
   include_directories(${AliRoot_SOURCE_DIR}/GPU/GPUTracking/SliceTracker
     ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/TRDTracking
     ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/Merger
+    ${AliRoot_SOURCE_DIR}/GPU/GPUTracking/DataTypes
     ${AliRoot_SOURCE_DIR}/GPU/Common
   )
 endif()
