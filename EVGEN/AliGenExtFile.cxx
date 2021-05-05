@@ -108,11 +108,11 @@ void AliGenExtFile::Generate()
 {
 // Generate particles
 
-  Double_t polar[3]  = {0,0,0};
+  Double_t polar[]  = {0,0,0};
   //
-  Double_t origin[3] = {0,0,0};
+  Double_t origin[] = {0,0,0};
   Double_t time = 0.;
-  Double_t p[4] = {0,0,0,0};
+  Double_t p[] = {0,0,0,0};
   Float_t random[6];
   Int_t nt = 0;
   //
