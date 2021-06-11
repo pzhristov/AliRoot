@@ -310,10 +310,11 @@ void AliGenExtFile::Generate()
       consecutiveDiscardedEvents=0;
     }
 
+    AliStack *stack = AliRunLoader::Instance()->Stack();
+
     // Base multiplicity trigger
     if(fSetMultTrig){
       AliInfo(Form("mult cut : %i",fMultCut));
-      AliStack *stack = AliRunLoader::Instance()->Stack();
       if(!MultiplicityTrigger(stack)){
 	stack->Clean();
         consecutiveDiscardedEvents++;
@@ -350,7 +351,7 @@ void AliGenExtFile::Generate()
         continue;
       }
       Int_t inew = selector.newId(iold);
-      TParticle* particle = fStack->Particle(inew);
+      TParticle* particle = stack->Particle(inew);
       if (!particle) {
         AliErrorStream() << "Could not find particle " << inew << std::endl;
         continue;
@@ -363,8 +364,8 @@ void AliGenExtFile::Generate()
       TParticle* parent1 = nullptr;
       TParticle* parent2 = nullptr;
       
-      if (iparent1 >= 0) parent1 = fStack->Particle(iparent1);
-      if (iparent2 >= 0) parent2 = fStack->Particle(iparent2);
+      if (iparent1 >= 0) parent1 = stack->Particle(iparent1);
+      if (iparent2 >= 0) parent2 = stack->Particle(iparent2);
       
       if (parent1 && !parent2) {
         // Only the first mother exists, nothing to be done
