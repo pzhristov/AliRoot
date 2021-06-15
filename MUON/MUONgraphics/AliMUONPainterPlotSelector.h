@@ -18,6 +18,9 @@
 #ifndef ROOT_TString
 #  include "TString.h"
 #endif
+#ifndef ROOT_TMap
+#  include "TMap.h"
+#endif
 
 class AliMUONPainterMatrix;
 class AliMUONVTrackerData;
