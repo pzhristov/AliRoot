@@ -582,11 +582,22 @@ void AliPythia8::ProcInit(Process_t process, Float_t energy, StrucFunc_t strucfu
     case kPyBeautyJets:
     case kPyMbAtlasTuneMC09: 
       break;
+    case kPyAngantyr:
+      //Some standard initializations
+      ReadString("Beams:idA = 1000822080");
+      ReadString("Beams:idB = 1000822080");
+      ReadString("HeavyIon:SigFitNGen = 0");
+      ReadString("HeavyIon:SigFitDefPar = 13.88,1.84,0.22,0.0,0.0,0.0,0.0,0.0");
+      ReadString("HeavyIon:bWidth = 14.48");
     }
 //
 //  Initialize PYTHIA
 //    SetMSTP(41,1);   // all resonance decays switched on
-    Initialize(2212, 2212, fEcms);
+    if(fProcess!=kPyAngantyr){
+      Initialize(2212, 2212, fEcms);
+    }else{ 
+      Initialize(1000822080, 1000822080, fEcms);
+    }
 }
 
 void AliPythia8::SetSeed(UInt_t seed)
