@@ -589,6 +589,7 @@ void AliPythia8::ProcInit(Process_t process, Float_t energy, StrucFunc_t strucfu
       ReadString("HeavyIon:SigFitNGen = 0");
       ReadString("HeavyIon:SigFitDefPar = 13.88,1.84,0.22,0.0,0.0,0.0,0.0,0.0");
       ReadString("HeavyIon:bWidth = 14.48");
+      break;
     }
 //
 //  Initialize PYTHIA
