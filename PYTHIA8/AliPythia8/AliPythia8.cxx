@@ -590,15 +590,54 @@ void AliPythia8::ProcInit(Process_t process, Float_t energy, StrucFunc_t strucfu
       ReadString("HeavyIon:SigFitDefPar = 13.88,1.84,0.22,0.0,0.0,0.0,0.0,0.0");
       ReadString("HeavyIon:bWidth = 14.48");
       break;
+    case kPyAngantyrXeXe:
+      //Some standard initializations - XeXe
+      ReadString("Beams:idA = 1000541290");
+      ReadString("Beams:idB = 1000541290");
+      ReadString("HeavyIon:SigFitNGen = 0");
+      ReadString("HeavyIon:SigFitDefPar = 13.88,1.84,0.22,0.0,0.0,0.0,0.0,0.0");
+      ReadString("HeavyIon:bWidth = 14.48");
+      break;
+    case kPyAngantyrKrKr:
+      //Some standard initializations - KrKr 
+      //Note: initialization of Kr necessary - unknown to PYTHIA 
+      ReadString("1000360840:all = 84Kr 84Krbar 10 108 0 83.798");
+      ReadString("Beams:idA = 1000360840");
+      ReadString("Beams:idB = 1000360840");
+      ReadString("HeavyIon:SigFitNGen = 0");
+      ReadString("HeavyIon:SigFitDefPar = 13.88,1.84,0.22,0.0,0.0,0.0,0.0,0.0");
+      ReadString("HeavyIon:bWidth = 14.48");
+      break;
+    case kPyAngantyrArAr:
+      //Some standard initializations - OO 
+      //Note: initialization of Ar necessary - unknown to PYTHIA 
+      ReadString("1000180400:all = 40Ar 40Arbar 8 54 0 39.963");
+      ReadString("Beams:idA = 1000180400");
+      ReadString("Beams:idB = 1000180400");
+      ReadString("HeavyIon:SigFitNGen = 0");
+      ReadString("HeavyIon:SigFitDefPar = 13.88,1.84,0.22,0.0,0.0,0.0,0.0,0.0");
+      ReadString("HeavyIon:bWidth = 14.48");
+      break;
+    case kPyAngantyrOO:
+      //Some standard initializations - OO 
+      ReadString("Beams:idA = 1000080160");
+      ReadString("Beams:idB = 1000080160");
+      ReadString("HeavyIon:SigFitNGen = 0");
+      ReadString("HeavyIon:SigFitDefPar = 13.88,1.84,0.22,0.0,0.0,0.0,0.0,0.0");
+      ReadString("HeavyIon:bWidth = 14.48");
+      break;
     }
 //
 //  Initialize PYTHIA
 //    SetMSTP(41,1);   // all resonance decays switched on
-    if(fProcess!=kPyAngantyr){
+    if(fProcess!=kPyAngantyr && fProcess!=kPyAngantyrXeXe && fProcess!=kPyAngantyrKrKr 
+       && fProcess!=kPyAngantyrArAr && && fProcess!=kPyAngantyrOO) 
       Initialize(2212, 2212, fEcms);
-    }else{ 
-      Initialize(1000822080, 1000822080, fEcms);
-    }
+    if(fProcess==kPyAngantyr) Initialize(1000822080, 1000822080, fEcms);
+    if(fProcess==kPyAngantyrXeXe) Initialize(1000541290, 1000541290, fEcms);
+    if(fProcess==kPyAngantyrKrKr) Initialize(1000360840, 1000360840, fEcms);
+    if(fProcess==kPyAngantyrArAr) Initialize(1000180400, 1000180400, fEcms);
+    if(fProcess==kPyAngantyrOO) Initialize(1000080160, 1000080160, fEcms);
 }
 
 void AliPythia8::SetSeed(UInt_t seed)
