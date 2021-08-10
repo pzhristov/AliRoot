@@ -10,7 +10,9 @@ typedef enum
     kPyCharmppMNR, kPyCharmppMNRwmi, kPyD0ppMNR, kPyDPlusppMNR, kPyDPlusStrangeppMNR, 
     kPyBeautyppMNR, kPyBeautyppMNRwmi, kPyHeavyFlavppMNRwmi, kPyBeautyJets, kPyW, kPyZ, kPyLambdacppMNR, kPyMbMSEL1,
     kPyOldUEQ2ordered, kPyOldUEQ2ordered2, kPyOldPopcorn,
-    kPyLhwgMb, kPyMbDefault, kPyMbAtlasTuneMC09, kPyMBRSingleDiffraction, kPyMBRDoubleDiffraction, kPyMBRCentralDiffraction, kPyJetsPWHG, kPyCharmPWHG, kPyBeautyPWHG, kPyWPWHG, kPyZgamma, kPyAngantyr
+    kPyLhwgMb, kPyMbDefault, kPyMbAtlasTuneMC09, kPyMBRSingleDiffraction, kPyMBRDoubleDiffraction, kPyMBRCentralDiffraction, 
+    kPyJetsPWHG, kPyCharmPWHG, kPyBeautyPWHG, kPyWPWHG, kPyZgamma, 
+    kPyAngantyr, kPyAngantyrXeXe, kPyAngantyrKrKr, kPyAngantyrArAr, kPyAngantyrOO
 }
 Process_t;
 
