@@ -627,17 +627,23 @@ void AliPythia8::ProcInit(Process_t process, Float_t energy, StrucFunc_t strucfu
       ReadString("HeavyIon:bWidth = 14.48");
       break;
     }
-//
+
 //  Initialize PYTHIA
 //    SetMSTP(41,1);   // all resonance decays switched on
-    if(fProcess!=kPyAngantyr && fProcess!=kPyAngantyrXeXe && fProcess!=kPyAngantyrKrKr 
-       && fProcess!=kPyAngantyrArAr && && fProcess!=kPyAngantyrOO) 
-      Initialize(2212, 2212, fEcms);
-    if(fProcess==kPyAngantyr) Initialize(1000822080, 1000822080, fEcms);
-    if(fProcess==kPyAngantyrXeXe) Initialize(1000541290, 1000541290, fEcms);
-    if(fProcess==kPyAngantyrKrKr) Initialize(1000360840, 1000360840, fEcms);
-    if(fProcess==kPyAngantyrArAr) Initialize(1000180400, 1000180400, fEcms);
-    if(fProcess==kPyAngantyrOO) Initialize(1000080160, 1000080160, fEcms);
+      if(fProcess==kPyAngantyr){
+        Initialize(1000822080, 1000822080, fEcms);
+      }else if(fProcess==kPyAngantyrXeXe){
+        Initialize(1000541290, 1000541290, fEcms);
+      }else if(fProcess==kPyAngantyrKrKr){
+        Initialize(1000360840, 1000360840, fEcms);
+      }else if(fProcess==kPyAngantyrArAr){
+        Initialize(1000180400, 1000180400, fEcms);
+      }else if(fProcess==kPyAngantyrOO){
+        Initialize(1000080160, 1000080160, fEcms);
+      }else{
+        //Revert to plain pp
+        Initialize(2212, 2212, fEcms);
+      }
 }
 
 void AliPythia8::SetSeed(UInt_t seed)
