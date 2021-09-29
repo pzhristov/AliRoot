@@ -82,6 +82,7 @@
 #include "TFileMerger.h"
 #include "TTree.h"
 #include "helpers.h"
+#include "TGrid.h"
 
 static const char *USAGE = 
       "usage: alihadd [-h] [-f[kf123456]] [-a] [-k] [-T] [-O] [-n <max numer of files>]"
@@ -288,6 +289,9 @@ int main( int argc, char **argv )
   for (size_t i = 0; i < mergeInputs.size(); ++i)
   {
     MergeInput &input = mergeInputs[i];
+    if (!gGrid && (input.filename.find("alien://") == 0)) {
+      TGrid::Connect("alien");
+    }
     TFile *f = TFile::Open(input.filename.c_str());
     if (!f || f->IsZombie())
     {
