@@ -147,6 +147,7 @@ if(X11_FOUND)
 endif(X11_FOUND)
 
 # Optional: Doxygen for reference doc generation
+set(DOXYGEN_EXECUTABLE "")
 find_package(Doxygen)
 if(DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
   message(STATUS "Doxygen ${DOXYGEN_VERSION} and Graphviz found: ${DOXYGEN_EXECUTABLE}, ${DOXYGEN_DOT_EXECUTABLE}")
