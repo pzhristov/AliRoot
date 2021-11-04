@@ -26,7 +26,7 @@ include_directories(SYSTEM ${ROOT_INCLUDE_DIR})
 add_executable(alihadd alihadd.cxx)
 add_executable(alisync alisync.cxx)
 
-target_link_libraries(alihadd RIO Hist Core)
+target_link_libraries(alihadd RIO Hist Core Net)
 target_link_libraries(alisync RIO Hist Core Net Tree)
 
 # Installation
