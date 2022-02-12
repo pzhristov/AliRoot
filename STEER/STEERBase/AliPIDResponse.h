@@ -146,6 +146,8 @@ public:
 
   void SetCustomTPCpidResponseOADBFile(const char* tpcpid) { fCustomTPCpidResponseOADBFile = tpcpid; }
   const char* GetCustomTPCpidResponseOADBFile() const { return fCustomTPCpidResponseOADBFile.Data(); }
+  
+  void SetForceGivenOADBPath(Bool_t flag) { fForceGivenOADBPath = flag; }
 
   void SetCustomTPCetaMaps(const char* tpcEtaMaps) { fCustomTPCetaMaps = tpcEtaMaps; }
   const char* GetCustomTPCetaMaps() const { return fCustomTPCetaMaps.Data(); }
@@ -253,6 +255,7 @@ private:
 
   Bool_t fIsMC;                        //  If we run on MC data
   Bool_t fCachePID;
+  Bool_t fForceGivenOADBPath;          // If we should use the given OADB path without calling AliDataFile::GetFileNameOADB
 
   TString fOADBPath;                   // OADB path to use
   TString fCustomTPCpidResponse;       // Custom TPC Pid Response file for debugging purposes
@@ -408,7 +411,7 @@ private:
   EDetPidStatus GetPHOSPIDStatus(const AliVTrack *track) const;
   EDetPidStatus GetEMCALPIDStatus(const AliVTrack *track) const;
 
-  ClassDef(AliPIDResponse, 21);  //PID response handling
+  ClassDef(AliPIDResponse, 22);  //PID response handling
 };
 
 #endif
