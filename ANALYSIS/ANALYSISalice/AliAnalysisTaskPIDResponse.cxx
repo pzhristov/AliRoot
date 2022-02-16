@@ -38,6 +38,7 @@ AliAnalysisTaskPIDResponse::AliAnalysisTaskPIDResponse():
 AliAnalysisTaskSE(),
 fIsMC(kFALSE),
 fCachePID(kTRUE),
+fForceGivenOADBPath(kFALSE),
 fOADBPath(),
 fSpecialDetResponse(),
 fRecoPassName(),
@@ -68,6 +69,7 @@ AliAnalysisTaskPIDResponse::AliAnalysisTaskPIDResponse(const char* name):
 AliAnalysisTaskSE(name),
 fIsMC(kFALSE),
 fCachePID(kTRUE),
+fForceGivenOADBPath(kFALSE),
 fOADBPath(),
 fSpecialDetResponse(),
 fRecoPassName(),
@@ -119,6 +121,7 @@ void AliAnalysisTaskPIDResponse::UserCreateOutputObjects()
   if (!fPIDResponse) AliFatal("PIDResponse object was not created");
 
   fPIDResponse->SetOADBPath(AliAnalysisManager::GetOADBPath());
+  fPIDResponse->SetForceGivenOADBPath(fForceGivenOADBPath);
   fPIDResponse->SetCachePID(fCachePID);
   if (!fOADBPath.IsNull()) fPIDResponse->SetOADBPath(fOADBPath.Data());
 

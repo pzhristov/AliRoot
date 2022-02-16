@@ -36,6 +36,7 @@ public:
   
   virtual void UserExec(Option_t */*option*/);
 
+  void SetForceGivenOADBPath(Bool_t flag) { fForceGivenOADBPath = flag; }
   void SetOADBPath(const char* path) {fOADBPath=path;}
   const char* GetOADBPath() const { return fOADBPath.Data(); }
   void SetTuneOnData(Bool_t flag, Int_t recopass, TString recoPassName){fIsTunedOnData=flag; fRecoPassTuned=recopass; fRecoPassNameTuned=recoPassName;}
@@ -70,6 +71,7 @@ public:
 private:
   Bool_t fIsMC;                        ///< If we run on MC data
   Bool_t fCachePID;                    ///< Cache PID values in transient object
+  Bool_t fForceGivenOADBPath;          ///< If we should use the given OADB path without calling AliDataFile::GetFileNameOADB
   TString fOADBPath;                   ///< OADB path to use
   TString fSpecialDetResponse;         ///< Special detector response files for debugging
   TString fRecoPassName;               //!<! Full name of the reco pass
@@ -102,6 +104,6 @@ private:
   AliAnalysisTaskPIDResponse(const AliAnalysisTaskPIDResponse &other);
   AliAnalysisTaskPIDResponse& operator=(const AliAnalysisTaskPIDResponse &other);
   
-  ClassDef(AliAnalysisTaskPIDResponse,12)  // Task to properly set the PID response functions of all detectors
+  ClassDef(AliAnalysisTaskPIDResponse,13)  // Task to properly set the PID response functions of all detectors
 };
 #endif

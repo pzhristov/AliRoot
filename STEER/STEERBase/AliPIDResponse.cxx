@@ -73,6 +73,7 @@ fTuneMConData(kFALSE),
 fTuneMConDataMask(kDetTOF|kDetTPC),
 fIsMC(isMC),
 fCachePID(kFALSE),
+fForceGivenOADBPath(kFALSE),
 fOADBPath(),
 fCustomTPCpidResponse(),
 fCustomTPCpidResponseOADBFile(),
@@ -153,6 +154,7 @@ fTuneMConData(other.fTuneMConData),
 fTuneMConDataMask(other.fTuneMConDataMask),
 fIsMC(other.fIsMC),
 fCachePID(other.fCachePID),
+fForceGivenOADBPath(other.fForceGivenOADBPath),
 fOADBPath(other.fOADBPath),
 fCustomTPCpidResponse(other.fCustomTPCpidResponse),
 fCustomTPCpidResponseOADBFile(other.fCustomTPCpidResponseOADBFile),
@@ -226,6 +228,7 @@ AliPIDResponse& AliPIDResponse::operator=(const AliPIDResponse &other)
     fTuneMConDataMask=other.fTuneMConDataMask;
     fIsMC=other.fIsMC;
     fCachePID=other.fCachePID;
+    fForceGivenOADBPath=other.fForceGivenOADBPath;
     fBeamType="PP";
     fBeamTypeNum=kPP;
     fLHCperiod="";
@@ -1385,8 +1388,8 @@ Bool_t AliPIDResponse::InitializeTPCResponse()
 
   if (!fCustomTPCpidResponseOADBFile.IsNull()) {
     fileNamePIDresponse=fCustomTPCpidResponseOADBFile;
-
-    if (gSystem->AccessPathName(fileNamePIDresponse)) {
+    
+    if (gSystem->AccessPathName(fileNamePIDresponse) && !fForceGivenOADBPath) {
       fileNamePIDresponse = AliDataFile::GetFileNameOADB(fileNamePIDresponse.Data());
     }
   } else {
