@@ -103,30 +103,23 @@ AliFITHits::AliFITHits(Int_t shunt, Int_t track, Int_t *vol, Float_t *hits):
   fNphot(999)
 {
 //Normal T0 hit ctor
-    // printf(" @@@ AliFITHits::AliFITHits constructor \n");
-  if (sizeof(vol)/sizeof(Int_t)>=3) {
-    fVolume = vol[2];
-    fMCP = vol[1];
-    fPmt=vol[0];
-  } else {
-    AliError("Size of vol array too small");
-  }
-  if (sizeof(hits)/sizeof(Float_t)>=13) {
-    fX=hits[0];
-    fY=hits[1];
-    fZ=hits[2];
-    fEtot=Double_t (hits[3]);
-    fParticle=Int_t (hits[4]);
-    fTime=hits[5];
-    fCharge = hits[6];
-    fPx = hits[7];
-    fPy = hits[8];
-    fPz = hits[9];
-    fEloss = hits[10];
-    fTlength = hits[11];
-    fNphot = hits[12];
-  } else {
-    AliError("Size of hits array too small");
-  }
+  // printf(" @@@ AliFITHits::AliFITHits constructor \n");
+  fVolume = vol[2];
+  fMCP = vol[1];
+  fPmt=vol[0];
+
+  fX=hits[0];
+  fY=hits[1];
+  fZ=hits[2];
+  fEtot=Double_t (hits[3]);
+  fParticle=Int_t (hits[4]);
+  fTime=hits[5];
+  fCharge = hits[6];
+  fPx = hits[7];
+  fPy = hits[8];
+  fPz = hits[9];
+  fEloss = hits[10];
+  fTlength = hits[11];
+  fNphot = hits[12];
 }
 
