@@ -187,7 +187,7 @@ void AliFT0::ConstructGeometry()
     stlinC->AddNode(plateVol, itr, phPlate);
   }
   // Add C-side frame
-  std::cout<<"Contructing frame C geometry\n";
+  std::cout << "Contructing frame C geometry\n";
   stlinC->AddNode(constructFrameCGeometry(), NCellsA + NCellsC + 1);
 
   TGeoVolume *alice = gGeoManager->GetVolume("ALIC");
@@ -723,15 +723,15 @@ TGeoVolume *AliFT0::constructFrameCGeometry()
   // define the media
   TGeoMedium *Vacuum = gGeoManager->GetMedium("FIT_Vacuum$");
   TGeoMedium *Al = gGeoManager->GetMedium("FIT_Aluminium$");
-  static constexpr Double_t sFrameZC = 5.5632;
-  static constexpr Double_t frameHeightC = 2.5; // pinstart[2]  or l_s
+  const Double_t sFrameZC = 5.5632;
+  const Double_t frameHeightC = 2.5; // pinstart[2]  or l_s
 
   // quartz & PMT C-side transformations
-  static constexpr Double_t sensShift = 0.5;
-  static constexpr Double_t sQuartzRadiatorZC = 1.94360;                              // Dimension variable (l_{q}
-  static constexpr Double_t sQuartzHeightC = (-sFrameZC / 2 + sQuartzRadiatorZC / 2); // placement variable )
-  static constexpr Double_t sPmtZC = 3.600;                                           // Dimension variable (l_{p}
-  static constexpr Double_t sPmtHeightC = (sFrameZC / 2 - sPmtZC / 2);                // placement variable
+  const Double_t sensShift = 0.5;
+  const Double_t sQuartzRadiatorZC = 1.94360;                              // Dimension variable (l_{q}
+  const Double_t sQuartzHeightC = (-sFrameZC / 2 + sQuartzRadiatorZC / 2); // placement variable )
+  const Double_t sPmtZC = 3.600;                                           // Dimension variable (l_{p}
+  const Double_t sPmtHeightC = (sFrameZC / 2 - sPmtZC / 2);                // placement variable
 
   Double_t crad = 82.;
   Float_t sweep = 3.5 * 2;
@@ -971,13 +971,10 @@ TGeoVolume *AliFT0::constructFrameCGeometry()
       TGeoRotation *rotPMT = new TGeoRotation(nameRot.Data(), ac[ic], bc[ic], gc[ic]);
       rotPMT->RegisterYourself();
 
-      TGeoCombiTrans *comPMT = new TGeoCombiTrans(nameComPMT.Data(),
-                                                  xPMT[ic], yPMT[ic],
-                                                  zPMT[ic], rotPMT);
+      TGeoCombiTrans *comPMT = new TGeoCombiTrans(nameComPMT.Data(), xPMT[ic], yPMT[ic], zPMT[ic], rotPMT);
       comPMT->RegisterYourself();
 
-      TGeoRotation *rotQuartz = new TGeoRotation(nameRot.Data(),
-                                                 ac[ic], bc[ic], gc[ic]);
+      TGeoRotation *rotQuartz = new TGeoRotation(nameRot.Data(), ac[ic], bc[ic], gc[ic]);
       rotQuartz->RegisterYourself();
 
       TGeoCombiTrans *comQuartz = new TGeoCombiTrans(nameComQuartz.Data(),
@@ -986,13 +983,11 @@ TGeoVolume *AliFT0::constructFrameCGeometry()
                                                      rotQuartz);
       comQuartz->RegisterYourself();
 
-      TGeoRotation *rotPlates = new TGeoRotation(nameRot.Data(),
-                                                 ac[ic], bc[ic], gc[ic]);
+      TGeoRotation *rotPlates = new TGeoRotation(nameRot.Data(), ac[ic], bc[ic], gc[ic]);
       rotPlates->RegisterYourself();
       TGeoCombiTrans *comPlates = new TGeoCombiTrans(nameComPlates.Data(),
                                                      xQrad[ic], yQrad[ic],
-                                                     zQrad[ic],
-                                                     rotPlates);
+                                                     zQrad[ic], rotPlates);
       comPlates->RegisterYourself();
 
       // Subtract the PMTs from the frame
@@ -1009,7 +1004,6 @@ TGeoVolume *AliFT0::constructFrameCGeometry()
       quartzCombiString += nameComQuartz.Data();
       shellString += quartzCombiString;
     }
-
   }
 
   // Construct composite shape from boolean

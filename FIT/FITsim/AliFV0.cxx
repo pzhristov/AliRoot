@@ -36,7 +36,7 @@ AliFV0::AliFV0(EGeoType initType) : mGeometryType(initType)
   initializeReadoutCenters();
 }
 
-AliFV0::AliFV0(const AliFV0& geometry) : mGeometryType(geometry.mGeometryType), mLeftTransformation(nullptr), mRightTransformation(nullptr)
+AliFV0::AliFV0(const AliFV0 &geometry) : mGeometryType(geometry.mGeometryType), mLeftTransformation(nullptr), mRightTransformation(nullptr)
 {
   this->mEnabledComponents = geometry.mEnabledComponents;
 }
@@ -45,7 +45,7 @@ AliFV0::~AliFV0()
 {
 }
 
-int AliFV0::getCurrentCellId(const TVirtualMC* fMC) const
+int AliFV0::getCurrentCellId(const TVirtualMC *fMC) const
 {
   int detectorHalfID = -1;
   int sectorID = -1;
@@ -58,12 +58,12 @@ int AliFV0::getCurrentCellId(const TVirtualMC* fMC) const
   sectorID += detectorHalfID * sNumberOfCellSectors;
 
   AliDebug(1, Form("FV0 AliFV0::getCurrentCellId(): \n Half id:     %d\n Half name:   %s\n  Sector id:   %d\n  Sector name: %s\n  Ring id:     %d\n  Ring name:   %s\n   Cell id :    %d\n",
-                  detectorHalfID, fMC->CurrentVolOffName(2), sectorID, fMC->CurrentVolOffName(1), ringID, fMC->CurrentVolOffName(0), sectorID + 8 * ringID));
+                   detectorHalfID, fMC->CurrentVolOffName(2), sectorID, fMC->CurrentVolOffName(1), ringID, fMC->CurrentVolOffName(0), sectorID + 8 * ringID));
 
   return sectorID + 8 * ringID;
 }
 
-int AliFV0::getCurrentRingId(const TVirtualMC* fMC) const
+int AliFV0::getCurrentRingId(const TVirtualMC *fMC) const
 {
   int ringID = -1;
   fMC->CurrentVolOffID(0, ringID);
@@ -71,10 +71,10 @@ int AliFV0::getCurrentRingId(const TVirtualMC* fMC) const
   return ringID + 1;
 }
 
-
 bool AliFV0::enableComponent(const EGeoComponent component, const bool enable)
 {
-  if (mEnabledComponents.find(component) == mEnabledComponents.end()) {
+  if (mEnabledComponents.find(component) == mEnabledComponents.end())
+  {
     AliDebug(2, "FV0 AliFV0::enableComponent(): Component not initialized and cannot be enabled/disabled!");
     return false;
   }
@@ -84,21 +84,23 @@ bool AliFV0::enableComponent(const EGeoComponent component, const bool enable)
 
 void AliFV0::ConstructGeometry()
 {
-  if (mGeometryType != eUninitialized) {
+  if (mGeometryType != eUninitialized)
+  {
     initializeGeometry();
   }
 
-  TGeoVolume* vALIC = gGeoManager->GetVolume("ALIC");
-  if (!vALIC) {
+  TGeoVolume *vALIC = gGeoManager->GetVolume("ALIC");
+  if (!vALIC)
+  {
     AliFatal("FV0: Could not find the top volume");
   }
 
   // Top volume of FV0 detector
-  TGeoVolumeAssembly* vFV0 = new TGeoVolumeAssembly(sDetectorName.c_str());
+  TGeoVolumeAssembly *vFV0 = new TGeoVolumeAssembly(sDetectorName.c_str());
   AliInfo(Form("FV0: Building geometry. FV0 volume name is '%s'", vFV0->GetName()));
 
-  TGeoVolumeAssembly* vFV0Right = new TGeoVolumeAssembly((sDetectorName + "RIGHT").c_str());
-  TGeoVolumeAssembly* vFV0Left = new TGeoVolumeAssembly((sDetectorName + "LEFT").c_str());
+  TGeoVolumeAssembly *vFV0Right = new TGeoVolumeAssembly((sDetectorName + "RIGHT").c_str());
+  TGeoVolumeAssembly *vFV0Left = new TGeoVolumeAssembly((sDetectorName + "LEFT").c_str());
 
   vFV0->AddNode(vFV0Right, 0, mRightTransformation);
   vFV0->AddNode(vFV0Left, 1, mLeftTransformation);
@@ -109,19 +111,19 @@ void AliFV0::ConstructGeometry()
   vALIC->AddNode(vFV0, 1, new TGeoTranslation(sXGlobal, sYGlobal, sZGlobal));
 }
 
-void AliFV0::getGlobalPosition(float& x, float& y, float& z)
+void AliFV0::getGlobalPosition(float &x, float &y, float &z)
 {
   x = sXGlobal;
   y = sYGlobal;
   z = sZGlobal;
 }
 
-TVector3& AliFV0::getCellCenter(UInt_t cellId)
+TVector3 &AliFV0::getCellCenter(UInt_t cellId)
 {
   return mCellCenter.at(cellId);
 }
 
-TVector3& AliFV0::getReadoutCenter(UInt_t cellId)
+TVector3 &AliFV0::getReadoutCenter(UInt_t cellId)
 {
   return mReadoutCenter.at(cellId);
 }
@@ -172,7 +174,8 @@ void AliFV0::initializeCellRingRadii()
   mRAvgRing.assign(sCellRingRadii, sCellRingRadii + sNumberOfCellRings + 1);
 
   // Set real scintillator radii (reduced by paint thickness and separation gap)
-  for (int i = 0; i < mRAvgRing.size() - 1; ++i) {
+  for (int i = 0; i < mRAvgRing.size() - 1; ++i)
+  {
     mRMinScintillator.push_back(mRAvgRing[i] + sDrSeparationScint);
     mRMaxScintillator.push_back(mRAvgRing[i + 1] - sDrSeparationScint);
   }
@@ -181,13 +184,15 @@ void AliFV0::initializeCellRingRadii()
 
 void AliFV0::initializeSectorTransformations()
 {
-  for (int iSector = 0; iSector < sNumberOfCellSectors; ++iSector) {
+  for (int iSector = 0; iSector < sNumberOfCellSectors; ++iSector)
+  {
     // iSector = 0 corresponds to the first sector clockwise from the y-axis
     // iSector = 1 corresponds to the next sector in clockwise direction and so on
 
-    TGeoRotation* trans = createAndRegisterRot(sDetectorName + sSectorName + std::to_string(iSector) + "TRANS");
+    TGeoRotation *trans = createAndRegisterRot(sDetectorName + sSectorName + std::to_string(iSector) + "TRANS");
 
-    if (iSector == 2 || iSector == 3) {
+    if (iSector == 2 || iSector == 3)
+    {
       // "a" and "b" mirrors.
       // The reference to "a" and "b" can be understood with the CAD drawings of the detector.
       trans->ReflectY(true);
@@ -199,7 +204,8 @@ void AliFV0::initializeSectorTransformations()
 
 void AliFV0::initializeFiberVolumeRadii()
 {
-  for (int i = 0; i < sNumberOfCellRings; i++) {
+  for (int i = 0; i < sNumberOfCellRings; i++)
+  {
     mRMinFiber.push_back(sCellRingRadii[i] + sEpsilon / 2);
     mRMaxFiber.push_back(sCellRingRadii[i + 1] - sEpsilon / 2);
   }
@@ -207,24 +213,28 @@ void AliFV0::initializeFiberVolumeRadii()
 
 void AliFV0::initializeFiberMedium()
 {
-  TGeoMedium* medium;
+  TGeoMedium *medium;
   TString mediumName;
 
   // one fiber volume per ring
-  for (int i = 0; i < mRMinFiber.size(); i++) {
+  for (int i = 0; i < mRMinFiber.size(); i++)
+  {
     mediumName = Form("FIT_FiberRing%i$", i + 1);
     medium = gGeoManager->GetMedium(mediumName);
-    if (!medium) {
+    if (!medium)
+    {
       AliWarning(Form("FV0 geometry: Fiber medium for ring no. %i (%s) not found!", i + 1, mediumName.Data()));
     }
     mMediumFiberRings.push_back(medium);
   }
 
   // five fiber volumes in front of the PMTs, one from each scintillator cell (two volumes from cell 5 but they are identical)
-  for (int i = 0; i < sNumberOfPMTFiberVolumes; i++) {
+  for (int i = 0; i < sNumberOfPMTFiberVolumes; i++)
+  {
     mediumName = Form("FIT_FiberPMT%i$", i + 1);
     medium = gGeoManager->GetMedium(mediumName);
-    if (!medium) {
+    if (!medium)
+    {
       AliWarning(Form("FV0 geometry: PMT fiber medium from cell no. %i (%s) not found!", i + 1, mediumName.Data()));
     }
     mMediumFiberPMTs.push_back(medium);
@@ -244,8 +254,9 @@ void AliFV0::initializeScrewAndRodRadii()
 void AliFV0::initializeScrewTypeMedium()
 {
   // There are no further checks if the medium is actually found
-  TGeoMedium* medium = gGeoManager->GetMedium("FIT_Titanium$");
-  for (int i = 0; i < sNumberOfScrewTypes; ++i) {
+  TGeoMedium *medium = gGeoManager->GetMedium("FIT_Titanium$");
+  for (int i = 0; i < sNumberOfScrewTypes; ++i)
+  {
     mMediumScrewTypes.push_back(medium);
   }
 }
@@ -253,8 +264,9 @@ void AliFV0::initializeScrewTypeMedium()
 void AliFV0::initializeRodTypeMedium()
 {
   // There are no further checks if the medium is actually found
-  TGeoMedium* medium = gGeoManager->GetMedium("FIT_Aluminium$");
-  for (int i = 0; i < sNumberOfRodTypes; ++i) {
+  TGeoMedium *medium = gGeoManager->GetMedium("FIT_Aluminium$");
+  for (int i = 0; i < sNumberOfRodTypes; ++i)
+  {
     mMediumRodTypes.push_back(medium);
   }
 }
@@ -299,46 +311,54 @@ void AliFV0::addRodProperties(const int rodTypeID, const int iRing)
 
 void AliFV0::initializeScrewAndRodPositionsAndDimensions()
 {
-  for (int iRing = 0; iRing < mRScrewAndRod.size(); ++iRing) {
-    switch (iRing) {
-      case 0:
-        addRodProperties(0, iRing);
-        for (float phi = 45; phi >= -45; phi -= 45) {
-          addScrewProperties(0, iRing, phi);
-        }
-        break;
-      case 1:
-        addRodProperties(0, iRing);
-        for (float phi = 45; phi >= -45; phi -= 45) {
-          addScrewProperties(1, iRing, phi);
-        }
-        break;
-      case 2:
-        addRodProperties(1, iRing);
-        for (float phi = 67.5; phi >= -67.5; phi -= 22.5) {
-          addScrewProperties(2, iRing, phi);
-        }
-        break;
-      case 3:
-        addRodProperties(2, iRing);
-        for (float phi = 67.5; phi >= -67.5; phi -= 22.5) {
-          addScrewProperties(3, iRing, phi);
-        }
-        break;
-      case 4:
-        addRodProperties(3, iRing);
-        for (float phi = 45; phi >= -45; phi -= 45) {
-          addScrewProperties(4, iRing, phi);
-        }
-        break;
-      case 5:
-        addRodProperties(3, iRing);
-        for (float phi = 67.5; phi >= -67.5; phi -= 22.5) {
-          addScrewProperties(5, iRing, phi);
-        }
-        break;
-      default:
-        break;
+  for (int iRing = 0; iRing < mRScrewAndRod.size(); ++iRing)
+  {
+    switch (iRing)
+    {
+    case 0:
+      addRodProperties(0, iRing);
+      for (float phi = 45; phi >= -45; phi -= 45)
+      {
+        addScrewProperties(0, iRing, phi);
+      }
+      break;
+    case 1:
+      addRodProperties(0, iRing);
+      for (float phi = 45; phi >= -45; phi -= 45)
+      {
+        addScrewProperties(1, iRing, phi);
+      }
+      break;
+    case 2:
+      addRodProperties(1, iRing);
+      for (float phi = 67.5; phi >= -67.5; phi -= 22.5)
+      {
+        addScrewProperties(2, iRing, phi);
+      }
+      break;
+    case 3:
+      addRodProperties(2, iRing);
+      for (float phi = 67.5; phi >= -67.5; phi -= 22.5)
+      {
+        addScrewProperties(3, iRing, phi);
+      }
+      break;
+    case 4:
+      addRodProperties(3, iRing);
+      for (float phi = 45; phi >= -45; phi -= 45)
+      {
+        addScrewProperties(4, iRing, phi);
+      }
+      break;
+    case 5:
+      addRodProperties(3, iRing);
+      for (float phi = 67.5; phi >= -67.5; phi -= 22.5)
+      {
+        addScrewProperties(5, iRing, phi);
+      }
+      break;
+    default:
+      break;
     }
   }
 }
@@ -375,7 +395,8 @@ void AliFV0::initializeScrewHoles()
 {
   std::string boolFormula = "";
 
-  for (int i = 0; i < mScrewPos.size(); ++i) {
+  for (int i = 0; i < mScrewPos.size(); ++i)
+  {
     std::string holeShapeName = sDetectorName + sScrewName + "HOLE" + std::to_string(i);
     std::string holeTransName = sDetectorName + sScrewName + "HOLETRANS" + std::to_string(i);
 
@@ -392,7 +413,8 @@ void AliFV0::initializeRodHoles()
 {
   std::string boolFormula = "";
 
-  for (int i = 0; i < mRodPos.size(); ++i) {
+  for (int i = 0; i < mRodPos.size(); ++i)
+  {
     std::string holeShapeName = sDetectorName + sRodName + "HOLE" + std::to_string(i);
     std::string holeTransName = sDetectorName + sRodName + "HOLETRANS" + std::to_string(i);
 
@@ -405,8 +427,8 @@ void AliFV0::initializeRodHoles()
   new TGeoCompositeShape(sRodHolesCSName.c_str(), boolFormula.c_str());
 }
 
-void AliFV0::initializeCells(const std::string& cellType, const float zThickness, const TGeoMedium* medium,
-                               const bool isSensitive)
+void AliFV0::initializeCells(const std::string &cellType, const float zThickness, const TGeoMedium *medium,
+                             const bool isSensitive)
 {
   // Creating the two types of cells, "a" and "b", for each ring.
   // All sectors can be assembled with these cells.
@@ -438,7 +460,8 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
   new TGeoBBox(holeSmallCutName.c_str(), dxHoleCut, sDrHoleSmallScintillator, zThickness / 2);
   new TGeoBBox(holeLargeCutName.c_str(), dxHoleCut, sDrHoleLargeScintillator, zThickness / 2);
 
-  for (int ir = 0; ir < sNumberOfCellRings; ++ir) {
+  for (int ir = 0; ir < sNumberOfCellRings; ++ir)
+  {
     // Radii without separation
     const float rMin = mRAvgRing[ir];
     const float rMax = mRAvgRing[ir + 1];
@@ -473,7 +496,8 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
     const std::string aCellShapeName = aCellName + "Shape";
 
     // The cells in the innermost ring have a slightly shifted inner radius origin.
-    if (ir == 0) {
+    if (ir == 0)
+    {
       // The innermost "a"-type cell
       const std::string a1CellShapeFullName = aCellShapeName + "Full";
       const std::string a1CellShapeHoleCutName = aCellShapeName + "HoleCut";
@@ -486,7 +510,9 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
 
       const std::string a1BoolFormula = a1CellShapeFullName + "-" + a1CellShapeHoleCutName + ":" + a1CellShapeHoleCutTransName;
       new TGeoCompositeShape(aCellShapeName.c_str(), a1BoolFormula.c_str());
-    } else {
+    }
+    else
+    {
       // The rest of the "a"-type cells
       new TGeoTubeSeg(aCellShapeName.c_str(), mRMinScintillator[ir], mRMaxScintillator[ir], zThickness / 2, 45, 90);
     }
@@ -541,7 +567,8 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
     aBoolFormula += "-" + ((ir < 2) ? holeSmallName : holeLargeName) + ":" + aHole3TransName;
 
     // inner holes
-    if (ir > 0) {
+    if (ir > 0)
+    {
       const std::string screwHoleName = (ir < 3) ? holeSmallName : holeLargeName;
       const std::string screwHoleCutName = (ir < 3) ? holeSmallCutName : holeLargeCutName;
 
@@ -551,27 +578,30 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
     }
 
     // outer middle hole
-    if (ir > 1) {
+    if (ir > 1)
+    {
       aBoolFormula += "-" + holeLargeName + ":" + aHole5TransName;
     }
 
     // inner middle hole
-    if (ir > 2) {
+    if (ir > 2)
+    {
       aBoolFormula += "-" + holeLargeName + ":" + aHole6TransName;
     }
 
     // half-length holes
-    if (ir == 4) {
+    if (ir == 4)
+    {
       aBoolFormula += "-" + holeLargeName + ":" + aHole7TransName;
       aBoolFormula += "-" + holeLargeCutName + ":" + aHole7CutTransName;
       aBoolFormula += "-" + holeLargeName + ":" + aHole8TransName;
     }
 
     const std::string aCellCSName = aCellName + "CS";
-    const TGeoCompositeShape* aCellCs = new TGeoCompositeShape(aCellCSName.c_str(), aBoolFormula.c_str());
+    const TGeoCompositeShape *aCellCs = new TGeoCompositeShape(aCellCSName.c_str(), aBoolFormula.c_str());
 
     // Cell volume
-    const TGeoVolume* aCell = new TGeoVolume(aCellName.c_str(), aCellCs, medium);
+    const TGeoVolume *aCell = new TGeoVolume(aCellName.c_str(), aCellCs, medium);
 
     // "b"-type cell
     //
@@ -601,7 +631,8 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
     const std::string bCellShapeName = bCellName + "Shape";
 
     // The cells in the innermost ring are slightly different than the rest
-    if (ir == 0) {
+    if (ir == 0)
+    {
       // The innermost "b"-type cell
       const std::string b1CellShapeFullName = bCellShapeName + "Full";
       const std::string b1CellShapeHoleCutName = bCellShapeName + "Cut";
@@ -614,7 +645,9 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
 
       const std::string b1BoolFormula = b1CellShapeFullName + "-" + b1CellShapeHoleCutName + ":" + b1CellShapeHoleCutTransName;
       new TGeoCompositeShape(bCellShapeName.c_str(), b1BoolFormula.c_str());
-    } else {
+    }
+    else
+    {
       // The rest of the "b"-type cells
       new TGeoTubeSeg(bCellShapeName.c_str(), mRMinScintillator[ir], mRMaxScintillator[ir], zThickness / 2, 0, 45);
     }
@@ -660,7 +693,8 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
     bBoolFormula += "-" + ((ir < 2) ? holeSmallName : holeLargeName) + ":" + bHole3TransName;
 
     // inner holes
-    if (ir > 0) {
+    if (ir > 0)
+    {
       const std::string holeName = (ir < 3) ? holeSmallName : holeLargeName;
 
       bBoolFormula += "-" + holeName + ":" + bHole2TransName;
@@ -668,28 +702,32 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
     }
 
     // outer middle hole
-    if (ir > 1) {
+    if (ir > 1)
+    {
       bBoolFormula += "-" + holeLargeName + ":" + bHole5TransName;
     }
 
     // inner middle hole
-    if (ir > 2) {
+    if (ir > 2)
+    {
       bBoolFormula += "-" + holeLargeName + ":" + bHole6TransName;
     }
 
     // half-lenght holes
-    if (ir == 4) {
+    if (ir == 4)
+    {
       bBoolFormula += "-" + holeLargeName + ":" + bHole7TransName;
       bBoolFormula += "-" + holeLargeName + ":" + bHole8TransName;
     }
 
     const std::string bCellCSName = bCellName + "CS";
-    const TGeoCompositeShape* bCellCs = new TGeoCompositeShape(bCellCSName.c_str(), bBoolFormula.c_str());
+    const TGeoCompositeShape *bCellCs = new TGeoCompositeShape(bCellCSName.c_str(), bBoolFormula.c_str());
 
     // Cell volume
-    const TGeoVolume* bCell = new TGeoVolume(bCellName.c_str(), bCellCs, medium);
+    const TGeoVolume *bCell = new TGeoVolume(bCellName.c_str(), bCellCs, medium);
 
-    if (isSensitive) {
+    if (isSensitive)
+    {
       mSensitiveVolumeNames.push_back(aCell->GetName());
       mSensitiveVolumeNames.push_back(bCell->GetName());
     }
@@ -698,19 +736,19 @@ void AliFV0::initializeCells(const std::string& cellType, const float zThickness
 
 void AliFV0::initializeScintCells()
 {
-  const TGeoMedium* medium = gGeoManager->GetMedium("FIT_Scintillator$");
+  const TGeoMedium *medium = gGeoManager->GetMedium("FIT_Scintillator$");
   initializeCells(sScintillatorName, sDzScintillator, medium, true);
 }
 
 void AliFV0::initializePlasticCells()
 {
-  const TGeoMedium* medium = gGeoManager->GetMedium("FIT_Plastic$");
+  const TGeoMedium *medium = gGeoManager->GetMedium("FIT_Plastic$");
   initializeCells(sPlasticName, sDzPlastic, medium, false);
 }
 
 void AliFV0::initializePmts()
 {
-  const TGeoMedium* medium = gGeoManager->GetMedium("FIT_PMT$");
+  const TGeoMedium *medium = gGeoManager->GetMedium("FIT_PMT$");
   new TGeoVolume(createVolumeName(sPmtName).c_str(), new TGeoTube(createVolumeName(sPmtName + "Shape").c_str(), 0, sDrPmt, sDzPmt / 2), medium);
 }
 
@@ -738,7 +776,8 @@ void AliFV0::initializeFibers()
   createAndRegisterTrans(fiberConeCutTransName, sXScintillator, 0, sZCone);
   createAndRegisterTrans(fiberHoleCutTransName, sXScintillator + sXShiftInnerRadiusScintillator, 0, sZFiber);
 
-  for (int i = 0; i < mRMinFiber.size(); ++i) {
+  for (int i = 0; i < mRMinFiber.size(); ++i)
+  {
     const std::string fiberShapeName = fiberName + std::to_string(i + 1);
     new TGeoTubeSeg(fiberShapeName.c_str(), mRMinFiber[i], mRMaxFiber[i] - sEpsilon, dzFibers / 2, -90, 90);
 
@@ -748,7 +787,8 @@ void AliFV0::initializeFibers()
     boolFormula += "-" + fiberSepCutName + ":" + fiberTransName;
     boolFormula += "-" + fiberConeCutName + ":" + fiberConeCutTransName;
 
-    if (i == 0) {
+    if (i == 0)
+    {
       // Cut out the hole in the innermost fiber volume
       boolFormula += "-" + fiberHoleCutName + ":" + fiberHoleCutTransName;
     }
@@ -757,13 +797,14 @@ void AliFV0::initializeFibers()
     boolFormula += "-" + sScrewHolesCSName;
     boolFormula += "-" + sRodHolesCSName;
 
-    const TGeoCompositeShape* fiberCS = new TGeoCompositeShape((fiberShapeName + "CS").c_str(), boolFormula.c_str());
+    const TGeoCompositeShape *fiberCS = new TGeoCompositeShape((fiberShapeName + "CS").c_str(), boolFormula.c_str());
 
     new TGeoVolume(createVolumeName(sFiberName, i + 1).c_str(), fiberCS, mMediumFiberRings[i]);
   }
 
   // Volume for fibers in front of PMTs
-  for (int i = 0; i < sNumberOfPMTFiberVolumes; i++) {
+  for (int i = 0; i < sNumberOfPMTFiberVolumes; i++)
+  {
     new TGeoVolume(createVolumeName(sFiberName + sPmtName, i + 1).c_str(),
                    new TGeoTube(createVolumeName(sFiberName + sPmtName + "Shape", i + 1).c_str(), 0, sDrPmt / 2, sDzPmt / 2),
                    mMediumFiberPMTs[i]);
@@ -772,9 +813,10 @@ void AliFV0::initializeFibers()
 
 void AliFV0::initializeScrews()
 {
-  for (int i = 0; i < sNumberOfScrewTypes; ++i) {
+  for (int i = 0; i < sNumberOfScrewTypes; ++i)
+  {
     const std::string screwName = createVolumeName(sScrewName, i);
-    const TGeoShape* screwShape = createScrewShape(screwName + "Shape", i, 0, 0, 0);
+    const TGeoShape *screwShape = createScrewShape(screwName + "Shape", i, 0, 0, 0);
 
     // If modifying materials, make sure the appropriate initialization is done in initializeXxxMedium() methods
     new TGeoVolume(screwName.c_str(), screwShape, mMediumScrewTypes[i]);
@@ -783,9 +825,10 @@ void AliFV0::initializeScrews()
 
 void AliFV0::initializeRods()
 {
-  for (int i = 0; i < sNumberOfRodTypes; ++i) {
+  for (int i = 0; i < sNumberOfRodTypes; ++i)
+  {
     const std::string rodName = createVolumeName(sRodName, i);
-    const TGeoShape* rodShape = createRodShape(rodName + "Shape", i, -sEpsilon, -sEpsilon);
+    const TGeoShape *rodShape = createRodShape(rodName + "Shape", i, -sEpsilon, -sEpsilon);
 
     // If modifying materials, make sure the appropriate initialization is done in initializeXxxMedium() methods
     new TGeoVolume(rodName.c_str(), rodShape, mMediumRodTypes[i]);
@@ -809,13 +852,11 @@ void AliFV0::initializeMetalContainer()
   const std::string backPlateHoleTransName = backPlateHoleName + "Trans";   // shift of the backplate inner radius
 
   new TGeoTubeSeg(backPlateName.c_str(), 0, sDrMaxContainerBack, sDzContainerBack / 2, -90, 90);
-  new TGeoBBox(backPlateStandName.c_str(), sDxContainerStand / 2, (sDrMaxContainerBack + sDyContainerStand) / 2,
-               sDzContainerBack / 2);
+  new TGeoBBox(backPlateStandName.c_str(), sDxContainerStand / 2, (sDrMaxContainerBack + sDyContainerStand) / 2, sDzContainerBack / 2);
   new TGeoTubeSeg(backPlateHoleName.c_str(), 0, sDrContainerHole, sDzContainerBack / 2, -90, 90);
   new TGeoBBox(backPlateHoleCutName.c_str(), -sXShiftContainerHole, sDrContainerHole, sDzContainerBack);
 
-  createAndRegisterTrans(backPlateStandTransName, sDxContainerStand / 2,
-                         -(sDrMaxContainerBack + sDyContainerStand) / 2, 0);
+  createAndRegisterTrans(backPlateStandTransName, sDxContainerStand / 2, -(sDrMaxContainerBack + sDyContainerStand) / 2, 0);
   createAndRegisterTrans(backPlateHoleTransName, sXShiftContainerHole, 0, 0);
 
   // Backplate composite shape
@@ -915,8 +956,7 @@ void AliFV0::initializeMetalContainer()
   const std::string outerShieldName = "FV0_OuterShield";
   const std::string outerShieldTransName = outerShieldName + "Trans";
 
-  new TGeoTubeSeg(outerShieldName.c_str(), sDrMinContainerOuterShield, sDrMaxContainerOuterShield, dzShield / 2, -90,
-                  90);
+  new TGeoTubeSeg(outerShieldName.c_str(), sDrMinContainerOuterShield, sDrMaxContainerOuterShield, dzShield / 2, -90, 90);
   createAndRegisterTrans(outerShieldTransName, 0, 0, zPosOuterShield);
 
   // Inner shield
@@ -980,8 +1020,7 @@ void AliFV0::initializeMetalContainer()
   const std::string standHoleName = standName + "Hole";
 
   new TGeoBBox(standName.c_str(), sDxContainerStandBottom / 2, sDyContainerStandBottom / 2, dzStandBottom / 2);
-  new TGeoBBox(standHoleName.c_str(), dxStandBottomHole / 2, sDyContainerStandBottom / 2 + sEpsilon,
-               dzStandBottomHole / 2);
+  new TGeoBBox(standHoleName.c_str(), dxStandBottomHole / 2, sDyContainerStandBottom / 2 + sEpsilon, dzStandBottomHole / 2);
 
   const std::string standHoleTrans1Name = standHoleName + "Trans1";
   const std::string standHoleTrans2Name = standHoleName + "Trans2";
@@ -1022,71 +1061,82 @@ void AliFV0::initializeMetalContainer()
   boolFormula += "-" + sRodHolesCSName;   // Remove holes for rods
 
   const std::string aluContCSName = "FV0_AluContCS";
-  const TGeoCompositeShape* aluContCS = new TGeoCompositeShape(aluContCSName.c_str(), boolFormula.c_str());
+  const TGeoCompositeShape *aluContCS = new TGeoCompositeShape(aluContCSName.c_str(), boolFormula.c_str());
 
   // Volume
   const std::string aluContName = createVolumeName(sContainerName);
-  const TGeoMedium* medium = gGeoManager->GetMedium("FIT_Aluminium$");
+  const TGeoMedium *medium = gGeoManager->GetMedium("FIT_Aluminium$");
   new TGeoVolume(aluContName.c_str(), aluContCS, medium);
 }
 
-void AliFV0::assembleSensVols(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assembleSensVols(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  if (mEnabledComponents.at(eScintillator)) {
+  if (mEnabledComponents.at(eScintillator))
+  {
     assembleScintSectors(vFV0Right, vFV0Left);
   }
 }
 
-void AliFV0::assembleNonSensVols(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assembleNonSensVols(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  if (mEnabledComponents.at(ePlastics)) {
+  if (mEnabledComponents.at(ePlastics))
+  {
     assemblePlasticSectors(vFV0Right, vFV0Left);
   }
-  if (mEnabledComponents.at(ePmts)) {
+  if (mEnabledComponents.at(ePmts))
+  {
     assemblePmts(vFV0Right, vFV0Left);
   }
-  if (mEnabledComponents.at(eFibers)) {
+  if (mEnabledComponents.at(eFibers))
+  {
     assembleFibers(vFV0Right, vFV0Left);
   }
-  if (mEnabledComponents.at(eScrews)) {
+  if (mEnabledComponents.at(eScrews))
+  {
     assembleScrews(vFV0Right, vFV0Left);
   }
-  if (mEnabledComponents.at(eRods)) {
+  if (mEnabledComponents.at(eRods))
+  {
     assembleRods(vFV0Right, vFV0Left);
   }
-  if (mEnabledComponents.at(eContainer)) {
+  if (mEnabledComponents.at(eContainer))
+  {
     assembleMetalContainer(vFV0Right, vFV0Left);
   }
 }
 
-void AliFV0::assembleScintSectors(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assembleScintSectors(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  TGeoVolumeAssembly* sectors = buildSectorAssembly(sScintillatorName);
+  TGeoVolumeAssembly *sectors = buildSectorAssembly(sScintillatorName);
 
   // Copy numbers used for cell identification in AliFV0::getCurrentCellId()
   vFV0Right->AddNode(sectors, 0);
   vFV0Left->AddNode(sectors, 1);
 }
 
-void AliFV0::assemblePlasticSectors(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assemblePlasticSectors(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  TGeoVolumeAssembly* sectors = buildSectorAssembly(sPlasticName);
+  TGeoVolumeAssembly *sectors = buildSectorAssembly(sPlasticName);
 
   // Move the plastic cells next to the scintillator cells
-  TGeoTranslation* trans = new TGeoTranslation(0, 0, sZPlastic);
+  TGeoTranslation *trans = new TGeoTranslation(0, 0, sZPlastic);
 
   vFV0Right->AddNode(sectors, 0, trans);
   vFV0Left->AddNode(sectors, 1, trans);
 }
 
-void AliFV0::assemblePmts(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assemblePmts(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  TGeoVolumeAssembly* pmts = new TGeoVolumeAssembly(createVolumeName("PMTS").c_str());
-  TGeoVolume* pmt = gGeoManager->GetVolume(createVolumeName(sPmtName).c_str());
-  if (!pmt) {
+  TGeoVolumeAssembly *pmts = new TGeoVolumeAssembly(createVolumeName("PMTS").c_str());
+  TGeoVolume *pmt = gGeoManager->GetVolume(createVolumeName(sPmtName).c_str());
+  if (!pmt)
+  {
     AliWarning("FV0 AliFV0::assemblePmts(): PMT volume not found.");
-  } else {
-    for (int i = 0; i < sNumberOfPMTs; i++) {
+  }
+  else
+  {
+    for (int i = 0; i < sNumberOfPMTs; i++)
+    {
       pmts->AddNode(pmt, i, new TGeoTranslation(sXPmt[i], sYPmt[i], sZPmt));
     }
   }
@@ -1095,36 +1145,45 @@ void AliFV0::assemblePmts(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
   vFV0Left->AddNode(pmts, 1);
 }
 
-void AliFV0::assembleFibers(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assembleFibers(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  TGeoVolumeAssembly* fibersRight = new TGeoVolumeAssembly(createVolumeName("FIBERSRIGHT").c_str());
-  TGeoVolumeAssembly* fibersLeft = new TGeoVolumeAssembly(createVolumeName("FIBERSLEFT").c_str());
-  TGeoVolume* fiber;
+  TGeoVolumeAssembly *fibersRight = new TGeoVolumeAssembly(createVolumeName("FIBERSRIGHT").c_str());
+  TGeoVolumeAssembly *fibersLeft = new TGeoVolumeAssembly(createVolumeName("FIBERSLEFT").c_str());
+  TGeoVolume *fiber;
   TString volumeName;
 
-  for (int i = 0; i < mRMinFiber.size(); ++i) {
+  for (int i = 0; i < mRMinFiber.size(); ++i)
+  {
     volumeName = createVolumeName(sFiberName, i + 1);
     fiber = gGeoManager->GetVolume(volumeName);
-    if (!fiber) {
+    if (!fiber)
+    {
       AliWarning(Form("FV0 geometry: Fiber volume no. %i (%s) not found!", i + 1, volumeName.Data()));
-    } else {
+    }
+    else
+    {
       fibersRight->AddNode(fiber, i);
       fibersLeft->AddNode(fiber, i);
     }
   }
 
   int iPMTFiberCell = 0;
-  for (int i = 0; i < sNumberOfPMTs; i++) {
-    if (iPMTFiberCell == sNumberOfPMTsPerSector) {
+  for (int i = 0; i < sNumberOfPMTs; i++)
+  {
+    if (iPMTFiberCell == sNumberOfPMTsPerSector)
+    {
       iPMTFiberCell = 0;
     }
 
     volumeName = createVolumeName(sFiberName + sPmtName, sPMTFiberCellOrder[iPMTFiberCell]);
     fiber = gGeoManager->GetVolume(volumeName);
 
-    if (!fiber) {
+    if (!fiber)
+    {
       AliWarning(Form("FV0 geometry: Volume of fibers from cell %i (%s) not found!", iPMTFiberCell, volumeName.Data()));
-    } else {
+    }
+    else
+    {
       fibersRight->AddNode(fiber, i, new TGeoTranslation(sXPmt[i], sYPmt[i], sZPmt + sDzPmt));
     }
 
@@ -1132,31 +1191,38 @@ void AliFV0::assembleFibers(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
     volumeName = createVolumeName(sFiberName + sPmtName, sPMTFiberCellOrder[abs(iPMTFiberCell - sNumberOfPMTsPerSector) - 1]);
     fiber = gGeoManager->GetVolume(volumeName);
 
-    if (!fiber) {
+    if (!fiber)
+    {
       AliWarning(Form("FV0 geometry: Volume of fibers from cell %i (%s) not found!", iPMTFiberCell, volumeName.Data()));
-    } else {
+    }
+    else
+    {
       fibersLeft->AddNode(fiber, i, new TGeoTranslation(sXPmt[i], sYPmt[i], sZPmt + sDzPmt));
     }
 
     iPMTFiberCell++;
   }
 
-  AliDebug(2,Form("FV0 geometry: total weight of fibers = %.4f kg", fibersRight->Weight(1e-5) + fibersLeft->Weight(1e-5)));
+  AliDebug(2, Form("FV0 geometry: total weight of fibers = %.4f kg", fibersRight->Weight(1e-5) + fibersLeft->Weight(1e-5)));
 
   vFV0Right->AddNode(fibersRight, 0);
   vFV0Left->AddNode(fibersLeft, 1);
 }
 
-void AliFV0::assembleScrews(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assembleScrews(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  TGeoVolumeAssembly* screws = new TGeoVolumeAssembly(createVolumeName("SCREWS").c_str());
+  TGeoVolumeAssembly *screws = new TGeoVolumeAssembly(createVolumeName("SCREWS").c_str());
 
   // If modifying something here, make sure screw initialization is OK
-  for (int i = 0; i < mScrewPos.size(); ++i) {
-    TGeoVolume* screw = gGeoManager->GetVolume(createVolumeName(sScrewName, mScrewTypeIDs[i]).c_str());
-    if (!screw) {
+  for (int i = 0; i < mScrewPos.size(); ++i)
+  {
+    TGeoVolume *screw = gGeoManager->GetVolume(createVolumeName(sScrewName, mScrewTypeIDs[i]).c_str());
+    if (!screw)
+    {
       AliWarning(Form("FV0 AliFV0::assembleScrews(): Screw no. %d not found", i));
-    } else {
+    }
+    else
+    {
       screws->AddNode(screw, i, new TGeoTranslation(mScrewPos[i][0] + sXShiftScrews, mScrewPos[i][1], mScrewPos[i][2]));
     }
   }
@@ -1165,17 +1231,21 @@ void AliFV0::assembleScrews(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
   vFV0Left->AddNode(screws, 1);
 }
 
-void AliFV0::assembleRods(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assembleRods(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  TGeoVolumeAssembly* rods = new TGeoVolumeAssembly(createVolumeName("RODS").c_str());
+  TGeoVolumeAssembly *rods = new TGeoVolumeAssembly(createVolumeName("RODS").c_str());
 
   // If modifying something here, make sure rod initialization is OK
-  for (int i = 0; i < mRodPos.size(); ++i) {
-    TGeoVolume* rod = gGeoManager->GetVolume(createVolumeName(sRodName, mRodTypeIDs[i]).c_str());
+  for (int i = 0; i < mRodPos.size(); ++i)
+  {
+    TGeoVolume *rod = gGeoManager->GetVolume(createVolumeName(sRodName, mRodTypeIDs[i]).c_str());
 
-    if (!rod) {
+    if (!rod)
+    {
       AliInfo(Form("FV0 AliFV0::assembleRods(): Rod no. %d not found", i));
-    } else {
+    }
+    else
+    {
       rods->AddNode(rod, i, new TGeoTranslation(mRodPos[i][0] + sXShiftScrews, mRodPos[i][1], mRodPos[i][2]));
     }
   }
@@ -1184,39 +1254,47 @@ void AliFV0::assembleRods(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
   vFV0Left->AddNode(rods, 1);
 }
 
-void AliFV0::assembleMetalContainer(TGeoVolume* vFV0Right, TGeoVolume* vFV0Left) const
+void AliFV0::assembleMetalContainer(TGeoVolume *vFV0Right, TGeoVolume *vFV0Left) const
 {
-  TGeoVolume* container = gGeoManager->GetVolume(createVolumeName(sContainerName).c_str());
-  if (!container) {
+  TGeoVolume *container = gGeoManager->GetVolume(createVolumeName(sContainerName).c_str());
+  if (!container)
+  {
     AliWarning("FV0: Could not find container volume");
-  } else {
+  }
+  else
+  {
     vFV0Right->AddNode(container, 0);
     vFV0Left->AddNode(container, 1);
   }
 }
 
-TGeoVolumeAssembly* AliFV0::buildSectorAssembly(const std::string& cellName) const
+TGeoVolumeAssembly *AliFV0::buildSectorAssembly(const std::string &cellName) const
 {
-  TGeoVolumeAssembly* assembly = new TGeoVolumeAssembly(createVolumeName(cellName).c_str());
+  TGeoVolumeAssembly *assembly = new TGeoVolumeAssembly(createVolumeName(cellName).c_str());
 
-  for (int iSector = 0; iSector < mSectorTrans.size(); ++iSector) {
-    TGeoVolumeAssembly* sector = buildSector(cellName, iSector);
+  for (int iSector = 0; iSector < mSectorTrans.size(); ++iSector)
+  {
+    TGeoVolumeAssembly *sector = buildSector(cellName, iSector);
     assembly->AddNode(sector, iSector, mSectorTrans[iSector]);
   }
 
   return assembly;
 }
 
-TGeoVolumeAssembly* AliFV0::buildSector(const std::string& cellType, const int iSector) const
+TGeoVolumeAssembly *AliFV0::buildSector(const std::string &cellType, const int iSector) const
 {
-  TGeoVolumeAssembly* sector = new TGeoVolumeAssembly(createVolumeName(cellType + sSectorName, iSector).c_str());
+  TGeoVolumeAssembly *sector = new TGeoVolumeAssembly(createVolumeName(cellType + sSectorName, iSector).c_str());
 
-  for (int i = 0; i < sNumberOfCellRings; ++i) {
-    TGeoVolume* cell = gGeoManager->GetVolume(createVolumeName(cellType + sCellName + sCellTypes[iSector], i).c_str());
+  for (int i = 0; i < sNumberOfCellRings; ++i)
+  {
+    TGeoVolume *cell = gGeoManager->GetVolume(createVolumeName(cellType + sCellName + sCellTypes[iSector], i).c_str());
 
-    if (!cell) {
+    if (!cell)
+    {
       AliWarning(Form("FV0 AliFV0::buildSector(): Couldn't find cell volume no. %d", i));
-    } else {
+    }
+    else
+    {
       sector->AddNode(cell, i, new TGeoTranslation(sXScintillator, 0, 0));
     }
   }
@@ -1224,8 +1302,8 @@ TGeoVolumeAssembly* AliFV0::buildSector(const std::string& cellType, const int i
   return sector;
 }
 
-TGeoShape* AliFV0::createScrewShape(const std::string& shapeName, const int screwTypeID, const float xEpsilon,
-                                      const float yEpsilon, const float zEpsilon) const
+TGeoShape *AliFV0::createScrewShape(const std::string &shapeName, const int screwTypeID, const float xEpsilon,
+                                    const float yEpsilon, const float zEpsilon) const
 {
   const float xyEpsilon = (fabs(xEpsilon) > fabs(yEpsilon)) ? xEpsilon : yEpsilon;
   const float dzMax = sDzMaxScrewTypes[screwTypeID] / 2 + zEpsilon;
@@ -1235,9 +1313,12 @@ TGeoShape* AliFV0::createScrewShape(const std::string& shapeName, const int scre
   const std::string thickPartName = shapeName + "Thick";
   const std::string thickPartTransName = thickPartName + "Trans";
 
-  if ((screwTypeID == 0) || (screwTypeID == 5)) { // for screw types 0 and 5 there is no thick part
+  if ((screwTypeID == 0) || (screwTypeID == 5))
+  { // for screw types 0 and 5 there is no thick part
     return new TGeoTube(shapeName.c_str(), 0, sDrMinScrewTypes[screwTypeID] + xyEpsilon, dzMax);
-  } else {
+  }
+  else
+  {
     new TGeoTube(thinPartName.c_str(), 0, sDrMinScrewTypes[screwTypeID] + xyEpsilon, dzMax);
     new TGeoTube(thickPartName.c_str(), 0, sDrMaxScrewTypes[screwTypeID] + xyEpsilon, dzMin);
     createAndRegisterTrans(thickPartTransName, 0, 0, -dzMax - sZShiftScrew + sDzScintillator + sDzPlastic + dzMin);
@@ -1247,8 +1328,8 @@ TGeoShape* AliFV0::createScrewShape(const std::string& shapeName, const int scre
   }
 }
 
-TGeoShape* AliFV0::createRodShape(const std::string& shapeName, const int rodTypeID, const float xEpsilon,
-                                    const float yEpsilon, const float zEpsilon) const
+TGeoShape *AliFV0::createRodShape(const std::string &shapeName, const int rodTypeID, const float xEpsilon,
+                                  const float yEpsilon, const float zEpsilon) const
 {
   const float dxMin = sDxMinRodTypes[rodTypeID] / 2 + xEpsilon;
   const float dxMax = sDxMaxRodTypes[rodTypeID] / 2 + xEpsilon;
@@ -1263,33 +1344,32 @@ TGeoShape* AliFV0::createRodShape(const std::string& shapeName, const int rodTyp
 
   new TGeoBBox(thinPartName.c_str(), dxMin, dyMin, dzMax);
   new TGeoBBox(thickPartName.c_str(), dxMax, dyMax, dzMin);
-  createAndRegisterTrans(thickPartTransName, dxMax - dxMin, 0,
-                         -dzMax - sZShiftRod + sDzScintillator + sDzPlastic + dzMin);
+  createAndRegisterTrans(thickPartTransName, dxMax - dxMin, 0, -dzMax - sZShiftRod + sDzScintillator + sDzPlastic + dzMin);
 
   std::string boolFormula = thinPartName;
   boolFormula += "+" + thickPartName + ":" + thickPartTransName;
 
-  TGeoCompositeShape* rodShape = new TGeoCompositeShape(shapeName.c_str(), boolFormula.c_str());
+  TGeoCompositeShape *rodShape = new TGeoCompositeShape(shapeName.c_str(), boolFormula.c_str());
   return rodShape;
 }
 
-TGeoTranslation* AliFV0::createAndRegisterTrans(const std::string& name, const double dx, const double dy,
-                                                  const double dz) const
+TGeoTranslation *AliFV0::createAndRegisterTrans(const std::string &name, const double dx, const double dy,
+                                                const double dz) const
 {
-  TGeoTranslation* trans = new TGeoTranslation(name.c_str(), dx, dy, dz);
+  TGeoTranslation *trans = new TGeoTranslation(name.c_str(), dx, dy, dz);
   trans->RegisterYourself();
   return trans;
 }
 
-TGeoRotation* AliFV0::createAndRegisterRot(const std::string& name, const double phi, const double theta,
-                                             const double psi) const
+TGeoRotation *AliFV0::createAndRegisterRot(const std::string &name, const double phi, const double theta,
+                                           const double psi) const
 {
-  TGeoRotation* rot = new TGeoRotation(name.c_str(), phi, theta, psi);
+  TGeoRotation *rot = new TGeoRotation(name.c_str(), phi, theta, psi);
   rot->RegisterYourself();
   return rot;
 }
 
-const std::string AliFV0::createVolumeName(const std::string& volumeType, const int number) const
+const std::string AliFV0::createVolumeName(const std::string &volumeType, const int number) const
 {
   return sDetectorName + volumeType + ((number >= 0) ? std::to_string(number) : "");
 }
@@ -1299,31 +1379,36 @@ void AliFV0::initializeCellCenters()
   const float phi0 = 67.5 * TMath::DegToRad(); // starting phi of one of the sectors
   const float dphi = 45. * TMath::DegToRad();  // phi difference between neighbouring sectors
   const float lutSect2Phi[sNumberOfCellSectors * 2] = {phi0, phi0 - dphi, phi0 - 2 * dphi, phi0 - 3 * dphi, phi0 + dphi, phi0 + 2 * dphi, phi0 + 3 * dphi, phi0 + 4 * dphi};
-  for (int cellId = 0; cellId < sNumberOfCells; cellId++) {
+  for (int cellId = 0; cellId < sNumberOfCells; cellId++)
+  {
     float r = 0.5 * (sCellRingRadii[sCellToRing[cellId]] + sCellRingRadii[sCellToRing[cellId] + 1]);
     double x = sXGlobal + r * TMath::Cos(lutSect2Phi[sCellToSector[cellId]]);
     double y = sYGlobal + r * TMath::Sin(lutSect2Phi[sCellToSector[cellId]]);
 
-    TVector3* p = &mCellCenter.at(cellId);
+    TVector3 *p = &mCellCenter.at(cellId);
     p->SetXYZ(x, y, sZGlobal);
   }
 }
 
 void AliFV0::initializeReadoutCenters()
 {
-  for (int channelId = 0; channelId < sNumberOfReadoutChannels; channelId++) {
-    TVector3* p = &mReadoutCenter.at(channelId);
-    if (!isRing5(channelId)) {
+  for (int channelId = 0; channelId < sNumberOfReadoutChannels; channelId++)
+  {
+    TVector3 *p = &mReadoutCenter.at(channelId);
+    if (!isRing5(channelId))
+    {
       p->SetXYZ(getCellCenter(channelId).x(), getCellCenter(channelId).y(), getCellCenter(channelId).z());
-    } else {
+    }
+    else
+    {
       const int numberOfSectorsR5 = sNumberOfCellSectors * 4; // from both halves of the detector
       const float phi0 = 78.75 * TMath::DegToRad();           // starting phi of one of the sectors
       const float dphi = 22.5 * TMath::DegToRad();            // phi difference between neighbouring sectors
       const float lutReadoutSect2Phi[numberOfSectorsR5] =
-        {phi0 - 0 * dphi, phi0 - 1 * dphi, phi0 - 2 * dphi, phi0 - 3 * dphi,
-         phi0 - 4 * dphi, phi0 - 5 * dphi, phi0 - 6 * dphi, phi0 - 7 * dphi,
-         phi0 + 1 * dphi, phi0 + 2 * dphi, phi0 + 3 * dphi, phi0 + 4 * dphi,
-         phi0 + 5 * dphi, phi0 + 6 * dphi, phi0 + 7 * dphi, phi0 + 8 * dphi};
+          {phi0 - 0 * dphi, phi0 - 1 * dphi, phi0 - 2 * dphi, phi0 - 3 * dphi,
+           phi0 - 4 * dphi, phi0 - 5 * dphi, phi0 - 6 * dphi, phi0 - 7 * dphi,
+           phi0 + 1 * dphi, phi0 + 2 * dphi, phi0 + 3 * dphi, phi0 + 4 * dphi,
+           phi0 + 5 * dphi, phi0 + 6 * dphi, phi0 + 7 * dphi, phi0 + 8 * dphi};
 
       int iReadoutSector = channelId - ((sNumberOfCellRings - 1) * sNumberOfCellSectors * 2);
       float r = 0.5 * (sCellRingRadii[4] + sCellRingRadii[5]);
@@ -1345,17 +1430,20 @@ void AliFV0::addAlignableVolumes() const
 
   AliInfo("FV0: Add alignable volumes");
 
-  if (!gGeoManager) {
+  if (!gGeoManager)
+  {
     AliFatal("TGeoManager doesn't exist !");
     return;
   }
 
   TString volPath, symName;
-  for (auto& half : {"RIGHT_0", "LEFT_1"}) {
+  for (auto &half : {"RIGHT_0", "LEFT_1"})
+  {
     volPath = Form("/ALIC_1/FV0_1/FV0%s", half);
     symName = Form("FV0%s", half);
     AliInfo(Form("FV0: Add alignable volume: %s : %s", symName.Data(), volPath.Data()));
-    if (!gGeoManager->SetAlignableEntry(symName.Data(), volPath.Data())) {
+    if (!gGeoManager->SetAlignableEntry(symName.Data(), volPath.Data()))
+    {
       AliFatal(Form("FV0: Unable to set alignable entry! %s : %s", symName.Data(), volPath.Data()));
     }
   }

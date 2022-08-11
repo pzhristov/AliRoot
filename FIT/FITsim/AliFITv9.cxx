@@ -42,7 +42,7 @@
 
 #include "AliFITv9.h"
 
-ClassImp(AliFITv9)
+ClassImp(AliFITv9);
 
 using std::cout;
 using std::endl;
@@ -65,21 +65,22 @@ AliFITv9::AliFITv9(const char *name, const char *title) : AliFIT(name, title), f
 //_____________________________________________________________________________
 AliFITv9::~AliFITv9()
 {
-  if(fFT0Det)
+  if (fFT0Det)
     delete fFT0Det;
-  if(fFV0Det)
+  if (fFV0Det)
     delete fFV0Det;
 }
 
 //-------------------------------------------------------------------------
 void AliFITv9::CreateGeometry()
 {
-    fFT0Det->ConstructGeometry();
-    fFV0Det->ConstructGeometry();
+  fFT0Det->ConstructGeometry();
+  fFV0Det->ConstructGeometry();
 }
 
 //--------------------------------------------------------------------
-void AliFITv9::AddAlignableVolumes() const {
+void AliFITv9::AddAlignableVolumes() const
+{
   // Create entries for alignable volumes associating the symbolic volume
   // name with the corresponding volume path. Needs to be synchronized with
   // eventual changes in the geometry.
@@ -88,7 +89,8 @@ void AliFITv9::AddAlignableVolumes() const {
 }
 
 //------------------------------------------------------------------------
-void AliFITv9::CreateMaterials() {
+void AliFITv9::CreateMaterials()
+{
 
   Int_t isxfld = ((AliMagF *)TGeoGlobalMagField::Instance()->GetField())->Integ();
   Float_t sxmgmx = ((AliMagF *)TGeoGlobalMagField::Instance()->GetField())->Max();
@@ -193,7 +195,7 @@ void AliFITv9::CreateMaterials() {
   Float_t wPMT[nPMT] = {0.07, 0.02, 0.14, 0.21, 0.11, 0.02, 0.02, 0.04, 0.01, 0.01, 0.000001, 0.00001, 0.01, 0.34};
   const Float_t dPMT = fFV0Det->getPmtDensity();
 
-  Int_t matId = 31;                  // tmp material id number
+  Int_t matId = 31;                 // tmp material id number
   const Int_t unsens = 0, sens = 1; // sensitive or unsensitive medium
 
   Float_t tmaxfd = -10.0; // max deflection angle due to magnetic field in one step
@@ -211,12 +213,14 @@ void AliFITv9::CreateMaterials() {
   AliMixture(9, "Plastic$", aPlastV0, zPlastV0, dPlast, nPlastV0, wPlastV0);
   AliMedium(9, "Plastic$", 9, unsens, fieldType, maxField, tmaxfd, stemax, deemax, epsil, stmin);
 
-  for (int i = 0; i < nFiberRings; i++) {
+  for (int i = 0; i < nFiberRings; i++)
+  {
     AliMixture(++matId, Form("FiberRing%i$", i + 1), aPlastV0, zPlastV0, dFiberRings[i], nPlastV0, wPlastV0);
     AliMedium(matId, Form("FiberRing%i$", i + 1), matId, unsens, fieldType, maxField, tmaxfd, stemax, deemax, epsil, stmin);
   }
 
-  for (int i = 0; i < nFiberPMTs; i++) {
+  for (int i = 0; i < nFiberPMTs; i++)
+  {
     AliMixture(++matId, Form("FiberPMT%i$", i + 1), aPlastV0, zPlastV0, dFiberPMTs[i], nPlastV0, wPlastV0);
     AliMedium(matId, Form("FiberPMT%i$", i + 1), matId, unsens, fieldType, maxField, tmaxfd, stemax, deemax, epsil, stmin);
   }
@@ -235,17 +239,22 @@ void AliFITv9::CreateMaterials() {
 }
 
 //-------------------------------------------------------------------
-void AliFITv9::Init() {
+void AliFITv9::Init()
+{
   AliFIT::Init();
 
   fIdSens1 = TVirtualMC::GetMC()->VolId("0REG"); // <--- 0REG is sensitive volume Id?
 
   std::string volSensitiveName;
-  for (int iCell = 0; iCell < fFV0Det->getSensitiveVolumeNames().size(); iCell++) {
+  for (int iCell = 0; iCell < fFV0Det->getSensitiveVolumeNames().size(); iCell++)
+  {
     volSensitiveName = fFV0Det->getSensitiveVolumeNames().at(iCell);
-    if (volSensitiveName.empty()) {
+    if (volSensitiveName.empty())
+    {
       AliFatal(Form("FV0: Can't find sensitive volume %s", volSensitiveName.c_str()));
-    } else {
+    }
+    else
+    {
       fIdV0Plus[iCell] = TVirtualMC::GetMC()->VolId(volSensitiveName.c_str());
       AliInfo(Form("FV0: Sensitive volume added: %s with ID: %d", volSensitiveName.c_str(), fIdV0Plus[iCell]));
     }
@@ -255,7 +264,8 @@ void AliFITv9::Init() {
 }
 
 //-------------------------------------------------------------------
-void AliFITv9::StepManager() {
+void AliFITv9::StepManager()
+{
   // Called for every step in the FIT AliFITv9
   Int_t id, copy, copy1;
   static Int_t vol[3];
@@ -267,9 +277,11 @@ void AliFITv9::StepManager() {
 
   id = TVirtualMC::GetMC()->CurrentVolID(copy);
 
-  if (id == fIdSens1) {
+  if (id == fIdSens1)
+  {
 
-    if (TVirtualMC::GetMC()->IsTrackEntering()) {
+    if (TVirtualMC::GetMC()->IsTrackEntering())
+    {
 
       TVirtualMC::GetMC()->CurrentVolOffID(1, copy1);
       vol[1] = copy1;
@@ -284,9 +296,12 @@ void AliFITv9::StepManager() {
       fHits[1] = pos[1];
       fHits[2] = pos[2];
 
-      if (pos[2] < 0) {
+      if (pos[2] < 0)
+      {
         vol[2] = 0;
-      } else {
+      }
+      else
+      {
         vol[2] = 1;
       }
       Float_t etot = TVirtualMC::GetMC()->Etot();
@@ -306,8 +321,10 @@ void AliFITv9::StepManager() {
       fHits[11] = fSenseless; // Track length is sensless for T0+
       fHits[12] = fSenseless; // Photon production for V0+
 
-      if (TVirtualMC::GetMC()->TrackPid() == 50000050) { // If particles is photon then ...
-        if (RegisterPhotoE(fHits[3])) {
+      if (TVirtualMC::GetMC()->TrackPid() == 50000050)
+      { // If particles is photon then ...
+        if (RegisterPhotoE(fHits[3]))
+        {
           fIshunt = 2;
           AddHit(gAlice->GetMCApp()->GetCurrentTrackNumber(), vol, fHits);
           // Create a track reference at the exit of photocatode
@@ -315,7 +332,8 @@ void AliFITv9::StepManager() {
       }
 
       // charge particle HITS
-      if (TVirtualMC::GetMC()->TrackCharge()) {
+      if (TVirtualMC::GetMC()->TrackCharge())
+      {
         fIshunt = 0;
         AddHit(gAlice->GetMCApp()->GetCurrentTrackNumber(), vol, fHits);
         // charge particle TrackReference
@@ -331,14 +349,17 @@ void AliFITv9::StepManager() {
   // Check if there is a hit in any of the V0+ sensitive volumes defined in Init
   Bool_t IsId = kFALSE;
 
-  for (Int_t iCell = 0; iCell < AliFV0::sNumberOfCells; iCell++) { 
-    if (id == fIdV0Plus[iCell]) {
+  for (Int_t iCell = 0; iCell < AliFV0::sNumberOfCells; iCell++)
+  {
+    if (id == fIdV0Plus[iCell])
+    {
       IsId = kTRUE;
       break;
     }
   }
 
-  if (IsId == kTRUE) { /// if the volume is sensitive
+  if (IsId == kTRUE)
+  { /// if the volume is sensitive
 
     // Defining V0+ ring numbers using the sensitive volumes
 
@@ -349,14 +370,18 @@ void AliFITv9::StepManager() {
 
     /// this was the old map:
 
-    if (RingNumber < 1) {
+    if (RingNumber < 1)
+    {
       std::cout << "\n\n  MC cell id = " << id << " This volume is not a V0+ Ring" << std::endl;
-    } else if (RingNumber) {
+    }
+    else if (RingNumber)
+    {
 
       // Track entering
-      if (TVirtualMC::GetMC()->IsTrackEntering()) {
-          TVirtualMC::GetMC()->TrackPosition(pos);
-          TVirtualMC::GetMC()->TrackMomentum(mom);
+      if (TVirtualMC::GetMC()->IsTrackEntering())
+      {
+        TVirtualMC::GetMC()->TrackPosition(pos);
+        TVirtualMC::GetMC()->TrackMomentum(mom);
 
         Float_t Pt = TMath::Sqrt(mom.Px() * mom.Px() + mom.Py() * mom.Py());
         fHits[0] = pos[0];
@@ -377,11 +402,14 @@ void AliFITv9::StepManager() {
         fHits[8] = mom.Py();
         fHits[9] = mom.Pz();
         fHits[10] = 0.;
-      } else {
+      }
+      else
+      {
         fHits[10] += TVirtualMC::GetMC()->Edep();
       }
 
-      if (gMC->IsTrackExiting() || gMC->IsTrackStop() || gMC->IsTrackDisappeared()) {
+      if (gMC->IsTrackExiting() || gMC->IsTrackStop() || gMC->IsTrackDisappeared())
+      {
 
         Float_t Tlength;
         Float_t EnergyDep = TVirtualMC::GetMC()->Edep();
@@ -410,18 +438,21 @@ void AliFITv9::StepManager() {
 }
 
 //------------------------------------------------------------------------
-Bool_t AliFITv9::RegisterPhotoE(Double_t energy) {
+Bool_t AliFITv9::RegisterPhotoE(Double_t energy)
+{
   Float_t eff = fPMTeff->Eval(energy);
   Double_t p = gRandom->Rndm();
 
-  if (p > eff) {
+  if (p > eff)
+  {
     return kFALSE;
   }
   return kTRUE;
 }
 
 //-------------------------------------------------------------------
-void AliFITv9::DefineOpticalProperties() {
+void AliFITv9::DefineOpticalProperties()
+{
   // Path of the optical properties input file
   TString optPropPath = "$(ALICE_ROOT)/FIT/sim/quartzOptProperties.txt";
   optPropPath = gSystem->ExpandPathName(optPropPath.Data()); // Expand $(ALICE_ROOT) into real system path
@@ -539,8 +570,8 @@ Int_t AliFITv9::ReadOptProperties(const std::string filePath, Float_t **e, Doubl
 
 //--------------------------------------------------------------------
 void AliFITv9::FillOtherOptProperties(Float_t **efficAll, Float_t **rindexAir, Float_t **absorAir,
-                                    Float_t **rindexCathodeNext, Float_t **absorbCathodeNext,
-                                    Double_t **efficMet, Double_t **aReflMet, const Int_t kNbins) const
+                                      Float_t **rindexCathodeNext, Float_t **absorbCathodeNext,
+                                      Double_t **efficMet, Double_t **aReflMet, const Int_t kNbins) const
 {
   // Allocate memory for these arrays according to the required size
   *efficAll = new Float_t[kNbins];
@@ -566,8 +597,8 @@ void AliFITv9::FillOtherOptProperties(Float_t **efficAll, Float_t **rindexAir, F
 
 //--------------------------------------------------------------------
 void AliFITv9::DeleteOptPropertiesArr(Float_t **e, Double_t **de, Float_t **abs, Float_t **n, Float_t **efficAll,
-                                    Float_t **rindexAir, Float_t **absorAir, Float_t **rindexCathodeNext,
-                                    Float_t **absorbCathodeNext, Double_t **efficMet, Double_t **aReflMet) const
+                                      Float_t **rindexAir, Float_t **absorAir, Float_t **rindexCathodeNext,
+                                      Float_t **absorbCathodeNext, Double_t **efficMet, Double_t **aReflMet) const
 {
   delete[](*e);
   delete[](*de);

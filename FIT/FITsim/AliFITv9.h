@@ -17,13 +17,14 @@
 #include <sstream>
 #include <string>
 
-class AliFITv9 : public AliFIT {
+class AliFITv9 : public AliFIT
+{
 
 public:
-
   AliFITv9();
   AliFITv9(const char *name, const char *title);
-  AliFITv9(const AliFITv9 &o) : AliFIT(), fIdSens1(0), fPMTeff(0x0) {
+  AliFITv9(const AliFITv9 &o) : AliFIT(), fIdSens1(0), fPMTeff(0x0)
+  {
     ((AliFITv9 &)o).Copy(*this);
   }
 
@@ -41,7 +42,6 @@ public:
                               Float_t **rindexAir, Float_t **absorAir, Float_t **rindexCathodeNext,
                               Float_t **absorbCathodeNext, Double_t **efficMet, Double_t **aReflMet) const;
 
-
   virtual void AddAlignableVolumes() const;
   virtual void CreateMaterials();
   virtual void Init();
@@ -51,24 +51,23 @@ public:
 
 protected:
   // T0+
-  Int_t fIdSens1;   // Sensitive volume in FIT
-  Int_t fSenseless; // Senseless hit entry
-  TGraph* fPMTeff = nullptr; // pmt registration effeicincy
+  Int_t fIdSens1;            // Sensitive volume in FIT
+  Int_t fSenseless;          // Senseless hit entry
+  TGraph *fPMTeff = nullptr; // pmt registration effeicincy
 
-  AliFT0* fFT0Det = nullptr;
-  AliFV0* fFV0Det = nullptr;
+  AliFT0 *fFT0Det = nullptr;
+  AliFV0 *fFV0Det = nullptr;
 
-  float fHits[13] = {0}; //Array of hits information
+  float fHits[13] = {0}; // Array of hits information
 
   // V0+
   Int_t fIdV0Plus[8 * 5]; // Sensitive volumes [nSectors][nRings], if modified then update the construct in .cxx
 
 private:
-
-  static constexpr float fV0PlusnMeters = 72.6 * 0.01;      // From V0A
-  static constexpr float fV0PlusLightYield = 93.75;         // From V0A
-  static constexpr float fV0PlusLightAttenuation = 0.05;    // From V0A
-  static constexpr float fV0PlusFibToPhot = 0.3;            // From V0A
+  const float fV0PlusnMeters = 72.6 * 0.01;   // From V0A
+  const float fV0PlusLightYield = 93.75;      // From V0A
+  const float fV0PlusLightAttenuation = 0.05; // From V0A
+  const float fV0PlusFibToPhot = 0.3;         // From V0A
 
   ClassDef(AliFITv9, 2) // Class for FIT version 6
 };
