@@ -66,7 +66,9 @@ target_link_libraries(${MODULE} ${LIBDEPS})
 
 # System dependent: Modify the way the library is build
 if(${CMAKE_SYSTEM} MATCHES Darwin)
-    set_target_properties(${MODULE} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+  set_target_properties(${MODULE} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+  set_target_properties(${MODULE} PROPERTIES COMPILE_FLAGS "-O0 -g")
+  set_target_properties(${MODULE} PROPERTIES CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -std=legacy")
 endif(${CMAKE_SYSTEM} MATCHES Darwin)
 
 # Installation
