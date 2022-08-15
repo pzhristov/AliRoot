@@ -58,7 +58,7 @@ public:
   const float ChannelWidthInverse = 0.076804916; // channel width in ps inverse
 
   /// Destructor
-  ~AliFT0() = default;
+  ~AliFT0() {};
 
   /// Initialization of the detector is done here
   void InitializeO2Detector();
@@ -85,19 +85,10 @@ public:
     fIdtmed = mediumIDs->GetArray();
   }
 
-private:
-  /// Copy constructor.
-  ///
-  AliFT0(const AliFT0 &geom);
-  /// assignment operator
-  AliFT0 &operator=(const AliFT0 &source); // assignment operator
 
   TVector3 mAngles[28];
   unsigned short fDummy;
-
-  // Define the aluminium frame for the detector
-  TGeoVolume *constructFrameAGeometry(); // A-side
-  TGeoVolume *constructFrameCGeometry(); // C-side
+  
   std::string cPlateShapeString();
 
   // BEGIN: Support structure constants
@@ -142,6 +133,18 @@ private:
   Float_t mStartC[3] = {20., 20, 5.5};
   Float_t mStartA[3] = {20., 20., 5};
   Float_t mInStart[3] = {2.9491, 2.9491, 2.6};
+  
+private:
+  /// Copy constructor.
+  ///
+  AliFT0(const AliFT0 &geom);
+  /// assignment operator
+  AliFT0 &operator=(const AliFT0 &source); // assignment operator
+
+
+  // Define the aluminium frame for the detector
+  TGeoVolume *constructFrameAGeometry(); // A-side
+  TGeoVolume *constructFrameCGeometry(); // C-side
 
   Int_t *fIdtmed;
 
