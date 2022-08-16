@@ -14,6 +14,7 @@
 #include <TGeoMatrix.h>
 #include <TVirtualMC.h>
 #include <TArrayI.h>
+#include <TVector3.h>
 #include <sstream>
 #include <string>
 #include <vector>
