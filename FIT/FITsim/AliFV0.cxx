@@ -120,12 +120,14 @@ void AliFV0::getGlobalPosition(float &x, float &y, float &z)
 
 TVector3 &AliFV0::getCellCenter(UInt_t cellId)
 {
-  return mCellCenter.at(cellId);
+  //return mCellCenter.at(cellId);
+  return mCellCenter[cellId];
 }
 
 TVector3 &AliFV0::getReadoutCenter(UInt_t cellId)
 {
-  return mReadoutCenter.at(cellId);
+  //return mReadoutCenter.at(cellId);
+  return mReadoutCenter[cellId];
 }
 
 bool AliFV0::isRing5(UInt_t cellId)
@@ -1385,8 +1387,10 @@ void AliFV0::initializeCellCenters()
     double x = sXGlobal + r * TMath::Cos(lutSect2Phi[sCellToSector[cellId]]);
     double y = sYGlobal + r * TMath::Sin(lutSect2Phi[sCellToSector[cellId]]);
 
-    TVector3 *p = &mCellCenter.at(cellId);
-    p->SetXYZ(x, y, sZGlobal);
+    /*TVector3 *p = &mCellCenter.at(cellId);
+    p->SetXYZ(x, y, sZGlobal);*/
+    TVector3 p(x,y,sZGlobal);
+    mCellCenter.push_back(p);
   }
 }
 
@@ -1394,10 +1398,12 @@ void AliFV0::initializeReadoutCenters()
 {
   for (int channelId = 0; channelId < sNumberOfReadoutChannels; channelId++)
   {
-    TVector3 *p = &mReadoutCenter.at(channelId);
+    //TVector3 *p = &mReadoutCenter.at(channelId);
+    TVector3 p;          
     if (!isRing5(channelId))
     {
-      p->SetXYZ(getCellCenter(channelId).x(), getCellCenter(channelId).y(), getCellCenter(channelId).z());
+      //p->SetXYZ(getCellCenter(channelId).x(), getCellCenter(channelId).y(), getCellCenter(channelId).z());
+      p.SetXYZ(getCellCenter(channelId).x(), getCellCenter(channelId).y(), getCellCenter(channelId).z());
     }
     else
     {
@@ -1414,8 +1420,10 @@ void AliFV0::initializeReadoutCenters()
       float r = 0.5 * (sCellRingRadii[4] + sCellRingRadii[5]);
       double x = sXGlobal + r * TMath::Cos(lutReadoutSect2Phi[iReadoutSector]);
       double y = sYGlobal + r * TMath::Sin(lutReadoutSect2Phi[iReadoutSector]);
-      p->SetXYZ(x, y, sZGlobal);
+      //p->SetXYZ(x, y, sZGlobal);
+      p.SetXYZ(x, y, sZGlobal);
     }
+    mReadoutCenter.push_back(p);
   }
 }
 

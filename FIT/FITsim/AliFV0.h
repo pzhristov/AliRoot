@@ -521,8 +521,8 @@ private:
   TGeoMatrix *mRightTransformation;                 ///< Transformation for the right part of the detector
 
   /// Utility arrays derived from constants
-  std::array<TVector3, 40> mCellCenter;    ///< Center of each scintillator cell  !!! Size of array is sNumberOfCells  (=40)
-  std::array<TVector3, 48> mReadoutCenter; ///< Similar to mCellCenter, cells in r5 are additionally divided  !!! Size of array is sNumberOfReadoutChannels (=48)
+  std::vector<TVector3> mCellCenter;    ///< Center of each scintillator cell  !!! Size of vector is sNumberOfCells  (=40)
+  std::vector<TVector3> mReadoutCenter; ///< Similar to mCellCenter, cells in r5 are additionally divided  !!! Size of vector is sNumberOfReadoutChannels (=48)
 
   ClassDef(AliFV0, 1);
 };
