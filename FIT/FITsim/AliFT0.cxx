@@ -23,10 +23,10 @@
 #include <TGeoMatrix.h>
 #include <TVirtualMC.h>
 #include "AliLog.h"
-#include <sstream>
+//#include <sstream>
 #include <iostream>
 #include <fstream>
-#include <string>
+//#include <string>
 
 ClassImp(AliFT0);
 
@@ -152,7 +152,7 @@ void AliFT0::ConstructGeometry()
   // Additional elements for the C-side frame
   TGeoCombiTrans *plateCom[NCellsC];
   TGeoMedium *Al = gGeoManager->GetMedium("FIT_Aluminium$");
-  TGeoCompositeShape *plateCompositeShape = new TGeoCompositeShape("plateCompositeShape", cPlateShapeString().c_str());
+  TGeoCompositeShape *plateCompositeShape = new TGeoCompositeShape("plateCompositeShape", cPlateShapeString().Data());
   TGeoVolume *plateVol = new TGeoVolume("plateVol", plateCompositeShape, Al);
 
   for (Int_t itr = NCellsA; itr < NCellsA + NCellsC; itr++)
@@ -1039,7 +1039,7 @@ TGeoVolume *AliFT0::constructFrameCGeometry()
   return FT0_C_Frame;
 }
 
-std::string AliFT0::cPlateShapeString()
+TString AliFT0::cPlateShapeString()
 {
   Double_t prismHeight = 0.3895; // height of vertical edge of square prism part of base
   Double_t prismSide = 5.9;      // width and length of square prism part of base
@@ -1115,7 +1115,7 @@ std::string AliFT0::cPlateShapeString()
   TGeoCombiTrans *rHolesBottomRightTrans = new TGeoCombiTrans("rHolesBottomRightTrans", sHolesLateralFromCenter, -1.0 * sHolesUpFromCenter, 0, rotateHolesRight);
   rHolesBottomRightTrans->RegisterYourself();
 
-  std::string plateString = " ";
+  TString plateString = " ";
   plateString += "(((BASE:rTrans";
   plateString += "- BASE_SUBTRACTION)";
   plateString += "+ (SLICE:rTrans))";

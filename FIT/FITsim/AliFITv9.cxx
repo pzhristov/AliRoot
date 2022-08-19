@@ -48,17 +48,45 @@ using std::cout;
 using std::endl;
 
 //--------------------------------------------------------------------
-AliFITv9::AliFITv9() : AliFIT(), fIdSens1(0), fPMTeff(0x0), fSenseless(-1)
+AliFITv9::AliFITv9() : 
+ AliFIT(), 
+ fIdSens1(0), 
+ fSenseless(-1),
+ fPMTeff(0x0),
+ fV0PlusnMeters(72.6 * 0.01),
+ fV0PlusLightYield(93.75),
+ fV0PlusLightAttenuation(0.05),
+ fV0PlusFibToPhot(0.3)
 {
   fFT0Det = new AliFT0();
   fFV0Det = new AliFV0(AliFV0::eFull);
+  for (Int_t i=0; i<13; i++) {
+    fHits[i] = 0.0;        
+  }
+  for (Int_t i=0; i<40; i++) {
+    fIdV0Plus[i] = 0;        
+  }
 }
 
 //--------------------------------------------------------------------
-AliFITv9::AliFITv9(const char *name, const char *title) : AliFIT(name, title), fIdSens1(0), fPMTeff(0x0), fSenseless(-1)
+AliFITv9::AliFITv9(const char *name, const char *title) : 
+ AliFIT(name, title), 
+ fSenseless(-1),
+ fIdSens1(0), 
+ fPMTeff(0x0),
+ fV0PlusnMeters(72.6 * 0.01),
+ fV0PlusLightYield(93.75),
+ fV0PlusLightAttenuation(0.05),
+ fV0PlusFibToPhot(0.3)
 {
   fFT0Det = new AliFT0();
   fFV0Det = new AliFV0(AliFV0::eFull);
+  for (Int_t i=0; i<13; i++) {
+    fHits[i] = 0.0;        
+  }
+  for (Int_t i=0; i<40; i++) {
+    fIdV0Plus[i] = 0;        
+  }
   fIshunt = 2;
 }
 
@@ -245,18 +273,18 @@ void AliFITv9::Init()
 
   fIdSens1 = TVirtualMC::GetMC()->VolId("0REG"); // <--- 0REG is sensitive volume Id?
 
-  std::string volSensitiveName;
-  for (int iCell = 0; iCell < fFV0Det->getSensitiveVolumeNames().size(); iCell++)
+  TString volSensitiveName;
+  for (int iCell = 0; iCell < AliFV0::sNumberOfCellRings; iCell++)
   {
-    volSensitiveName = fFV0Det->getSensitiveVolumeNames().at(iCell);
-    if (volSensitiveName.empty())
+    volSensitiveName = fFV0Det->getSensitiveVolumeName(iCell);
+    if (volSensitiveName.IsWhitespace())
     {
-      AliFatal(Form("FV0: Can't find sensitive volume %s", volSensitiveName.c_str()));
+      AliFatal(Form("FV0: Can't find sensitive volume %s", volSensitiveName.Data()));
     }
     else
     {
-      fIdV0Plus[iCell] = TVirtualMC::GetMC()->VolId(volSensitiveName.c_str());
-      AliInfo(Form("FV0: Sensitive volume added: %s with ID: %d", volSensitiveName.c_str(), fIdV0Plus[iCell]));
+      fIdV0Plus[iCell] = TVirtualMC::GetMC()->VolId(volSensitiveName.Data());
+      AliInfo(Form("FV0: Sensitive volume added: %s with ID: %d", volSensitiveName.Data(), fIdV0Plus[iCell]));
     }
   }
 

@@ -15,9 +15,10 @@
 #include <TVirtualMC.h>
 #include <TArrayI.h>
 #include <TVector3.h>
-#include <sstream>
-#include <string>
-#include <vector>
+#include <TString.h>
+//#include <sstream>
+//#include <string>
+//#include <vector>
 
 class AliFT0 : public TNamed
 {
@@ -46,7 +47,10 @@ public:
   /// It must be kept public for root persistency purposes,
   /// but should never be called by the outside world
   AliFT0();
-
+  AliFT0(const AliFT0 &geom);
+  AliFT0 &operator=(const AliFT0 &source); // assignment operator
+  ~AliFT0() {};
+  
   ///
   TVector3 tiltMCP(int imcp) { return mAngles[imcp]; }
 
@@ -58,8 +62,6 @@ public:
   const float ChannelWidth = 13.02;              // channel width in ps
   const float ChannelWidthInverse = 0.076804916; // channel width in ps inverse
 
-  /// Destructor
-  ~AliFT0() {};
 
   /// Initialization of the detector is done here
   void InitializeO2Detector();
@@ -90,7 +92,7 @@ public:
   TVector3 mAngles[28];
   unsigned short fDummy;
   
-  std::string cPlateShapeString();
+  TString cPlateShapeString();
 
   // BEGIN: Support structure constants
   // define some error to avoid overlaps
@@ -136,13 +138,7 @@ public:
   Float_t mInStart[3] = {2.9491, 2.9491, 2.6};
   
 private:
-  /// Copy constructor.
-  ///
-  AliFT0(const AliFT0 &geom);
-  /// assignment operator
-  AliFT0 &operator=(const AliFT0 &source); // assignment operator
-
-
+  
   // Define the aluminium frame for the detector
   TGeoVolume *constructFrameAGeometry(); // A-side
   TGeoVolume *constructFrameCGeometry(); // C-side

@@ -15,8 +15,9 @@
 #include <TVirtualMC.h>
 #include <TVector.h>
 #include <TArrayI.h>
-#include <sstream>
-#include <string>
+#include <TString.h>
+//#include <sstream>
+//#include <string>
 #include <vector>
 //#include <array>
 
@@ -43,13 +44,14 @@ public:
   /// Geometry components possible to be enabled/disabled. Only enabled components will be created.
   enum EGeoComponent
   {
-    eScintillator,
+    eScintillator=0,
     ePlastics,
     ePmts,
     eFibers,
     eScrews,
     eRods,
-    eContainer
+    eContainer,
+    eNComponents
   };
 
   enum Constants
@@ -67,8 +69,8 @@ public:
   /// Default constructor.
   /// It must be kept public for root persistency purposes,
   /// but should never be called by the outside world
-  AliFV0() : mGeometryType(eUninitialized), mLeftTransformation(nullptr), mRightTransformation(nullptr){};
-  AliFV0(const char *name, const char *title) : TNamed(name, title), mGeometryType(eUninitialized), mLeftTransformation(nullptr), mRightTransformation(nullptr){};
+  AliFV0() : mGeometryType(eUninitialized), mLeftTransformation(0x0), mRightTransformation(0x0){};
+  AliFV0(const char *name, const char *title) : TNamed(name, title), mGeometryType(eUninitialized), mLeftTransformation(0x0), mRightTransformation(0x0){};
 
   AliFV0(EGeoType initType);
 
@@ -94,14 +96,16 @@ public:
 
   /// Get the names of all the sensitive volumes of the Geometry.
   /// \return The names of all the sensitive volumes of the Geometry.
-  const std::vector<std::string> &getSensitiveVolumeNames() const { return mSensitiveVolumeNames; };
+  //const std::vector<std::string> &getSensitiveVolumeNames() const { return mSensitiveVolumeNames; };
+  TString getSensitiveVolumeName(int i) const { return mSensitiveVolumeNames[i]; }
 
   /// Enable or disable a Geometry component. To be called before the Geometry is built. A disabled component will not
   /// be added to the Geometry. The enabled components are by default specified by the Geometry type.
   /// \param  component   The Geometry component to be enabled/disabled.
   /// \param  enable      Setting the enabled state. Default is true.
   /// \return The enabled state of the Geometry component.
-  bool enableComponent(EGeoComponent component, bool enable = true);
+  void enableComponent(EGeoComponent component, bool enable = true);
+  bool getEnabledComponent(EGeoComponent component) {return mEnabledComponents[component];}
 
   /// Build the Geometry.
   void ConstructGeometry();
@@ -128,155 +132,149 @@ public:
     return sDensityPmt;
   }
 
-  const std::string sDetectorName = "FV0";
+  TString sDetectorName;// = "FV0";
 
   // General Geometry constants
-  const float sEpsilon = 0.01;     ///< Used to make one spatial dimension infinitesimally larger than other
-  const float sDzScintillator = 4; ///< Thickness of the scintillator
-  const float sDzPlastic = 1;      ///< Thickness of the fiber plastics
+  float sEpsilon;// = 0.01;     ///< Used to make one spatial dimension infinitesimally larger than other
+  float sDzScintillator;// = 4; ///< Thickness of the scintillator
+  float sDzPlastic;// = 1;      ///< Thickness of the fiber plastics
 
-  const float sXGlobal = 0;                         ///< Global x-position of the geometrical center of scintillators
-  const float sYGlobal = 0;                         ///< Global y-position of the geometrical center of scintillators
+  float sXGlobal;// = 0;                         ///< Global x-position of the geometrical center of scintillators
+  float sYGlobal;// = 0;                         ///< Global y-position of the geometrical center of scintillators
                                                     // FT0 starts at z=328
-  const float sZGlobal = 320 - sDzScintillator / 2; ///< Global z-pos of geometrical center of scintillators
-  const float sDxHalvesSeparation = 0;              ///< Separation between the left and right side of the detector
-  const float sDyHalvesSeparation = 0;              ///< y-position of the right detector part relative to the left part
-  const float sDzHalvesSeparation = 0;              ///< z-position of the right detector part relative to the left part
-
-  /// Cell and scintillator constants
-  // static const int sNumberOfCellSectors;                                             ///< Number of cell sectors for one half of the detector  ( = 4)
-  // static const int sNumberOfCellRings;                                               ///< Number of cell rings ( = 5)
-  // static const int sNumberOfCells;       ///< Number of cells
-  // static const int sNumberOfReadoutChannels; ///< Number of ch (2 ch per cell in r5)
+  float sZGlobal;// = 320 - sDzScintillator / 2; ///< Global z-pos of geometrical center of scintillators
+  float sDxHalvesSeparation;// = 0;              ///< Separation between the left and right side of the detector
+  float sDyHalvesSeparation;// = 0;              ///< y-position of the right detector part relative to the left part
+  float sDzHalvesSeparation;// = 0;              ///< z-position of the right detector part relative to the left part
 
   /// Look-up tables converting cellId to the ring and sector number
-  const int sCellToRing[sNumberOfCells] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4};
-  const int sCellToSector[sNumberOfCells] = {0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7};
+  int sCellToRing[sNumberOfCells];// = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4};
+  int sCellToSector[sNumberOfCells];// = {0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7};
 
   /// Average cell ring radii.
-  const float sCellRingRadii[sNumberOfCellRings + 1] = {4.01, 7.3, 12.9, 21.25, 38.7, 72.115};
-  const char sCellTypes[sNumberOfCellSectors] = {'a', 'b', 'b', 'a'}; ///< Ordered cell types per half a ring
+  float sCellRingRadii[sNumberOfCellRings + 1];// = {4.01, 7.3, 12.9, 21.25, 38.7, 72.115};
+  char sCellTypes[sNumberOfCellSectors];// = {'a', 'b', 'b', 'a'}; ///< Ordered cell types per half a ring
                                                                       /// Separation between the scintillator cells; paint thickness + half of separation gap.
-  const float sDrSeparationScint = 0.03 + 0.04;
+  float sDrSeparationScint;// = 0.03 + 0.04;
 
   /// Shift of the inner radius origin of the scintillators.
-  const float sXShiftInnerRadiusScintillator = -0.15;
+  float sXShiftInnerRadiusScintillator;// = -0.15;
   /// Extension of the scintillator holes for the metal rods
-  const float sDxHoleExtensionScintillator = 0.2;
-  const float sDrHoleSmallScintillator = 0.265; ///< Radius of the small scintillator screw hole
-  const float sDrHoleLargeScintillator = 0.415; ///< Radius of the large scintillator screw hole
+  float sDxHoleExtensionScintillator;// = 0.2;
+  float sDrHoleSmallScintillator;// = 0.265; ///< Radius of the small scintillator screw hole
+  float sDrHoleLargeScintillator;// = 0.415; ///< Radius of the large scintillator screw hole
 
   // Container constants
-  const float sDzContainer = 30;                  ///< Depth of the metal container
-  const float sDrContainerHole = 4.05;            ///< Radius of the beam hole in the metal container
-  const float sXShiftContainerHole = -0.15;       ///< x-shift of the beam hole in the metal container
-  const float sDrMaxContainerBack = 83.1;         ///< Outer radius of the container backplate
-  const float sDzContainerBack = 1;               ///< Thickness of the container backplate
-  const float sDrMinContainerFront = 45.7;        ///< Inner radius of the container frontplate
-  const float sDrMaxContainerFront = 83.1;        ///< Outer radius of the container frontplate
-  const float sDzContainerFront = 1;              ///< Thickness of the container frontplate
-  const float sDxContainerStand = 40;             ///< Width of the container stand
-  const float sDyContainerStand = 3;              ///< Height of the container stand at its center in x
-  const float sDrMinContainerCone = 24.3;         ///< Inner radius at bottom of container frontplate cone
-  const float sDzContainerCone = 16.2;            ///< Depth of the container frontplate cone
-  const float sThicknessContainerCone = 0.6;      ///< Thickness of the container frontplate cone
-  const float sXYThicknessContainerCone = 0.975;  ///< Radial thickness in the xy-plane of container cone
-  const float sDrMinContainerOuterShield = 82.5;  ///< Inner radius of outer container shield
-  const float sDrMaxContainerOuterShield = 82.65; ///< Outer radius of outer container shield
-  const float sDrMinContainerInnerShield = 4;     ///< Inner radius of the inner container shield
-  const float sDrMaxContainerInnerShield = 4.05;  ///< Outer radius of inner container shield
-  const float sDxContainerCover = 0.15;           ///< Thickness of the container cover
-  const float sDxContainerStandBottom = 38.5;     ///< Width of the bottom of the container stand
-  const float sDyContainerStandBottom = 2;        ///< Thickness of the bottom of the container stand
+  float sDzContainer;// = 30;                  ///< Depth of the metal container
+  float sDrContainerHole;// = 4.05;            ///< Radius of the beam hole in the metal container
+  float sXShiftContainerHole;// = -0.15;       ///< x-shift of the beam hole in the metal container
+  float sDrMaxContainerBack;// = 83.1;         ///< Outer radius of the container backplate
+  float sDzContainerBack;// = 1;               ///< Thickness of the container backplate
+  float sDrMinContainerFront;// = 45.7;        ///< Inner radius of the container frontplate
+  float sDrMaxContainerFront;// = 83.1;        ///< Outer radius of the container frontplate
+  float sDzContainerFront;// = 1;              ///< Thickness of the container frontplate
+  float sDxContainerStand;// = 40;             ///< Width of the container stand
+  float sDyContainerStand;// = 3;              ///< Height of the container stand at its center in x
+  float sDrMinContainerCone;// = 24.3;         ///< Inner radius at bottom of container frontplate cone
+  float sDzContainerCone;// = 16.2;            ///< Depth of the container frontplate cone
+  float sThicknessContainerCone;// = 0.6;      ///< Thickness of the container frontplate cone
+  float sXYThicknessContainerCone;// = 0.975;  ///< Radial thickness in the xy-plane of container cone
+  float sDrMinContainerOuterShield;// = 82.5;  ///< Inner radius of outer container shield
+  float sDrMaxContainerOuterShield;// = 82.65; ///< Outer radius of outer container shield
+  float sDrMinContainerInnerShield;// = 4;     ///< Inner radius of the inner container shield
+  float sDrMaxContainerInnerShield;// = 4.05;  ///< Outer radius of inner container shield
+  float sDxContainerCover;// = 0.15;           ///< Thickness of the container cover
+  float sDxContainerStandBottom;// = 38.5;     ///< Width of the bottom of the container stand
+  float sDyContainerStandBottom;// = 2;        ///< Thickness of the bottom of the container stand
 
   // PMT constants
-  // static const int sNumberOfPMTs;                                        ///< Number of PMTs for one half of the detector.
+  // static int sNumberOfPMTs;                                        ///< Number of PMTs for one half of the detector.
   // static const int sNumberOfPMTsPerSector;                                ///< Number of PMTs for one sector,
-  const float sDrPmt = 3.75;                                           ///< PMT radius
-  const float sDzPmt = 12.199;                                         ///< PMT length
-  const float sMPmt = 376.77;                                          ///< PMT mass
-  const float sDensityPmt = sMPmt / (M_PI * sDrPmt * sDrPmt * sDzPmt); ///< PMT density
+  float sDrPmt;// = 3.75;                                           ///< PMT radius
+  float sDzPmt;// = 12.199;                                         ///< PMT length
+  float sMPmt;// = 376.77;                                          ///< PMT mass
+  float sDensityPmt;// = sMPmt / (M_PI * sDrPmt * sDrPmt * sDzPmt); ///< PMT density
 
   // Fiber constants
-  const int sNumberOfPMTFiberVolumes = 5; ///< Number of different fiber equivalent volumes in front of the PMTs
+  int sNumberOfPMTFiberVolumes;// = 5; ///< Number of different fiber equivalent volumes in front of the PMTs
                                           /// The order of cells from which the fibers arrive to the PMTs in one sector.
-  const int sPMTFiberCellOrder[sNumberOfPMTsPerSector] = {2, 5, 4, 3, 5, 1};
+  int sPMTFiberCellOrder[sNumberOfPMTsPerSector];// = {2, 5, 4, 3, 5, 1};
 
   // Local position constants
 
   /// x-position of the right half of the scintillator.
-  const float sXScintillator = sDxContainerCover;
+  float sXScintillator;// = sDxContainerCover;
   /// z-position of the scintillator cells.
-  const float sZScintillator = 0;
+  float sZScintillator;// = 0;
   /// z-position of the plastic cells.
-  const float sZPlastic = sZScintillator + sDzScintillator / 2 + sDzPlastic / 2;
+  float sZPlastic;// = sZScintillator + sDzScintillator / 2 + sDzPlastic / 2;
   /// z-position of the container backplate.
-  const float sZContainerBack = sZScintillator - sDzScintillator / 2 - sDzContainerBack / 2;
+  float sZContainerBack;// = sZScintillator - sDzScintillator / 2 - sDzContainerBack / 2;
   /// z-position of the container frontplate.
-  const float sZContainerFront = sZContainerBack - sDzContainerBack / 2 + sDzContainer - sDzContainerFront / 2;
+  float sZContainerFront;// = sZContainerBack - sDzContainerBack / 2 + sDzContainer - sDzContainerFront / 2;
   /// z-position of the center of the container.
-  const float sZContainerMid = (sZContainerBack + sZContainerFront) / 2;
+  float sZContainerMid;// = (sZContainerBack + sZContainerFront) / 2;
   /// z-position of the fiber volumes.
-  const float sZFiber = (sZPlastic + sZContainerFront) / 2;
+  float sZFiber;// = (sZPlastic + sZContainerFront) / 2;
   /// z-position of the container frontplate cone.
-  const float sZCone = sZContainerFront + sDzContainerFront / 2 - sDzContainerCone / 2;
+  float sZCone;// = sZContainerFront + sDzContainerFront / 2 - sDzContainerCone / 2;
   /// x shift of all screw holes.
-  const float sXShiftScrews = sXScintillator;
+  float sXShiftScrews;// = sXScintillator;
   /// x-positions of the PMTs in the right half of the detector.
-  const float sXPmt[sNumberOfPMTs] = {8.023, 16.612, 24.987, 33.042, 40.671, 47.778, 59.646, 64.73, 68.982, 72.348, 74.783, 76.257, 76.330, 74.931, 72.569, 69.273, 65.088, 60.065, 48.3, 41.238, 33.645, 25.62, 17.265, 8.688};
+  float sXPmt[sNumberOfPMTs];// = {8.023, 16.612, 24.987, 33.042, 40.671, 47.778, 59.646, 64.73, 68.982, 72.348, 74.783, 76.257, 76.330, 74.931, 72.569, 69.273, 65.088, 60.065, 48.3, 41.238, 33.645, 25.62, 17.265, 8.688};
   /// y-positions of the PMTs in one half of the detector.
-  const float sYPmt[sNumberOfPMTs] = {76.33, 74.931, 72.569, 69.273, 65.088, 60.065, 48.3, 41.238, 33.645, 25.62, 17.265, 8.688, -8.023, -16.612, -24.987, -33.042, -40.671, -47.778, -59.646, -64.73, -68.982, -72.348, -74.783, -76.257};
+  float sYPmt[sNumberOfPMTs];// = {76.33, 74.931, 72.569, 69.273, 65.088, 60.065, 48.3, 41.238, 33.645, 25.62, 17.265, 8.688, -8.023, -16.612, -24.987, -33.042, -40.671, -47.778, -59.646, -64.73, -68.982, -72.348, -74.783, -76.257};
   /// z-position of the PMTs.
-  const float sZPmt = sZContainerBack + sDzContainerBack / 2 + sDzPmt / 2;
+  float sZPmt;// = sZContainerBack + sDzContainerBack / 2 + sDzPmt / 2;
 
   // Screw and rod dimensions
 
   /// Number of the different screw types.
   // static const int sNumberOfScrewTypes;
   /// Radii of the thinner part of the screw types.
-  const float sDrMinScrewTypes[sNumberOfScrewTypes] = {0.25, 0.25, 0.4, 0.4, 0.4, 0.4};
+  float sDrMinScrewTypes[sNumberOfScrewTypes];// = {0.25, 0.25, 0.4, 0.4, 0.4, 0.4};
   /// Radii of the thicker part of the screw types.
-  const float sDrMaxScrewTypes[sNumberOfScrewTypes] = {0, 0.5, 0.6, 0.6, 0.6, 0};
+  float sDrMaxScrewTypes[sNumberOfScrewTypes];// = {0, 0.5, 0.6, 0.6, 0.6, 0};
   /// Length of the thinner part of the screw types.
-  const float sDzMaxScrewTypes[sNumberOfScrewTypes] = {6.02, 13.09, 13.1, 23.1, 28.3, 5};
+  float sDzMaxScrewTypes[sNumberOfScrewTypes];// = {6.02, 13.09, 13.1, 23.1, 28.3, 5};
   /// Length of the thicker part of the screw types.
-  const float sDzMinScrewTypes[sNumberOfScrewTypes] = {0, 6.78, 6.58, 15.98, 21.48, 0};
+  float sDzMinScrewTypes[sNumberOfScrewTypes];// = {0, 6.78, 6.58, 15.98, 21.48, 0};
   /// z shift of the screws. 0 means they are aligned with the scintillator.
-  const float sZShiftScrew = 0;
+  float sZShiftScrew;// = 0;
 
   /// Number of the different rod types.
   // static const int sNumberOfRodTypes;
   /// Width of the thinner part of the rod types.
-  const float sDxMinRodTypes[sNumberOfRodTypes] = {0.366, 0.344, 0.344, 0.344};
+  float sDxMinRodTypes[sNumberOfRodTypes];// = {0.366, 0.344, 0.344, 0.344};
   /// Width of the thicker part of the rod types.
-  const float sDxMaxRodTypes[sNumberOfRodTypes] = {0.536, 0.566, 0.566, 0.716};
+  float sDxMaxRodTypes[sNumberOfRodTypes];// = {0.536, 0.566, 0.566, 0.716};
   /// Height of the thinner part of the rod types.
-  const float sDyMinRodTypes[sNumberOfRodTypes] = {0.5, 0.8, 0.8, 0.8};
+  float sDyMinRodTypes[sNumberOfRodTypes];// = {0.5, 0.8, 0.8, 0.8};
   /// Height of the thicker part of the rod types.
-  const float sDyMaxRodTypes[sNumberOfRodTypes] = {0.9, 1.2, 1.2, 1.2};
+  float sDyMaxRodTypes[sNumberOfRodTypes];// = {0.9, 1.2, 1.2, 1.2};
   /// Length of the thinner part of the rod types.
-  const float sDzMaxRodTypes[sNumberOfRodTypes] = {12.5, 12.5, 22.5, 27.7};
+  float sDzMaxRodTypes[sNumberOfRodTypes];// = {12.5, 12.5, 22.5, 27.7};
   /// Length of the thicker part of the rod types.
-  const float sDzMinRodTypes[sNumberOfRodTypes] = {7.45, 7.45, 17.45, 22.65};
+  float sDzMinRodTypes[sNumberOfRodTypes];// = {7.45, 7.45, 17.45, 22.65};
   /// z shift of the rods. 0 means they are aligned with the scintillators.
-  const float sZShiftRod = -0.05;
+  float sZShiftRod;// = -0.05;
 
   // Strings for volume names, etc.
-  const std::string sScintillatorName = "SCINT";
-  const std::string sPlasticName = "PLAST";
-  const std::string sSectorName = "SECTOR";
-  const std::string sCellName = "CELL";
-  const std::string sScintillatorSectorName = sScintillatorName + sSectorName;
-  const std::string sScintillatorCellName = sScintillatorName + sCellName;
-  const std::string sPlasticSectorName = sPlasticName + sSectorName;
-  const std::string sPlasticCellName = sPlasticName + sCellName;
-  const std::string sPmtName = "PMT";
-  const std::string sFiberName = "FIBER";
-  const std::string sScrewName = "SCREW";
-  const std::string sScrewHolesCSName = "FV0SCREWHOLES";
-  const std::string sRodName = "ROD";
-  const std::string sRodHolesCSName = "FV0RODHOLES";
-  const std::string sContainerName = "CONTAINER";
+  TString sScintillatorName;// = "SCINT";
+  TString sPlasticName;// = "PLAST";
+  TString sSectorName;// = "SECTOR";
+  TString sCellName;// = "CELL";
+  TString sScintillatorSectorName;// = sScintillatorName + sSectorName;
+  TString sScintillatorCellName;// = sScintillatorName + sCellName;
+  TString sPlasticSectorName;// = sPlasticName + sSectorName;
+  TString sPlasticCellName;// = sPlasticName + sCellName;
+  TString sPmtName;// = "PMT";
+  TString sFiberName;// = "FIBER";
+  TString sScrewName;// = "SCREW";
+  TString sScrewHolesCSName;// = "FV0SCREWHOLES";
+  TString sRodName;// = "ROD";
+  TString sRodHolesCSName;// = "FV0RODHOLES";
+  TString sContainerName;// = "CONTAINER";
 
 private:
   /// Copy constructor.
@@ -350,7 +348,7 @@ private:
   /// \param  zThicknes   The thickness of the cells.
   /// \param  medium      The medium of the cells.
   /// \param  isSensitive Specifies if the cells are sensitive volumes.
-  void initializeCells(const std::string &cellType, const float zThickness, const TGeoMedium *medium, bool isSensitive);
+  void initializeCells(TString cellType, const float zThickness, const TGeoMedium *medium, bool isSensitive);
 
   /// Initialize scintillator cell volumes.
   void initializeScintCells();
@@ -421,13 +419,13 @@ private:
   /// Build sector assembly of specified type.
   /// \param  cellName  The type of the cells in the sector assembly.
   /// \return The sector assembly.
-  TGeoVolumeAssembly *buildSectorAssembly(const std::string &cellName) const;
+  TGeoVolumeAssembly *buildSectorAssembly(TString cellName) const;
 
   /// Build a sector of specified type and number.
   /// \param  cellType  The type of the cells in the sector.
   /// \param  iSector   The numbering of the sector.
   /// \return The sector.
-  TGeoVolumeAssembly *buildSector(const std::string &cellType, int iSector) const;
+  TGeoVolumeAssembly *buildSector(TString cellType, int iSector) const;
 
   /// Create the shape for a specified screw.
   /// \param  shapeName   The name of the shape.
@@ -436,7 +434,7 @@ private:
   /// \param  yEpsilon    Shrinks or expands the y dimensions of the screw shape.
   /// \param  zEpsilon    Shrinks or expands the z dimensions of the screw shape.
   /// \return The screw shape.
-  TGeoShape *createScrewShape(const std::string &shapeName, int screwTypeID, float xEpsilon = 0, float yEpsilon = 0,
+  TGeoShape *createScrewShape(TString shapeName, int screwTypeID, float xEpsilon = 0, float yEpsilon = 0,
                               float zEpsilon = 0) const;
 
   /// Create the shape for a specified rod.
@@ -446,7 +444,7 @@ private:
   /// \param  yEpsilon  Shrinks or expands the y dimensions of the rod shape.
   /// \param  zEpsilon  Shrinks or expands the z dimensions of the rod shape.
   /// \return The rod shape.
-  TGeoShape *createRodShape(const std::string &shapeName, int rodTypeID, float xEpsilon = 0, float yEpsilon = 0,
+  TGeoShape *createRodShape(TString shapeName, int rodTypeID, float xEpsilon = 0, float yEpsilon = 0,
                             float zEpsilon = 0) const;
 
   /// Helper function for creating and registering a TGeoTranslation.
@@ -455,7 +453,7 @@ private:
   /// \param  dy    Translation dy.
   /// \param  dz    Translation dz.
   /// \return The newly created and registered TGeoTranslation.
-  TGeoTranslation *createAndRegisterTrans(const std::string &name, double dx = 0, double dy = 0, double dz = 0) const;
+  TGeoTranslation *createAndRegisterTrans(TString name, double dx = 0, double dy = 0, double dz = 0) const;
 
   /// Helper function for creating and registering a TGeoRotation.
   /// \param  name  The name of the rotation.
@@ -463,19 +461,19 @@ private:
   /// \param  dy    Translation theta.
   /// \param  dz    Translation psi.
   /// \return The newly created and registered TGeoRotation.
-  TGeoRotation *createAndRegisterRot(const std::string &name, double phi = 0, double theta = 0, double psi = 0) const;
+  TGeoRotation *createAndRegisterRot(TString name, double phi = 0, double theta = 0, double psi = 0) const;
 
   /// Helper function for creating volume names.
   /// \param  volumeType  A string that will be included in the volume name.
   /// \param  number      A number, e.g. an ID, that is included in the name. A negative number is omitted.
   /// \return The volume name.
-  const std::string createVolumeName(const std::string &volumeType, int number = -1) const;
+  TString createVolumeName(TString volumeType, int number = -1) const;
 
   /// Utility methods
   void initializeCellCenters();    ///< To be called in constructor to initialize mCellCenter
   void initializeReadoutCenters(); ///< To be called in constructor to initialize mReadoutCenter
 
-  std::vector<std::string> mSensitiveVolumeNames; ///< The names of all the sensitive volumes
+  std::vector<TString> mSensitiveVolumeNames; ///< The names of all the sensitive volumes
 
   /// Average ring radii
   ///
@@ -516,7 +514,7 @@ private:
   std::vector<TGeoMedium *> mMediumRodTypes;   ///< Medium of the rod types
 
   const int mGeometryType;                          ///< The type of the geometry.
-  std::map<EGeoComponent, bool> mEnabledComponents; ///< Map of the enabled state of all Geometry components
+  bool mEnabledComponents[eNComponents];            ///< Map of the enabled state of all Geometry components
   TGeoMatrix *mLeftTransformation;                  ///< Transformation for the left part of the detector
   TGeoMatrix *mRightTransformation;                 ///< Transformation for the right part of the detector
 

@@ -53,21 +53,21 @@ protected:
   // T0+
   Int_t fIdSens1;            // Sensitive volume in FIT
   Int_t fSenseless;          // Senseless hit entry
-  TGraph *fPMTeff = nullptr; // pmt registration effeicincy
+  TGraph *fPMTeff;           // pmt registration effeicincy
 
-  AliFT0 *fFT0Det = nullptr;
-  AliFV0 *fFV0Det = nullptr;
+  AliFT0 *fFT0Det;
+  AliFV0 *fFV0Det;
 
-  float fHits[13] = {0}; // Array of hits information
+  float fHits[13]; // Array of hits information
 
   // V0+
   Int_t fIdV0Plus[8 * 5]; // Sensitive volumes [nSectors][nRings], if modified then update the construct in .cxx
 
 private:
-  const float fV0PlusnMeters = 72.6 * 0.01;   // From V0A
-  const float fV0PlusLightYield = 93.75;      // From V0A
-  const float fV0PlusLightAttenuation = 0.05; // From V0A
-  const float fV0PlusFibToPhot = 0.3;         // From V0A
+  float fV0PlusnMeters;
+  float fV0PlusLightYield;
+  float fV0PlusLightAttenuation;
+  float fV0PlusFibToPhot;
 
   ClassDef(AliFITv9, 2) // Class for FIT version 6
 };
