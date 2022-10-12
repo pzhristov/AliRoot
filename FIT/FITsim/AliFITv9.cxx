@@ -274,7 +274,7 @@ void AliFITv9::Init()
   fIdSens1 = TVirtualMC::GetMC()->VolId("0REG"); // <--- 0REG is sensitive volume Id?
 
   TString volSensitiveName;
-  for (int iCell = 0; iCell < AliFV0::sNumberOfCellRings; iCell++)
+  for (int iCell = 0; iCell < AliFV0::sNumberOfCellRings*2; iCell++)
   {
     volSensitiveName = fFV0Det->getSensitiveVolumeName(iCell);
     if (volSensitiveName.IsWhitespace())
