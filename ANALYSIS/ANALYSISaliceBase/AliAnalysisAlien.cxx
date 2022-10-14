@@ -4164,6 +4164,9 @@ void AliAnalysisAlien::WriteAnalysisMacro(Long64_t nentries, Long64_t firstentry
       // Reset existing include path
       out << "// Reset existing include path and add current directory first in the search" << endl;
       out << "   gSystem->SetIncludePath(\"-I.\");" << endl;
+      // Only load libraries manually for ROOT 5. In ROOT 6, loading libraries
+      // multiple times leads to segfaults.
+#if ROOT_VERSION_CODE < ROOT_VERSION(5, 99, 0)
       if (!fExecutableCommand.Contains("aliroot")) {
          out << "// load base root libraries" << endl;
          out << "   gSystem->Load(\"libTree\");" << endl;
@@ -4306,6 +4309,7 @@ void AliAnalysisAlien::WriteAnalysisMacro(Long64_t nentries, Long64_t firstentry
          }
          delete list;
       }
+#endif
       out << endl;
       out << "// analysis source to be compiled at runtime (if any)" << endl;
       if (fAnalysisSource.Length()) {
@@ -4576,6 +4580,9 @@ void AliAnalysisAlien::WriteMergingMacro()
       // Reset existing include path
       out << "// Reset existing include path and add current directory first in the search" << endl;
       out << "   gSystem->SetIncludePath(\"-I.\");" << endl;
+      // Only load libraries manually for ROOT 5. In ROOT 6, loading libraries
+      // multiple times leads to segfaults.
+#if ROOT_VERSION_CODE < ROOT_VERSION(5, 99, 0)
       if (!fExecutableCommand.Contains("aliroot")) {
          out << "// load base root libraries" << endl;
          out << "   gSystem->Load(\"libTree\");" << endl;
@@ -4717,6 +4724,7 @@ void AliAnalysisAlien::WriteMergingMacro()
          }
          if (list) delete list;
       }
+#endif
       out << endl;
       out << "// Analysis source to be compiled at runtime (if any)" << endl;
       if (fAnalysisSource.Length()) {
