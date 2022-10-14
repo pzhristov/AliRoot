@@ -17,6 +17,7 @@
 
 #include <Compression.h>		
 #include "Riostream.h"
+#include <RVersion.h>
 #include "TEnv.h"
 #include "TKey.h"
 #include "TBits.h"
