@@ -42,7 +42,7 @@ AliFV0::AliFV0(EGeoType initType) :
   sXGlobal = 0;                         ///< Global x-position of the geometrical center of scintillators
   sYGlobal = 0;                         ///< Global y-position of the geometrical center of scintillators
                                                     // FT0 starts at z=328
-  sZGlobal = 320 - sDzScintillator / 2; ///< Global z-pos of geometrical center of scintillators
+  sZGlobal = 323.0 - sDzScintillator/2; ///< Global z-pos of geometrical center of scintillators - added  3 cm to 320.0. for 12/21 survey aliment
   sDxHalvesSeparation = 0;              ///< Separation between the left and right side of the detector
   sDyHalvesSeparation = 0;              ///< y-position of the right detector part relative to the left part
   sDzHalvesSeparation = 0;              ///< z-position of the right detector part relative to the left part

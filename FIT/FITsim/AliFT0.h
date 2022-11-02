@@ -57,7 +57,7 @@ public:
   //   const int Nchannels = o2::ft0::Constants::sNCHANNELS_PM; // number of PM channels
   const int Nchannels = 208;                     // number of sensors
   const int Nsensors = 208;                      // number of sensors
-  const float ZdetA = 335.5;                     // Z position of center volume  on A side
+  const float ZdetA = 338.5;                     // Z position of center volume  on A side - adding 3 cm to 335.5 for 12/21 aliment
   const float ZdetC = 82;                        //  Z position of center volume on C side
   const float ChannelWidth = 13.02;              // channel width in ps
   const float ChannelWidthInverse = 0.076804916; // channel width in ps inverse
