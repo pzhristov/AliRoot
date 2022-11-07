@@ -751,6 +751,10 @@ Int_t AliITStrackerMI::PropagateBack(AliESDEvent *event) {
        dst2 = dxs*dxs + dys*dys;
        double dxy = TMath::Sqrt(dst2), arg = crvh*dxy;
        if (arg > kWatchStep) { // correct circular part for arc/segment factor
+         if (arg > 1.0) {
+           // Clamp "arg" to be <=1.0, to avoid errors from TMath::Asin below.
+           arg = 1.0;
+         }
 	 double dst = 1./crvh*TMath::ASin(arg);
 	 dst2 *= dst*dst;
        }
