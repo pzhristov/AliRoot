@@ -22,7 +22,10 @@ if [ "$RUNG3" = "1" ]; then
   rm -rf *.root *.dat *.log fort* hlt hough raw* recraw/*.root recraw/*.log
   aliroot -b -q  sim.C\($NEVENTS,\""$G3CONFIG"\"\)  2>&1 | tee sim.log
   aliroot -b -q rec.C      2>&1 | tee rec.log
-  aliroot -b -q ${ALICE_ROOT}/STEER/macros/CheckESD.C  2>&1 | tee check.log
+  if [ -n "$ALICE_PHYSICS" ]; then
+    # This macro needs AliPhysics to work.
+    aliroot -b -q "$ALICE_ROOT/STEER/macros/CheckESD.C" 2>&1 | tee check.log
+  fi
   rm -fr $G3OUTDIR
   mkdir $G3OUTDIR
   mv *.root *.log GRP $G3OUTDIR
@@ -33,7 +36,10 @@ if [ "$RUNG4" = "1" ]; then
   rm -rf *.root *.dat *.log fort* hlt hough raw* recraw/*.root recraw/*.log
   aliroot -b -q  simG4.C\($NEVENTS,\""$G4CONFIG"\"\)  2>&1 | tee sim.log
   aliroot -b -q rec.C      2>&1 | tee rec.log
-  aliroot -b -q ${ALICE_ROOT}/STEER/macros/CheckESD.C  2>&1 | tee check.log
+  if [ -n "$ALICE_PHYSICS" ]; then
+    # This macro needs AliPhysics to work.
+    aliroot -b -q "$ALICE_ROOT/STEER/macros/CheckESD.C" 2>&1 | tee check.log
+  fi
   rm -fr $G4OUTDIR
   mkdir $G4OUTDIR
   mv *.root *.log *.rndm GRP $G4OUTDIR
