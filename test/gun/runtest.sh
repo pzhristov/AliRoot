@@ -15,5 +15,7 @@ fi
 cd recraw
 ln -s ../raw.root
 aliroot -b -q rec.C      2>&1 | tee rec.log
-aliroot -b -q  2>&1 aod.C | tee aod.log
-
+if [ -n "$ALICE_PHYSICS" ]; then
+  # This macro needs AliPhysics to work.
+  aliroot -b -q  2>&1 aod.C | tee aod.log
+fi
