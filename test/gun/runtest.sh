@@ -7,10 +7,10 @@ mv syswatch.log simwatch.log
 aliroot -b -q rec.C      2>&1 | tee rec.log
 mv syswatch.log recwatch.log
 if [ -n "$ALICE_PHYSICS" ]; then
-  # For this macro, we need OADB, which is part of AliPhysics.
+  # These macros need AliPhysics to work.
   aliroot -b -q "$ALICE_ROOT/STEER/macros/CheckESD.C" 2>&1 | tee check.log
+  aliroot -b -q aod.C 2>&1 | tee aod.log
 fi
-aliroot -b -q aod.C 2>&1 | tee aod.log
 
 cd recraw
 ln -s ../raw.root
