@@ -724,3 +724,21 @@ HMPID  9  1.e-5 1.e-5 1.e-4  -1.   1.e-4 -1.   -1.    5.e-5 5.e-5 -1.  -1   -1  
 VZERO  4   3.e-5 3.e-5 3.e-5 3.e-5 1.e-3 3.e-5 3.e-5 3.e-5 3.e-5 -1.  -1   -1   -1   -1   1    -1   1    -1   -1   -1   -1   -1
 * V0A Scintillator
 VZERO  5   3.e-5 3.e-5 3.e-5 3.e-5 1.e-3 3.e-5 3.e-5 3.e-5 3.e-5 -1.  -1   -1   -1   -1   1    -1   1    -1   -1   -1   -1   -1
+
+* FV0
+* ===
+*
+*    Med  GAM   ELEC  NHAD  CHAD  MUON  EBREM MUHAB EDEL  MUDEL MUPA  ANNI  BREM  COMP  DCAY  DRAY  HADR  LOSS  MULS  PAIR  PHOT  RAYL  STRA  CKOV
+* Scintillator
+FV0  8    1e-3  1e-3  1e-3  1e-3  1e-3  1e-3  1e-3  1e-3  1e-3  -1.   1     1     1     1     1     1     1     1     1     1     1     -1    1
+
+* FT0
+* ===
+*
+*    Med GAM   ELEC  NHAD  CHAD  MUON  EBREM MUHAB EDEL  MUDEL MUPA  ANNI  BREM  COMP  DCAY  DRAY  HADR  LOSS  MULS  PAIR  PHOT  RAYL STRA CKOV
+* Radiator optical glass
+FT0 16 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4  -1.   1     1     1     1     1     1     2     1     1     1     1    -1   1
+* PhotoCathode 
+FT0 19 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4 5e-4  -1.   1     1     1     1     1     1     2     1     1     1     1    -1   1
+
+
