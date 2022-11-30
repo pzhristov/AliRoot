@@ -1079,7 +1079,7 @@ Int_t  AliGenPythia::GenerateMB()
 
   // Select events with fragmentation photon, decay photon, pi0, eta or other hadrons going to PHOS or EMCAL or central barrel,
   // implemented primaryly for kPyJets, but extended to any kind of process.
-  if ((fFragPhotonInCalo || fPi0InCalo || fEtaInCalo || fEleInCalo || fHadronInCalo || fDecayPhotonInCalo) &&
+  if ((fFragPhotonInCalo || fPi0InCalo || fEtaInCalo || fEleInCalo || fHadronInCalo || fDecayPhotonInCalo || fPhotonInCalo) &&
       (fCheckPHOS || fCheckEMCAL || fCheckBarrel || fCheckBarrelCalos) ) {
     Bool_t ok = TriggerOnSelectedParticles(np);
 
