@@ -28,7 +28,7 @@ jobs:
           TAG: ${{ github.event.inputs.tag }}
 
       - name: Tag and create release
-        uses: ncipollo/release-action@v1
+        uses: alisw/release-action@v1
         with:
           name: ${{ github.event.inputs.tag }}
           # The tag is created from the given commit if it does not exist yet.
@@ -36,4 +36,7 @@ jobs:
           commit: ${{ steps.decide_release_branch.outputs.branch }}
           draft: false
           prerelease: false
-          generateReleaseNotes: true
+          # GitHub often chooses the wrong tag to compare against for
+          # generating release notes -- it'll generate a diff e.g. between
+          # v5-09-56-patches and master.
+          generateReleaseNotes: false
