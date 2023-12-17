@@ -345,8 +345,8 @@ int AliHLTDataBuffer::SetSegments(AliHLTUInt8_t* pTgt, AliHLTComponentBlockData*
 	  // pointer. In either case it is 'ignored' and set to the beginning of the
 	  // data buffer
 	  if (arrayBlockData[i].fPtr==NULL ||
-	      arrayBlockData[i].fPtr==*fpBuffer) {
-	    arrayBlockData[i].fPtr=*fpBuffer;
+	      arrayBlockData[i].fPtr==(void*)*fpBuffer) {
+	    arrayBlockData[i].fPtr=(void*)*fpBuffer;
 	    if ((arrayBlockData[i].fOffset+arrayBlockData[i].fSize<=fpBuffer->GetUsedSize()) ||
 		((arrayBlockData[i].fOffset==~(AliHLTUInt32_t)0) && arrayBlockData[i].fSize==0)) {
 	      segment.fSegmentOffset=arrayBlockData[i].fOffset;
