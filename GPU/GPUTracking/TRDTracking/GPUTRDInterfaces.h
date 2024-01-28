@@ -54,19 +54,19 @@ class trackInterface<AliExternalTrackParam> : public AliExternalTrackParam
 {
 
  public:
-  trackInterface<AliExternalTrackParam>() : AliExternalTrackParam(){};
-  trackInterface<AliExternalTrackParam>(const trackInterface<AliExternalTrackParam>& param) : AliExternalTrackParam(param){};
-  trackInterface<AliExternalTrackParam>(const AliExternalTrackParam& param) CON_DELETE;
-  trackInterface<AliExternalTrackParam>(const AliHLTExternalTrackParam& param) : AliExternalTrackParam()
+  trackInterface() : AliExternalTrackParam(){};
+  trackInterface(const trackInterface<AliExternalTrackParam>& param) : AliExternalTrackParam(param){};
+  trackInterface(const AliExternalTrackParam& param) CON_DELETE;
+  trackInterface(const AliHLTExternalTrackParam& param) : AliExternalTrackParam()
   {
     float paramTmp[5] = {param.fY, param.fZ, param.fSinPhi, param.fTgl, param.fq1Pt};
     Set(param.fX, param.fAlpha, paramTmp, param.fC);
   }
-  trackInterface<AliExternalTrackParam>(const GPUTPCGMMergedTrack& trk) : AliExternalTrackParam()
+  trackInterface(const GPUTPCGMMergedTrack& trk) : AliExternalTrackParam()
   {
     Set(trk.GetParam().GetX(), trk.GetAlpha(), trk.GetParam().GetPar(), trk.GetParam().GetCov());
   }
-  trackInterface<AliExternalTrackParam>(const gputpcgmmergertypes::GPUTPCOuterParam& param) : AliExternalTrackParam()
+  trackInterface(const gputpcgmmergertypes::GPUTPCOuterParam& param) : AliExternalTrackParam()
   {
     Set(param.X, param.alpha, param.P, param.C);
   }
@@ -106,9 +106,9 @@ class propagatorInterface<AliTrackerBase> : public AliTrackerBase
 
  public:
   typedef void propagatorParam;
-  propagatorInterface<AliTrackerBase>(const propagatorParam* = nullptr) : AliTrackerBase(), mParam(nullptr){};
-  propagatorInterface<AliTrackerBase>(const propagatorInterface<AliTrackerBase>&) CON_DELETE;
-  propagatorInterface<AliTrackerBase>& operator=(const propagatorInterface<AliTrackerBase>&) CON_DELETE;
+  propagatorInterface(const propagatorParam* = nullptr) : AliTrackerBase(), mParam(nullptr){};
+  propagatorInterface(const propagatorInterface<AliTrackerBase>&) CON_DELETE;
+  propagatorInterface& operator=(const propagatorInterface<AliTrackerBase>&) CON_DELETE;
 
   bool propagateToX(float x, float maxSnp, float maxStep) { return PropagateTrackToBxByBz(mParam, x, 0.13957, maxStep, false, maxSnp); }
   int getPropagatedYZ(float x, float& projY, float& projZ)
@@ -152,9 +152,9 @@ class propagatorInterface<o2::base::Propagator>
 {
  public:
   typedef o2::base::Propagator propagatorParam;
-  GPUd() propagatorInterface<o2::base::Propagator>(const propagatorParam* prop) : mProp(prop){};
-  GPUd() propagatorInterface<o2::base::Propagator>(const propagatorInterface<o2::base::Propagator>&) = delete;
-  GPUd() propagatorInterface<o2::base::Propagator>& operator=(const propagatorInterface<o2::base::Propagator>&) = delete;
+  GPUd() propagatorInterface(const propagatorParam* prop) : mProp(prop){};
+  GPUd() propagatorInterface(const propagatorInterface<o2::base::Propagator>&) = delete;
+  GPUd() propagatorInterface& operator=(const propagatorInterface<o2::base::Propagator>&) = delete;
 
   GPUdi() bool propagateToX(float x, float maxSnp, float maxStep) { return mProp->PropagateToXBxByBz(*mParam, x, maxSnp, maxStep); }
   GPUdi() int getPropagatedYZ(float x, float& projY, float& projZ) { return static_cast<int>(mParam->getYZAt(x, mProp->getNominalBz(), projY, projZ)); }
@@ -211,10 +211,10 @@ template <>
 class trackInterface<GPUTPCGMTrackParam> : public GPUTPCGMTrackParam
 {
  public:
-  GPUdDefault() trackInterface<GPUTPCGMTrackParam>() CON_DEFAULT;
-  GPUd() trackInterface<GPUTPCGMTrackParam>(const GPUTPCGMTrackParam& param) CON_DELETE;
-  GPUd() trackInterface<GPUTPCGMTrackParam>(const GPUTPCGMMergedTrack& trk) : GPUTPCGMTrackParam(trk.GetParam()), mAlpha(trk.GetAlpha()) {}
-  GPUd() trackInterface<GPUTPCGMTrackParam>(const gputpcgmmergertypes::GPUTPCOuterParam& param) : GPUTPCGMTrackParam(), mAlpha(param.alpha)
+  GPUdDefault() trackInterface() CON_DEFAULT;
+  GPUd() trackInterface(const GPUTPCGMTrackParam& param) CON_DELETE;
+  GPUd() trackInterface(const GPUTPCGMMergedTrack& trk) : GPUTPCGMTrackParam(trk.GetParam()), mAlpha(trk.GetAlpha()) {}
+  GPUd() trackInterface(const gputpcgmmergertypes::GPUTPCOuterParam& param) : GPUTPCGMTrackParam(), mAlpha(param.alpha)
   {
     SetX(param.X);
     for (int i = 0; i < 5; i++) {
@@ -225,11 +225,11 @@ class trackInterface<GPUTPCGMTrackParam> : public GPUTPCGMTrackParam
     }
   };
 #ifdef GPUCA_NOCOMPAT
-  GPUdDefault() trackInterface<GPUTPCGMTrackParam>(const trackInterface<GPUTPCGMTrackParam>& param) = default;
-  GPUdDefault() trackInterface<GPUTPCGMTrackParam>& operator=(const trackInterface<GPUTPCGMTrackParam>& param) = default;
+  GPUdDefault() trackInterface(const trackInterface<GPUTPCGMTrackParam>& param) = default;
+  GPUdDefault() trackInterface& operator=(const trackInterface<GPUTPCGMTrackParam>& param) = default;
 #endif
 #ifdef GPUCA_ALIROOT_LIB
-  trackInterface<GPUTPCGMTrackParam>(const AliHLTExternalTrackParam& param) : GPUTPCGMTrackParam(), mAlpha(param.fAlpha)
+  trackInterface(const AliHLTExternalTrackParam& param) : GPUTPCGMTrackParam(), mAlpha(param.fAlpha)
   {
     SetX(param.fX);
     SetPar(0, param.fY);
@@ -243,7 +243,7 @@ class trackInterface<GPUTPCGMTrackParam> : public GPUTPCGMTrackParam
   };
 #endif
 #if defined(GPUCA_HAVE_O2HEADERS)
-  GPUd() trackInterface<GPUTPCGMTrackParam>(const o2::dataformats::TrackTPCITS& param) : GPUTPCGMTrackParam(), mAlpha(param.getParamOut().getAlpha())
+  GPUd() trackInterface(const o2::dataformats::TrackTPCITS& param) : GPUTPCGMTrackParam(), mAlpha(param.getParamOut().getAlpha())
   {
     SetX(param.getParamOut().getX());
     SetPar(0, param.getParamOut().getY());
@@ -255,7 +255,7 @@ class trackInterface<GPUTPCGMTrackParam> : public GPUTPCGMTrackParam
       SetCov(i, param.getParamOut().getCov()[i]);
     }
   }
-  GPUd() trackInterface<GPUTPCGMTrackParam>(const o2::tpc::TrackTPC& param) : GPUTPCGMTrackParam(), mAlpha(param.getParamOut().getAlpha())
+  GPUd() trackInterface(const o2::tpc::TrackTPC& param) : GPUTPCGMTrackParam(), mAlpha(param.getParamOut().getAlpha())
   {
     SetX(param.getParamOut().getX());
     SetPar(0, param.getParamOut().getY());
@@ -312,7 +312,7 @@ class propagatorInterface<GPUTPCGMPropagator> : public GPUTPCGMPropagator
 {
  public:
   typedef GPUTPCGMPolynomialField propagatorParam;
-  GPUd() propagatorInterface<GPUTPCGMPropagator>(const propagatorParam* pField) : GPUTPCGMPropagator(), mTrack(nullptr)
+  GPUd() propagatorInterface(const propagatorParam* pField) : GPUTPCGMPropagator(), mTrack(nullptr)
   {
     this->SetMaterialTPC();
     this->SetPolynomialField(pField);
@@ -321,8 +321,8 @@ class propagatorInterface<GPUTPCGMPropagator> : public GPUTPCGMPropagator
     this->SetFitInProjections(0);
     this->SelectFieldRegion(GPUTPCGMPropagator::TRD);
   };
-  propagatorInterface<GPUTPCGMPropagator>(const propagatorInterface<GPUTPCGMPropagator>&) CON_DELETE;
-  propagatorInterface<GPUTPCGMPropagator>& operator=(const propagatorInterface<GPUTPCGMPropagator>&) CON_DELETE;
+  propagatorInterface(const propagatorInterface<GPUTPCGMPropagator>&) CON_DELETE;
+  propagatorInterface& operator=(const propagatorInterface<GPUTPCGMPropagator>&) CON_DELETE;
   GPUd() void setTrack(trackInterface<GPUTPCGMTrackParam>* trk)
   {
     SetTrack(trk, trk->getAlpha());
