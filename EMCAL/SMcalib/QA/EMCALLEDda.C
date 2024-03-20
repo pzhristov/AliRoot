@@ -21,7 +21,7 @@ void EMCALLEDda(const int year=12, const int runno = 191741, const int streamno=
   int nevents=0;
 
   Char_t fname[256];
-  sprintf(fname, "%02d%09d0%02d.%d.root", year, runno, streamno, segno);
+  snprintf(fname, 256, "%02d%09d0%02d.%d.root", year, runno, streamno, segno);
   AliRawReader *rawReader = NULL;
   rawReader = new AliRawReaderRoot(fname);
 
@@ -79,8 +79,8 @@ void EMCALLEDda(const int year=12, const int runno = 191741, const int streamno=
   
   // create output histograms and write to file
   Char_t outname[256];
-  sprintf(outname, "LED_%09d.root",runno);
-  //sprintf(outname, "EMCALLED.root");
+  snprintf(outname, 256, "LED_%09d.root",runno);
+  //snprintf(outname, 256, "EMCALLED.root");
 
   TFile destFile(outname, "update");
   destFile.cd();

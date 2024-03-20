@@ -56,7 +56,7 @@ void ShowSPDESDs (Int_t RunStart, Int_t RunStop) {
   // Loop over runs ...
   for (Int_t run=RunStart; run<RunStop+1; run++) {
 
-    sprintf(fileName,"%s/AliESDsRAW_%04d.root",dir,run);
+    snprintf(fileName,256,"%s/AliESDsRAW_%04d.root",dir,run);
 
     // Open input file and get the TTree
     TFile inFile(fileName, "READ");

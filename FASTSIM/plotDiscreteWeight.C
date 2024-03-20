@@ -43,7 +43,7 @@ plotDiscreteWeightMacro(Int_t len=5)
   l1a->SetFillStyle(0);
   l1a->SetBorderSize(0);
   Char_t label[100];
-  sprintf(label,"L = %d fm",len);
+  snprintf(label,100,"L = %d fm",len);
   l1a->AddEntry(gq,label,"");
   l1a->AddEntry(gq,"quark","pl");
   l1a->AddEntry(gg,"gluon","pl");

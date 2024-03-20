@@ -15,7 +15,7 @@ void MakePHOSBadMaps(){
   TFile * fLHC10b = TFile::Open("alien:///alice/cern.ch/user/p/prsnko/BadMaps/BadMap_LHC10b.root") ;
   if(fLHC10b->IsOpen()){
     for(Int_t mod=1;mod<4; mod++){
-      sprintf(key,"PHOS_BadMap_mod%d",mod) ;
+      snprintf(key,55,"PHOS_BadMap_mod%d",mod) ;
       TH2I * h = (TH2I*)fLHC10b->Get(key) ;
       if(!h)
         lhc10b->AddAt(0x0,mod);
@@ -31,7 +31,7 @@ void MakePHOSBadMaps(){
   TFile * fLHC10h1 = TFile::Open("alien:///alice/cern.ch/user/p/prsnko/BadMaps/BadMap_LHC10h_period1.root") ;
   if(fLHC10h1->IsOpen()){
     for(Int_t mod=1;mod<4; mod++){
-      sprintf(key,"PHOS_BadMap_mod%d",mod) ;
+      snprintf(key,55,"PHOS_BadMap_mod%d",mod) ;
       TH2I * h = (TH2I*)fLHC10h1->Get(key) ;
       if(!h)
         lhc10h1->AddAt(0x0,mod);
@@ -45,7 +45,7 @@ void MakePHOSBadMaps(){
   TFile * fLHC10h234 = TFile::Open("alien:///alice/cern.ch/user/p/prsnko/BadMaps/BadMap_LHC10h_period234.root") ;
   if(fLHC10h234->IsOpen()){
     for(Int_t mod=1;mod<4; mod++){
-      sprintf(key,"PHOS_BadMap_mod%d",mod) ;
+      snprintf(key,55,"PHOS_BadMap_mod%d",mod) ;
       TH2I * h = (TH2I*)fLHC10h234->Get(key) ;
       if(!h)
         lhc10h234->AddAt(0x0,mod);

@@ -165,7 +165,7 @@ Bool_t AliAnalysisGoodies::Alien2Local(const TString collectionNameIn, const TSt
     TString dir = localDir + runNumber ; 
     dir += evtsNumber ;
     char line[1024] ; 
-    sprintf(line, ".! mkdir -p %s", dir.Data()) ; 
+    snprintf(line, 1024, ".! mkdir -p %s", dir.Data()) ; 
     gROOT->ProcessLine(line) ; 
     printf("***************************%s\n", line) ; 
     TEntryList * list = collectionIn->GetEventList("") ; 
@@ -240,10 +240,10 @@ AliAnalysisDataContainer *  AliAnalysisGoodies::ConnectOuput(AliAnalysisTask * t
 	aodHandler->SetOutputFileName(Form("%s_0.root",task->GetName())) ; 
 	fAmgr->SetOutputEventHandler(aodHandler) ;
       } 
-      sprintf(filename, "default") ; 
+      snprintf(filename, 20, "default") ; 
     } 
     else 
-      sprintf(filename, "%s_%d.root",task->GetName(), index) ; 
+      snprintf(filename, 20, "%s_%d.root",task->GetName(), index) ; 
     
     AliAnalysisDataContainer * taskOuput = 0x0 ;
     if ( fAmgr->GetOutputs() ) 
@@ -406,9 +406,9 @@ Bool_t AliAnalysisGoodies::Merge(const char * collectionFile, const char * subFi
   while ( (turl = result->GetKey(index, "turl")) ) {
     char file[2048] ;
     if ( subFile )
-      sprintf(file, "%s#%s", turl, subFile) ; 
+      snprintf(file, 2048, "%s#%s", turl, subFile) ; 
     else 
-      sprintf(file, "%s", turl) ; 
+      snprintf(file, 2048, "%s", turl) ; 
       
     printf("%s\n", file) ; 
     merger.AddFile(file) ; 
@@ -810,11 +810,11 @@ Bool_t AliAnalysisGoodies::Register( const char * lfndir, const char * pfndir, c
       break;
     char lfn[1024] ; 
     
-    sprintf(lfn, "%s/%s", lfndir, fileName) ; 
+    snprintf(lfn, 1024, "%s/%s", lfndir, fileName) ; 
     
     char pfn[1024] ; 
     
-    sprintf(pfn, "castor://Alice::CERN::Castor2/%s/%s", pfndir, fileName) ;  
+    snprintf(pfn, 1024, "castor://Alice::CERN::Castor2/%s/%s", pfndir, fileName) ;  
         
     printf("Register %s as %s\n", pfn, lfn) ; 
     

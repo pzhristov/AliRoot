@@ -168,7 +168,7 @@ Int_t AliTRDdisplayDigits3D(Int_t event = 0, Int_t thresh = 4
   TNode     *module   = 0;
   while ((module = (TNode *) next())) {
     Char_t ch[100];
-    sprintf(ch,"%s\n",module->GetTitle());
+    snprintf(ch,100,"%s\n",module->GetTitle());
     if ((ch[0] == 'T') && ((ch[1] == 'R') || (ch[1] == 'P'))) {
       module->SetVisibility( 3);
     }

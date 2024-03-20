@@ -118,7 +118,7 @@ void PlotSDDRawData(Int_t nrun,
 
   TGrid::Connect("alien:",0,0,"t");
   Char_t filnam[200];
-  sprintf(filnam,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
+  snprintf(filnam,200,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
   printf("Open file %s\n",filnam);
   PlotSDDRawData(filnam,nDDL,firstEv,lastEv);
 }

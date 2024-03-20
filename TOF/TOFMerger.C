@@ -54,7 +54,7 @@ void TOFMerger (Int_t evNumber1=0, Int_t evNumber2=0, Int_t ibg=0, Int_t bgr=10)
 	gAlice->SDigits2Digits("TOF");
 
 	char hname[30];
-	sprintf(hname,"TreeD%d",nev);
+	snprintf(hname,30,"TreeD%d",nev);
 	//	gAlice->TreeD()->Write(hname);
 	//	cout<<hname<<" was written in file"<<file<<endl;
 	//	gAlice->TreeD()->Print();

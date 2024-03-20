@@ -215,15 +215,15 @@ void MonitorGui(AliTPCMonitor */*fMon*/)
   for(Int_t i = 0; i<36; i++)
     {
       char nameb[256] ; 
-      if(i<18)sprintf(nameb,"Sector %i",i);
-      else    sprintf(nameb,"Sector %i",i-18);
+      if(i<18)snprintf(nameb,256,"Sector %i",i);
+      else    snprintf(nameb,256,"Sector %i",i-18);
       fTextButton = new TGTextButton(fFrameMain,nameb);
       fFrameMain->AddFrame(fTextButton, new TGLayoutHints(kLHintsLeft | kLHintsTop,5,5,5,5));
       if(i<18)fTextButton->MoveResize((Int_t)xfirst1,(Int_t)(yfirst     +i*ysize),(UInt_t)xsize,(UInt_t)ysize);
       else    fTextButton->MoveResize((Int_t)xfirst2,(Int_t)(yfirst+(i-18)*ysize),(UInt_t)xsize,(UInt_t)ysize);
       if(i<18){ side = 0; sector = i;   }
       else    { side = 1; sector = i-18;}
-      char bef[50]; sprintf(bef,"ProcessSector(%i,%i)",side,sector);
+      char bef[50]; snprintf(bef,50,"ProcessSector(%i,%i)",side,sector);
       fTextButton->SetCommand(bef);
       fFrameArr->Add(fTextButton);
     }
@@ -293,7 +293,7 @@ void NextEvent()
   fMon->ResizeCanv();
   fMon->ProcessEvent();
   fMon->SetProcNextEvent(0);
-  char tenttext[20] ; sprintf(tenttext,"%i",fMon->GetEventID()+1);
+  char tenttext[20] ; snprintf(tenttext,20,"%i",fMon->GetEventID()+1);
   fTextEvId->SetText(tenttext);
 }
 
@@ -462,7 +462,7 @@ void SetStyle()
 void ReadMe()
 {
 //  AliTPCMonitorEditor *ed = new AliTPCMonitorEditor(fFrameMain, 700, 400);
-//  char nameread[256]; sprintf(nameread,"%s/TPC/Monitor/TPCMonitorReadMe.txt",gSystem->Getenv("ALICE_ROOT"));
+//  char nameread[256]; snprintf(nameread,256,"%s/TPC/Monitor/TPCMonitorReadMe.txt",gSystem->Getenv("ALICE_ROOT"));
 //  ed->LoadFile(nameread);
 //  ed->Popup();
 }

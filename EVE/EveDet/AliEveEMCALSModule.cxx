@@ -263,7 +263,7 @@ void AliEveEMCALSModule::UpdateQuads(Bool_t iHits, Bool_t iDigits, Bool_t iClust
      TEvePointSet* points = fEMCALData->GetPointSetData();
      char form[1000];
      if(points){
-     sprintf(form,"N=%d", points->Size());
+     snprintf(form,1000,"N=%d", points->Size());
      points->SetTitle(form);
      points->SetMarkerSize(.5);
      points->SetMarkerColor((Color_t)2);

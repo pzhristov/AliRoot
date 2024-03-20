@@ -340,7 +340,7 @@ TString AliHLTDomainEntry::AsString() const
   if (fUseSpec)
   {
     char num[16];
-    sprintf(num, "0x%8.8X", fSpecification);
+    snprintf(num, 16, "0x%8.8X", fSpecification);
     str += num;
   }
   else

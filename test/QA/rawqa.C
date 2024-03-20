@@ -66,7 +66,7 @@ void rawqa(const Int_t runNumber, Int_t maxFiles = 10, const char* year = "08")
 	   // get the list of files from the local current directory 
 	    local = kTRUE ; 
 	    char line[100] ; 
-	    sprintf(line, ".! ls %s*.root > tempo.txt", pattern.Data()) ; 
+	    snprintf(line,100, ".! ls %s*.root > tempo.txt", pattern.Data()) ; 
 	    gROOT->ProcessLine(line) ;
 	}
 	
@@ -105,9 +105,9 @@ void rawqa(const Int_t runNumber, Int_t maxFiles = 10, const char* year = "08")
                 filesProcessed++ ;
 		char input[200] ; 
 		if (local) 
-			sprintf(input, "%s", fileName.Data()) ; 
+			snprintf(input,200, "%s", fileName.Data()) ; 
 		else 
-			sprintf(input, "%s", result->GetKey(file, "turl")); 
+			snprintf(input,200, "%s", result->GetKey(file, "turl")); 
 		AliInfo(Form("Proccessing file # %d --> %s", file, input)) ;
 		AliLog::Flush();
 		// check which detectors are present 

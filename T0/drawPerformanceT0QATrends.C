@@ -74,7 +74,7 @@ TGraphErrors * MakeGraphSparse(TTree * tree, const Char_t * expr="mean-fdelta:ru
   // set the bins for the x-axis
   Char_t xName[50];
   for(Int_t i=0;i<count;i++){
-    sprintf(xName,"%d",Int_t(vrun[i]));
+    snprintf(xName,50,"%d",Int_t(vrun[i]));
     graphNew->GetXaxis()->SetBinLabel(i+1,xName);
   }
   graphNew->GetHistogram()->SetTitle("");
@@ -219,7 +219,7 @@ drawPerformanceT0QATrends(const char* inFile = "trending.root", const char* runT
   char name[200];
 
   for(int ipmt=1;ipmt<=kNPMTs; ipmt++){
-    sprintf(name,"amplPMT%d:run",ipmt);
+    snprintf(name,200,"amplPMT%d:run",ipmt);
     gr = MakeGraphSparse(tree,name,"");
     gr->SetMarkerStyle(20);
     gr->SetMarkerSize(1.0);
@@ -246,11 +246,11 @@ drawPerformanceT0QATrends(const char* inFile = "trending.root", const char* runT
   }
   /****** Mean Time in PMT ******/
   for(int ipmt=1;ipmt<=kNPMTs; ipmt++){
-    sprintf(name,"timePMT%d:run",ipmt);
+    snprintf(name,200,"timePMT%d:run",ipmt);
     gr = MakeGraphSparse(tree,name,"");
 
 
-    sprintf(name,"timeDelayPMT%d:run",ipmt);
+    snprintf(name,200,"timeDelayPMT%d:run",ipmt);
     TGraphErrors *grDelay = MakeGraphSparse(tree,name,"");
     //regular run
     int nRuns = gr->GetN();

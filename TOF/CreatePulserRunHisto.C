@@ -108,7 +108,7 @@ void CreatePulserRunHisto(Int_t iLDC=0){
   TCanvas *c = new TCanvas("c","c",-2,30,500,500);
   htofPulser->Draw();
   char filename[100];
-  sprintf(filename,"$ALICE_ROOT/TOF/ShuttleInput/TOFoutPulserLDC_%02i.root",iLDC);
+  snprintf(filename,100,"$ALICE_ROOT/TOF/ShuttleInput/TOFoutPulserLDC_%02i.root",iLDC);
   TFile *fileout = new TFile(filename,"RECREATE");
   htofPulser->Write("hTOFpulser");
   fileout->Close();

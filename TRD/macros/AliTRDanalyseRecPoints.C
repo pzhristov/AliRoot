@@ -132,7 +132,7 @@ void AliTRDanalyseRecPoints (const char *filename="galice.root")
   char name[8];
   for (Int_t ind = 0; ind < 14; ind++)
   {
-    sprintf(name,"%dPads",ind + 2);
+    snprintf(name,8,"%dPads",ind + 2);
     mPads[ind] = new TH1D(name, ";Charge", 200, 0, 200);
   }
 
@@ -144,10 +144,10 @@ void AliTRDanalyseRecPoints (const char *filename="galice.root")
 
   // Keep track of the number of clusters per chamber with Q < kQThreshold
   char clusTitle[55];
-  sprintf(clusTitle,";Number of clusters with Q < %d vs detector", kQThreshold);
+  snprintf(clusTitle,55,";Number of clusters with Q < %d vs detector", kQThreshold);
   TH1D *mClusCham = new TH1D("ClusCham", clusTitle, 540, -0.5, 539.5);
   // Same but this time noisy detectors excluded
-  sprintf(clusTitle,";Number of clusters with Q < %d vs detector", kQThreshold);
+  snprintf(clusTitle,55,";Number of clusters with Q < %d vs detector", kQThreshold);
   TH1D *mClusChamEx = new TH1D("ClusChamEx", clusTitle, 540, -0.5, 539.5);
 
   TH2D *mColRow = new TH2D("ColRow", ";Column;Row;#Clusters", 144, -0.5, 143.5, 18, -0.5, 17.5);
@@ -344,7 +344,7 @@ void AliTRDanalyseRecPoints (const char *filename="galice.root")
       // Event by event display for the first 100 events
       if (numPassed < 100)
       {
-        sprintf(title,"Charge distribution for event %d", ev);
+        snprintf(title,40,"Charge distribution for event %d", ev);
         eventc->SetTitle(title);
         mChrgEBE->Draw();
         eventc->Update();
@@ -355,7 +355,7 @@ void AliTRDanalyseRecPoints (const char *filename="galice.root")
 
 #ifdef EVENT_BY_EVENT2
       // Event by event display 
-      sprintf(title2,"Supermodule tracks for event %d", ev);
+      snprintf(title2,40,"Supermodule tracks for event %d", ev);
       sTrc->SetTitle(title2);
       sTrc->cd(1);
       mTrSMod0->Draw("colz");

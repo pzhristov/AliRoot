@@ -322,7 +322,7 @@ int main(int argc, char **argv) {
 
   //write the Run level file   
   char filename[100];
-  sprintf(filename,"TOFoutNoiseLDC_%02i.root",ldcId);
+  snprintf(filename,100,"TOFoutNoiseLDC_%02i.root",ldcId);
   TFile * fileRun = new TFile (filename,"RECREATE"); 
   htofNoise->Write();
   fileRun->Close();

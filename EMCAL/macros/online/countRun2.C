@@ -414,7 +414,7 @@ void countRun2(Int_t onoffline = 1 /*1 = offline, needs a root file; 2 = online,
     treeDDL->Write();
     destFile.Close();
     //    char cmd[200];
-    //    sprintf(cmd, ".! mv root/run.root root/run%09d.root", runno);
+    //    snprintf(cmd, 200, ".! mv root/run.root root/run%09d.root", runno);
     //    gROOT->ProcessLine(cmd);
   }
 
@@ -426,36 +426,36 @@ void countRun2(Int_t onoffline = 1 /*1 = offline, needs a root file; 2 = online,
   Char_t outname[256];
   TCanvas *c1 = new TCanvas("c1","",0,0,900,600);
   hDDLNchan->Draw("colz");
-  sprintf(outname, "png/DDLNchan_%09d.png",runno);
+  snprintf(outname, 256, "png/DDLNchan_%09d.png",runno);
   c1->SaveAs(outname);
 
   TCanvas *c2 = new TCanvas("c2","",100,100,900,600);
   hLDCNchan->Draw("colz");
-  sprintf(outname, "png/LDCNchan_%09d.png",runno);
+  snprintf(outname, 256, "png/LDCNchan_%09d.png",runno);
   c2->SaveAs(outname);
 
   TCanvas *c3 = new TCanvas("c3","",200,200,900,600);
   hDDLNsamp->SetMarkerStyle(20);
   hDDLNsamp->Draw("colz");
-  sprintf(outname, "png/DDLNsamp_%09d.png",runno);
+  snprintf(outname, 256, "png/DDLNsamp_%09d.png",runno);
   c3->SaveAs(outname);
 
   TCanvas *c4 = new TCanvas("c4","",300,300,900,600);
   
   hLDCNsamp->SetMarkerStyle(20);
   hLDCNsamp->Draw("colz");
-  sprintf(outname, "png/LDCNsamp_%09d.png",runno);
+  snprintf(outname, 256, "png/LDCNsamp_%09d.png",runno);
   c4->SaveAs(outname);
 
   TCanvas *c5 = new TCanvas("c5","",100,100,900,600);
   hSMNchan->Draw("colz");
-  sprintf(outname, "png/SMNchan_%09d.png",runno);
+  snprintf(outname, 256, "png/SMNchan_%09d.png",runno);
   c5->SaveAs(outname);
 
   TCanvas *c6 = new TCanvas("c6","",300,300,900,600);  
   hSMNsamp->SetMarkerStyle(20);
   hSMNsamp->Draw("colz");
-  sprintf(outname, "png/SMNsamp_%09d.png",runno);
+  snprintf(outname, 256, "png/SMNsamp_%09d.png",runno);
   c6->SaveAs(outname);
   
   TString sufopt = optchunk>0 ? Form("%d", optchunk) : "";
@@ -538,7 +538,7 @@ void PlotMergedOutput(Int_t nfiles, Int_t runnumb, TString endofname = "Amp5", T
       
       }
       gROOT->ProcessLine(".! mkdir -p png");
-      sprintf(outname, "png/%s%d.png",obj->GetName(),runnumb);
+      snprintf(outname, 256, "png/%s%d.png",obj->GetName(),runnumb);
       c->SaveAs(outname);
       Printf("%s",((TKey*)list->At(i))->ReadObj()->GetName());
      

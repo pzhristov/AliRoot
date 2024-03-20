@@ -870,7 +870,7 @@ void  AddFitFieldCage(AliTPCkalmanFit *kalmanFit){
 	fpar[0]=ipolR;
 	fpar[1]=ipolZ;
 	if (ipolR+ipolZ==0) continue;
-	sprintf(tname,"tTPCscalingRPolR%dDr%dSide%d",ipolR,ipolZ,iside);
+	snprintf(tname,100,"tTPCscalingRPolR%dDr%dSide%d",ipolR,ipolZ,iside);
 	transformation = new AliTPCTransformation(tname,AliTPCTransformation::BitsSide(iside),"TPCscalingRPol",0,0,  1);
 	transformation->SetParams(0,0.2,0,&fpar);
 	kalmanFit->AddCalibration(transformation);      
@@ -883,7 +883,7 @@ void  AddFitFieldCage(AliTPCkalmanFit *kalmanFit){
   for (Int_t iside=0; iside<=1; iside++)
     for (Int_t ipol=0; ipol<3; ipol++){
       fpar[0]=ipol; 
-      sprintf(tname,"tTPCscalingRIFC%dSide%d",ipol,iside);
+      snprintf(tname,100,"tTPCscalingRIFC%dSide%d",ipol,iside);
       transformation = new AliTPCTransformation(tname,AliTPCTransformation::BitsSide(iside),"TPCscalingRIFC",0,0,   1);
       transformation->SetParams(0,0.2,0,&fpar);
       kalmanFit->AddCalibration(transformation);
@@ -895,7 +895,7 @@ void  AddFitFieldCage(AliTPCkalmanFit *kalmanFit){
     for (Int_t ipol=0; ipol<3; ipol++){
       fpar[0]=ipol;
       //Outer field cage
-      sprintf(tname,"tTPCscalingROFC%dSide%d",ipol,iside);
+      snprintf(tname,100,"tTPCscalingROFC%dSide%d",ipol,iside);
       transformation = new AliTPCTransformation(tname,AliTPCTransformation::BitsSide(iside),"TPCscalingROFC",0,0,  1);
       transformation->SetParams(0,0.2,0,&fpar);
       kalmanFit->AddCalibration(transformation);
@@ -964,12 +964,12 @@ void  AddZShift(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     fpar[1]=0;  // no sinus
     fpar[2]=1;  // relative misalignment
     //
-    sprintf(tname,"tTPCDeltaZIROCOROCSideA_Cos%d",i);
+    snprintf(tname,100,"tTPCDeltaZIROCOROCSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCDeltaZIROCOROCSideC_Cos%d",i);
+    snprintf(tname,100,"tTPCDeltaZIROCOROCSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -977,12 +977,12 @@ void  AddZShift(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     //
     fpar[2]=0;  // absolute  misalignment
-    sprintf(tname,"tTPCDeltaZSectorSideA_Cos%d",i);
+    snprintf(tname,100,"tTPCDeltaZSectorSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCDeltaZSectorSideC_Cos%d",i);
+    snprintf(tname,100,"tTPCDeltaZSectorSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -993,12 +993,12 @@ void  AddZShift(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     fpar[1]=i;  // sinus frequncy
     fpar[2]=1;  // relative misalignment
     //
-    sprintf(tname,"tTPCDeltaZIROCOROCSideA_Sin%d",i);
+    snprintf(tname,100,"tTPCDeltaZIROCOROCSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCDeltaZIROCOROCSideC_Sin%d",i);
+    snprintf(tname,100,"tTPCDeltaZIROCOROCSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1006,12 +1006,12 @@ void  AddZShift(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     //
     fpar[2]=0;  // absolute  misalignment
-    sprintf(tname,"tTPCDeltaZSectorSideA_Sin%d",i);
+    snprintf(tname,100,"tTPCDeltaZSectorSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCDeltaZSectorSideC_Sin%d",i);
+    snprintf(tname,100,"tTPCDeltaZSectorSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCDeltaZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1037,12 +1037,12 @@ void AddZTilting(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     fpar[1]=0;  // sinus frequency
     fpar[2]=1;  // relative misalignment
     //
-    sprintf(tname,"tTPCTiltingZIROCOROCSideA_Cos%d",i);
+    snprintf(tname,100,"tTPCTiltingZIROCOROCSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCTiltingZIROCOROCSideC_Cos%d",i);
+    snprintf(tname,100,"tTPCTiltingZIROCOROCSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1050,12 +1050,12 @@ void AddZTilting(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     //
     fpar[2]=0;  // absolute  misalignment
-    sprintf(tname,"tTPCTiltingZSectorSideA_Cos%d",i);
+    snprintf(tname,100,"tTPCTiltingZSectorSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCTiltingZSectorSideC_Cos%d",i);
+    snprintf(tname,100,"tTPCTiltingZSectorSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1066,12 +1066,12 @@ void AddZTilting(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     fpar[1]=i;  // sinus frequncy
     fpar[2]=1;  // relative misalignment
     //
-    sprintf(tname,"tTPCTiltingZIROCOROCSideA_Sin%d",i);
+    snprintf(tname,100,"tTPCTiltingZIROCOROCSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCTiltingZIROCOROCSideC_Sin%d",i);
+    snprintf(tname,100,"tTPCTiltingZIROCOROCSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1079,12 +1079,12 @@ void AddZTilting(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     //
     fpar[2]=0;  // absolute  misalignment
-    sprintf(tname,"tTPCTiltingZSectorSideA_Sin%d",i);
+    snprintf(tname,100,"tTPCTiltingZSectorSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPCTiltingZSectorSideC_Sin%d",i);
+    snprintf(tname,100,"tTPCTiltingZSectorSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), 0,0, "TPCTiltingZ" ,  0);
     transformation->SetParams(0,0.1,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1135,17 +1135,17 @@ void  AddLocalXYMisalignmentSector(AliTPCkalmanFit *kalmanFit){
     mask[isec]=kTRUE;
     char tname[1000];
     //
-    sprintf(tname,"tTPClocalLxIROC%d",isec);
+    snprintf(tname,100,"tTPClocalLxIROC%d",isec);
     transformation = new AliTPCTransformation(tname, new TBits(mask), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.2,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPClocalLyIROC%d",isec);
+    snprintf(tname,100,"tTPClocalLyIROC%d",isec);
     transformation = new AliTPCTransformation(tname, new TBits(mask), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.2,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     
-    sprintf(tname,"tTPClocalRzIROC%d",isec);
+    snprintf(tname,100,"tTPClocalRzIROC%d",isec);
     transformation = new AliTPCTransformation(tname, new TBits(mask), "TPClocaldLydGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.2,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1159,17 +1159,17 @@ void  AddLocalXYMisalignmentSector(AliTPCkalmanFit *kalmanFit){
     mask[isec+36]=kTRUE;    
     char tname[1000];
     //
-    sprintf(tname,"tTPClocalLxSector%d",isec);
+    snprintf(tname,100,"tTPClocalLxSector%d",isec);
     transformation = new AliTPCTransformation(tname, new TBits(mask), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.2,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
-    sprintf(tname,"tTPClocalLySector%d",isec);
+    snprintf(tname,100,"tTPClocalLySector%d",isec);
     transformation = new AliTPCTransformation(tname, new TBits(mask), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.2,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     
-    sprintf(tname,"tTPClocalRzSector%d",isec);
+    snprintf(tname,100,"tTPClocalRzSector%d",isec);
     transformation = new AliTPCTransformation(tname, new TBits(mask), "TPClocaldLydGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.2,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1193,11 +1193,11 @@ void  AddAlignOROCIROCFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin
     //
     // Local X shift
     //
-    sprintf(tname,"tTPClocalLxIROCOROCSideA_Cos%d",i);
+    snprintf(tname,100,"tTPClocalLxIROCOROCSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalLxIROCOROCSideC_Cos%d",i);
+    snprintf(tname,100,"tTPClocalLxIROCOROCSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1205,11 +1205,11 @@ void  AddAlignOROCIROCFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin
     //
     // Local Y shift
     //
-    sprintf(tname,"tTPClocalLyIROCOROCSideA_Cos%d",i);
+    snprintf(tname,100,"tTPClocalLyIROCOROCSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalLyIROCOROCSideC_Cos%d",i);
+    snprintf(tname,100,"tTPClocalLyIROCOROCSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1218,11 +1218,11 @@ void  AddAlignOROCIROCFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin
     //
     // Z rotation
     //
-    sprintf(tname,"tTPClocalRzIROCOROCSideA_Cos%d",i);
+    snprintf(tname,100,"tTPClocalRzIROCOROCSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalRzIROCOROCSideC_Cos%d",i);
+    snprintf(tname,100,"tTPClocalRzIROCOROCSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1236,11 +1236,11 @@ void  AddAlignOROCIROCFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin
     //
     // Local X shift
     //
-    sprintf(tname,"tTPClocalLxIROCOROCSideA_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLxIROCOROCSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalLxIROCOROCSideC_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLxIROCOROCSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1248,11 +1248,11 @@ void  AddAlignOROCIROCFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin
     //
     // Local Y shift
     //
-    sprintf(tname,"tTPClocalLyIROCOROCSideA_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLyIROCOROCSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalLyIROCOROCSideC_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLyIROCOROCSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1261,11 +1261,11 @@ void  AddAlignOROCIROCFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin
     //
     // Z rotation
     //
-    sprintf(tname,"tTPClocalRzIROCOROCSideA_Sin%d",i);
+    snprintf(tname,100,"tTPClocalRzIROCOROCSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalRzIROCOROCSideC_Sin%d",i);
+    snprintf(tname,100,"tTPClocalRzIROCOROCSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1287,7 +1287,7 @@ void  AddAlignSectorFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
       //
       // A side is reference
       // local x 
-      sprintf(tname,"tTPClocalLxSectorSideA_Cos%d",i);
+      snprintf(tname,100,"tTPClocalLxSectorSideA_Cos%d",i);
       transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
       transformation->SetParams(0,0.03,0,&fpar);
       kalmanFit->AddCalibration(transformation);
@@ -1295,7 +1295,7 @@ void  AddAlignSectorFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
 	//
 	// Local Y shift
 	//
-	sprintf(tname,"tTPClocalLySectorSideA_Cos%d",i);
+	snprintf(tname,100,"tTPClocalLySectorSideA_Cos%d",i);
 	transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
 	transformation->SetParams(0,0.03,0,&fpar);
 	kalmanFit->AddCalibration(transformation);
@@ -1306,14 +1306,14 @@ void  AddAlignSectorFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     // C side to vary
     // local x 
-    sprintf(tname,"tTPClocalLxSectorSideC_Cos%d",i);
+    snprintf(tname,100,"tTPClocalLxSectorSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
     //
     // Local Y shift
     //
-    sprintf(tname,"tTPClocalLySectorSideC_Cos%d",i);
+    snprintf(tname,100,"tTPClocalLySectorSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1321,11 +1321,11 @@ void  AddAlignSectorFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     // Z rotation - independent
     //
-    sprintf(tname,"tTPClocalRzSectorSideA_Cos%d",i);
+    snprintf(tname,100,"tTPClocalRzSectorSideA_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalRzSectorSideC_Cos%d",i);
+    snprintf(tname,100,"tTPClocalRzSectorSideC_Cos%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1345,11 +1345,11 @@ void  AddAlignSectorFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     // Local X shift
     //
-    sprintf(tname,"tTPClocalLxSectorSideA_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLxSectorSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalLxSectorSideC_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLxSectorSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLxdGX","TPClocaldLxdGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1357,11 +1357,11 @@ void  AddAlignSectorFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     // Local Y shift
     //
-    sprintf(tname,"tTPClocalLySectorSideA_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLySectorSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalLySectorSideC_Sin%d",i);
+    snprintf(tname,100,"tTPClocalLySectorSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldLydGX","TPClocaldLydGY",0,  0);
     transformation->SetParams(0,0.03,0,&fpar);
     kalmanFit->AddCalibration(transformation);
@@ -1370,11 +1370,11 @@ void  AddAlignSectorFourier(AliTPCkalmanFit *kalmanFit, Int_t ncos, Int_t nsin){
     //
     // Z rotation
     //
-    sprintf(tname,"tTPClocalRzSectorSideA_Sin%d",i);
+    snprintf(tname,100,"tTPClocalRzSectorSideA_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(0), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);
-    sprintf(tname,"tTPClocalRzSectorSideC_Sin%d",i);
+    snprintf(tname,100,"tTPClocalRzSectorSideC_Sin%d",i);
     transformation = new AliTPCTransformation(tname, AliTPCTransformation::BitsSide(1), "TPClocaldRzdGX","TPClocaldRzdGY",0,  0);
     transformation->SetParams(0,0.3,0,&fpar);
     kalmanFit->AddCalibration(transformation);

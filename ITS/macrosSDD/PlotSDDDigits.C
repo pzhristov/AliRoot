@@ -92,11 +92,11 @@ Int_t PlotSDDDigits(Int_t lay, Int_t lad, Int_t iev=0){
     nbytes = TD->GetEvent(nmod);
     Int_t ndigits = ITSdigits->GetEntries();
     printf("Module %d  ndigits=%d\n",nmod,ndigits);
-    sprintf(histname,"hdig%ds0",nmod);
-    sprintf(histtit,"Digit mod %d side 0",nmod);
+    snprintf(histname,10,"hdig%ds0",nmod);
+    snprintf(histtit,100,"Digit mod %d side 0",nmod);
     hdig0[i]=new TH2F(histname,histtit,256,-0.5,255.5,256,-0.5,255.5);
-    sprintf(histname,"hdig%ds1",nmod);
-    sprintf(histtit,"Digit mod %d side 1",nmod);
+    snprintf(histname,10,"hdig%ds1",nmod);
+    snprintf(histtit,100,"Digit mod %d side 1",nmod);
     hdig1[i]=new TH2F(histname,histtit,256,-0.5,255.5,256,-0.5,255.5);
     hdig0[i]->SetStats(0);
     hdig1[i]->SetStats(0);

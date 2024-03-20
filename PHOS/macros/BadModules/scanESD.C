@@ -34,7 +34,7 @@ void scanESD(Int_t irun=7727)
   TChain * chain = new TChain("esdTree") ;
   char filename[255] ;
   for(Int_t sec=1; sec<=17; sec++){
-    sprintf(filename,"Seq_%d0/AliESDs.root/esdTree",sec) ;
+    snprintf(filename,255,"Seq_%d0/AliESDs.root/esdTree",sec) ;
     chain->AddFile(filename);
   }
   

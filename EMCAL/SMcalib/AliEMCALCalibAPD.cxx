@@ -109,8 +109,8 @@ void AliEMCALCalibAPD::ReadCalibAPDInfo(Int_t nAPD, const TString &txtFileName)
       // assign the variables:
       t.fAPDNum = i1; 
       t.fSerialNum = i2; 
-      sprintf(t.fStatus,"%s",c1);
-      sprintf(t.fLocation,"%s",c2);
+      snprintf(t.fStatus,10"%s",c1);
+      snprintf(t.fLocation,20"%s",c2);
       t.fRunNum = i3; 
       t.fTestPos = i4; 
 

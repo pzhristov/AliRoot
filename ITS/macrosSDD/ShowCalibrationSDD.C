@@ -588,7 +588,7 @@ void ShowCalibrationSDD(Char_t *filnam="$ALICE_ROOT/OCDB/ITS/Calib/CalibSDD/Run0
     ipt++;
   }
   Char_t ctit[100];
-  sprintf(ctit,"Module %d",iMod);
+  snprintf(ctit,100"Module %d",iMod);
 
   TCanvas *c2=new TCanvas("c2",ctit,1200,800);
   c2->Divide(2,2);
@@ -635,7 +635,7 @@ void ShowCalibrationSDD(Int_t nrun, Int_t year=2016, Int_t nmod=0){
     //    gSystem->Exec("rm run.txt");
     return;
   }
-  sprintf(filnamalien,"alien://%s",filnam);
+  snprintf(filnamalien,200,"alien://%s",filnam);
   
   printf("Open file: %s\n",filnamalien);
   ShowCalibrationSDD(filnamalien,nmod);

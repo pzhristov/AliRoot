@@ -48,7 +48,7 @@ The user has these two possibilities although for some cases, like the analysis 
   // Setup PAR File
   if (pararchivename) {
     char processline[1024];
-    sprintf(processline,".! tar xvzf %s.par",pararchivename);
+    snprintf(processline,1024,".! tar xvzf %s.par",pararchivename);
     gROOT->ProcessLine(processline);
     const char* ocwd = gSystem->WorkingDirectory();
     gSystem->ChangeDirectory(pararchivename);

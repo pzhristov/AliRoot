@@ -176,9 +176,9 @@ void FitSignals(TTree * treeB, TCut cut, Int_t max){
   TFile *f = cstream.GetFile();
 
   char lname[100];
-  sprintf(lname,"Fit%s", cut.GetTitle());
+  snprintf(lname,100,"Fit%s", cut.GetTitle());
   TEventList *list = new TEventList(lname,lname);
-  sprintf(lname,">>Fit%s", cut.GetTitle());
+  snprintf(lname,100,">>Fit%s", cut.GetTitle());
   treeB->Draw(lname,cut);
   treeB->SetEventList(list);
   Int_t nFits=0;
@@ -186,7 +186,7 @@ void FitSignals(TTree * treeB, TCut cut, Int_t max){
     if (nFits>max) break;
     if (nFits%50==0) printf("%d\n",nFits);
     char ename[100];
-    sprintf(ename,"Fit%d", ievent);
+    snprintf(ename,100,"Fit%d", ievent);
     Double_t nsample = treeB->Draw("Graph.fY-Mean09:Graph.fX","","",1,ievent);
     Double_t * signal  = treeB->GetV1();
     Double_t * time  = treeB->GetV2();
@@ -236,13 +236,13 @@ void FitSignals(TTree * treeB, TCut cut, Int_t max){
     proc.TailCancelationALTRO1(x0,x1,0.85*0.339,0.09,last-first);
     proc.TailCancelationALTRO1(x1,x2,0.85,0.789,last-first);
     //
-    sprintf(ename,"Cancel1_%d", ievent);
+    snprintf(ename,100,"Cancel1_%d", ievent);
     TH1F his1(ename,ename,last-first,first,last);
     for (Int_t ipos=0; ipos<last-first; ipos++){
       his1.SetBinContent(ipos+1,x1[ipos]);
     }
     his1.Write(ename);
-    sprintf(ename,"Cancel2_%d", ievent);
+    snprintf(ename,100,"Cancel2_%d", ievent);
     TH1F his2(ename,ename,last-first,first,last);
     for (Int_t ipos=0; ipos<last-first; ipos++){
       his2.SetBinContent(ipos+1,x1[ipos]);
@@ -450,8 +450,8 @@ TChain *MakeChainCL(Int_t first, Int_t last){
   //
   char fname[100];
   for (Int_t i=first;i<last; i++){
-    if (i>0) sprintf(fname,"TPC.RecPoints%d.root/Event%d/TreeR",i,i);
-    if (i==0) sprintf(fname,"TPC.RecPoints.root/Event%d/TreeR",i);
+    if (i>0) snprintf(fname,100,"TPC.RecPoints%d.root/Event%d/TreeR",i,i);
+    if (i==0) snprintf(fname,100,"TPC.RecPoints.root/Event%d/TreeR",i);
     chaincl->Add(fname);
   }
   return chaincl;
@@ -460,9 +460,9 @@ TChain *MakeChainCL(Int_t first, Int_t last){
 TTree* GetTree(Int_t ievent){
   char fname[100];
   char tname[100];
-  if (ievent>0) sprintf(fname,"TPC.RecPoints%d.root",ievent);
-  if (ievent==0) sprintf(fname,"TPC.RecPoints.root");
-  sprintf(tname,"Event%d/TreeR",ievent);
+  if (ievent>0) snprintf(fname,100,"TPC.RecPoints%d.root",ievent);
+  if (ievent==0) snprintf(fname,100,"TPC.RecPoints.root");
+  snprintf(tname,100,"Event%d/TreeR",ievent);
   TFile * f  = new TFile(fname);
   TTree * tree = (TTree*)f->Get(tname);
   return tree;

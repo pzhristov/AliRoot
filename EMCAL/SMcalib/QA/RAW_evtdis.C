@@ -57,7 +57,7 @@ void RAW_evtdis(const int year=12, const int runno = 191741, const int streamno=
 
   // Assume we are just interested in the 1st segment, _0.root below for fname*
   Char_t fname[256];
-  sprintf(fname, "%02d%09d0%02d.%d.root", year, runno, streamno, segno);
+  snprintf(fname, 256, "%02d%09d0%02d.%d.root", year, runno, streamno, segno);
 
   // set up a raw reader of the data
   AliRawReader *rawReader = NULL;
@@ -73,10 +73,10 @@ void RAW_evtdis(const int year=12, const int runno = 191741, const int streamno=
   char buff1[100];
   char name[80];
   for(int i=0; i<TOTCHAN; i++) {
-    sprintf(buff1,"hfit_%d",i);
+    snprintf(buff1,100,"hfit_%d",i);
     hfit[i] = new TH1F(buff1,"hfit", nsamples , -0.5, nsamples - 0.5);
     hfit[i]->SetDirectory(0);
-    sprintf(name,"f1_%d",i);
+    snprintf(name,80,"f1_%d",i);
     f1[i] = new TF1(name,fitfun,0,70,5);
     f1[i]->SetLineWidth(2);
     f1[i]->SetLineColor(2);
@@ -85,7 +85,7 @@ void RAW_evtdis(const int year=12, const int runno = 191741, const int streamno=
     int gain = i / (NCOLS*NROWS);
     int row = (i % (NCOLS*NROWS))/NCOLS;
     int col = i % NCOLS;
-    sprintf(ch_label[i], "Col%02d Row%02d", col, row);
+    snprintf(ch_label[i], 100, "Col%02d Row%02d", col, row);
   }
 
   int numcol = col_l-col_f+1;
@@ -93,9 +93,9 @@ void RAW_evtdis(const int year=12, const int runno = 191741, const int streamno=
 
   TCanvas *cc[NMINI];
   for (int ic=0; ic<NMINI; ic++) {
-    sprintf(buff1, "cc%d", ic);
+    snprintf(buff1, 100, "cc%d", ic);
     // use the usual StripX CY, X=0..23, Y=0..2 notation for T-cards (mini-strips)
-    sprintf(name,"Strip %d MiniStrip(T-card) C%d", strip, ic);
+    snprintf(name,80,"Strip %d MiniStrip(T-card) C%d", strip, ic);
     cc[ic] = new TCanvas(buff1,name, 400*ic, 10, 400,800);
     cc[ic]->Divide(numcol, numrow/NMINI);
     cc[ic]->SetTitle(name);
@@ -243,7 +243,7 @@ void RAW_evtdis(const int year=12, const int runno = 191741, const int streamno=
 	//label->SetFillStyle(0);
 	TDatime d;
 	d.Set(timestamp);
-	sprintf(name,"Run %d, Event %d, Hist Max %d, %s",runno,iev,ymax,d.AsString());
+	snprintf(name,80,"Run %d, Event %d, Hist Max %d, %s",runno,iev,ymax,d.AsString());
 	label->AddText(name);
 	label->Draw();
 	cc[ic]->Update();
@@ -280,7 +280,7 @@ void RAW_evtdis(const int year=12, const int runno = 191741, const int streamno=
   char plotname[100];
   if (saveplot==1) {
     for (int ic=0; ic<NMINI; ic++) {
-      sprintf(plotname,"Run_%d_Ev%d_Strip%d_C%d_Gain%d_MaxHist%d.gif",
+      snprintf(plotname,100,"Run_%d_Ev%d_Strip%d_C%d_Gain%d_MaxHist%d.gif",
 	      runno,iev,strip,ic,gainv,ymax);  
   
       cout <<"SAVING plot:"<< plotname << endl;

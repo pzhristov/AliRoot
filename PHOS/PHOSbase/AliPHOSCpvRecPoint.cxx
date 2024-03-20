@@ -203,7 +203,7 @@ void AliPHOSCpvRecPoint::ExecuteEvent(Int_t, Int_t, Int_t ) /*const*/
 //     // 2. gets the histogram title
     
 //     Text_t title[100] ; 
-//     sprintf(title,"Energy=%1.2f GeV ; Digits ; %d ", GetEnergy(), GetDigitsMultiplicity()) ;
+//     snprintf(title,100,"Energy=%1.2f GeV ; Digits ; %d ", GetEnergy(), GetDigitsMultiplicity()) ;
     
 //     if (!histo) {
 //       delete histo ; 

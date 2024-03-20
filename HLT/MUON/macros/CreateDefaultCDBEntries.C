@@ -127,9 +127,9 @@ void CreateDefaultCDBEntries(
 	params = new TMap;
 	params->SetOwner(kTRUE);
 	char valstr[1024];
-	sprintf(valstr, "%8.8f", zmiddle);
+	snprintf(valstr, 1024, "%8.8f", zmiddle);
 	params->Add(new TObjString("zmiddle"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", bfieldintegral);
+	snprintf(valstr, 1024, "%8.8f", bfieldintegral);
 	params->Add(new TObjString("bfieldintegral"), new TObjString(valstr));
 	
 	path = AliHLTMUONConstants::TriggerReconstructorCDBPath();
@@ -142,7 +142,7 @@ void CreateDefaultCDBEntries(
 	// Create and store the configuration parameters for the hit reconstructor.
 	params = new TMap;
 	params->SetOwner(kTRUE);
-	sprintf(valstr, "%d", dccut);
+	snprintf(valstr, 1024, "%d", dccut);
 	params->Add(new TObjString("dccut"), new TObjString(valstr));
 	
 	path = AliHLTMUONConstants::HitReconstructorCDBPath();
@@ -155,37 +155,37 @@ void CreateDefaultCDBEntries(
 	// Create and store the configuration parameters for the Manso tracker.
 	params = new TMap;
 	params->SetOwner(kTRUE);
-	sprintf(valstr, "%8.8f", zmiddle);
+	snprintf(valstr, 1024, "%8.8f", zmiddle);
 	params->Add(new TObjString("zmiddle"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", bfieldintegral);
+	snprintf(valstr, 1024, "%8.8f", bfieldintegral);
 	params->Add(new TObjString("bfieldintegral"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamAchamber7);
+	snprintf(valstr, 1024, "%8.8f", roiParamAchamber7);
 	params->Add(new TObjString("roi_paramA_chamber7"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamBchamber7);
+	snprintf(valstr, 1024, "%8.8f", roiParamBchamber7);
 	params->Add(new TObjString("roi_paramB_chamber7"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamAchamber8);
+	snprintf(valstr, 1024, "%8.8f", roiParamAchamber8);
 	params->Add(new TObjString("roi_paramA_chamber8"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamBchamber8);
+	snprintf(valstr, 1024, "%8.8f", roiParamBchamber8);
 	params->Add(new TObjString("roi_paramB_chamber8"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamAchamber9);
+	snprintf(valstr, 1024, "%8.8f", roiParamAchamber9);
 	params->Add(new TObjString("roi_paramA_chamber9"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamBchamber9);
+	snprintf(valstr, 1024, "%8.8f", roiParamBchamber9);
 	params->Add(new TObjString("roi_paramB_chamber9"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamAchamber10);
+	snprintf(valstr, 1024, "%8.8f", roiParamAchamber10);
 	params->Add(new TObjString("roi_paramA_chamber10"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", roiParamBchamber10);
+	snprintf(valstr, 1024, "%8.8f", roiParamBchamber10);
 	params->Add(new TObjString("roi_paramB_chamber10"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", chamber7postion);
+	snprintf(valstr, 1024, "%8.8f", chamber7postion);
 	params->Add(new TObjString("chamber7postion"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", chamber8postion);
+	snprintf(valstr, 1024, "%8.8f", chamber8postion);
 	params->Add(new TObjString("chamber8postion"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", chamber9postion);
+	snprintf(valstr, 1024, "%8.8f", chamber9postion);
 	params->Add(new TObjString("chamber9postion"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", chamber10postion);
+	snprintf(valstr, 1024, "%8.8f", chamber10postion);
 	params->Add(new TObjString("chamber10postion"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", chamber11postion);
+	snprintf(valstr, 1024, "%8.8f", chamber11postion);
 	params->Add(new TObjString("chamber11postion"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", chamber13postion);
+	snprintf(valstr, 1024, "%8.8f", chamber13postion);
 	params->Add(new TObjString("chamber13postion"), new TObjString(valstr));
 	
 	path = AliHLTMUONConstants::MansoTrackerFSMCDBPath();
@@ -198,13 +198,13 @@ void CreateDefaultCDBEntries(
 	// Create and store the configuration parameters for the trigger decision cuts.
 	params = new TMap;
 	params->SetOwner(kTRUE);
-	sprintf(valstr, "%8.8f", lowptcut);
+	snprintf(valstr, 1024, "%8.8f", lowptcut);
 	params->Add(new TObjString("lowptcut"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", highptcut);
+	snprintf(valstr, 1024, "%8.8f", highptcut);
 	params->Add(new TObjString("highptcut"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", lowmasscut);
+	snprintf(valstr, 1024, "%8.8f", lowmasscut);
 	params->Add(new TObjString("lowmasscut"), new TObjString(valstr));
-	sprintf(valstr, "%8.8f", highmasscut);
+	snprintf(valstr, 1024, "%8.8f", highmasscut);
 	params->Add(new TObjString("highmasscut"), new TObjString(valstr));
 	
 	path = AliHLTMUONConstants::DecisionComponentCDBPath();

@@ -404,7 +404,7 @@ bool CheckReadingOldFormat(const char* filename = "$ALICE_ROOT/HLT/BASE/test/old
 	for (int i = 0; i < 5; ++i)
 	{
 		char name[1024];
-		sprintf(name, "readoutlist%d", i+1);
+		snprintf(name, 1024, "readoutlist%d", i+1);
 		rl[i] = dynamic_cast<AliHLTReadoutList*>(file.Get(name));
 		if (rl[i] == NULL)
 		{

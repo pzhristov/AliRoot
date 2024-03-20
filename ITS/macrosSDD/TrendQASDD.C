@@ -23,13 +23,13 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   //Char_t FileName[200];//="/home/msicilia/Desktop/createlists";
   char FileName[150];
   Char_t FileName1[150];
-  sprintf(FileName1,"%s",filelist);
+  snprintf(FileName1,150,"%s",filelist);
   FILE * pFile;
   pFile = fopen (FileName1,"r");
   while (fscanf (pFile,"%d\n",&m)==1){
     
-    if(kUseOriginalFile)sprintf(FileName,"run%d/%s/File.QA.%d.%s.%s.Run.%d.root",m,pass,year,period,pass,m);
-    else sprintf(FileName, "run%d/%s/%s.root", m,pass,filename);
+    if(kUseOriginalFile)snprintf(FileName,150,"run%d/%s/File.QA.%d.%s.%s.Run.%d.root",m,pass,year,period,pass,m);
+    else snprintf(FileName,150, "run%d/%s/%s.root", m,pass,filename);
     if(gSystem->Exec(Form("ls %s >/dev/null 2>&1", FileName))==0){
       TFile mergedfile(FileName);
       if(kUseOriginalFile){
@@ -52,8 +52,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   TH1F *histocharge;
   TH1F *histochargerp;
 
-  sprintf(name,"histoRAWeventtrend");
-  sprintf(title,"Events used for the QA analysis - RAW");
+  snprintf(name,100,"histoRAWeventtrend");
+  snprintf(title,100,"Events used for the QA analysis - RAW");
   TH1F *histoRAWeventtrend=new TH1F(name,title,n.size(),0.,(float)n.size());
   histoRAWeventtrend->GetXaxis()->SetTitle("# Run");
   histoRAWeventtrend->GetXaxis()->SetTicks("-");
@@ -68,8 +68,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   histoRAWeventtrend->SetMarkerStyle(20);
   histoRAWeventtrend->SetMarkerColor(1);
 
-  sprintf(name,"histoRPeventtrend");
-  sprintf(title,"Events used for the QA analysis - RP");
+  snprintf(name,100,"histoRPeventtrend");
+  snprintf(title,100,"Events used for the QA analysis - RP");
   TH1F *histoRPeventtrend=new TH1F(name,title,n.size(),0.,(float)n.size());
   histoRPeventtrend->GetXaxis()->SetTitle("# Run");
   histoRPeventtrend->GetXaxis()->SetTicks("-");
@@ -172,8 +172,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   for(Int_t ii=0;ii<3;ii++)
 
     {
-      sprintf(name,"histoRAWnormevent%d", ii);
-      sprintf(title,"Trend of the Norm Events  %s RAW",histoname[ii].Data());
+      snprintf(name,100,"histoRAWnormevent%d", ii);
+      snprintf(title,100,"Trend of the Norm Events  %s RAW",histoname[ii].Data());
       histoRAWnormevents[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRAWnormevents[ii]->SetStats(0);
       histoRAWnormevents[ii]->SetMinimum(0.);
@@ -190,8 +190,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRAWnormevents[ii]->SetMarkerStyle(20+ii);
       histoRAWnormevents[ii]->SetMarkerColor(1+ii);
 
-      sprintf(name,"histoRPnormevent%d", ii);
-      sprintf(title,"Trend of the Norm Events  %s RP", histoname[ii].Data());
+      snprintf(name,100,"histoRPnormevent%d", ii);
+      snprintf(title,100,"Trend of the Norm Events  %s RP", histoname[ii].Data());
       histoRPnormevents[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRPnormevents[ii]->SetStats(0);
       histoRPnormevents[ii]->SetMinimum(0.);
@@ -209,8 +209,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRPnormevents[ii]->SetMarkerColor(1+ii);
 
 
-      sprintf(name,"histoRAWfilledmodules%d", ii);
-      sprintf(title,"Trend of the filled modules %s RAW", histoname[ii].Data());
+      snprintf(name,100,"histoRAWfilledmodules%d", ii);
+      snprintf(title,100,"Trend of the filled modules %s RAW", histoname[ii].Data());
       histoRAWfilledmodules[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRAWfilledmodules[ii]->SetStats(0);
       histoRAWfilledmodules[ii]->SetMaximum(272.);
@@ -228,8 +228,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRAWfilledmodules[ii]->SetMarkerStyle(20+ii);
       histoRAWfilledmodules[ii]->SetMarkerColor(1+ii);
 
-      sprintf(name,"histoRPfilledmodules%d", ii);
-      sprintf(title,"Trend of the filled modules %s RP",  histoname[ii].Data());
+      snprintf(name,100,"histoRPfilledmodules%d", ii);
+      snprintf(title,100,"Trend of the filled modules %s RP",  histoname[ii].Data());
       histoRPfilledmodules[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRPfilledmodules[ii]->GetXaxis()->SetTitle("# Run");
       histoRPfilledmodules[ii]->SetStats(0);
@@ -247,8 +247,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRPfilledmodules[ii]->SetMarkerStyle(20+ii);
       histoRPfilledmodules[ii]->SetMarkerColor(1+ii);
 
-      sprintf(name,"histoRAWfilleddr%d", ii);
-      sprintf(title,"Trend of the filled drift regions %s RAW",  histoname[ii].Data());
+      snprintf(name,100,"histoRAWfilleddr%d", ii);
+      snprintf(title,100,"Trend of the filled drift regions %s RAW",  histoname[ii].Data());
       histoRAWfilleddr[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRAWfilleddr[ii]->GetXaxis()->SetTitle("# Run");
       histoRAWfilleddr[ii]->SetStats(0);
@@ -266,8 +266,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRAWfilleddr[ii]->SetMarkerStyle(20+ii);
       histoRAWfilleddr[ii]->SetMarkerColor(1+ii);
 
-      sprintf(name,"histoRPfilleddr%d", ii);
-      sprintf(title,"Trend of the filled drift regions %s RP", histoname[ii].Data());
+      snprintf(name,100,"histoRPfilleddr%d", ii);
+      snprintf(title,100,"Trend of the filled drift regions %s RP", histoname[ii].Data());
       histoRPfilleddr[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRPfilleddr[ii]->SetStats(0);
       histoRPfilleddr[ii]->SetMaximum(272.);
@@ -286,8 +286,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRPfilleddr[ii]->SetMarkerColor(1+ii);
 
 
-      sprintf(name,"histoRAWactivemodules%d", ii);
-      sprintf(title,"Trend of the active module %s RAW",  histoname[ii].Data());
+      snprintf(name,100,"histoRAWactivemodules%d", ii);
+      snprintf(title,100,"Trend of the active module %s RAW",  histoname[ii].Data());
       histoRAWactivemodules[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRAWactivemodules[ii]->SetStats(0);
       histoRAWactivemodules[ii]->GetXaxis()->SetTitle("# Run");
@@ -305,8 +305,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 
 
 
-      sprintf(name,"histoRPactivemodules%d", ii);
-      sprintf(title,"Trend of the active modules %s RP",  histoname[ii].Data());
+      snprintf(name,100,"histoRPactivemodules%d", ii);
+      snprintf(title,100,"Trend of the active modules %s RP",  histoname[ii].Data());
       histoRPactivemodules[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRPactivemodules[ii]->SetStats(0);
       histoRPactivemodules[ii]->GetXaxis()->SetTitle("# Run");
@@ -323,8 +323,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRPactivemodules[ii]->SetMarkerColor(4);
 
 
-      sprintf(name,"histoRAWactivedr%d", ii);
-      sprintf(title,"Trend of the active drift region %s RAW", histoname[ii].Data());
+      snprintf(name,100,"histoRAWactivedr%d", ii);
+      snprintf(title,100,"Trend of the active drift region %s RAW", histoname[ii].Data());
       histoRAWactivedr[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRAWactivedr[ii]->SetStats(0);
       histoRAWactivedr[ii]->GetXaxis()->SetTitle("# Run");
@@ -340,8 +340,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRAWactivedr[ii]->SetMarkerStyle(24+ii);
       histoRAWactivedr[ii]->SetMarkerColor(4);
 
-      sprintf(name,"histoRPactivedr%d", ii);
-      sprintf(title,"Trend of the active drift region %s RP",  histoname[ii].Data());
+      snprintf(name,100,"histoRPactivedr%d", ii);
+      snprintf(title,100,"Trend of the active drift region %s RP",  histoname[ii].Data());
       histoRPactivedr[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRPactivedr[ii]->SetStats(0);
       histoRPactivedr[ii]->GetXaxis()->SetTitle("# Run");
@@ -357,8 +357,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRPactivedr[ii]->SetMarkerStyle(24+ii);
       histoRPactivedr[ii]->SetMarkerColor(4);
 
-      sprintf(name,"histoRAWoverthmodules%d", ii);
-      sprintf(title,"Trend of the over th modules %s RAW", histoname[ii].Data());
+      snprintf(name,100,"histoRAWoverthmodules%d", ii);
+      snprintf(title,100,"Trend of the over th modules %s RAW", histoname[ii].Data());
       histoRAWoverthmodules[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRAWoverthmodules[ii]->SetStats(0);
       histoRAWoverthmodules[ii]->GetXaxis()->SetTitle("# Run");
@@ -374,8 +374,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRAWoverthmodules[ii]->SetMarkerStyle(20+ii);
       histoRAWoverthmodules[ii]->SetMarkerColor(1+ii);
 
-      sprintf(name,"histoRPoverthmodules%d", ii);
-      sprintf(title,"Trend of the over th modules %s RP",  histoname[ii].Data());
+      snprintf(name,100,"histoRPoverthmodules%d", ii);
+      snprintf(title,100,"Trend of the over th modules %s RP",  histoname[ii].Data());
       histoRPoverthmodules[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRPoverthmodules[ii]->SetStats(0);
       histoRPoverthmodules[ii]->GetXaxis()->SetTitle("# Run");
@@ -391,8 +391,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRPoverthmodules[ii]->SetMarkerColor(1+ii);
 
 
-      sprintf(name,"histoRAWoverthdr%d", ii);
-      sprintf(title,"Trend of the over th drift regions %s RAW",  histoname[ii].Data());
+      snprintf(name,100,"histoRAWoverthdr%d", ii);
+      snprintf(title,100,"Trend of the over th drift regions %s RAW",  histoname[ii].Data());
       histoRAWoverthdr[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRAWoverthdr[ii]->SetStats(0);
       histoRAWoverthdr[ii]->GetXaxis()->SetTitle("# Run");
@@ -409,8 +409,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histoRAWoverthdr[ii]->SetMarkerColor(1+ii);
 
 
-      sprintf(name,"histoRPoverthdr%d", ii);
-      sprintf(title,"Trend of the over th drift regions %s RP",  histoname[ii].Data());
+      snprintf(name,100,"histoRPoverthdr%d", ii);
+      snprintf(title,100,"Trend of the over th drift regions %s RP",  histoname[ii].Data());
       histoRPoverthdr[ii]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histoRPoverthdr[ii]->SetStats(0);
       histoRPoverthdr[ii]->GetXaxis()->SetTitle("# Run");
@@ -430,8 +430,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 
   for(Int_t layer=3;layer<5;layer++)
     {
-      sprintf(name,"histochargetrend_%d", layer);
-      sprintf(title,"Trend of the Charge of the Layer %d", layer);
+      snprintf(name,100,"histochargetrend_%d", layer);
+      snprintf(title,100,"Trend of the Charge of the Layer %d", layer);
       histochargetrend[layer-3]=new TH1F(name,title,n.size(),0.,(float)n.size());
       histochargetrend[layer-3]->SetStats(0);
       histochargetrend[layer-3]->GetXaxis()->SetTicks("-");
@@ -452,8 +452,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
       histochargetrend[layer-3]->SetFillColor(42);
 
 
-      sprintf(name,"historadiustrend_%d", layer);
-      sprintf(title,"Trend of the radius of the Layer %d", layer);
+      snprintf(name,100,"historadiustrend_%d", layer);
+      snprintf(title,100,"Trend of the radius of the Layer %d", layer);
       historadiustrend[layer-3]=new TH1F(name,title,n.size(),0.,(float)n.size());
       historadiustrend[layer-3]->SetStats(0);
       historadiustrend[layer-3]->GetXaxis()->SetTicks("-");
@@ -481,7 +481,7 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   
   for(Int_t i=0;i<12;i++)
     {
-      sprintf(name,"canvas%i",i);
+      snprintf(name,100,"canvas%i",i);
       //printf("--> %s \n",name);
       
       canvas[i]=new TCanvas(name,name);
@@ -491,8 +491,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   char buffer [10];
   for (Int_t irun=0; irun<(Int_t)(n.size());irun++)
     {
-	if(kUseOriginalFile) sprintf(FileName, "run%d/%s/File.QA.%d.%s.%s.Run.%d.root", n[irun],pass,year,period,pass,n[irun]);
-	else sprintf(FileName, "run%d/%s/%s.root", n[irun],pass,filename);	   
+	if(kUseOriginalFile) snprintf(FileName,150, "run%d/%s/File.QA.%d.%s.%s.Run.%d.root", n[irun],pass,year,period,pass,n[irun]);
+	else snprintf(FileName,150, "run%d/%s/%s.root", n[irun],pass,filename);	   
 	
 	TFile mergedfile(FileName);
 	if(kUseOriginalFile){
@@ -501,10 +501,10 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 	    continue;
 	  }
 	}
-	sprintf(buffer, "%d", n[irun]);
-	if(kUseOriginalFile)sprintf(filepath,"ITS/Raws/%s/Expert/%s_SDDRawDataCheck",especiename,especiename);
-	else sprintf(filepath,"%s_SDDRawDataCheck",especiename);	
-	sprintf(runnmbr,"run%d",n[irun]);
+	snprintf(buffer,10, "%d", n[irun]);
+	if(kUseOriginalFile)snprintf(filepath,200,"ITS/Raws/%s/Expert/%s_SDDRawDataCheck",especiename,especiename);
+	else snprintf(filepath,200,"%s_SDDRawDataCheck",especiename);	
+	snprintf(runnmbr,20,"run%d",n[irun]);
 	//printf("%s  %s\n",filepath,runnmbr);	
 	histocharge=(TH1F*)(mergedfile.Get(filepath));
 	if(histocharge)
@@ -512,9 +512,9 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 	    histoRAWeventtrend->Fill(buffer,(histocharge->GetBinContent(event)));
 	  }
 	
-	if(kUseOriginalFile)sprintf(filepath,"ITS/RecPoints/%s/Expert/%s_SDDRecPointDataCheck",especiename,especiename);
-	else sprintf(filepath,"%s_SDDRecPointCheck",especiename);	
-	sprintf(runnmbr,"run%d",n[irun]);
+	if(kUseOriginalFile)snprintf(filepath,200,"ITS/RecPoints/%s/Expert/%s_SDDRecPointDataCheck",especiename,especiename);
+	else snprintf(snprintf,200,"%s_SDDRecPointCheck",especiename);	
+	snprintf(runnmbr,20,"run%d",n[irun]);
 	//printf("%s  %s\n",filepath,runnmbr);	
 	histochargerp=(TH1F*)(mergedfile.Get(filepath));	
 	if(histochargerp)
@@ -573,7 +573,7 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
     {
       //      histoRAWnormevents[i]->GetXaxis()->LabelsOption("v");
       histoRAWnormevents[i]->Draw(drawoptionevents[i].Data());
-      //      sprintf(legendtext,"%s %s",histolegend);
+      //      snprintf(legendtext,50,"%s %s",histolegend);
       legendchecks->AddEntry(histoRAWnormevents[i],histolegend[i].Data(),"P");
     }
   legendchecks->Draw();
@@ -594,11 +594,11 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
     {
       //histoRAWfilledmodules[i]->GetXaxis()->LabelsOption("v");
       histoRAWfilledmodules[i]->Draw(drawoptionfill[i].Data());
-      sprintf(legendtext,"%s %s",histolegend[i].Data(),histolegend2[0].Data());
+      snprintf(legendtext,50,"%s %s",histolegend[i].Data(),histolegend2[0].Data());
       legendchecks2->AddEntry(histoRAWfilledmodules[i],legendtext,"P");
       //histoRAWactivemodules[i]->GetXaxis()->LabelsOption("v");
       histoRAWactivemodules[i]->Draw(drawoptionactive[i].Data());
-      sprintf(legendtext,"%s %s",histolegend[i].Data(),histolegend2[1].Data());
+      snprintf(legendtext,50,"%s %s",histolegend[i].Data(),histolegend2[1].Data());
       legendchecks2->AddEntry(histoRAWactivemodules[i],legendtext,"P");
     }
   legendchecks2->Draw("same");
@@ -645,11 +645,11 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   
   //histoRAWfilledmodules[i]->GetXaxis()->LabelsOption("v");
   histoRAWfilledmodules[0]->Draw(drawoptionfill[0].Data());
-  sprintf(legendtext,"%s %s",histolegend[0].Data(),histolegend2[0].Data());
+  snprintf(legendtext,50,"%s %s",histolegend[0].Data(),histolegend2[0].Data());
   legendchecks3->AddEntry(histoRAWfilledmodules[0],legendtext,"P");
   //histoRAWactivemodules[i]->GetXaxis()->LabelsOption("v");
   histoRAWactivemodules[0]->Draw(drawoptionactive[0].Data());
-  sprintf(legendtext,"%s %s",histolegend[0].Data(),histolegend2[1].Data());
+  snprintf(legendtext,50,"%s %s",histolegend[0].Data(),histolegend2[1].Data());
   legendchecks3->AddEntry(histoRAWactivemodules[0],legendtext,"P");
   legendchecks3->Draw("same");
   canvas[10]->cd(2);
@@ -764,8 +764,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 	{
 	  for(Int_t ilayer=3;ilayer<5;ilayer++)
 	    {
-	    if(kUseOriginalFile)sprintf(FileName,"run%d/%s/File.QA.%d.%s.%s.Run.%d.root",n[irun],pass,year,period,pass,n[irun]);
-	    else sprintf(FileName, "run%d/%s/%s.root", n[irun],pass,filename);
+	    if(kUseOriginalFile)snprintf(FileName,150,"run%d/%s/File.QA.%d.%s.%s.Run.%d.root",n[irun],pass,year,period,pass,n[irun]);
+	    else snprintf(FileName,150, "run%d/%s/%s.root", n[irun],pass,filename);
 	    
 	    TFile mergedfile(FileName);
 	    
@@ -775,13 +775,13 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 		continue;
 	      }
 	    }
-	    if(kUseOriginalFile)sprintf(filepath,"ITS/RecPoints/%s/%s_SDDLay%dTotCh",especiename,especiename,ilayer);
-	    else sprintf(filepath,"%s_SDDLay%dTotCh",especiename,ilayer);
+	    if(kUseOriginalFile)snprintf(filepath,200,"ITS/RecPoints/%s/%s_SDDLay%dTotCh",especiename,especiename,ilayer);
+	    else snprintf(filepath,200,"%s_SDDLay%dTotCh",especiename,ilayer);
 	    histocharge=(TH1F*)(mergedfile.Get(filepath));	 
 	    
 	    if(histocharge)
 	      {
-		sprintf(buffer, "%d", n[irun]);
+		snprintf(buffer,10, "%d", n[irun]);
 		
 		fmax[ilayer-3]=histocharge->GetMaximum();
 		if (jj==0)	{ fmaxold=fmax[ilayer-3];}
@@ -793,13 +793,13 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 	    
 	    //drift time
 	    
-	    if(kUseOriginalFile)sprintf(filepath,"ITS/RecPoints/%s/%s_SDDdrifttime_Layer%d",especiename,especiename,ilayer);
-	    else sprintf(filepath,"%s_SDDdrifttime_Layer%d",especiename,ilayer);
+	    if(kUseOriginalFile)snprintf(filepath,200,"ITS/RecPoints/%s/%s_SDDdrifttime_Layer%d",especiename,especiename,ilayer);
+	    else snprintf(filepath,200,"%s_SDDdrifttime_Layer%d",especiename,ilayer);
 	    histocharge=(TH1F*)(mergedfile.Get(filepath));	 
 	    
 	    if(histocharge)
 	      {
-		sprintf(buffer, "%d", n[irun]);	
+		snprintf(buffer,10, "%d", n[irun]);	
 		fmaxtime=histocharge->GetMaximum();
 		if (jj==0)	{ fmaxoldtime=fmaxtime;}
 		if (jj!=0) { if(fmaxoldtime<fmaxtime) { fmaxoldtime=fmaxtime;} }
@@ -828,8 +828,8 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
     for (Int_t irun=0; irun< (Int_t)(n.size());irun++)
       {
 	
-	if(kUseOriginalFile) sprintf(FileName, "run%d/%s/File.QA.%d.%s.%s.Run.%d.root", n[irun],pass,year,period,pass,n[irun]);
-	else sprintf(FileName, "run%d/%s/%s.root", n[irun],pass,filename);	   
+	if(kUseOriginalFile) snprintf(FileName,150, "run%d/%s/File.QA.%d.%s.%s.Run.%d.root", n[irun],pass,year,period,pass,n[irun]);
+	else snprintf(FileName,150, "run%d/%s/%s.root", n[irun],pass,filename);	   
 	
 	TFile mergedfile(FileName);
 	if(kUseOriginalFile){
@@ -838,9 +838,9 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 	    continue;
 	  }
 	}	
-	if(kUseOriginalFile)sprintf(filepath,"ITS/RecPoints/%s/%s_SDDLay%dTotCh",especiename,especiename,layer);
-	else sprintf(filepath,"%s_SDDLay%dTotCh",especiename,layer);	
-	sprintf(runnmbr,"run%d",n[irun]);
+	if(kUseOriginalFile)snprintf(filepath,200,"ITS/RecPoints/%s/%s_SDDLay%dTotCh",especiename,especiename,layer);
+	else snprintf(filepath,200,"%s_SDDLay%dTotCh",especiename,layer);	
+	snprintf(runnmbr,20,"run%d",n[irun]);
 	printf("%s  %s",filepath,runnmbr);	
 	histocharge=(TH1F*)(mergedfile.Get(filepath));	
 	if(histocharge)
@@ -879,9 +879,9 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
 	histocharge=NULL;
 	
 	    //======================================================== Drift Time	
-	if(kUseOriginalFile)sprintf(filepath,"ITS/RecPoints/%s/%s_SDDdrifttime_Layer%d",especiename,especiename,layer);
-	else sprintf(filepath,"%s_SDDdrifttime_Layer%d",especiename,layer);	
-	sprintf(runnmbr,"run %d",n[irun]);
+	if(kUseOriginalFile)snprintf(filepath,200,"ITS/RecPoints/%s/%s_SDDdrifttime_Layer%d",especiename,especiename,layer);
+	else snprintf(filepath,200,"%s_SDDdrifttime_Layer%d",especiename,layer);	
+	snprintf(runnmbr,20,"run %d",n[irun]);
 	printf("%s  %s",filepath,runnmbr);	
 	histocharge=(TH1F*)(mergedfile.Get(filepath));	
 	if(histocharge)
@@ -918,7 +918,7 @@ void TrendQASDD( Char_t filelist[150]="LHC10b.txt", Char_t filename[20]="FileQAt
   for(Int_t ican=0;ican<10;ican++)canvas[ican]->Write();
   trendfile.Close();
   Char_t psfile[50];
-  sprintf(psfile,"SDDtrend%s%s.ps",period,pass);
+  snprintf(psfile,50,"SDDtrend%s%s.ps",period,pass);
   canvas[0]->Print(Form("%s[",psfile));
   for(Int_t ifile=0;ifile<12;ifile++){canvas[ifile]->Print(psfile);}
 

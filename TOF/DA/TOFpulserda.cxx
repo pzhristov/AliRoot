@@ -300,7 +300,7 @@ int main(int argc, char **argv) {
 
   //write the Run level file   
   char filename[100];
-  sprintf(filename,"TOFoutPulserLDC_%02i.root",ldcId);
+  snprintf(filename,100,"TOFoutPulserLDC_%02i.root",ldcId);
   TFile * fileRun = new TFile (filename,"RECREATE"); 
   htofPulser->Write();
   fileRun->Close();

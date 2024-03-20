@@ -54,13 +54,13 @@ Bool_t AliTRDCreateVector2DSum(const char* variablecali, const char* noime, cons
   void * dircu = gSystem->OpenDirectory(dire);
   while((namesubdir = gSystem->GetDirEntry(dircu))) {
     if(strstr(namesubdir,patterndir)) {
-      sprintf(dir,"%s/%s",dire,namesubdir);
+      snprintf(dir,200,"%s/%s",dire,namesubdir);
       printf("process subdirectories: %s\n",dir);
       
       //full name of the file and tree
       char fullname[255] = "";
       
-      sprintf(fullname,"%s/%s",dir,name);
+      snprintf(fullname,255,"%s/%s",dir,name);
       printf("Process file: %s\n",fullname);
       TFile *file = new TFile(fullname,"READ");
       if(!file) continue;

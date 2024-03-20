@@ -293,7 +293,7 @@ void AliNDFormulaBrowser::DoSlider(Int_t pos) {
   }
 
   char buf[32];
-  sprintf(buf, "%d", pos);
+  snprintf(buf, 32, "%d", pos);
   Int_t nPars = fFormula->GetNpar();
   for (Int_t iPar=0; iPar<nPars; iPar++){
     TString parName=fFormula->GetName();
@@ -312,7 +312,7 @@ void AliNDFormulaBrowser::DoSlider(Int_t pos) {
       Double_t maxPosT=atof(textMax->GetBuffer()->GetString());
       Double_t valueS=(slider->GetPosition()-minPosS)/(maxPosS-minPosS);
       Double_t valueR=minPosT+valueS*(maxPosT-minPosT);
-      sprintf(buf, "%.4f", valueR);
+      snprintf(buf, 32, "%.4f", valueR);
       buffer->Clear();
       buffer->AddText(0, buf);
       text->SetCursorPosition(text->GetCursorPosition());

@@ -51,15 +51,15 @@ public:
     /** Base index for inner rings */ 
     kBaseInner = 0, 
     /** Base index for outer rings */
-    kBaseOuter = kNSectorInner * kNStripInner
+    kBaseOuter = (int) kNSectorInner * (int) kNStripInner
   };
   enum { 
     /** Base for FMD1 index */ 
     kFMD1Base = 0, 
     /** Base for FMD2 index */ 
-    kFMD2Base = kNSectorInner * kNStripInner, 
+    kFMD2Base = (int) kNSectorInner * (int) kNStripInner, 
     /** Base for FMD3 index */ 
-    kFMD3Base = (kBaseOuter + kNSectorOuter * kNStripOuter + kFMD2Base)
+    kFMD3Base = ((int) kBaseOuter + (int) kNSectorOuter * (int) kNStripOuter + (int) kFMD2Base)
   };
   /** 
    * Class to do stuff on each element of a map in an efficient

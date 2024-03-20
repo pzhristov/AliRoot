@@ -91,7 +91,7 @@ void   AliITSImpactParametersPP(Int_t evFirst=0,Int_t evLast=0) {
   // loop on events in file
   for(ev=evFirst; ev<=evLast; ev++) {
     printf(" --- Processing event  %d ---\n",ev);
-    sprintf(trksName,"TreeT_ITS_%d",ev);
+    snprintf(trksName,100,"TreeT_ITS_%d",ev);
 
     // tracks from ITS
     TTree *itsTree  =(TTree*)itstrks->Get(trksName);

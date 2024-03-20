@@ -356,9 +356,9 @@ void AliTOFCalibTask::DrawHistos(){
 
 	  /*
 	  char line[1024] ; 
-	  sprintf(line, ".!tar -zcvf %s.tar.gz *.gif", GetName()) ; 
+	  snprintf(line,1024, ".!tar -zcvf %s.tar.gz *.gif", GetName()) ; 
 	  gROOT->ProcessLine(line);
-	  sprintf(line, ".!rm -fR *.gif"); 
+	  snprintf(line,1024, ".!rm -fR *.gif"); 
 	  gROOT->ProcessLine(line);
 	  AliInfo(Form("*** TOF Calib Task: plots saved in %s.tar.gz...\n", GetName())) ;
 	  */

@@ -57,7 +57,7 @@ void plotHits(Int_t ilay=3, Int_t ilrs=1, Int_t nev=-1, Int_t evStart=0)
 
   // Create histos
   char volName[15];
-  sprintf(volName,"ITSU%s%d",lrsNames[ilrs],ilay);
+  snprintf(volName,15,"ITSU%s%d",lrsNames[ilrs],ilay);
   TGeoBBox *vShape = (TGeoBBox*)(gGeoManager->GetVolume(volName)->GetShape());
   Double_t xHist = 1.1*vShape->GetDX(); // 10% greater
   Double_t yHist = 1.1*vShape->GetDY();
@@ -68,19 +68,19 @@ void plotHits(Int_t ilay=3, Int_t ilrs=1, Int_t nev=-1, Int_t evStart=0)
 
   char histTitle[50];
 
-  sprintf(histTitle," X - Y %s Local coordinates",lrsNames[ilrs]);
+  snprintf(histTitle,50," X - Y %s Local coordinates",lrsNames[ilrs]);
   TH2F *xy = new TH2F("xy",histTitle,100,-xHist,xHist,100,-yHist,yHist);
   xy->SetXTitle("X (cm)");
   xy->SetYTitle("Y (cm)");
   xy->SetMarkerStyle(7);
 
-  sprintf(histTitle," X - Z %s Local coordinates",lrsNames[ilrs]);
+  snprintf(histTitle,50," X - Z %s Local coordinates",lrsNames[ilrs]);
   TH2F *xz = new TH2F("xz",histTitle,100,-xHist,xHist,100,-zHist,zHist);
   xz->SetXTitle("X (cm)");
   xz->SetYTitle("Z (cm)");
   xz->SetMarkerStyle(7);
 
-  sprintf(histTitle," Z - Y %s Local coordinates",lrsNames[ilrs]);
+  snprintf(histTitle,50," Z - Y %s Local coordinates",lrsNames[ilrs]);
   TH2F *zy = new TH2F("zy",histTitle,100,-zHist,zHist,100,-yHist,yHist);
   zy->SetXTitle("Z (cm)");
   zy->SetYTitle("Y (cm)");

@@ -777,18 +777,18 @@ string AliHLTComponent::DataType2Text( const AliHLTComponentDataType& type, int 
     for (i=0; i<kAliHLTComponentDataTypefIDsize; i++) {
       unsigned char* puc=(unsigned char*)type.fID;
       if (puc[i]<32)
-	sprintf(tmp, "\\%x", type.fID[i]);
+	snprintf(tmp, 8, "\\%x", type.fID[i]);
       else
-	sprintf(tmp, "%c", type.fID[i]);
+	snprintf(tmp, 8, "%c", type.fID[i]);
       out+=tmp;
     }
     out+="' '";
     for (i=0; i<kAliHLTComponentDataTypefOriginSize; i++) {
       unsigned char* puc=(unsigned char*)type.fOrigin;
       if ((puc[i])<32)
-	sprintf(tmp, "\\%x", type.fOrigin[i]);
+	snprintf(tmp, 8, "\\%x", type.fOrigin[i]);
       else
-	sprintf(tmp, "%c", type.fOrigin[i]);
+	snprintf(tmp, 8, "%c", type.fOrigin[i]);
       out+=tmp;
     }
     out+="'";
@@ -803,12 +803,12 @@ string AliHLTComponent::DataType2Text( const AliHLTComponentDataType& type, int 
     int i=0;
     char tmp[8];
     for (i=0; i<kAliHLTComponentDataTypefOriginSize; i++) {
-      sprintf(tmp, "'%d", type.fOrigin[i]);
+      snprintf(tmp, 8, "'%d", type.fOrigin[i]);
       out+=tmp;
     }
     out+="':'";
     for (i=0; i<kAliHLTComponentDataTypefIDsize; i++) {
-      sprintf(tmp, "%d'", type.fID[i]);
+      snprintf(tmp, 8, "%d'", type.fID[i]);
       out+=tmp;
     }
     return out;
@@ -824,18 +824,18 @@ string AliHLTComponent::DataType2Text( const AliHLTComponentDataType& type, int 
     for (i=0; i<kAliHLTComponentDataTypefOriginSize; i++) {
       unsigned char* puc=(unsigned char*)type.fOrigin;
       if ((puc[i])<32)
-	sprintf(tmp, "'\\%x", type.fOrigin[i]);
+	snprintf(tmp, 8, "'\\%x", type.fOrigin[i]);
       else
-	sprintf(tmp, "'%c", type.fOrigin[i]);
+	snprintf(tmp, 8, "'%c", type.fOrigin[i]);
       out+=tmp;
     }
     out+="':'";
     for (i=0; i<kAliHLTComponentDataTypefIDsize; i++) {
       unsigned char* puc=(unsigned char*)type.fID;
       if (puc[i]<32)
-	sprintf(tmp, "\\%x'", type.fID[i]);
+	snprintf(tmp, 8, "\\%x'", type.fID[i]);
       else
-	sprintf(tmp, "%c'", type.fID[i]);
+	snprintf(tmp, 8, "%c'", type.fID[i]);
       out+=tmp;
     }
     return out;
@@ -3044,7 +3044,7 @@ TUUID AliHLTComponent::GenerateGUID()
 
   // Create the name of the new class and file.
   char uuidstr[64];
-  sprintf(uuidstr, "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+  snprintf(uuidstr, 64, "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
     dword[0], word[2], word[3], buf[8], buf[9], buf[10], buf[11], buf[12], buf[13], buf[14], buf[15]
   );
 

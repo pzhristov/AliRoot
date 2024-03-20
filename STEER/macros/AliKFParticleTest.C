@@ -300,9 +300,9 @@ Int_t AliKFParticleTest(Int_t n1=0,Int_t n2=1000,char *dire="/d/alice10/sma/my_v
   for (Int_t ifi=n1; ifi<=n2; ifi++) {
    
     char nstring[5], filename[100], esdfile[100];
-    sprintf(nstring,"%3.3d",ifi);
-    sprintf(filename,"%s%s/galice.root",dire,nstring);
-    sprintf(esdfile,"%s%s/AliESDs.root",dire,nstring);
+    snprintf(nstring,5,"%3.3d",ifi);
+    snprintf(filename,100,"%s%s/galice.root",dire,nstring);
+    snprintf(esdfile,100,"%s%s/AliESDs.root",dire,nstring);
     
     cout <<"  Opening "<<filename<<"\nand ESD "<<esdfile<<endl;
     

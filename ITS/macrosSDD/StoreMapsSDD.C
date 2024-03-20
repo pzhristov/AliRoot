@@ -41,19 +41,19 @@ void StoreMapsSDD(Int_t firstRun=0,Int_t lastRun=AliCDBRunRange::Infinity(), Boo
   AliITSCorrMapSDD* mapTime1;
   for(Int_t mod=0;mod<260;mod++){
     // maps
-    Char_t name[20];
-    sprintf(name,"DriftTimeMap_%d_%d\n",mod,0);
+    Char_t name[32];
+    snprintf(name,32,"DriftTimeMap_%d_%d\n",mod,0);
     Int_t nbinsan=1;
     if(optSmear && (mod==10 || mod==240)){
       nbinsan=256;
-      sprintf(name,"DriftTimeMap_%d_%d\n",mod,0);
+      snprintf(name,32,"DriftTimeMap_%d_%d\n",mod,0);
       mapTime0 = new AliITSCorrMap2DSDD(name,nbinsan,72);
-      sprintf(name,"DriftTimeMap_%d_%d\n",mod,1);
+      snprintf(name,32,"DriftTimeMap_%d_%d\n",mod,1);
       mapTime1 = new AliITSCorrMap2DSDD(name,nbinsan,72);
     }else{
-      sprintf(name,"DriftTimeMap_%d_%d\n",mod,0);
+      snprintf(name,32,"DriftTimeMap_%d_%d\n",mod,0);
       mapTime0 = new AliITSCorrMap1DSDD(name,72);
-      sprintf(name,"DriftTimeMap_%d_%d\n",mod,1);
+      snprintf(name,32,"DriftTimeMap_%d_%d\n",mod,1);
       mapTime1 = new AliITSCorrMap1DSDD(name,72);
     }
     for(Int_t nan = 0;nan< nbinsan;nan++){

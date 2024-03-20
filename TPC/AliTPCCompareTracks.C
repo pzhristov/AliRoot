@@ -29,12 +29,12 @@ Int_t AliTPCCompareTracks(Int_t eventn, Bool_t all = kFALSE) {
    ce->Setup(param);
    ce->SetClusterType("AliComplexCluster");
    char  cname[100];
-   sprintf(cname,"TreeCExact_%d",eventn);
+   snprintf(cname,100,"TreeCExact_%d",eventn);
    ce->ConnectTree(cname);
    //
    //connect reconstructed tracks
    ftracks->cd();
-   sprintf(cname,"Seeds");
+   snprintf(cname,100,"Seeds");
    TTree * treetracks = (TTree*)ftracks->Get(cname);
    TBranch * branchtracks = treetracks->GetBranch("seeds");   
    //

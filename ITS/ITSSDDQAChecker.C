@@ -39,8 +39,8 @@ void ITSSDDQAChecker(Char_t *filename){
     if(hModulePattern->GetBinContent(imod+1)!=0){
       nActiveModules++;	
       cout<<imod<<" imod" <<endl;
-      sprintf(canvtitle,"canvas_module_%d",imod);
-      sprintf(canvname,"moduleCanvas[%d]",imod); 
+      snprintf(canvtitle,100,"canvas_module_%d",imod);
+      snprintf(canvname,100,"moduleCanvas[%d]",imod); 
       moduleCanvas[imod]=new TCanvas(canvname,canvtitle);
       moduleCanvas[imod]->Divide(2,6);
       moduleCanvas[imod]->Update();
@@ -49,9 +49,9 @@ void ITSSDDQAChecker(Char_t *filename){
         Int_t index=2*imod+isid;
 	if(hModuleSidePattern->GetBinContent(index+1)!=0){
 	  //cout << "Module: " << imod << ", Side: " << isid << ", index: " << index << ", update canvases" << endl;
-	  sprintf(takeChargeMap,"chargeMap%d",index);
+	  snprintf(takeChargeMap,50,"chargeMap%d",index);
 	  ChargeMap= (TH2F*)fileinput->Get(takeChargeMap);
-	  sprintf(takeCountsMap,"countsMap%d",index);
+	  snprintf(takeCountsMap,50,"countsMap%d",index);
 	  CountsMap= (TH2F*)fileinput->Get(takeCountsMap);
 
 	  mapProjX[index] = ChargeMap->ProjectionX();

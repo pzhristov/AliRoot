@@ -1363,7 +1363,7 @@ void AliITSv11GeometrySDD::Layer3(TGeoVolume *moth) {
     if (iLadd%2 != 0) minRadiusDetBox = fgkLay3DetLongRadius;
     minRadiusDetBox += detectorsThick/2;
 
-    sprintf(rotName, "ITSsddLay3EndLadd%i",iLadd);
+    snprintf(rotName, 30, "ITSsddLay3EndLadd%i",iLadd);
 
     TGeoCombiTrans *ctEndLaddPos = CreateCombiTrans(rotName, minRadiusDetBox-0.1,
 				   -fgkForwardLay3Length/2, ladderPhi, kTRUE);
@@ -1456,7 +1456,7 @@ void AliITSv11GeometrySDD::Layer3(TGeoVolume *moth) {
 //     if (iLadd%2 != 0) minRadiusDetBox = fgkLay3DetLongRadius;
 //     minRadiusDetBox += detectorsThick/2;
 
-//     sprintf(rotName, "ITSsddLay3EndLadd%i",iLadd);
+//     snprintf(rotName, 30, "ITSsddLay3EndLadd%i",iLadd);
 
 //     TGeoCombiTrans *ctEndLaddPos = CreateCombiTrans(rotName, minRadiusDetBox-0.1,
 // 				   -fgkForwardLay3Length/2, ladderPhi, kTRUE);
@@ -1641,7 +1641,7 @@ void AliITSv11GeometrySDD::Layer4(TGeoVolume *moth) {
       minRadiusDetBox = fgkLay4DetLongRadius;
     minRadiusDetBox += detBoxThickness/2;
 
-    sprintf(rotName, "ITSsddLay4EndLadd%i",iLadd);
+    snprintf(rotName, 30, "ITSsddLay4EndLadd%i",iLadd);
 
     TGeoCombiTrans *ctEndLaddPos = CreateCombiTrans(rotName, minRadiusDetBox-0.1,
 				   -fgkForwardLay4Length/2, ladderPhi, kTRUE);
@@ -1723,7 +1723,7 @@ void AliITSv11GeometrySDD::Layer4(TGeoVolume *moth) {
 //       minRadiusDetBox = fgkLay4DetLongRadius;
 //     minRadiusDetBox += detBoxThickness/2;
 
-//     sprintf(rotName, "ITSsddLay4EndLadd%i",iLadd);
+//     snprintf(rotName, 30, "ITSsddLay4EndLadd%i",iLadd);
 
 //     TGeoCombiTrans *ctEndLaddPos = CreateCombiTrans(rotName, minRadiusDetBox-0.1,
 // 				   -fgkForwardLay4Length/2, ladderPhi, kTRUE);
@@ -5437,7 +5437,7 @@ TGeoVolume *AliITSv11GeometrySDD::CreateDetectors(Int_t iLay) {
   Double_t volThickness = ( fgkLadWaferSep + 2*fgkWaferThickness +
 			    2*(fgkWaHVcableAlThick+fgkWaHVcablePolyThick));
   
-  sprintf(name,"ITSsddDetBox%i",iLay);
+  snprintf(name,30,"ITSsddDetBox%i",iLay);
   TGeoBBox *detBox = new TGeoBBox(name, fgkWaferWidth/2, volThickness/2,
 			 ladderLength*((nDetectors-0.5)/nDetectors)/2);
   TGeoVolume *virtualDet = new TGeoVolume("ITSsddLadd",detBox, airSDD);
@@ -5447,7 +5447,7 @@ TGeoVolume *AliITSv11GeometrySDD::CreateDetectors(Int_t iLay) {
         Double_t localY = fgkLadWaferSep/2+fgkWaferThickness/2;
         if (iLay==3) if (i%2!=0) localY = -localY;
 	if (iLay==4) if (i%2==0) localY = -localY;
-        sprintf(name, "ITSsddLay%iSensorPos%i",iLay, i);
+        snprintf(name,30, "ITSsddLay%iSensorPos%i",iLay, i);
 
 	if (i >= nDetectors/2) {
 	  TGeoTranslation *sensorPos = new TGeoTranslation(0,localY,localZ);

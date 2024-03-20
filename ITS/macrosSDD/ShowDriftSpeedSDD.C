@@ -73,33 +73,33 @@ void ShowDriftSpeedSDD(Char_t filnam[150]="$ALICE_ROOT/ITS/Calib/DriftSpeedSDD/R
   TGraph *dveevsmod1=new TGraph(0);
 
   char tit0[100];
-  sprintf(tit0,"Temperature vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Temperature vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Temperature vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Temperature vs. mod. number - Run %d",nrun);
   tempvsmod0->SetTitle(tit0);
   tempvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Drift Speed vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Drift Speed vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Drift Speed vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Drift Speed vs. mod. number - Run %d",nrun);
   vvsmod0->SetTitle(tit0);
   vvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Degree of poly fit vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Degree of poly fit vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Degree of poly fit vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Degree of poly fit vs. mod. number - Run %d",nrun);
   poldegvsmod0->SetTitle(tit0);
   poldegvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Anode with max. vdrift vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Anode with max. vdrift vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Anode with max. vdrift vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Anode with max. vdrift vs. mod. number - Run %d",nrun);
   anmaxvsmod0->SetTitle(tit0);
   anmaxvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Delta Vdrift 128-0 vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Delta Vdrift 128-0 vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Delta Vdrift 128-0 vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Delta Vdrift 128-0 vs. mod. number - Run %d",nrun);
   dvcevsmod0->SetTitle(tit0);
   dvcevsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Delta Vdrift 256-0 vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Delta Vdrift 256-0 vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Delta Vdrift 256-0 vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Delta Vdrift 256-0 vs. mod. number - Run %d",nrun);
   dveevsmod0->SetTitle(tit0);
   dveevsmod1->SetTitle(tit0);
 
@@ -145,7 +145,7 @@ void ShowDriftSpeedSDD(Char_t filnam[150]="$ALICE_ROOT/ITS/Calib/DriftSpeedSDD/R
     gvdr1[i]->SetMinimum(5.);
     gvdr0[i]->SetMaximum(7.5);
     gvdr1[i]->SetMaximum(7.5);
-    sprintf(tit,"Mod %d\n",iMod);
+    snprintf(tit,100,"Mod %d\n",iMod);
     gvdr0[i]->SetTitle(tit);
     gvdr1[i]->SetTitle(tit);
     gvdr1[i]->SetMarkerColor(kRed);
@@ -422,7 +422,7 @@ void ShowDriftSpeedSDD(Int_t nrun, Int_t year=2018, Int_t nv=-1){
     gSystem->Exec("rm run.txt");
     return;
   }  
-  sprintf(filnamalien,"alien://%s",filnam);
+  snprintf(filnamalien,200,"alien://%s",filnam);
   
   printf("Open file: %s\n",filnamalien);
   ShowDriftSpeedSDD(filnamalien,0,260,nrun);

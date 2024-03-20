@@ -269,9 +269,9 @@ void AliPHOSESDQA::Terminate(Option_t *)
   cPHOS->Print("PHOS.eps");
  
   char line[1024] ; 
-  sprintf(line, ".!tar -zcf %s.tar.gz *.eps", GetName()) ; 
+  snprintf(line, 1024, ".!tar -zcf %s.tar.gz *.eps", GetName()) ; 
   gROOT->ProcessLine(line);
-  sprintf(line, ".!rm -fR *.eps"); 
+  snprintf(line, 1024, ".!rm -fR *.eps"); 
   gROOT->ProcessLine(line);
  
   AliInfo(Form("!!! All the eps files are in %s.tar.gz !!!", GetName())) ;

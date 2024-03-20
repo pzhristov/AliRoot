@@ -99,7 +99,7 @@ void MakeHitsTable(
 		
 		char buf[1024];
 		char* str = &buf[0];
-		sprintf(str, "AliHLTMUONEvent;%d", event+1);
+		snprintf(str, 1024, "AliHLTMUONEvent;%d", event+1);
 		AliHLTMUONEvent* dHLTevent = dynamic_cast<AliHLTMUONEvent*>( dHLTfile.Get(str) );
 		if (dHLTevent == NULL)
 		{

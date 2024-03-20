@@ -186,7 +186,7 @@ PrintScript()
     int isect = iSM / 2;
     for (iRCU=0; iRCU<kNRCU; iRCU++) 
     {
-      sprintf(filename, "setSM%1s%dRCU%d.scr", 
+      snprintf(filename, 100, "setSM%1s%dRCU%d.scr", 
               sideStr[iside], isect, iRCU);
       ofstream fout(filename);
       int nscriptLines = 0;
@@ -222,14 +222,14 @@ PrintScript()
                   // 
                   int writeAddr = (ibranch << 16) | (iFEC << 12) | (ichip << 9) |
                   (ichan << 5) | VFPED | RCUWrite;  
-                  sprintf(scriptLine, "w 0x%04x 0x%06x  # Branch %s, Card %d, Altro %d, Chan %d", 
+                  snprintf(scriptLine, 200, "w 0x%04x 0x%06x  # Branch %s, Card %d, Altro %d, Chan %d", 
                           nscriptLines, writeAddr, branchStr[ibranch],
                           iFEC, ichip, ichan);
                   fout << scriptLine << endl;
                   nscriptLines++;
                   
                   int writeVal = (Ped | RCUWrite);
-                  sprintf(scriptLine, "w 0x%04x 0x%06x  # Pedestal 0x%x = %d", 
+                  snprintf(scriptLine, 200, "w 0x%04x 0x%06x  # Pedestal 0x%x = %d", 
                           nscriptLines, writeVal, Ped, Ped);
                   fout << scriptLine << endl;
                   nscriptLines++;
@@ -241,12 +241,12 @@ PrintScript()
         }
       }
       // ending, with execute and update step..	    
-      sprintf(scriptLine, "w 0x%04x 0x380000  # End of the sequence", 
+      snprintf(scriptLine, 200, "w 0x%04x 0x380000  # End of the sequence", 
               nscriptLines);
       fout << scriptLine << endl;
       nscriptLines++;
       
-      sprintf(scriptLine, "w 0x%04x 0x3F0000  # End of the instruction memory", 
+      snprintf(scriptLine, 200, "w 0x%04x 0x3F0000  # End of the instruction memory", 
               nscriptLines);
       fout << scriptLine << endl;
       nscriptLines++;

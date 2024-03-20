@@ -26,12 +26,12 @@ void ReadQASDD(Int_t runNb = 101498,Int_t year=2009,Char_t period[10]="LHC09c",C
   merger.SetFastMethod(kTRUE);
   Char_t fileName[100];
   Char_t directory[100];
-  sprintf(fileName,"%s.%i.%s.%s.Run.%i.root",initfileout,year,period,pass,runNb);
+  snprintf(fileName,100,"%s.%i.%s.%s.Run.%i.root",initfileout,year,period,pass,runNb);
   merger.OutputFile(fileName);//metto il nome del file QA
-  //sprintf(directory,"local://%s",gSystem->pwd());
+  //snprintf(directory,100,"local://%s",gSystem->pwd());
   Char_t path[200];
 
-  sprintf(path,"/alice/data/%04i/%s/%09i/ESDs/%s/%02i%09i*.*",year,period,runNb,pass,year-2000,runNb);
+  snprintf(path,200,"/alice/data/%04i/%s/%09i/ESDs/%s/%02i%09i*.*",year,period,runNb,pass,year-2000,runNb);
   printf("path %s\n",path);
 
   TGridResult *gr = gGrid->Query(path,filetosearch);
@@ -46,7 +46,7 @@ void ReadQASDD(Int_t runNb = 101498,Int_t year=2009,Char_t period[10]="LHC09c",C
   if(nFiles>maxfiles) nFiles=maxfiles; 
   for (Int_t i = 3; i <nFiles ; i++) { 
     printf("File %i/%i\n",i+1,nFiles); 
-    sprintf(directory,"%s",gr->GetKey(i,"turl"));
+    snprintf(directory,100,"%s",gr->GetKey(i,"turl"));
     printf("%s\n\n", directory);
        if(i==0) 
       {

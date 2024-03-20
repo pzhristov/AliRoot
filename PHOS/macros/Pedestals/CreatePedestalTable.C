@@ -68,7 +68,7 @@ Bool_t CreatePedestalTable(Int_t runnumber)
         Char_t name[255];
 	Int_t iDTC=idtc;
 	if (idtc==1) iDTC=15; // FEE 1 is connected to SRU port 15
-        sprintf(name,"%d/Pedestal_%d_SRUM%d-%d_DTC%d.txt",runnumber,runnumber,imod,isru,iDTC);
+        snprintf(name,255,"%d/Pedestal_%d_SRUM%d-%d_DTC%d.txt",runnumber,runnumber,imod,isru,iDTC);
 	gSystem->Exec(Form("mkdir -p %d",runnumber));
         ftxt.open(name,ios::out);
 

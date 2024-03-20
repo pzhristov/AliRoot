@@ -87,7 +87,7 @@ void AliEveTOFDigitsInfo::ReadRaw(AliRawReader* rawReader, Int_t newDecoder)
 
   //ofstream ftxt;
   //Char_t fileName[100];
-  //sprintf(fileName,"TOFrawDataReadingFromEVE%d.txt",nEvent);
+  //snprintf(fileName,100,"TOFrawDataReadingFromEVE%d.txt",nEvent);
 
   //ftxt.open(fileName,ios::app);
   //ftxt << endl;

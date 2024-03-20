@@ -51,7 +51,7 @@ void LEDRef_evtdis(const int runno = 615,
   
   // Assume we are just interested in the 1st segment, _0.root below for fname*
   Char_t fname[256];
-  sprintf(fname, "/local/data/Run_%09d.Seq_1A.Stream_0.root",runno);
+  snprintf(fname, 256, "/local/data/Run_%09d.Seq_1A.Stream_0.root",runno);
   cout << "TOTCHAN " << TOTCHAN << endl;
 
   // set up a raw reader of the data
@@ -67,10 +67,10 @@ void LEDRef_evtdis(const int runno = 615,
   char buff1[100];
   char name[80];
   for(int i=0; i<TOTCHAN; i++) {
-    sprintf(buff1,"hfit_%d",i);
+    snprintf(buff1,100,"hfit_%d",i);
     hfit[i] = new TH1F(buff1,"hfit", nsamples , -0.5, nsamples - 0.5);
     hfit[i]->SetDirectory(0);
-    sprintf(name,"f1_%d",i);
+    snprintf(name,80,"f1_%d",i);
     f1[i] = new TF1(name,fitfun,0,70,5);
     f1[i]->SetLineWidth(2);
     f1[i]->SetLineColor(2);
@@ -78,7 +78,7 @@ void LEDRef_evtdis(const int runno = 615,
     //	int idx = istrip + NSTRIPS * gain; // encoding used later
     int gain = i / (NSTRIPS);
     int istrip = i % NSTRIPS;
-    sprintf(ch_label[i], "Strip%02d", istrip);
+    snprintf(ch_label[i], 100, "Strip%02d", istrip);
   }
   
   TCanvas *cc1 = new TCanvas("cc1","3 columns of 8 strips each",600,800);
@@ -205,7 +205,7 @@ void LEDRef_evtdis(const int runno = 615,
       //label->SetFillStyle(0);
       TDatime d;
       d.Set(timestamp);
-      sprintf(name,"Run %d, Event %d, Hist Max %d, %s",runno,iev,ymax,d.AsString());
+      snprintf(name,80,"Run %d, Event %d, Hist Max %d, %s",runno,iev,ymax,d.AsString());
       label->AddText(name);
       label->Draw();
       cc1->Update();
@@ -236,7 +236,7 @@ void LEDRef_evtdis(const int runno = 615,
       // save plot, if setup/requested to do so
       char plotname[100];
       if (saveplot==1) {
-	sprintf(plotname,"Run_%d_LEDRef_Ev%d_Gain%d_MaxHist%d.gif",
+	snprintf(plotname,100,"Run_%d_LEDRef_Ev%d_Gain%d_MaxHist%d.gif",
 		runno,iev,gainv,ymax);  
 	cout <<"SAVING plot:"<< plotname << endl;
 	cc1->SaveAs(plotname);

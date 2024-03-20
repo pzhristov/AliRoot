@@ -40,7 +40,7 @@ void PlotTDCcalibvsTime(Int_t year=2011, Int_t firstRun=166000,
   for(Int_t i=0; i<kNchannels; i++){
      graph[i] = new TGraphErrors(0);
      char name[50], title[50];
-     sprintf(name,"graph%d",i); sprintf(title,"TDC.%d vs. run#",i);
+     snprintf(name,50,"graph%d",i); snprintf(title,50,"TDC.%d vs. run#",i);
      graph[i]->SetName("graph");  graph[i]->SetTitle("title");
   }
 
@@ -51,13 +51,13 @@ void PlotTDCcalibvsTime(Int_t year=2011, Int_t firstRun=166000,
   while(!feof(listruns)){
     int st = fscanf(listruns,"%s\n",filnam);    
     Char_t directory[100];
-    sprintf(directory,"/alice/data/%d",year);
+    snprintf(directory,100,"/alice/data/%d",year);
     printf(" Checking for %s\n",filnam);
     if(!strstr(filnam,directory)) continue;
     sscanf(filnam,"/alice/data/%d/OCDB/ZDC/Calib/TDCCalib/Run%d_%d_v%d_s%d.root",&year,&nrun,&nrun2,&nv,&ns);
     if(nrun<firstRun) continue;
     if(nrun>lastRun) continue;
-    sprintf(filnamalien,"alien://%s",filnam);
+    snprintf(filnamalien,200,"alien://%s",filnam);
     printf("Opening file: %s\n",filnam);
     TFile *f = TFile::Open(filnamalien);  
     AliCDBEntry *entry = (AliCDBEntry*)f->Get("AliCDBEntry");

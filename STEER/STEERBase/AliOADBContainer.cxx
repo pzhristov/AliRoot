@@ -329,7 +329,7 @@ TObject* AliOADBContainer::GetObjectFromFile(TFile* file, Int_t run, const char*
     }
   } else {
     char keyst[20];
-    sprintf(keyst, "multSel;%d", idx);
+    snprintf(keyst,20, "multSel;%d", idx);
     obj = file->Get(keyst);
     return obj;
   }

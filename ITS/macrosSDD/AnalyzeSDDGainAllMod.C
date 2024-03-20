@@ -49,7 +49,7 @@ void AnalyzeSDDGainAllMod(Char_t *datafil,
 	anal[index]=new AliITSOnlineSDDTP(iddl,imod,isid,pascalDAC);
 	if(adcfreq==40) anal[index]->SetLastGoodTB(254);
 	else anal[index]->SetLastGoodTB(126);
-	sprintf(hisnam,"h%02dc%02ds%d",iddl,imod,isid);
+	snprintf(hisnam,20,"h%02dc%02ds%d",iddl,imod,isid);
 	histo[index]=new TH2F(hisnam,"",256,-0.5,255.5,256,-0.5,255.5);
 	isFilled[index]=0;
       }
@@ -115,7 +115,7 @@ void AnalyzeSDDGainAllMod(Char_t *datafil,
 	    Int_t index2=kSides*imod+isid;
 	    c0->cd(index2+1);
 	    histo[index]->DrawCopy("colz");
-	    sprintf(text,"DDL %d channel %d Side %d",nDDL,imod,isid);
+	    snprintf(text,50,"DDL %d channel %d Side %d",nDDL,imod,isid);
 	    t0->DrawLatex(0.15,0.92,text);
 	    c0->Update();
 	  }
@@ -189,15 +189,15 @@ void AnalyzeSDDGainAllMod(Char_t *datafil,
     for(Int_t isid=0;isid<kSides;isid++){
       Int_t index1=kSides*(kModPerDDL*nDDL+imod)+isid;
       Int_t index2=kSides*imod+isid;
-      sprintf(text,"DDL %d channel %d Side %d",nDDL,imod,isid);
+      snprintf(text,50,"DDL %d channel %d Side %d",nDDL,imod,isid);
 
       TLatex *t3=new TLatex(0.15,0.92,text);
       t3->SetNDC();
       t3->SetTextSize(0.06);
       t3->SetTextColor(4);
-      sprintf(hisnam,"hgain%ds%d",imod,isid);
+      snprintf(hisnam,20,"hgain%ds%d",imod,isid);
       hgain[index2]=new TH1F(hisnam,"",256,-0.5,255.5);
-      sprintf(hisnam,"htptb%ds%d",imod,isid);
+      snprintf(hisnam,20,"htptb%ds%d",imod,isid);
       htptb[index2]=new TH1F(hisnam,"",256,-0.5,255.5);
       for(Int_t ian=0;ian<256;ian++){
 	hgain[index2]->SetBinContent(ian+1,anal[index1]->GetChannelGain(ian));
@@ -249,7 +249,7 @@ void AnalyzeSDDGainAllMod(Int_t nrun, Int_t n2, Int_t year=2009, Char_t* dir="LH
 
   TGrid::Connect("alien:",0,0,"t");
   Char_t filnam[200];
-  sprintf(filnam,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
+  snprintf(filnam,200,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
   printf("Open file %s\n",filnam);
   AnalyzeSDDGainAllMod(filnam,adcfreq,nDDL,firstEv,lastEv,pascalDAC);
 }

@@ -263,7 +263,7 @@ Bool_t AliPHOSPreprocessor::ProcessBadMapFromDCS()
         }
         
         for (Int_t i=1; i<5; i++) {
-            sprintf(hname,"PHOS_BadMap_mod%d",i);
+            snprintf(hname,80,"PHOS_BadMap_mod%d",i);
             PHOSBadMaps[i] = (TH2I*)f.Get(hname);
         }
     }

@@ -174,12 +174,12 @@ void TopVMDetector(){
   for (Int_t idet=0; idet<12; idet++){
     char cdet[100];
     char cdvm[100];
-    sprintf(cdet,"id0==%d",idet);
+    snprintf(cdet,100,"id0==%d",idet);
     char expr[100];
-    sprintf(expr,"deltaVM:sname>>hhh");  
+    snprintf(expr,100,"deltaVM:sname>>hhh");  
     //
     Float_t thDVM = TopUsage(tree,"deltaVM",cdet,ctop);
-    sprintf(cdvm,"%s&&deltaT>%f",cdet, thDVM);
+    snprintf(cdvm,100,"%s&&deltaT>%f",cdet, thDVM);
 
 
     //
@@ -194,7 +194,7 @@ void TopVMDetector(){
     delete his2;
     //
     //    
-    sprintf(expr,"VM:sname>>hhh");
+    snprintf(expr,100,"VM:sname>>hhh");
     tree->Draw(expr,cdvm,"*"); 
     his2 = (TH2F*)(tree->GetHistogram())->Clone("yyy");
     delete tree->GetHistogram();
@@ -220,12 +220,12 @@ void TopCPUDetector(){
   for (Int_t idet=0; idet<12; idet++){
     char cdet[100];
     char cdtime[100];
-    sprintf(cdet,"id0==%d",idet);
+    snprintf(cdet,100,"id0==%d",idet);
     char expr[100];
-    sprintf(expr,"deltaT:sname>>hhh");  
+    snprintf(expr,100,"deltaT:sname>>hhh");  
     //
     Float_t thDT = TopUsage(tree,"deltaT",cdet,ctop);
-    sprintf(cdtime,"%s&&deltaT>%f",cdet, thDT);
+    snprintf(cdtime,100,"%s&&deltaT>%f",cdet, thDT);
     //
     tree->Draw(expr,cdtime,"*"); 
     his2 = (TH2F*)(tree->GetHistogram())->Clone("dtsname");

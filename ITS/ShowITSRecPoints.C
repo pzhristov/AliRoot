@@ -74,47 +74,47 @@ Int_t ShowITSRecPoints(Int_t nevfordisp=0){
   
   Char_t name[10];
   for(Int_t iLay=0;iLay<6;iLay++){
-    sprintf(name,"hmod%d",iLay+1);
+    snprintf(name,10,"hmod%d",iLay+1);
     hmod[iLay]=new TH1F(name,"",totmod,modmin-0.5,modmax+0.5);
     hmod[iLay]->GetXaxis()->SetTitle("Module");
     hmod[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hxloc%d",iLay+1);
+    snprintf(name,10,"hxloc%d",iLay+1);
     hxl[iLay]=new TH1F(name,"",100,-4.,4.);
     hxl[iLay]->GetXaxis()->SetTitle("Xloc (cm)");
     hxl[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hzloc%d",iLay+1);
+    snprintf(name,10,"hzloc%d",iLay+1);
     hzl[iLay]=new TH1F(name,"",100,-4.,4.);
     hzl[iLay]->GetXaxis()->SetTitle("Zloc (cm)");
     hzl[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hxgl%d",iLay+1);
+    snprintf(name,10,"hxgl%d",iLay+1);
     hxg[iLay]=new TH1F(name,"",100,-xlim[iLay],xlim[iLay]);
     hxg[iLay]->GetXaxis()->SetTitle("Xglob (cm)");
     hxg[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hygl%d",iLay+1);
+    snprintf(name,10,"hygl%d",iLay+1);
     hyg[iLay]=new TH1F(name,"",100,-xlim[iLay],xlim[iLay]);
     hyg[iLay]->GetXaxis()->SetTitle("Yglob (cm)");
     hyg[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hzgl%d",iLay+1);
+    snprintf(name,10,"hzgl%d",iLay+1);
     hzg[iLay]=new TH1F(name,"",100,-zlim[iLay],zlim[iLay]);
     hzg[iLay]->GetXaxis()->SetTitle("Zglob (cm)");
     hzg[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hr%d",iLay+1);
+    snprintf(name,10,"hr%d",iLay+1);
     hr[iLay]=new TH1F(name,"",100,0.,50.);
     hr[iLay]->GetXaxis()->SetTitle("r (cm)");
     hr[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hphi%d",iLay+1);
+    snprintf(name,10,"hphi%d",iLay+1);
     hphi[iLay]=new TH1F(name,"",100,-TMath::Pi(),TMath::Pi());    
     hphi[iLay]->GetXaxis()->SetTitle("#varphi (rad)");
     hphi[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hq%d",iLay+1);
+    snprintf(name,10,"hq%d",iLay+1);
     hq[iLay]=new TH1F(name,"",100,0.,300.);    
     hq[iLay]->GetXaxis()->SetTitle("Charge (keV)");
     hq[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hdtim%d",iLay+1);
+    snprintf(name,10,"hdtim%d",iLay+1);
     hdrtime[iLay]=new TH1F(name,"",100,0.,7000.);    
     hdrtime[iLay]->GetXaxis()->SetTitle("Drift Time (ns)");
     hdrtime[iLay]->GetXaxis()->CenterTitle();
-    sprintf(name,"hzphi%d",iLay+1);
+    snprintf(name,10,"hzphi%d",iLay+1);
     hzphi[iLay]=new TH2F(name,Form("Layer %d",iLay+1),50,-TMath::Pi(),TMath::Pi(),50,-zlim[iLay],zlim[iLay]);
     hzphi[iLay]->GetXaxis()->SetTitle("#varphi (rad)");
     hzphi[iLay]->GetYaxis()->SetTitle("Zglob (cm)");
@@ -172,8 +172,8 @@ Int_t ShowITSRecPoints(Int_t nevfordisp=0){
   TCanvas **c=new TCanvas*[6];
   Char_t ctit[30];
   for(Int_t iLay=0;iLay<6;iLay++){
-    sprintf(name,"can%d",iLay+1);
-    sprintf(ctit,"Layer %d",iLay+1);
+    snprintf(name,10,"can%d",iLay+1);
+    snprintf(ctit,30,"Layer %d",iLay+1);
     c[iLay]=new TCanvas(name,ctit,1200,900);
     c[iLay]->Divide(3,3,0.001,0.001);
     c[iLay]->cd(1);
@@ -234,7 +234,7 @@ Int_t ShowITSRecPoints(Int_t nevfordisp=0){
   tstat->DrawLatex(0.6,0.92,Form("# Clusters = %d",int(hzphi[5]->GetEntries())));  
 
   TCanvas *cev0;
-  sprintf(ctit,"Event %d XY",nevfordisp);
+  snprintf(ctit,30,"Event %d XY",nevfordisp);
   cev0=new TCanvas("cev0",ctit,600,600);
   if(gptsXY->GetN()>0){
     gptsXY->SetMarkerStyle(7);
@@ -245,7 +245,7 @@ Int_t ShowITSRecPoints(Int_t nevfordisp=0){
    }
 
   TCanvas *cev1;
-  sprintf(ctit,"Event %d Zr",nevfordisp);
+  snprintf(ctit,30,"Event %d Zr",nevfordisp);
   cev1=new TCanvas("cev1",ctit,600,600);
   if(gptsRZ->GetN()>0){
     gptsRZ->SetMarkerStyle(7);

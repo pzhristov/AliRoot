@@ -117,7 +117,7 @@ extern "C" {
 //
 
 #include <iostream>
-#include <cstdio>       // needed for formatted output using sprintf 
+#include <cstdio>       // needed for formatted output using snprintf 
 
 namespace HepMC {
 

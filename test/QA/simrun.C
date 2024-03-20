@@ -18,14 +18,14 @@
   char squench[1024];
   char sqhat[1024];
 
-  sprintf(srun,"");
-  sprintf(sevent,"");
-  sprintf(sprocess,"");
-  sprintf(sminpthard,"");
-  sprintf(smaxpthard,"");
-  sprintf(sminptgammapi0,"");
-  sprintf(squench,"");
-  sprintf(sqhat,"");
+  snprintf(srun,1024,"");
+  snprintf(sevent,1024,"");
+  snprintf(sprocess,1024,"");
+  snprintf(sminpthard,1024,"");
+  snprintf(smaxpthard,1024,"");
+  snprintf(sminptgammapi0,1024,"");
+  snprintf(squench,1024,"");
+  snprintf(sqhat,1024,"");
 
   for (int i=0; i< gApplication->Argc();i++){
 #ifdef VERBOSEARGS
@@ -33,33 +33,33 @@
 #endif
     if (!(strcmp(gApplication->Argv(i),"--run")))
       nrun = atoi(gApplication->Argv(i+1));
-    sprintf(srun,"%d",nrun);
+    snprintf(srun,1024,"%d",nrun);
     if (!(strcmp(gApplication->Argv(i),"--event")))
       nevent = atoi(gApplication->Argv(i+1));
-    sprintf(sevent,"%d",nevent);
+    snprintf(sevent,1024,"%d",nevent);
     
     if (!(strcmp(gApplication->Argv(i),"--process")))
-      sprintf(sprocess, gApplication->Argv(i+1));
+      snprintf(sprocess,1024, gApplication->Argv(i+1));
     
     if (!(strcmp(gApplication->Argv(i),"--minhard")))
-      sprintf(sminpthard,gApplication->Argv(i+1));
+      snprintf(sminpthard,1024,gApplication->Argv(i+1));
     
     if (!(strcmp(gApplication->Argv(i),"--maxhard")))
-      sprintf(smaxpthard,gApplication->Argv(i+1));
+      snprintf(smaxpthard,1024,gApplication->Argv(i+1));
     
     if (!(strcmp(gApplication->Argv(i),"--minpt")))
-      sprintf(sminptgammapi0,gApplication->Argv(i+1));
+      snprintf(sminptgammapi0,1024,gApplication->Argv(i+1));
 
     if (!(strcmp(gApplication->Argv(i),"--quench")))
-      sprintf(squench,gApplication->Argv(i+1));
+      snprintf(squench,1024,gApplication->Argv(i+1));
 
     if (!(strcmp(gApplication->Argv(i),"--qhat")))
-      sprintf(sqhat,gApplication->Argv(i+1));
+      snprintf(sqhat,1024,gApplication->Argv(i+1));
 
   }
   
   seed = nrun * 100000 + nevent;
-  sprintf(sseed,"%d",seed);
+  snprintf(sseed,1024,"%d",seed);
 
   if (seed==0) {
     fprintf(stderr,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");

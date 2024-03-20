@@ -103,7 +103,7 @@ Int_t AliITSComparisonV2
 
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodTracksITS.root",dir);
+   snprintf(fname,100,"%s/GoodTracksITS.root",dir);
 
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
@@ -133,10 +133,10 @@ Int_t AliITSComparisonV2
    branch->SetAddress(&refs);
 
 
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname, 100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
-      sprintf(fname,"%s/AliESDits.root",dir);
+      snprintf(fname, 100,"%s/AliESDits.root",dir);
       ef=TFile::Open(fname);
       if ((!ef)||(!ef->IsOpen())) {
          ::Error("AliITSComparisonV2.C","Can't open AliESDits.root !");
@@ -370,7 +370,7 @@ Int_t GoodTracksITS(const Char_t *dir) {
    }
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -394,7 +394,7 @@ Int_t GoodTracksITS(const Char_t *dir) {
    Int_t nev=rl->GetNumberOfEvents();
    ::Info("GoodTracksITS","Number of events : %d\n",nev);  
 
-   sprintf(fname,"%s/GoodTracksTPC.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTPC.root",dir);
    TFile *tpcFile=TFile::Open(fname);
    if ((!tpcFile)||(!tpcFile->IsOpen())) {
        ::Error("GoodTracksITS","Can't open the GoodTracksTPC.root !");
@@ -416,7 +416,7 @@ Int_t GoodTracksITS(const Char_t *dir) {
    }
    tpcBranch->SetAddress(&tpcRefs);
 
-   sprintf(fname,"%s/GoodTracksITS.root",dir);
+   snprintf(fname,100,"%s/GoodTracksITS.root",dir);
    TFile *itsFile=TFile::Open(fname,"recreate");
    TClonesArray dummy2("AliTrackReference",1000), *itsRefs=&dummy2;
    TTree itsTree("itsTree","Tree with info about the reconstructable ITS tracks");

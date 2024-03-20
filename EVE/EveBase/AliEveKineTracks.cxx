@@ -74,7 +74,7 @@ TEveTrackList* AliEveKineTracks::Draw(Double_t min_pt,  Double_t min_p,
             //PH on some platforms (alphalinuxgcc, solariscc5, etc.)
             //PH    track->SetName(Form("%s [%d]", p->GetName(), i));
             char form[1000];
-            sprintf(form,"%s [%d]", p->GetName(), i);
+            snprintf(form,1000,"%s [%d]", p->GetName(), i);
             track->SetName(form);
             track->SetStdTitle();
             Int_t ml = p->GetMother(0);
@@ -105,7 +105,7 @@ TEveTrackList* AliEveKineTracks::Draw(Double_t min_pt,  Double_t min_p,
     
     //PH  const Text_t* tooltip = Form("min pT=%.2lf, min P=%.2lf), N=%d", min_pt, min_p, count);
     char tooltip[1000];
-    sprintf(tooltip,"min pT=%.2lf, min P=%.2lf), N=%d", min_pt, min_p, count);
+    snprintf(tooltip,1000,"min pT=%.2lf, min P=%.2lf), N=%d", min_pt, min_p, count);
     cont->SetTitle(tooltip); // Not broadcasted automatically ...
     
     cont->MakeTracks(recurse);
@@ -130,7 +130,7 @@ void AliEveKineTracks::KineDaughters(AliEveTrack* parent,  AliStack* stack,
             
             AliEveTrack* dtrack = new AliEveTrack(dp, d, rs);
             char form[1000];
-            sprintf(form,"%s [%d]", dp->GetName(), d);
+            snprintf(form,1000,"%s [%d]", dp->GetName(), d);
             dtrack->SetName(form);
             dtrack->SetStdTitle();
             SetTrackColor(dtrack, pdg_col);
@@ -250,7 +250,7 @@ TEveElement* AliEveKineTracks::KineTrack(Int_t  label,
             trkProp->SetMagFieldObj(new AliEveMagField(fld));
             
             char tooltip[1000];
-            sprintf(tooltip,"Ndaughters=%d", p->GetNDaughters());
+            snprintf(tooltip,1000,"Ndaughters=%d", p->GetNDaughters());
             tlist->SetTitle(tooltip);
             trkProp->SetMaxOrbs(2);
             trkProp->SetEditPathMarks(kTRUE);
@@ -277,7 +277,7 @@ TEveElement* AliEveKineTracks::KineTrack(Int_t  label,
         {
             AliEveTrack* track = new AliEveTrack(p, label, rs);
             char form[1000];
-            sprintf(form,"%s [%d]", p->GetName(), label);
+            snprintf(form,1000,"%s [%d]", p->GetName(), label);
             track->SetName(form);
             track->SetStdTitle();
             SetTrackColor(track, pdg_col);
@@ -294,7 +294,7 @@ TEveElement* AliEveKineTracks::KineTrack(Int_t  label,
                 TParticle* dp = stack->Particle(d);
                 AliEveTrack* track = new AliEveTrack(dp, d, rs);
                 char form[1000];
-                sprintf(form,"%s [%d]", dp->GetName(), d);
+                snprintf(form,1000,"%s [%d]", dp->GetName(), d);
                 track->SetName(form);
                 track->SetStdTitle();
                 SetTrackColor(track, pdg_col);

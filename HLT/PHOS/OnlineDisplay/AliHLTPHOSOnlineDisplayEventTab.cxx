@@ -264,7 +264,7 @@ AliHLTPHOSOnlineDisplayEventTab::InitDisplay(TGTab  * tabPtr, int runnumber)
  
       //     Gain2Text
       fOnlineDisplayPtr->Gain2Text(gain,gainLabel);
-      sprintf(label, "PHOS HLT Online Display %s", gainLabel);
+      snprintf(label, 256, "PHOS HLT Online Display %s", gainLabel);
       fgLegoPlotPtr[gain] = new AliHLTPHOSOnlineDisplayTH2D(fOnlineDisplayPtr, label, label, 
 							    NXCOLUMNSMOD*NMODULES , 0, NXCOLUMNSMOD*NMODULES,  
 							    NZROWSMOD,   0, NZROWSMOD);   

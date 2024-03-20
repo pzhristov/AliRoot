@@ -115,10 +115,10 @@ int main(int argc, char **argv) {
   //char namhistr[50];
   char namhistc[50];
   for(Int_t i=0; i<4; i++) {
-     if(i==0) sprintf(namhistc,"ZN%d-EMDCorr",i+1);
-     else if(i==1) sprintf(namhistc,"ZP%d-EMDCorr",i);
-     else if(i==2) sprintf(namhistc,"ZN%d-EMDCorr",i);
-     else if(i==3) sprintf(namhistc,"ZP%d-EMDCorr",i-1);
+     if(i==0) snprintf(namhistc,50,"ZN%d-EMDCorr",i+1);
+     else if(i==1) snprintf(namhistc,50,"ZP%d-EMDCorr",i);
+     else if(i==2) snprintf(namhistc,50,"ZN%d-EMDCorr",i);
+     else if(i==3) snprintf(namhistc,50,"ZP%d-EMDCorr",i-1);
      histoEMDCorr[i] = new TH1F(namhistc,namhistc,200,0.,2000.);
   }
 
@@ -130,10 +130,10 @@ int main(int argc, char **argv) {
   char namhistznc[50], namhistzpc[50];
   char namhistzna[50], namhistzpa[50];
   for(Int_t i=0; i<4; i++) {
-     sprintf(namhistznc,"ZNC-tow%d",i+1);
-     sprintf(namhistzpc,"ZPC-tow%d",i+1);
-     sprintf(namhistzna,"ZNA-tow%d",i+1);
-     sprintf(namhistzpa,"ZPA-tow%d",i+1);
+     snprintf(namhistznc,50,"ZNC-tow%d",i+1);
+     snprintf(namhistzpc,50,"ZPC-tow%d",i+1);
+     snprintf(namhistzna,50,"ZNA-tow%d",i+1);
+     snprintf(namhistzpa,50,"ZPA-tow%d",i+1);
      //
      histZNCtow[i] = new TH1F(namhistznc,namhistznc,100,0.,4000.);
      histZPCtow[i] = new TH1F(namhistzpc,namhistzpc,100,0.,4000.);

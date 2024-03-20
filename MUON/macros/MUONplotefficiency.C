@@ -217,10 +217,10 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
   // Another acceptance cut to add is a range for the  recontructed  invariant mass, it is 
   // obvious that an upsilon reconstructed with a mass  of 5 GeV/c2 is not correct. Thus
   Char_t ResonanceAccCutMC[200];  
-  sprintf(ResonanceAccCutMC,"pt>= %.2f && pt<= %.2f",ptcutmin,ptcutmax);
+  snprintf(ResonanceAccCutMC,200,"pt>= %.2f && pt<= %.2f",ptcutmin,ptcutmax);
 
   Char_t ResonanceAccCutESD[200];
-  sprintf(ResonanceAccCutESD,"pt >=  %.2f && pt<= %.2f && minv>=  %.2f && minv<= %.2f",ptcutmin,ptcutmax,masscutmin,masscutmax);
+  snprintf(ResonanceAccCutESD,200,"pt >=  %.2f && pt<= %.2f && minv>=  %.2f && minv<= %.2f",ptcutmin,ptcutmax,masscutmin,masscutmax);
 
 
 
@@ -232,14 +232,14 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
   Char_t IdcutMuplusMC[100];      
  
   if (ResType==553){
-    sprintf(IdcutResonanceMC,"id==553");
-    sprintf(IdcutMuminusMC,"id==13 && idmo==553");
-    sprintf(IdcutMuplusMC,"id==-13 && idmo==553");  
+    snprintf(IdcutResonanceMC,100,"id==553");
+    snprintf(IdcutMuminusMC,100,"id==13 && idmo==553");
+    snprintf(IdcutMuplusMC,100,"id==-13 && idmo==553");  
   }
   if (ResType==443){
-    sprintf(IdcutResonanceMC,"id==443");
-    sprintf(IdcutMuminusMC,"id==13 && idmo==443");
-    sprintf(IdcutMuplusMC,"id==-13 && idmo==443");  
+    snprintf(IdcutResonanceMC,100,"id==443");
+    snprintf(IdcutMuminusMC,100,"id==13 && idmo==443");
+    snprintf(IdcutMuplusMC,100,"id==-13 && idmo==443");  
   }
   
   //means no cuts since we don't have the trackid propagated yet pt>0
@@ -256,7 +256,7 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
   // to take background into account, i.e. substraction, if necessary
   // this is not ready yet
   Char_t BckgdCutResonanceESD[100];      
-  sprintf(BckgdCutResonanceESD,"pt>0 && minv>%f && minv<%f && pt1>0 && pt2>0",masscutmin,masscutmax); 
+  snprintf(BckgdCutResonanceESD,100,"pt>0 && minv>%f && minv<%f && pt1>0 && pt2>0",masscutmin,masscutmax); 
   
   // if realistic background 
   // same cut + substract the background from hInvMassBg
@@ -320,7 +320,7 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
   //tex->SetLineWidth(2);  
   //tex->Draw();
  
-  sprintf(txt,"Resonance : %d entries",(Int_t)hptyResonanceMCAcc->GetEntries());
+  snprintf(txt,50,"Resonance : %d entries",(Int_t)hptyResonanceMCAcc->GetEntries());
   tex = new TLatex(-0.854829,0.794436,txt);
   tex->SetLineWidth(2);
   tex->Draw();
@@ -462,7 +462,7 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
   c100->cd();
   hptyResonanceESDAcc->SetStats(0);
   hptyResonanceESDAcc->Draw("LEGO2ZFB"); 
-  sprintf(txt,"Resonance : %d entries",(Int_t)hptyResonanceESDAcc->GetEntries());
+  snprintf(txt,50,"Resonance : %d entries",(Int_t)hptyResonanceESDAcc->GetEntries());
   tex = new TLatex(-0.854829,0.794436,txt);
   tex->SetLineWidth(2);
   tex->Draw();
@@ -484,7 +484,7 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
     c110->cd();
     hptyResonanceESDBckAcc->SetStats(0);
     hptyResonanceESDBckAcc->Draw("LEGO2ZFB"); 
-    sprintf(txt,"Resonance backround : %d entries",(Int_t)hptyResonanceESDBckAcc->GetEntries());
+    snprintf(txt,50,"Resonance backround : %d entries",(Int_t)hptyResonanceESDBckAcc->GetEntries());
     tex = new TLatex(-0.854829,0.794436,txt);
     tex->SetLineWidth(2);
     tex->Draw();
@@ -888,7 +888,7 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
   //TH1F *hInvMassAllClone = (TH1F*) gROOT->FindObject("hInvMassAll");
   
   TH1F* hInvMassAll = new TH1F("hInvMassAll","Inv. Mass Pt,Y integrated",invMassBins,invMassMin,invMassMax);
-  sprintf(theCut,"pt> %.2f && pt<= %.2f",ptbinslimits[0],ptbinslimits[nofMassHistograms]);
+  snprintf(theCut,100,"pt> %.2f && pt<= %.2f",ptbinslimits[0],ptbinslimits[nofMassHistograms]);
   //cout << "theCut" << theCut << endl ;
   ESDtuple->Project("hInvMassAll","minv",theCut);
   hInvMassAll->Draw();
@@ -939,13 +939,13 @@ Int_t MUONplotefficiency(Int_t ResType = 553, Int_t fittype = 1){
    Float_t chi2sum = 0.;
   
   for (Int_t qw = 0 ; qw < nofMassHistograms ; qw++){
-    sprintf(theExt,"_%1f_%1f",ptbinslimits[qw],ptbinslimits[qw+1]);
+    snprintf(theExt,20,"_%1f_%1f",ptbinslimits[qw],ptbinslimits[qw+1]);
     histExt= theExt;
     hInvMassInPtBins[qw] = new TH1F("hInvMassInPtBins"+histExt,"hInvMassInPtBins"+histExt,invMassBins,invMassMin,invMassMax);
     hInvMassInPtBins[qw]->GetXaxis()->SetTitle("Mass [GeV/c^{2}]");
     hInvMassInPtBins[qw]->GetYaxis()->SetTitle("Counts");
      
-    sprintf(theCut,"pt> %.2f && pt<= %.2f",ptbinslimits[qw],ptbinslimits[qw+1]);
+    snprintf(theCut,100,"pt> %.2f && pt<= %.2f",ptbinslimits[qw],ptbinslimits[qw+1]);
     histCut = theCut; 
     ESDtuple->Project("hInvMassInPtBins"+histExt,"minv",histCut.Data());
     

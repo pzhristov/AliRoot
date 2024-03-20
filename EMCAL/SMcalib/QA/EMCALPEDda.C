@@ -18,7 +18,7 @@ void EMCALPEDda(const int runno = 476){
   int nevents=0;
   // Assume we are just interested in the 1st segment, _0.root below for fname*
   Char_t fname[256];
-  sprintf(fname, "/local/data/Run_%09d.Seq_1A.Stream_0.root",runno);
+  snprintf(fname, 256 "/local/data/Run_%09d.Seq_1A.Stream_0.root",runno);
   
   AliRawReader *rawReader = NULL;
   rawReader = new AliRawReaderRoot(fname);
@@ -57,7 +57,7 @@ void EMCALPEDda(const int runno = 476){
   
   // create output histograms and write to file
   Char_t outname[256];
-  sprintf(outname, "PED_%09d.root",runno);
+  snprintf(outname, 256, "PED_%09d.root",runno);
   
   calibPedestal->SaveHistograms(outname);
 

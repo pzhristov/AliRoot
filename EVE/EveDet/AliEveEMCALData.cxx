@@ -229,7 +229,7 @@ void AliEveEMCALData::LoadHits()
    char form[1000];
    const char *selection = "";
    const char *varexp = "fX:fY:fZ";
-   sprintf(form,"EMCAL Hits '%s'", selection);
+   snprintf(form,1000,"EMCAL Hits '%s'", selection);
    fPoint = new TEvePointSet(form);
    
    TEvePointSelector ps(t, fPoint, varexp, selection);

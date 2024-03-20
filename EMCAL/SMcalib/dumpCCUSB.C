@@ -11,7 +11,7 @@ void dumpCCUSB(const int runno  = 117, const int evtnum = -1 )
 	for (Int_t i=0;i<12;i++) hScalerLecroy[i] = new TH1F(Form("hScalerLecroy%d",i),Form("hScalerLecroy%d",i),4096,0.,4096.);
 	
 	Char_t fname[256];
-	sprintf(fname, "/local/data/Run_%09d.Seq_1A.Stream_0.root",runno);
+	snprintf(fname, 256, "/local/data/Run_%09d.Seq_1A.Stream_0.root",runno);
 	
 	cout << "Reading file: " << fname << endl;
 	AliRawReader *rawReader = new AliRawReaderRoot(fname);

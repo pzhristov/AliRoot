@@ -313,7 +313,7 @@ int main(int argc, char **argv) {
   Int_t iZmax=-1;
   Int_t iModMax=-1;
   
-  sprintf(localfile,"PHOS_LED.root");
+  snprintf(localfile,128,"PHOS_LED.root");
   TFile* f = new TFile(localfile,"recreate");
 
   for(Int_t iMod=0; iMod<5; iMod++) {

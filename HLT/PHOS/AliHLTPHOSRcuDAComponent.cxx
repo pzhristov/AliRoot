@@ -216,7 +216,7 @@ AliHLTPHOSRcuDAComponent::ShipDataToFXS( const AliHLTComponentEventData& /*evtDa
       filename[i] = 0;
     }
   const TObjArray *calibPtr = fPHOSDAPtr->GetHistoContainer();
-  sprintf(filename, "/home/perthi/hlt/rundir/test/outdata/%s.root", fPHOSDAPtr->GetName() );
+  snprintf(filename, 200, "/home/perthi/hlt/rundir/test/outdata/%s.root", fPHOSDAPtr->GetName() );
   TFile *outFile =  new TFile(filename, "recreate");
   calibPtr->Write(); 
   outFile->Close();

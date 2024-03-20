@@ -122,7 +122,7 @@ Int_t AliV0Comparison(Int_t code=310, const Char_t *dir=".") {
 
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodV0s.root",dir);
+   snprintf(fname,100,"%s/GoodV0s.root",dir);
 
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
@@ -160,10 +160,10 @@ Int_t AliV0Comparison(Int_t code=310, const Char_t *dir=".") {
    nbranch->SetAddress(&nrefs);
 
    
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
-      sprintf(fname,"%s/AliESDv0.root",dir);
+      snprintf(fname,100,"%s/AliESDv0.root",dir);
       ef=TFile::Open(fname);
       if ((!ef)||(!ef->IsOpen())) {
          ::Error("AliV0Comparison.C","Can't open AliESDv0.root !");
@@ -398,7 +398,7 @@ Int_t GoodV0s(const Char_t *dir) {
    }
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -414,7 +414,7 @@ Int_t GoodV0s(const Char_t *dir) {
    Int_t nev=rl->GetNumberOfEvents();
    ::Info("GoodV0s","Number of events : %d\n",nev);  
 
-   sprintf(fname,"%s/GoodTracksITS.root",dir);
+   snprintf(fname,100,"%s/GoodTracksITS.root",dir);
    TFile *itsFile=TFile::Open(fname);
    if ((!itsFile)||(!itsFile->IsOpen())) {
        ::Error("GoodV0s","Can't open the GoodTracksITS.root !");
@@ -437,7 +437,7 @@ Int_t GoodV0s(const Char_t *dir) {
    itsBranch->SetAddress(&itsRefs);
 
 
-   sprintf(fname,"%s/GoodV0s.root",dir);
+   snprintf(fname,100,"%s/GoodV0s.root",dir);
    TFile *v0File=TFile::Open(fname,"recreate");
    TClonesArray dummy("AliTrackReference",1000), *nrefs=&dummy;
    TClonesArray dumm("AliTrackReference",1000), *prefs=&dumm;

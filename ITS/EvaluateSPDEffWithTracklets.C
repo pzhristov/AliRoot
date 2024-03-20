@@ -71,7 +71,7 @@ void EvaluateSPDEffWithTracklets(Char_t* dir=".", Bool_t mc=kTRUE, Bool_t bckg=k
       gAlice=0;
     }
 
-    sprintf(str,"%s/galice.root",dir);
+    snprintf(str,256,"%s/galice.root",dir);
     runLoader = AliRunLoader::Open(str);
     runLoader->LoadgAlice();
     gAlice = runLoader->GetAliRun();
@@ -85,7 +85,7 @@ void EvaluateSPDEffWithTracklets(Char_t* dir=".", Bool_t mc=kTRUE, Bool_t bckg=k
     }
 
     // open the new ESD file
-    sprintf(str,"%s/AliESDs.root",dir);
+    snprintf(str,256,"%s/AliESDs.root",dir);
 
     TFile inFile(str, "READ");
     TTree *esdTree = (TTree*)inFile.Get("esdTree");
@@ -106,7 +106,7 @@ void EvaluateSPDEffWithTracklets(Char_t* dir=".", Bool_t mc=kTRUE, Bool_t bckg=k
     }
     // retrives geometry
     if (!gGeoManager) {
-      sprintf(str,"%s/geometry.root",dir);
+      snprintf(str,256,"%s/geometry.root",dir);
       AliGeomManager::LoadGeometry(str);
     }
     // apply misalignement

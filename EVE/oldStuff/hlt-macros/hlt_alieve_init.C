@@ -57,7 +57,7 @@ void alieve_init_import_macros()
     char fullName[1000];
     for (StringList::iterator si=names.begin(); si!=names.end(); ++si)
     {
-      sprintf(fullName,"%s/%s", macdir.Data(), si->c_str());
+      snprintf(fullName,1000,"%s/%s", macdir.Data(), si->c_str());
       f->Add(new TEveMacro(fullName));
     }
   }

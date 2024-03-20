@@ -74,7 +74,7 @@ void WriteDDLs(AliRawReader* rawReader, const TString& dir, const char* detector
 		filename += detector;
 		filename += "_";
 		char num[32];
-		sprintf(num, "%d", rawReader->GetEquipmentId());
+		snprintf(num, 32, "%d", rawReader->GetEquipmentId());
 		filename += num;
 		filename += ".ddl";
 		
@@ -130,7 +130,7 @@ void ExtractDDLs(
 	while (event <= lastEvent)
 	{
 		char num[32];
-		sprintf(num, "%d", count);
+		snprintf(num, 32, "%d", count);
 		TString dir = outputDir;
 		dir += "/raw";
 		dir += num;

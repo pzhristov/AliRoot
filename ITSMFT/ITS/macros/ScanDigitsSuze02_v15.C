@@ -108,7 +108,7 @@ void ScanDigitsSuze02_v15(Int_t Cycle=0, Int_t CollectMode=0, Bool_t ProcessOnly
   Int_t nWindowsPer32colsMin=nWindowsPer32colsMax;
 
   Char_t logfile_name[100];
-  sprintf(logfile_name,"ScanDigits_v15_log_Cycle_%d_nEvents_%d_EncWindow_%dx%d_SuzeLimitsVersion_%d_Mode_%d-%d_QED_%d.log",Cycle,nEvents,NRowsEncodingWindow,NColsEncodingWindow,SuzeLimitsVersion,CollectMode,ProcessOnlyChipsWithSignal,AddQED);
+  snprintf(logfile_name,100,"ScanDigits_v15_log_Cycle_%d_nEvents_%d_EncWindow_%dx%d_SuzeLimitsVersion_%d_Mode_%d-%d_QED_%d.log",Cycle,nEvents,NRowsEncodingWindow,NColsEncodingWindow,SuzeLimitsVersion,CollectMode,ProcessOnlyChipsWithSignal,AddQED);
   FILE *logfile = fopen (logfile_name,"w");
 
   gAlice=NULL;
@@ -422,7 +422,7 @@ void ScanDigitsSuze02_v15(Int_t Cycle=0, Int_t CollectMode=0, Bool_t ProcessOnly
   TFile* ResultsFile;
   Char_t ResultsFileName[100];
   if(SaveResults){
-    sprintf(ResultsFileName,"ScanDigits_v15_results_cycle_%d_EncWindow_%dx%d_SuzeLimitsVersion_%d_mode_%d-%d_QED_%d.root",Cycle,NRowsEncodingWindow,NColsEncodingWindow,SuzeLimitsVersion,CollectMode,ProcessOnlyChipsWithSignal,AddQED);
+    snprintf(ResultsFileName,100,"ScanDigits_v15_results_cycle_%d_EncWindow_%dx%d_SuzeLimitsVersion_%d_mode_%d-%d_QED_%d.root",Cycle,NRowsEncodingWindow,NColsEncodingWindow,SuzeLimitsVersion,CollectMode,ProcessOnlyChipsWithSignal,AddQED);
     ResultsFile = new TFile(ResultsFileName,"RECREATE");
 
     OverflowCodes->Write();

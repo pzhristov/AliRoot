@@ -109,7 +109,7 @@ AliHLTEMCALOnlineDisplayTH2D::ExecuteEvent(Int_t event, Int_t px, Int_t pz)
 	  char gainLabel[100];
 	  char label[256];
 	  fOnlineDisplayPtr->Gain2Text(gain,gainLabel);
-	  sprintf(label, "%s_EMCAL_HLT_Online_rawdatadisplay",gainLabel);
+	  snprintf(label, 256, "%s_EMCAL_HLT_Online_rawdatadisplay",gainLabel);
 	  fgRawDataCanvasPtr[gain] = new TCanvas(label, label, 1200, 1000); ;
 	  fgRawDataCanvasPtr[gain]->Divide(ZROWS, XCOLS); 
 
@@ -123,11 +123,11 @@ AliHLTEMCALOnlineDisplayTH2D::ExecuteEvent(Int_t event, Int_t px, Int_t pz)
 
 		  if( fRunNumber >= 0)
 		    {
-		      sprintf(label, "(z = %d, x = %d) %s , run %d",  zbin + z, (xbin + x)%64 , gainLabel, fRunNumber);
+		      snprintf(label, 256, "(z = %d, x = %d) %s , run %d",  zbin + z, (xbin + x)%64 , gainLabel, fRunNumber);
 		    }
 		  else
 		    {
-		      sprintf(label, "(z = %d, x = %d) %s, unknow run number",  zbin + z, ( xbin + x)%64,  gainLabel); 
+		      snprintf(label, 256, "(z = %d, x = %d) %s, unknow run number",  zbin + z, ( xbin + x)%64,  gainLabel); 
 		    }
 
 
@@ -145,19 +145,19 @@ AliHLTEMCALOnlineDisplayTH2D::ExecuteEvent(Int_t event, Int_t px, Int_t pz)
 		}
 	    }
 
-	  sprintf(label, "%s_EMCAL_HLT__Online_rawdatadisplay",gainLabel);
+	  snprintf(label, 256, "%s_EMCAL_HLT__Online_rawdatadisplay",gainLabel);
 	  fgRawDataCanvasSinglePtr[gain] = new TCanvas(label, label, 1200, 1000); ;  
 	  fgRawDataCanvasSinglePtr[gain]->cd();
-	  //	  sprintf(label, "Z_%d_X_%d__%s",  tmpZBin, tmpXBin, gainLabel);
+	  //	  snprintf(label, 256, "Z_%d_X_%d__%s",  tmpZBin, tmpXBin, gainLabel);
 
 	  
 	  if( fRunNumber >= 0)
 	    {
-	      sprintf(label, "(z = %d, x = %d) %s , run %d", zbin , xbin%64, gainLabel, fRunNumber);
+	      snprintf(label, 256, "(z = %d, x = %d) %s , run %d", zbin , xbin%64, gainLabel, fRunNumber);
 	    }
 	  else
 	    {
-	      sprintf(label, "(z = %d, x = %d) %s, unknow run number", zbin , xbin%64, gainLabel); 
+	      snprintf(label, 256, "(z = %d, x = %d) %s, unknow run number", zbin , xbin%64, gainLabel); 
 	    }
 
 

@@ -178,7 +178,7 @@ AliHLTPHOSOnlineDisplayCalibTab::InitDisplay(TGTab *tabPtr)
 
   for(int gain = 0; gain< NGAINS; gain ++)
     {
-      sprintf(tmpHistoName, "TAB a HLT gain %d", gain);
+      snprintf(tmpHistoName, 256, "TAB a HLT gain %d", gain);
       fgCalibHistPtr[gain] = new TH2D(tmpHistoName, tmpHistoName,  
 				      NXCOLUMNSMOD*NMODULES , 0, NXCOLUMNSMOD*NMODULES , 
 				      NZROWSMOD,         0, NZROWSMOD);
@@ -186,7 +186,7 @@ AliHLTPHOSOnlineDisplayCalibTab::InitDisplay(TGTab *tabPtr)
       fgCalibHistPtr[gain]->GetXaxis()->SetRange(XRANGESTART, XRANGEEND);
       
       
-      sprintf(tmpHistoName, "TAB b Calibration Data HLT: #pi^{0} 5 - 30GeV gain %d", gain);
+      snprintf(tmpHistoName, 256, "TAB b Calibration Data HLT: #pi^{0} 5 - 30GeV gain %d", gain);
       
       fgHitsHistPtr[gain] = new TH2I(tmpHistoName, tmpHistoName,  
 				    NXCOLUMNSMOD* NMODULES , 0, NXCOLUMNSMOD*NMODULES,  
@@ -195,7 +195,7 @@ AliHLTPHOSOnlineDisplayCalibTab::InitDisplay(TGTab *tabPtr)
       fgHitsHistPtr[gain]->Reset();
       fgHitsHistPtr[gain]->GetXaxis()->SetRange(XRANGESTART, XRANGEEND);
      
-      sprintf(tmpHistoName, "Average Energy gain %d", gain);
+      snprintf(tmpHistoName, 256, "Average Energy gain %d", gain);
       fgAveragePtr[gain] = new TH2D(tmpHistoName,tmpHistoName,  
 				    NXCOLUMNSMOD* NMODULES , 0, NXCOLUMNSMOD*NMODULES,  
 				    NZROWSMOD,          0, NZROWSMOD);
@@ -203,8 +203,8 @@ AliHLTPHOSOnlineDisplayCalibTab::InitDisplay(TGTab *tabPtr)
       fgAveragePtr[gain]->Reset();
       fgAveragePtr[gain]->GetXaxis()->SetRange(XRANGESTART, XRANGEEND);
 
-      //sprintf(tmpHistoName, "Dead Channel Map gain%d", gain);
-      sprintf(tmpHistoName,  "Dead Channel Map gain%d", gain);
+      //snprintf(tmpHistoName, 256, "Dead Channel Map gain%d", gain);
+      snprintf(tmpHistoName, 256,  "Dead Channel Map gain%d", gain);
       fDeadCannelMapPtr[gain] = new TH2D(tmpHistoName,tmpHistoName,  
 				    NXCOLUMNSMOD* NMODULES , 0, NXCOLUMNSMOD*NMODULES,  
 				    NZROWSMOD,          0, NZROWSMOD);
@@ -215,7 +215,7 @@ AliHLTPHOSOnlineDisplayCalibTab::InitDisplay(TGTab *tabPtr)
 
 
       
-      sprintf(tmpHistoName, "DCS view gain %d", gain);
+      snprintf(tmpHistoName, 256, "DCS view gain %d", gain);
       fgDCSViewPtr[gain] = new TH2D(tmpHistoName, tmpHistoName, 
 				    NZROWSMOD, 0, NZROWSMOD,  
 				    NXCOLUMNSMOD, 0, NXCOLUMNSMOD);

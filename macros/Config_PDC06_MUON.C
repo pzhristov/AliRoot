@@ -28,7 +28,7 @@ void Config(char directory[100]="", char option[6]="trg1mu")
 
   //  Create the output file    
   Text_t filename[100];
-  sprintf(filename,"%sgalice.root",directory);
+  snprintf(filename,100,"%sgalice.root",directory);
 
   AliRunLoader* rl=0x0;
   rl = AliRunLoader::Open(

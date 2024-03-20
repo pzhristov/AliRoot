@@ -195,7 +195,7 @@ AliCaloRawAnalyzerComparison::InitHistograms( vector <AliCaloRawAnalyzer*> analy
    {
    for(int row=0; row < NXROWSSMOD; row ++ )
    {
-   sprintf(tmpname, "z(col)%d_x(row)%d_amplitude;Counts;Amplitude/ADC counts", col, row);
+   snprintf(tmpname, 256, "z(col)%d_x(row)%d_amplitude;Counts;Amplitude/ADC counts", col, row);
    fAmpHistograms[col][row] = new TH1D(tmpname, tmpname, 1024, 0, 1023 );
    }
    }
@@ -209,35 +209,35 @@ AliCaloRawAnalyzerComparison::InitHistograms( vector <AliCaloRawAnalyzer*> analy
     {
       for(int row=0; row < NXROWSSMOD; row ++ )
 	    {
-	      sprintf(tmpname, "z(col)%d_x(row)%d_amplitude_%s;Amplitude/ADC counts;Counts", col, row,  analyzers.at(i)->GetAlgoAbbr() );
+	      snprintf(tmpname, 256, "z(col)%d_x(row)%d_amplitude_%s;Amplitude/ADC counts;Counts", col, row,  analyzers.at(i)->GetAlgoAbbr() );
 	      fAmpHistograms[i][col][row] = new TH1D(tmpname, tmpname, 1024, 0, 1023 );
 	    }
     }
     
-    sprintf(tmpname, "%s_amplitude_vs_event_row%d_col%d;Event;Amplitude/ADC counts", analyzers.at(i)->GetAlgoAbbr(), fMonRow1, fMonCol1 );
+    snprintf(tmpname, 256 "%s_amplitude_vs_event_row%d_col%d;Event;Amplitude/ADC counts", analyzers.at(i)->GetAlgoAbbr(), fMonRow1, fMonCol1 );
     fAmplitudeVsEvent[i]=new TH2D(tmpname, tmpname, 8000, 0, 7999, 1024, 0, 1023 );
     
-    sprintf(tmpname, "%s_tof_vs_event_row%d_col%d;Event;Amplitude/ADC counts", analyzers.at(i)->GetAlgoAbbr(), fMonRow1, fMonCol1 );
+    snprintf(tmpname, 256 "%s_tof_vs_event_row%d_col%d;Event;Amplitude/ADC counts", analyzers.at(i)->GetAlgoAbbr(), fMonRow1, fMonCol1 );
     
     //     fTofVsEvent[i]=new TH2D(tmpname, tmpname, 8000, 0, 7999, 2000, 3000, 5000);
     fTofVsEvent[i]=new TH2D(tmpname, tmpname, 8000, 0, 7999, 2000, 1000, 4000);
     
     
-    sprintf(tmpname, "%s_vs_%s_ampltude; Amplitude_{%s}/ADC counts; Amplitude_{%s}/ADC counts", ref->GetAlgoAbbr(),
+    snprintf(tmpname, 256 "%s_vs_%s_ampltude; Amplitude_{%s}/ADC counts; Amplitude_{%s}/ADC counts", ref->GetAlgoAbbr(),
             analyzers.at(i)->GetAlgoAbbr(), ref->GetAlgoAbbr(), analyzers.at(i)->GetAlgoAbbr() );
     fRefAmpVsAnalyzers[i] = new TH2D(tmpname, tmpname, 1024, 0, 1023, 1024, 0, 1023);
-    sprintf(tmpname, "%s_vs_%s_tof; tof_{%s}/ns; tof_{%s}/ns", ref->GetAlgoAbbr(), analyzers.at(i)->GetAlgoAbbr(), ref->GetAlgoAbbr(), analyzers.at(i)->GetAlgoAbbr() );
+    snprintf(tmpname, 256 "%s_vs_%s_tof; tof_{%s}/ns; tof_{%s}/ns", ref->GetAlgoAbbr(), analyzers.at(i)->GetAlgoAbbr(), ref->GetAlgoAbbr(), analyzers.at(i)->GetAlgoAbbr() );
     fRefTofVsAnalyzers[i] = new TH2D(tmpname, tmpname, 500, 2000, 4999, 500, 2000, 4999 );
-    sprintf( tmpname, "%s-%s amplitude;counts;A_{%s} - A_{%s}",   ref->GetAlgoAbbr(),
+    snprintf( tmpname 256, "%s-%s amplitude;counts;A_{%s} - A_{%s}",   ref->GetAlgoAbbr(),
             analyzers.at(i)->GetAlgoAbbr(), ref->GetAlgoAbbr(), analyzers.at(i)->GetAlgoAbbr());
     fAmpDiff[i] = new TH1D(tmpname, tmpname, 100, -10, 10 );
-    sprintf( tmpname, "%s-%s tof;counts;A_{%s} - A_{%s}",   ref->GetAlgoAbbr(),
+    snprintf( tmpname 256, "%s-%s tof;counts;A_{%s} - A_{%s}",   ref->GetAlgoAbbr(),
             analyzers.at(i)->GetAlgoAbbr(), ref->GetAlgoAbbr(), analyzers.at(i)->GetAlgoAbbr());
     fTofDiff[i] = new TH1D(tmpname, tmpname, 1000, -5000, 5000 );
-    sprintf( tmpname, "%s Differential tof resolution (%d, %d) vs (%d, %d);#sigma_{tof}^{%s}/ns;Counts",  analyzers.at(i)->GetAlgoAbbr(), fMonCol1, fMonRow1, fMonCol2, fMonRow2,
+    snprintf( tmpname 256, "%s Differential tof resolution (%d, %d) vs (%d, %d);#sigma_{tof}^{%s}/ns;Counts",  analyzers.at(i)->GetAlgoAbbr(), fMonCol1, fMonRow1, fMonCol2, fMonRow2,
             analyzers.at(i)->GetAlgoAbbr() );
     fTofResDifferential[i] = new TH1D(tmpname, tmpname, 1000, -250, 250 );
-    sprintf( tmpname, "%s Absolute tof distribution (%d, %d);#sigma_{tof}^{%s}/ns;Counts",  analyzers.at(i)->GetAlgoAbbr(), fMonCol1, fMonRow1, analyzers.at(i)->GetAlgoAbbr() );
+    snprintf( tmpname 256, "%s Absolute tof distribution (%d, %d);#sigma_{tof}^{%s}/ns;Counts",  analyzers.at(i)->GetAlgoAbbr(), fMonCol1, fMonRow1, analyzers.at(i)->GetAlgoAbbr() );
     
     fTofResAbsolute[i] = new TH1D(tmpname, tmpname, 2000 , -1000, 7000 );
   }

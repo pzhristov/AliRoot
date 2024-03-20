@@ -44,7 +44,7 @@ AliITSScanPIDV1(Int_t evNumber1=0,Int_t evNumber2=0) {
 
   // for (int nev=0; nev<= evNumber2; nev++) {
 
-   sprintf(tname,"TreeT%d",nev);
+   snprintf(tname,30,"TreeT%d",nev);
    TTree *tracktree=(TTree*)file->Get(tname);
    TBranch *tbranch=tracktree->GetBranch("ITStracks");
    cout<<" nev = "<<nev<<"\n";

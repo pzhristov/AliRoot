@@ -143,7 +143,7 @@ Int_t AliITSUComparisonPileup(const Char_t *dir=".") {
 
    // **** Generate a rerefence file with reconstructable vertices
    Char_t fname[100];
-   sprintf(fname,"%s/GoodPileupVertices.root",dir);
+   snprintf(fname,100,"%s/GoodPileupVertices.root",dir);
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
       ::Info("AliITSUComparisonPileup.C",
@@ -173,7 +173,7 @@ Int_t AliITSUComparisonPileup(const Char_t *dir=".") {
 
 
    // **** Open the ESD 
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
       ::Error("AliITSUComparisonPileup.C","Can't open AliESDs.root !");
@@ -381,7 +381,7 @@ Int_t GoodPileupVertices(const Char_t *dir) {
    }
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -397,7 +397,7 @@ Int_t GoodPileupVertices(const Char_t *dir) {
    Int_t nev=rl->GetNumberOfEvents();
    ::Info("GoodPileupVertices","Number of events : %d\n",nev);  
 
-   sprintf(fname,"%s/GoodPileupVertices.root",dir);
+   snprintf(fname,100,"%s/GoodPileupVertices.root",dir);
    TFile *refFile=TFile::Open(fname,"recreate");
    TClonesArray dummy("AliESDVertex",100), *refs=&dummy;
    TTree refTree("refTree","Tree with the reconstructable vertices");

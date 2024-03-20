@@ -130,7 +130,7 @@ Int_t AliCascadeComparison(Int_t code=3312, const Char_t *dir=".") {
 
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodCascades.root",dir);
+   snprintf(fname,100,"%s/GoodCascades.root",dir);
 
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
@@ -177,10 +177,10 @@ Int_t AliCascadeComparison(Int_t code=3312, const Char_t *dir=".") {
 
 
    
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
-      sprintf(fname,"%s/AliESDcascade.root",dir);
+      snprintf(fname,100,"%s/AliESDcascade.root",dir);
       ef=TFile::Open(fname);
       if ((!ef)||(!ef->IsOpen())) {
          ::Error("AliCascadeComparison.C","Can't open AliESDcascade.root !");
@@ -433,7 +433,7 @@ Int_t GoodCascades(const Char_t *dir) {
    }   
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -450,7 +450,7 @@ Int_t GoodCascades(const Char_t *dir) {
    ::Info("GoodCascades","Number of events : %d\n",nev);  
 
  
-   sprintf(fname,"%s/GoodTracksITS.root",dir);
+   snprintf(fname,100,"%s/GoodTracksITS.root",dir);
    TFile *itsFile=TFile::Open(fname);
    if ((!itsFile)||(!itsFile->IsOpen())) {
        ::Error("GoodCAscades","Can't open the GoodTracksITS.root !");
@@ -473,7 +473,7 @@ Int_t GoodCascades(const Char_t *dir) {
    itsBranch->SetAddress(&itsRefs);
 
 
-   sprintf(fname,"%s/GoodCascades.root",dir);
+   snprintf(fname,100,"%s/GoodCascades.root",dir);
    TFile *csFile=TFile::Open(fname,"recreate");
    TClonesArray dummy("AliTrackReference",1000), *nrefs=&dummy;
    TClonesArray dumm("AliTrackReference",1000), *prefs=&dumm;

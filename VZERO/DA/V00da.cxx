@@ -131,11 +131,11 @@ int main(int argc, char **argv) {
   
   char  texte[12];
   for (Int_t i=0; i<128; i++) {
-       sprintf(adcName,"hADC%d",i);
-       sprintf(texte,"ADC cell%d",i);
+       snprintf(adcName, 6, "hADC%d",i);
+       snprintf(texte, 12, "ADC cell%d",i);
        hADCname[i]  = new TH1F(adcName,texte,1024,-0.5, 1023.5);
-       sprintf(pedName,"hPED%d",i);
-       sprintf(texte,"PED cell%d",i);
+       snprintf(pedName, 6, "hPED%d",i);
+       snprintf(texte, 12, "PED cell%d",i);
        hPEDname[i]  = new TH1F(pedName,texte,1024,-0.5, 1023.5);
   }
 //___________________________________________________ 

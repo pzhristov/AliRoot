@@ -3,7 +3,7 @@ void readESD()
   //read T0 ESD from reconstructed cosmic data 
 
   char filename[100];
-  sprintf(filename,"");
+  snprintf(filename,100,"");
   TFile *file = new TFile("AliESDs.root");
   
   //  TH1F *hMean= new TH1F("hMean"," T0 ", 10000,1.249e6,1.259e6);
@@ -17,9 +17,9 @@ void readESD()
   
   for(Int_t ic=0; ic<24; ic++) 
     {
-      sprintf(buf1,"Amp%i",ic+1);
+      snprintf(buf1,20,"Amp%i",ic+1);
       hAmp[ic] = new TH1F(buf1,"Amp",50, 0,50 );
-      sprintf(buf2,"Time%i",ic+1);
+      snprintf(buf2,20,"Time%i",ic+1);
       //      hTime[ic] = new TH1F("hTime"," time",   10000,1.249e6,1.259e6);
           hTime[ic] = new TH1F("hTime"," time",   6000,0,6000);
     }

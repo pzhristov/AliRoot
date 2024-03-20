@@ -23,7 +23,7 @@ void CheckZDCDCSMap(Int_t nRun=0)
    TGrid::Connect("alien:",0,0,"t");
   
    char fName[150];
-   sprintf(fName,"alien:///alice/data/2010/Reference/ZDC/DCS/Data/Run%d_%d_v1_s0.root",nRun,nRun);
+   snprintf(fName,150,"alien:///alice/data/2010/Reference/ZDC/DCS/Data/Run%d_%d_v1_s0.root",nRun,nRun);
   
    TString  aliasNames[28];
    aliasNames[0]  = "ZDC_ZNA_POS.actual.position";

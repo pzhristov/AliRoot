@@ -111,7 +111,7 @@ void PlotCalibSDDVsTime(Int_t year=2018, Int_t firstRun=282970,
 
     fscanf(listruns,"%s\n",filnam);    
     Char_t directory[100];
-    sprintf(directory,"/alice/data/%d",year);
+    snprintf(directory,100,"/alice/data/%d",year);
     if(!strstr(filnam,directory)) continue;
     sscanf(filnam,"/alice/data/%d/OCDB/ITS/Calib/CalibSDD/Run%d_%d_v%d_s%d.root",&year,&nrun,&nrun2,&nv,&ns);
     if(year==2009 && (nrun<85639 && nrun2> 85639)) continue; // protection for files with swapped ladders 4-5 of layer 3 
@@ -121,7 +121,7 @@ void PlotCalibSDDVsTime(Int_t year=2018, Int_t firstRun=282970,
     if(year==2011 && nrun==156856) continue;
     if(nrun<firstRun) continue;
     if(nrun>lastRun) continue;
-    sprintf(filnamalien,"alien://%s",filnam);
+    snprintf(filnamalien,200,"alien://%s",filnam);
     printf("Open file: %s\n",filnam);
     TFile *f= TFile::Open(filnamalien);  
     AliCDBEntry *ent=(AliCDBEntry*)f->Get("AliCDBEntry");

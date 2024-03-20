@@ -374,11 +374,11 @@ void AliMergeSteer::PrintVertex(TArrayF &primaryVertex)
 void AliMergeSteer::ExportVertex(TArrayF &primaryVertex) 
 {
   char vertexAsString[30];
-  sprintf(vertexAsString,"%f",primaryVertex[0]);
+  snprintf(vertexAsString,30,"%f",primaryVertex[0]);
   gSystem->Setenv("CONFIG_VERTEX_X",vertexAsString);
-  sprintf(vertexAsString,"%f",primaryVertex[1]);
+  snprintf(vertexAsString,30,"%f",primaryVertex[1]);
   gSystem->Setenv("CONFIG_VERTEX_Y",vertexAsString);
-  sprintf(vertexAsString,"%f",primaryVertex[2]);
+  snprintf(vertexAsString,30,"%f",primaryVertex[2]);
   gSystem->Setenv("CONFIG_VERTEX_Z",vertexAsString);
   return;
 }
@@ -410,7 +410,7 @@ Bool_t AliMergeSteer::Simulate()
   f = static_cast<TFile *>(gROOT->FindObject("galice.root"));
   if (f) f->Close();
   f = 0;    
-  sprintf(cmd,"mv galice.root %s",fFileNameHits.Data());
+  snprintf(cmd,100,"mv galice.root %s",fFileNameHits.Data());
   gSystem->Exec(cmd);
   return kTRUE;
  
@@ -421,8 +421,8 @@ Bool_t AliMergeSteer::CreateSDigits()
 {
   char macroName[200];
   char funcName[200]; 
-  sprintf(macroName,"AliHits2SDigits.C");
-  sprintf(funcName,
+  snprintf(macroName,200,"AliHits2SDigits.C");
+  snprintf(funcName,200,
 	  "AliHits2SDigits(\"%s\",\"%s\",%d,%d,%d,%d,%d,%d,%d,%d);",
 	  fFileNameSDigits.Data(),fFileNameHits.Data(),
 	  fNEvents,0,fITS,fTPC,fTRD,fPHOS,fTOF,0);
@@ -441,8 +441,8 @@ Bool_t AliMergeSteer::Merge()
   char macroName[200];
   char funcName[200]; 
   cerr<<"Start merging"<<endl;
-  sprintf(macroName,"MergeV1.C");
-  sprintf(funcName,
+  snprintf(macroName,200,"MergeV1.C");
+  snprintf(funcName,200,
 	  "Merge(\"%s\",\"%s\",\"%s\",%d,%d,%d,%d,%d,%d,%d,%d);",
 	  fFileNameDigitsMerged.Data(),fFileNameSDigits.Data(),
 	  fFileNameBgrSDigits.Data(),
@@ -465,8 +465,8 @@ Bool_t AliMergeSteer::NoMerge()
   char macroName[200];
   char funcName[200]; 
   cerr<<"Start NoMerging"<<endl;
-  sprintf(macroName,"AliSDigits2Digits.C");
-  sprintf(funcName,
+  snprintf(macroName,200,"AliSDigits2Digits.C");
+  snprintf(funcName,200,
 	  "AliSDigits2Digits(\"%s\",\"%s\",%d,%d,%d,%d,%d,%d,%d,%d);",
 	  fFileNameDigitsSignalOnly.Data(),fFileNameSDigits.Data(),
 	  fNEvents,fITS,fTPC,fTRD,fPHOS,fMUON,fHMPID,0);
@@ -485,8 +485,8 @@ Bool_t AliMergeSteer::ITSFastPoints(const char *outputFile, const char *inputFil
 
   char macroName[200];
   char funcName[200]; 
-  sprintf(macroName,"AliITSHits2SDR.C");
-  sprintf(funcName,"AliITSH2FR2files(\"%s\",\"%s\");",
+  snprintf(macroName,200,"AliITSHits2SDR.C");
+  snprintf(funcName,200,"AliITSH2FR2files(\"%s\",\"%s\");",
 	  inputFile,  outputFile);
   if (fDEBUG) cerr<<"I'll do: "<<funcName<<endl;
   gROOT->LoadMacro(macroName);
@@ -505,8 +505,8 @@ Bool_t AliMergeSteer::RecoMerged()
   char macroName[200];
   char funcName[200]; 
   cerr<<"Start RecoMerged"<<endl;
-  sprintf(macroName,"AliBarrelRecoV3.C");
-  sprintf(funcName,"AliBarrelRecoMerged(%d);",fNEvents);
+  snprintf(macroName,200,"AliBarrelRecoV3.C");
+  snprintf(funcName,200,"AliBarrelRecoMerged(%d);",fNEvents);
   gROOT->LoadMacro(macroName);
   if (fDEBUG) cerr<<"I'll do: "<<funcName<<endl;
   gInterpreter->ProcessLine(funcName);
@@ -523,8 +523,8 @@ Bool_t AliMergeSteer::RecoSignalOnly()
   char macroName[200];
   char funcName[200]; 
   cerr<<"Start RecoSignalOnly"<<endl;
-  sprintf(macroName,"AliBarrelRecoNoITSClass.C");
-  sprintf(funcName,"AliBarrelReco(%d);",fNEvents);
+  snprintf(macroName,200,"AliBarrelRecoNoITSClass.C");
+  snprintf(funcName,200,"AliBarrelReco(%d);",fNEvents);
   gROOT->LoadMacro(macroName);
   if (fDEBUG) cerr<<"I'll do: "<<funcName<<endl;
   gInterpreter->ProcessLine(funcName);  
@@ -541,8 +541,8 @@ Bool_t AliMergeSteer::CmpMerged()
   char macroName[200];
   char funcName[200]; 
   cerr<<"Start CmpMerged"<<endl;
-  sprintf(macroName,"CmpGaRS.C");
-  sprintf(funcName,
+  snprintf(macroName,200,"CmpGaRS.C");
+  snprintf(funcName,200,
 	  "CmpGaRS(%d,%d,\"%s\",\"AliTPCtracks_merged.root\",\"%s\");",
 	  fNEvents, fFirstEvent, fFileNameHits.Data(),
 	  fFileNameCmpMerged.Data());
@@ -561,8 +561,8 @@ Bool_t AliMergeSteer::CmpSignalOnly()
   char macroName[200];
   char funcName[200]; 
   cerr<<"Start CmpSignalOnly"<<endl;
-  sprintf(macroName,"CmpGaRS.C");
-  sprintf(funcName,
+  snprintf(macroName,200,"CmpGaRS.C");
+  snprintf(funcName,200,
 	  "CmpGaRS(%d,%d,\"%s\",\"AliTPCtracks.root\",\"%s\");",
 	  fNEvents, fFirstEvent, fFileNameHits.Data(),
 	  fFileNameCmpSignalOnly.Data());

@@ -35,16 +35,16 @@ void DrawPrim(Double_t theta,Float_t magf=5){
   char leg3[1000];
   Float_t conv= 1/(magf*0.299792458e-3);
   fdrfi_rpi0->GetHistogram()->Fit("pol2","same","",90,250);
-  sprintf(leg0,"#phi=0*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg0,1000,"#phi=0*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*pol2->GetParameter(0),1000*pol2->GetParameter(1), conv*pol2->GetParameter(2));
   fdrfi_rpi1->GetHistogram()->Fit("pol2","same","",90,250);
-  sprintf(leg1,"#phi=1*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg1,1000,"#phi=1*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*pol2->GetParameter(0),1000*pol2->GetParameter(1),conv*pol2->GetParameter(2));
   fdrfi_rpi2->GetHistogram()->Fit("pol2","same","",90,250);
-  sprintf(leg2,"#phi=2*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg2,1000,"#phi=2*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*pol2->GetParameter(0),1000*pol2->GetParameter(1),conv*pol2->GetParameter(2));
   fdrfi_rpi3->GetHistogram()->Fit("pol2","same","",90,250);
-  sprintf(leg3,"#phi=3*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg3,1000,"#phi=3*#pi/2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*pol2->GetParameter(0),1000*pol2->GetParameter(1),conv*pol2->GetParameter(2));
   fdrfi_rpi0->SetMaximum(fdrfi_rpi0->GetMaximum()*2.0);
   fdrfi_rpi0->Draw();
@@ -87,16 +87,16 @@ void DrawLaser(Double_t fipi2,Float_t magf=5){
   char leg3[1000];
   Float_t conv= 1/(magf*0.299792458e-3);
   fdrfi_rpi0->GetHistogram()->Fit("fdistout","same","",90,250);
-  sprintf(leg0,"laser 0      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg0,1000,"laser 0      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*fdistout->GetParameter(0),1000*fdistout->GetParameter(1), conv*fdistout->GetParameter(2));
   fdrfi_rpi1->GetHistogram()->Fit("fdistout","same","",90,250);
-  sprintf(leg1,"laser 1      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg1,1000,"laser 1      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*fdistout->GetParameter(0),1000*fdistout->GetParameter(1),conv*fdistout->GetParameter(2));
   fdrfi_rpi2->GetHistogram()->Fit("fdistout","same","",90,250);
-  sprintf(leg2,"laser 2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg2,1000,"laser 2      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*fdistout->GetParameter(0),1000*fdistout->GetParameter(1),conv*fdistout->GetParameter(2));
   fdrfi_rpi3->GetHistogram()->Fit("fdistout","same","",90,250);
-  sprintf(leg3,"laser 3      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
+  snprintf(leg3,1000,"laser 3      Track res: dy=%.2f mm d#phi=%.2f mrad dC = %.6f 1/GeV",
 	  10*fdistout->GetParameter(0),1000*fdistout->GetParameter(1),conv*fdistout->GetParameter(2));
   fdrfi_rpi0->SetMaximum(fdrfi_rpi3->GetMaximum()*2.0);
   fdrfi_rpi0->Draw();

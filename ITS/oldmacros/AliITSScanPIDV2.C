@@ -24,7 +24,7 @@ fpid->ls();
 //
 for (int nev=0; nev<= evNumber2; nev++) {
   char tpidname[30];
-  sprintf(tpidname,"TreeT%d",nev);
+  snprintf(tpidname,30,"TreeT%d",nev);
   TTree *tracktree=(TTree*)fpid->Get(tpidname);
   TBranch *tbranch=tracktree->GetBranch("pids");
 	

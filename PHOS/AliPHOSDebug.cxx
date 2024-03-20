@@ -364,7 +364,7 @@ void AliPHOSv1::MakeBranch(Option_t* opt, char *file)
   //Create a branch for SDigits
   if( cH ){
     char branchname[20];
-    sprintf(branchname,"%s",GetName());  
+    snprintf(branchname,20,"%s",GetName());  
     if(fSDigits)
       fSDigits->Clear();
 
@@ -376,7 +376,7 @@ void AliPHOSv1::MakeBranch(Option_t* opt, char *file)
   //Create a branch for Digits
   if( cH ){
     char branchname[20];
-    sprintf(branchname,"%s",GetName());  
+    snprintf(branchname,20,"%s",GetName());  
 
     if(fDigits)
       fDigits->Clear();
@@ -395,7 +395,7 @@ void AliPHOSv1::MakeBranch(Option_t* opt, char *file)
       fEmcRecPoints->Delete() ; 
 
     if ( fEmcRecPoints && gAlice->TreeR() ) {
-      sprintf(branchname,"%sEmcRP",GetName()) ;
+      snprintf(branchname,20,"%sEmcRP",GetName()) ;
       gAlice->MakeBranchInTree(gAlice->TreeR(),branchname,"TObjArray",&fEmcRecPoints, fBufferSize, splitlevel,file); 
     }
 
@@ -403,7 +403,7 @@ void AliPHOSv1::MakeBranch(Option_t* opt, char *file)
       fPpsdRecPoints->Delete() ; 
 
     if ( fPpsdRecPoints && gAlice->TreeR() ) {
-      sprintf(branchname,"%sPpsdRP",GetName()) ;
+      snprintf(branchname,20,"%sPpsdRP",GetName()) ;
       gAlice->MakeBranchInTree(gAlice->TreeR(),branchname,"TObjArray",&fPpsdRecPoints, fBufferSize, splitlevel,file); 
     }
 
@@ -411,7 +411,7 @@ void AliPHOSv1::MakeBranch(Option_t* opt, char *file)
       fTrackSegments->Clear() ; 
     
     if ( fTrackSegments && gAlice->TreeR() ) { 
-      sprintf(branchname,"%sTS",GetName()) ;
+      snprintf(branchname,20,"%sTS",GetName()) ;
       gAlice->MakeBranchInTree(gAlice->TreeR(),branchname,&fTrackSegments,fBufferSize,file);
     }
     
@@ -419,7 +419,7 @@ void AliPHOSv1::MakeBranch(Option_t* opt, char *file)
       fRecParticles->Clear() ; 
     
     if ( fRecParticles && gAlice->TreeR() ) { 
-      sprintf(branchname,"%sRP",GetName()) ;
+      snprintf(branchname,20,"%sRP",GetName()) ;
       gAlice->MakeBranchInTree(gAlice->TreeR(),branchname,&fRecParticles,fBufferSize,file); 
     }
     

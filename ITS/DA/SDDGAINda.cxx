@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
       for(Int_t isid=0;isid<kSides;isid++){
 	Int_t index=kSides*(kModPerDDL*iddl+imod)+isid;
 	tpan[index]=new AliITSOnlineSDDTP(iddl,imod,isid,100.);
-	sprintf(hisnam,"h%02dc%02ds%d",iddl,imod,isid);
+	snprintf(hisnam,20,"h%02dc%02ds%d",iddl,imod,isid);
 	histo[index]=new TH2F(hisnam,"",256,-0.5,255.5,256,-0.5,255.5);
 	isFilled[index]=0;
       }
@@ -258,8 +258,8 @@ int main(int argc, char **argv) {
 	  tpan[index]->WriteToASCII();
 	  gainHistos->AddLast(tpan[index]->GetGainAnodeHisto());
 	  statusHistos->AddLast(tpan[index]->GetStatusAnodeHisto());
-	  sprintf(filnam,"SDDbase_ddl%02dc%02d_sid%d.data",iddl,imod,isid);
-	  sprintf(command,"tar -rf SDDbase_LDC.tar %s",filnam);
+	  snprintf(filnam,100,"SDDbase_ddl%02dc%02d_sid%d.data",iddl,imod,isid);
+	  snprintf(command,120,"tar -rf SDDbase_LDC.tar %s",filnam);
 	  gSystem->Exec(command);
 	}else{
 	  if(ddlActive[iddl]){

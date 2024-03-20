@@ -310,7 +310,7 @@ AliHLTEMCALOnlineDisplayEventTab::InitDisplay(TGTab  * tabPtr, int runnumber)
  
       //     Gain2Text
       fOnlineDisplayPtr->Gain2Text(gain,gainLabel);
-      sprintf(label, "EMCAL HLT Online Display %s", gainLabel);
+      snprintf(label, 256, "EMCAL HLT Online Display %s", gainLabel);
       fgLegoPlotPtr[gain] = new AliHLTEMCALOnlineDisplayTH2D(fOnlineDisplayPtr, label, label, 
 							    NXCOLUMNSMOD*NMODULES , 0, NXCOLUMNSMOD*NMODULES,  
 							    NZROWSMOD,   0, NZROWSMOD);   

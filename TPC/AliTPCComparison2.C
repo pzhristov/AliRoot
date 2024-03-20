@@ -95,10 +95,10 @@ Int_t AliTPCComparison2(Int_t firstev=0, Int_t eventn=1) {
     
     char   tname[100];
     if (eventn==-1) {
-      sprintf(tname,"TreeT_TPC");
+      snprintf(tname,100,"TreeT_TPC");
     }
     else {
-      sprintf(tname,"TreeT_TPC_%d",event);
+      snprintf(tname,100,"TreeT_TPC_%d",event);
     }
   
     // Load tracks
@@ -466,7 +466,7 @@ Int_t good_tracks(GoodTrackTPC *gt, Int_t max, Int_t firstev, Int_t eventn) {
       break;
     case 2:
       {
-        sprintf(treeName,"TreeD_75x40_100x60_150x60_%d",event);  
+        snprintf(treeName,100,"TreeD_75x40_100x60_150x60_%d",event);  
         TD=(TTree*)fdigit->Get(treeName); // To be revised according to
                                           // NewIO schema M.Kowalski
         TD->GetBranch("Segment")->SetAddress(&digits);

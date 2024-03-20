@@ -40,8 +40,8 @@ void SetUPHistograms(){
     Char_t name[10],title[50];
 
     for(i=0;i<ndets;i++){
-        sprintf(name,"BeamSpot%d",i);
-        sprintf(title,"Beam Spot for SPD %d detectors row-column values",i);
+        snprintf(name,10,"BeamSpot%d",i);
+        snprintf(title,50,"Beam Spot for SPD %d detectors row-column values",i);
         BeamSpot[i] = new TH2I(name,title,256,0.,256.,160,0.,160.);
     } // end for i
 }

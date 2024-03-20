@@ -11,7 +11,7 @@ void generateFlipSlatFile(int line)
 	  if ( line > 4 )
 	    {
 	      // make a file consisting into flip-x right-slat.
-	      sprintf(filename,"%dLL%d.%s.slat",i,line,planes[iplane]);
+	      snprintf(filename,80,"%dLL%d.%s.slat",i,line,planes[iplane]);
 	      ofstream out(filename);
 	      out << "FLIP_X " << i << "RL" << line << endl;
 	      out.close();
@@ -22,7 +22,7 @@ void generateFlipSlatFile(int line)
 	      const char* lr[] = { "L","R" };
 	      for ( int j = 0; j < 2; ++j )
 		{
-		  sprintf(filename,"%d%sL%d.%s.slat",
+		  snprintf(filename,80,"%d%sL%d.%s.slat",
 			  i,lr[j],line,planes[iplane]);
 		  ofstream out(filename);
 		  out << "FLIP_Y " << i << lr[j] << "L" << (10-line) << endl;

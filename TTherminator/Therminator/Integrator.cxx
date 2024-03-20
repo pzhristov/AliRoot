@@ -511,21 +511,21 @@ Integrator::ParameterHash()
   tBuf = (char *) malloc(sizeof(char *) * (15 * 3 + 3));
   
   if (sModel == 0) {
-    sprintf(tBuf, "%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mAlfaRange*100, mRapRange*100);
+    snprintf(tBuf, 48, "%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mAlfaRange*100, mRapRange*100);
   }
 /*MCH begin*/
   else if ((sModel == 10) || (sModel == 11)) {
-    sprintf(tBuf, "%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mAlfaRange*100, mRapRange*100);
+    snprintf(tBuf, 48, "%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mAlfaRange*100, mRapRange*100);
   }
 /*MCH end*/
   else if ((sModel == 2) || (sModel == 4))  {
-    sprintf(tBuf, "%1i%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sModel, sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mBWA*100, mBWVt*1000, mAlfaRange*100, mRapRange*100);
+    snprintf(tBuf, 48, "%1i%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sModel, sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mBWA*100, mBWVt*1000, mAlfaRange*100, mRapRange*100);
   }
   else if ((sModel == 6) || (sModel == 7) || (sModel == 8)) {
-    sprintf(tBuf, "%1i%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sModel, sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mBWA*100, mBWVt*1000, mAlfaRange*100, mRapRange*100, mBWDelay);
+    snprintf(tBuf, 48, "%1i%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sModel, sTables, mRhoMax*100, mTau*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mBWA*100, mBWVt*1000, mAlfaRange*100, mRapRange*100, mBWDelay);
   }
   else if (sModel == 5)  {
-    sprintf(tBuf, "%1i%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sModel, sTables, mRhoMax*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mTau0*10, mTauf*10, mAlfa*1000, mBN*100, mLambda*100, mAlfaRange*100, mRapRange*100);
+    snprintf(tBuf, 48, "%1i%1i%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f%03.0f", sModel, sTables, mRhoMax*100, mTemp*1000, mMiu_i*10000, mMiu_s*100000, mMiu_b*10000, mTau0*10, mTauf*10, mAlfa*1000, mBN*100, mLambda*100, mAlfaRange*100, mRapRange*100);
   }
   
   return tBuf;

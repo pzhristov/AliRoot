@@ -22,7 +22,7 @@ void AliITSSDigits2DigitsDubna(TString inFile= "galiceS.root",
 void AliITSSD2D(TString inFile, TString outFile){
     AliRunDigitizer * manager = new AliRunDigitizer(1,1);
     char ftmp[50];
-    sprintf(ftmp,"%s",inFile.Data());
+    snprintf(ftmp,50,"%s",inFile.Data());
     TFile *file0 = AccessFile(ftmp);
     AliITS *ITS = (AliITS*)gAlice->GetDetector("ITS");      
     if (!ITS) {

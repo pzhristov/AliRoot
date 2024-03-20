@@ -221,7 +221,7 @@ AliHLTEMCALOnlineDisplay::ScanArguments(int argc, char** argv)
 	  if(i+1 <= argc)
 	    {
 	      i++;
-	      sprintf(fgHosts[fgNHosts],"%s", argv[i]);
+	      snprintf(fgHosts[fgNHosts],fgNHosts,"%s", argv[i]);
 	      fgNHosts ++; 
 	      cout <<"fgNHosts set to "<< fgNHosts <<endl;
 	      hostIsSet = kTRUE; 
@@ -288,19 +288,19 @@ AliHLTEMCALOnlineDisplay::Gain2Text(const int gain,  char *txt) const
   // See header file for documentation
   if(gain == LOWGAIN)
     {
-      sprintf(txt,"High Gain");
-      //   sprintf(txt,"Low Gain");
+      snprintf(txt, strlen(txt)/sizeof(char), "High Gain");
+      //   snprintf(txt, strlen(txt)/sizeof(char), "Low Gain");
     }
 
   else if(gain == HIGHGAIN)
     {
-      sprintf(txt,"Low Gain");
-      //  sprintf(txt,"High Gain");
+      snprintf(txt, strlen(txt)/sizeof(char), "Low Gain");
+      //  snprintf(txt, strlen(txt)/sizeof(char), "High Gain");
     }
 
   else
     {
-      sprintf(txt,"Error!! invalid gain %d", gain);
+      snprintf(txt, strlen(txt)/sizeof(char), "Error!! invalid gain %d", gain);
     }
   
 }

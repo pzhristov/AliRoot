@@ -362,7 +362,7 @@ void AliPHOSGeoUtils::RelPosToAbsId(Int_t module, Double_t x, Double_t z, Int_t 
   Double_t posL[3]={x,-fCrystalShift,-z} ; //Only for EMC!!!
   Double_t posG[3] ;
   char path[100] ;
-  sprintf(path,"/ALIC_1/PHOS_%d/PEMC_1/PCOL_1/PTIO_1/PCOR_1/PAGA_1/PTII_1",module) ;
+  snprintf(path,100,"/ALIC_1/PHOS_%d/PEMC_1/PCOL_1/PTIO_1/PCOR_1/PAGA_1/PTII_1",module) ;
   if (!gGeoManager->cd(path)){
     printf("Geo manager can not find path \n");
     abort() ;
@@ -611,7 +611,7 @@ const TGeoHMatrix * AliPHOSGeoUtils::GetMatrixForModule(Int_t mod)const {
   if(gGeoManager){
     char path[255] ;
     snprintf(path,255,"/ALIC_1/PHOS_%d/PEMC_1/PCOL_1/PTIO_1/PCOR_1/PAGA_1/PTII_1",mod) ;
-    //    sprintf(path,"/ALIC_1/PHOS_%d",relid[0]) ;
+    //    snprintf(path,255,"/ALIC_1/PHOS_%d",relid[0]) ;
     if (!gGeoManager->CheckPath(path)){ //Module with CPV
       snprintf(path,255,"/ALIC_1/PHOC_%d/PEMC_1/PCOL_1/PTIO_1/PCOR_1/PAGA_1/PTII_1",mod) ;
       if (!gGeoManager->CheckPath(path)){

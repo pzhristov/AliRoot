@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
       for(Int_t isid=0;isid<kSides;isid++){
 	Int_t index=kSides*(kModPerDDL*iddl+imod)+isid;
 	injan[index]=new AliITSOnlineSDDInjectors(iddl,imod,isid);
-	sprintf(hisnam,"h%02dc%02ds%d",iddl,imod,isid);
+	snprintf(hisnam,20,"h%02dc%02ds%d",iddl,imod,isid);
 	histo[index]=new TH2F(hisnam,"",256,-0.5,255.5,256,-0.5,255.5);
 	nWrittenEv[index]=0;
 	isFilled[index]=0;
@@ -257,8 +257,8 @@ int main(int argc, char **argv) {
 	  injan[index]->WriteToASCII(0,timeSt,0);
 	  injan[index]->WriteInjectorStatusToASCII();
 	  dspHistos->AddLast(injan[index]->GetMeanDriftSpeedVsPadHisto());
-	  sprintf(filnam,"SDDinj_ddl%02dc%02d_sid%d.data",iddl,imod,isid);
-	  sprintf(command,"tar -rf SDDinj_LDC.tar %s",filnam);
+	  snprintf(filnam,100,"SDDinj_ddl%02dc%02d_sid%d.data",iddl,imod,isid);
+	  snprintf(command,120,"tar -rf SDDinj_LDC.tar %s",filnam);
 	  gSystem->Exec(command);
 	}
       }  

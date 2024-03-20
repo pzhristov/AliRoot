@@ -247,8 +247,8 @@ int AliHLTMUONRawDataHistoComponent::DoInit(int argc, const char** argv)
 		for (int i = 0; i < 22; i++)
 		{
 			AliHLTInt32_t equipId = AliHLTMUONUtils::DDLNumberToEquipId(i);
-			sprintf(name, "rawDataErrors_%d", equipId);
-			sprintf(title, "Distribution of errors found in raw data from DDL %d.", equipId);
+			snprintf(name, 256, "rawDataErrors_%d", equipId);
+			snprintf(title, 1024, "Distribution of errors found in raw data from DDL %d.", equipId);
 			fErrorHist[i] = new TH1D(name, title, 40, 0.5, 40.5);
 			fErrorHist[i]->SetXTitle("Error code");
 			fErrorHist[i]->SetYTitle("Number of errors");
@@ -256,13 +256,13 @@ int AliHLTMUONRawDataHistoComponent::DoInit(int argc, const char** argv)
 		for (int i = 0; i < 20; i++)
 		{
 			AliHLTInt32_t equipId = AliHLTMUONUtils::DDLNumberToEquipId(i);
-			sprintf(name, "manuDistrib_%d", equipId);
-			sprintf(title, "Distribution of MANUs containing raw data in DDL %d.", equipId);
+			snprintf(name, 256, "manuDistrib_%d", equipId);
+			snprintf(title, 1024, "Distribution of MANUs containing raw data in DDL %d.", equipId);
 			fManuHist[i] = new TH1D(name, title, 2048, -0.5, 2047.5);
 			fManuHist[i]->SetXTitle("MANU number (as seen in raw data)");
 			fManuHist[i]->SetYTitle("Number of signals read.");
-			sprintf(name, "signalDistrib_%d", equipId);
-			sprintf(title, "Distribution of signals in raw data from DDL %d.", equipId);
+			snprintf(name, 256, "signalDistrib_%d", equipId);
+			snprintf(title, 1024, "Distribution of signals in raw data from DDL %d.", equipId);
 			fSignalHist[i] = new TH1D(name, title, 4096, -0.5, 4095.5);
 			fSignalHist[i]->SetXTitle("Channels");
 			fSignalHist[i]->SetYTitle("dN/dChannel");

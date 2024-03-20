@@ -140,12 +140,12 @@ void DCSGenerateAPD(const char *inputFileName,
 	int card = ifec;
 	int icard = ifec+1;
 
-	sprintf(cfile,"%s/set_rcu_%d_bias_branch_%s_FEC_%d.scr",
+	snprintf(cfile,200,"%s/set_rcu_%d_bias_branch_%s_FEC_%d.scr",
 		outputDir, rcu, 
 		branch_str[branch], icard);
 	fout_setbias_card[rcu][branch][card] = fopen(cfile, "w");
 
-	sprintf(cfile,"%s/read_rcu_%d_bias_branch_%s_FEC_%d.scr", 
+	snprintf(cfile,200,"%s/read_rcu_%d_bias_branch_%s_FEC_%d.scr", 
 		outputDir, rcu,
 		branch_str[branch], icard);
 	fout_readbias_card[rcu][branch][card] = fopen(cfile, "w");
@@ -167,13 +167,13 @@ void DCSGenerateAPD(const char *inputFileName,
 	  // what does the desired voltage (in V) correspond to in DAC?
 	  int iv_dac = (int)( (biasVoltage[rcu][branch][card][icsp] - hvmin)/prop + 0.5); // round-off
 	  if (iv_dac > max_dac_value) iv_dac = max_dac_value;
-	  sprintf(iv_dac_setting,"%06X", voltage_value_start[RCUFWVersion] + iv_dac);
+	  snprintf(iv_dac_setting,100,"%06X", voltage_value_start[RCUFWVersion] + iv_dac);
 
 	  // set up instructions that should be written
 	  word = write_header[RCUFWVersion] | (branch << 16) | (icard << 12) | (csp_addr);
 
 	  // write a long comment with all info for this CSP
-	  sprintf(comment, "# RCU %d, Branch %s, FEC %d, CSP %02d - Tower Col %02d, Row %02d ", 
+	  snprintf(comment, 400, "# RCU %d, Branch %s, FEC %d, CSP %02d - Tower Col %02d, Row %02d ", 
 		  rcu, branch_str[branch], icard, icsp,
 		  towerCol[rcu][branch][card][icsp],
 		  towerRow[rcu][branch][card][icsp]
@@ -191,7 +191,7 @@ void DCSGenerateAPD(const char *inputFileName,
 	  rcu_addr_card++;
 
 	  // slighly modified comment for read command - include voltage info
-	  sprintf(comment, "# RCU %d, Branch %s, FEC %d, CSP %02d - Tower Col %02d, Row %02d : %4.1f V, DAC %d (hex: %03X)", 
+	  snprintf(comment, 400, "# RCU %d, Branch %s, FEC %d, CSP %02d - Tower Col %02d, Row %02d : %4.1f V, DAC %d (hex: %03X)", 
 		  rcu, branch_str[branch], icard, icsp,
 		  towerCol[rcu][branch][card][icsp],
 		  towerRow[rcu][branch][card][icsp],

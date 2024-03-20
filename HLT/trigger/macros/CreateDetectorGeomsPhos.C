@@ -19,7 +19,7 @@ void CreateDetectorGeomsPhos()
 	  AliHLTTriggerDetectorGeom *tmpDet= new AliHLTTriggerDetectorGeomRectangle();
 
 	  char tmpName[128];
-	  sprintf(tmpName, "PHOS_%d", i);
+	  snprintf(tmpName, 128, "PHOS_%d", i);
 	  TString name = tmpName;
 
 	  tmpDet->SetDetName(name);

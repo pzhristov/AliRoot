@@ -61,7 +61,7 @@ void tof_digits_strips(Int_t selectedSector=-1)
 
   for(Int_t iSector=0; iSector<g->NSectors(); iSector++) {
     if (selectedSector!=-1 && iSector!=selectedSector) continue;
-    sprintf(sectorName,"Sector%2i",iSector);
+    snprintf(sectorName,100,"Sector%2i",iSector);
     TEveElementList* l = new TEveElementList(sectorName);
     l->SetTitle(sectorTitle);
     l->SetMainColor(2);

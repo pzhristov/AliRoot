@@ -63,8 +63,8 @@ void AliITSPlotGeom(const char *filename="galice.root"){
 //    cout << in << endl;
     for(i=0;i<in;i++){
 	itsgeom->GetRotMatrix(i+is,m);
-	sprintf(name,"ROT%d",i+is);
-	sprintf(title,"ROT%d",i+is);
+	snprintf(name,10,"ROT%d",i+is);
+	snprintf(title,20,"ROT%d",i+is);
 	r[i] = new TRotMatrix(name,title,m);
 //	cout << name << title << endl;
 //	itsgeom->GetTrans(i+is,x[i],y[i],z[i]);
@@ -137,26 +137,26 @@ void AliITSPlotGeom(const char *filename="galice.root"){
 	itsgeom->GetTrans(i+is,x,y,z);
 /*	switch (itsgeom->GetGeomMatrix(i+is)->GetDetectorIndex())
         case 0:
-	    sprintf(name,"SPD%d",i+is);
-	    sprintf(title,"SPD%d",i+is);
-	    sprintf(name2,"BSPD%d",i+is);
-	    sprintf(title2,"BSPD%d",i+is);
+	    snprintf(name,10,"SPD%d",i+is);
+	    snprintf(title,20,"SPD%d",i+is);
+	    snprintf(name2,10,"BSPD%d",i+is);
+	    snprintf(title2,20,"BSPD%d",i+is);
 	    itsn[i] = new TNode(name,title,new TBRIK(name2,title2,"void",
                       spds->GetDx(),spds->GetDy(),spds->GetDz()),x,y,z,r[i]);
 	    break;
         case 1:
-	    sprintf(name,"SDD%d",i+is);
-	    sprintf(title,"SDD%d",i+is);
-	    sprintf(name2,"BSDD%d",i+is);
-	    sprintf(title2,"BSDD%d",i+is);
+	    snprintf(name,10,"SDD%d",i+is);
+	    snprintf(title,20,"SDD%d",i+is);
+	    snprintf(name2,10,"BSDD%d",i+is);
+	    snprintf(title2,20,"BSDD%d",i+is);
 	    itsn[i] = new TNode(name,title,new TBRIK(name2,title2,"void",
                       sdds->GetDx(),sdds->GetDy(),sdds->GetDz()),x,y,z,r[i]);
 	    break;
         case 2:
-	    sprintf(name,"SSD%d",i+is);
-	    sprintf(title,"SSD%d",i+is);
-	    sprintf(name2,"BSSD%d",i+is);
-	    sprintf(title2,"BSSD%d",i+is);
+	    snprintf(name,10,"SSD%d",i+is);
+	    snprintf(title,20,"SSD%d",i+is);
+	    snprintf(name2,10,"BSSD%d",i+is);
+	    snprintf(title2,20,"BSSD%d",i+is);
 	    itsn[i] = new TNode(name,title,new TBRIK(name2,title2,"void",
                       ssds->GetDx(),ssds->GetDy(),ssds->GetDz()),x,y,z,r[i]);
 	    break; */

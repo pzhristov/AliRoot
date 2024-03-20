@@ -114,7 +114,7 @@ void MakeTriggerTable(
 		
 		char buf[1024];
 		char* str = &buf[0];
-		sprintf(str, "AliHLTMUONEvent;%d", event+1);
+		snprintf(str, 1024, "AliHLTMUONEvent;%d", event+1);
 		AliHLTMUONEvent* L0event = dynamic_cast<AliHLTMUONEvent*>( L0file.Get(str) );
 		if (L0event == NULL)
 		{

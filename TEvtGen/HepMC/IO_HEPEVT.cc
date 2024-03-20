@@ -5,7 +5,7 @@
 
 #include "HepMC/IO_HEPEVT.h"
 #include "HepMC/GenEvent.h"
-#include <cstdio>       // needed for formatted output using sprintf 
+#include <cstdio>       // needed for formatted output using snprintf 
 
 namespace HepMC {
 

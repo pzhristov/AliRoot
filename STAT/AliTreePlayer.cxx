@@ -126,7 +126,7 @@ char *AliTreeFormulaF::PrintValue(Int_t mode) const {
 /// \return
 /// TODO  - proper treatment of the 64bits/32 bits integer
 /// TODO  - speed up evaluation caching information (e.g format type )
-///       - get rid of the root formatting string and use sprintf  formatting
+///       - get rid of the root formatting string and use snprintf formatting
 ///       - e.g using t
 char *AliTreeFormulaF::PrintValue(Int_t mode, Int_t instance, const char *decform) const {
   std::stringstream stream;
@@ -141,8 +141,8 @@ char *AliTreeFormulaF::PrintValue(Int_t mode, Int_t instance, const char *decfor
       if (isHex) { // TODO check 64bits/32 bits
         char buffer[64];
         Int_t value=treeFormula->EvalInstance();
-        //sprintf(format,"%s",fFormatArray->At(iVar)->GetName());
-        sprintf(buffer,"%X",(Int_t)value);
+        //snprintf(format,64,"%s",fFormatArray->At(iVar)->GetName());
+        snprintf(buffer,64,"%X",(Int_t)value);
         stream<<buffer;
         continue;
       }

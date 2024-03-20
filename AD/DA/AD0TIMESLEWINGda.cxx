@@ -149,8 +149,8 @@ int main(int argc, char **argv) {
   
   char  texte[20];
   for (Int_t i=0; i<16; i++) {
-       	sprintf(TimeVsChargeName,"hTimeVsCharge%d",i);
-       	sprintf(texte,"hTimeVsCharge ch%d",i);
+       	snprintf(TimeVsChargeName, 20, "hTimeVsCharge%d",i);
+       	snprintf(texte, 20, "hTimeVsCharge ch%d",i);
        	hTimeVsCharge[i]  = new TH2F(TimeVsChargeName,texte,kNBinsCharge,-4,0,kMaxTime-kMinTime,kMinTime,kMaxTime);
         }
        

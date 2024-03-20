@@ -20,11 +20,11 @@ void testAliGlauberQuenching() {
     Char_t name[100];
     Char_t hname[100];
     if(itype==1){
-      sprintf(name,"Energy Loss Distribution - Quarks;E_{loss} (GeV);#"); 
-      sprintf(hname,"hQuarks"); 
+      snprintf(name,100,"Energy Loss Distribution - Quarks;E_{loss} (GeV);#"); 
+      snprintf(hname,100,"hQuarks"); 
     } else {
-      sprintf(name,"Energy Loss Distribution - Gluons;E_{loss} (GeV);#"); 
-      sprintf(hname,"hGluons"); 
+      snprintf(name,100,"Energy Loss Distribution - Gluons;E_{loss} (GeV);#"); 
+      snprintf(hname,100,"hGluons"); 
     }
 
     TH1F *h = new TH1F(hname,name,100,0,200);
@@ -74,14 +74,14 @@ void testFastAliGlauberQuenching(Char_t *fname) {
     gPad->SetLogy();
     Char_t name[200];
     if(itype==1)
-      sprintf(name,"Energy Loss Distribution - Quarks;E_{loss} (GeV);#"); 
+      snprintf(name,200,"Energy Loss Distribution - Quarks;E_{loss} (GeV);#"); 
     else 
-      sprintf(name,"Energy Loss Distribution - Gluons;E_{loss} (GeV);#"); 
+      snprintf(name,200,"Energy Loss Distribution - Gluons;E_{loss} (GeV);#"); 
     Char_t hname[200];
     if(itype==1)
-      sprintf(hname,"hQuarks"); 
+      snprintf(hname,200,"hQuarks"); 
     else 
-      sprintf(hname,"hGluons"); 
+      snprintf(hname,200,"hGluons"); 
 
     TH1F *h = afq.ComputeELossHisto(itype,1.,hEll);
 

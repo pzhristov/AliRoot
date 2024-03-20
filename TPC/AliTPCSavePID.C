@@ -29,7 +29,7 @@ TFile fpid("AliTPCtracksPid.root","recreate");
 
  Int_t nentr=0,i=0;
  for(int je=0;je<emax;je++){
-   char tname[100]; sprintf(tname,"TreeT_TPC_%d",je);
+   char tname[100]; snprintf(tname,100,"TreeT_TPC_%d",je);
    TTree *tracktree=(TTree*)tf->Get(tname);
    if (!tracktree) {cerr<<"Can't get a tree with TPC tracks !\n"; return 4;}
 
@@ -37,7 +37,7 @@ TFile fpid("AliTPCtracksPid.root","recreate");
    nentr=(Int_t)tracktree->GetEntries();
    cout<<nentr<<" "<<" tracks in track tree "<<tname<<"."<<endl;
 
-    char tpname[100]; sprintf(tpname,"TreeT%d",je);
+    char tpname[100]; snprintf(tpname,100,"TreeT%d",je);
     TTree *ptree = new  TTree(tpname,"Tree with PID"); 
     ptree->Branch("pids","AliTPCtrackPid",&outpid,32000,1); 
 

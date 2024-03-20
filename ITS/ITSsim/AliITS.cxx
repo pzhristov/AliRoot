@@ -421,7 +421,7 @@ void AliITS:: MakeBranchInTreeD(TTree* treeD, const char* file){
     }
     else ResetDigits(i);  
     if(fgkNTYPES==3) snprintf(branchname,30,"%sDigits%s",GetName(),det[i]);
-    else sprintf(branchname,"%sDigits%d",GetName(),i+1);
+    else snprintf(branchname,31,"%sDigits%d",GetName(),i+1);
     TObjArray* dig = DigitsAddress(i);
     if(GetDigits() && treeD) AliDetector::MakeBranchInTree(treeD,branchname, &dig,buffersize,file);
   }

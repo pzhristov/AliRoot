@@ -72,7 +72,7 @@ void DrawCFD()
   for (Int_t i=0; i<12; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"T0_C_%i_CFD",i+1);
+      snprintf(buf1,10,"T0_C_%i_CFD",i+1);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
       //    cfd->Draw();
       
@@ -109,7 +109,7 @@ void DrawCFD()
   for (Int_t i=0; i<12; i++)
     {
       c2->cd(i+1);
-      sprintf(buf1,"T0_A_%i_CFD",i+1);
+      snprintf(buf1,10,"T0_A_%i_CFD",i+1);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
       //    cfd->Draw();
       
@@ -155,7 +155,7 @@ void DrawLED()
   for (Int_t i=0; i<12; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"T0_C_%i_LED",i+1);
+      snprintf(buf1,20,"T0_C_%i_LED",i+1);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
        TSpectrum *s = new TSpectrum(2*npeaks,1);
       Int_t nfound = s->Search(cfd,sigma," ",0.2);
@@ -185,7 +185,7 @@ void DrawLED()
   for (Int_t i=0; i<12; i++)
     {
       c2->cd(i+1);
-      sprintf(buf1,"T0_A_%i_LED",i+1);
+      snprintf(buf1,20,"T0_A_%i_LED",i+1);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
  
       TSpectrum *s = new TSpectrum(2*npeaks,1);
@@ -223,7 +223,7 @@ void DrawQTC()
   for (Int_t i=0; i<12; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"QTC%i",i+1);
+      snprintf(buf1,10,"QTC%i",i+1);
       
       TH1F *qtc = (TH1F*) gFile->Get(buf1);
       
@@ -251,7 +251,7 @@ void DrawQTC()
   for (Int_t i=12; i<24; i++)
     {
       c2->cd(i+1-12);
-      sprintf(buf1,"QTC%i",i+1);
+      snprintf(buf1,10,"QTC%i",i+1);
       
       TH1F *qtc = (TH1F*) gFile->Get(buf1);
       
@@ -288,7 +288,7 @@ void DrawLEDminCFD()
   for (Int_t i=0; i<12; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"LEDminCFD%i",i+1);
+      snprintf(buf1,20,"LEDminCFD%i",i+1);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
       cfd->Draw();
       TSpectrum *s = new TSpectrum(2*npeaks,1);
@@ -318,7 +318,7 @@ void DrawLEDminCFD()
   for (Int_t i=12; i<24; i++)
     {
       c2->cd(i+1-12);
-      sprintf(buf1,"LEDminCFD%i",i+1);
+      snprintf(buf1,20,"LEDminCFD%i",i+1);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
       cfd->Draw();
       TSpectrum *s = new TSpectrum(2*npeaks,1);
@@ -348,7 +348,7 @@ void DrawLEDminCFD()
   for (Int_t i=0; i<4; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"LED-CFD%i",i+1);
+      snprintf(buf1,10,"LED-CFD%i",i+1);
       TH1F *cfd = (TH1F*) file->Get(buf1);
       //  cout<<buf1<<" "<<cfd<<endl;
       //     cfd->Draw();
@@ -383,8 +383,8 @@ void DrawCFDvsQTC()
   for (Int_t i=0; i<12; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"T0_C_%i_CFD",i+1);
-      sprintf(buf2,"CFDvsQTC%i",i+1);
+      snprintf(buf1,10,"T0_C_%i_CFD",i+1);
+      snprintf(buf2,10,"CFDvsQTC%i",i+1);
       cout<<buf1<<" "<<buf2<<endl;
       TH2F *qtc_cfd = (TH2F*) gFile->Get(buf2);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
@@ -418,8 +418,8 @@ void DrawCFDvsQTC()
   for (Int_t i=12; i<24; i++)
     {
       c2->cd(i+1-12);
-      sprintf(buf1,"T0_A_%i_CFD",i+1-12);
-      sprintf(buf2,"CFDvsQTC%i",i+1);
+      snprintf(buf1,10,"T0_A_%i_CFD",i+1-12);
+      snprintf(buf2,10,"CFDvsQTC%i",i+1);
       cout<<buf1<<" "<<buf2<<endl;
       TH2F *qtc_cfd = (TH2F*) gFile->Get(buf2);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
@@ -467,8 +467,8 @@ void DrawWalk()
   for (Int_t i=0; i<12; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"T0_C_%i_CFD",i+1);
-      sprintf(buf2,"CFDvsQTC%i",i+1);
+      snprintf(buf1,10,"T0_C_%i_CFD",i+1);
+      snprintf(buf2,10,"CFDvsQTC%i",i+1);
       cout<<buf1<<" "<<buf2<<endl;
       TH2F *qtc_cfd = (TH2F*) gFile->Get(buf2);
       TH1F *cfd = (TH1F*) gFile->Get(buf1);
@@ -552,8 +552,8 @@ void DrawCFDvsLED()
   for (Int_t i=0; i<12; i++)
     {
       c1->cd(i+1);
-      sprintf(buf1,"T0_C_%i_CFD",i+1);
-      sprintf(buf2,"CFDvsLED%i",i+1);
+      snprintf(buf1,10,"T0_C_%i_CFD",i+1);
+      snprintf(buf2,10,"CFDvsLED%i",i+1);
       
       TH2F *qtc_cfd = (TH2F*) gFile->Get(buf2);
       //qtc_cfd->Draw();

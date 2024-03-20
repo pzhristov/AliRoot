@@ -188,11 +188,11 @@ AliITSGeoCable::AliITSGeoCable(const char *name,const TObjArray *vect,
         th *= TMath::RadToDeg();
         ph =  TMath::ATan2(d.y()-d.Mag(),d.x()-d.Mag());
         ph *= TMath::RadToDeg();
-        sprintf(nam,"%sCombiTrans%dCable",name,i-1);
+        snprintf(nam,500,"%sCombiTrans%dCable",name,i-1);
         fTranRot->AddAt(new TGeoCombiTrans(nam,t.x(),t.y(),t.z(),
 					 new TGeoRotation("",ph,th,0.0)),i-1);
         s  = d.Mag();
-        sprintf(nam,"%sPart%dCable",name,i-1);
+        snprintf(nam,500,"%sPart%dCable",name,i-1);
         fTubes->AddAt( new TGeoCtub(nam,fRmin,fRmax,0.5*s,0.0,360.0,n0.x(),
 				    n0.y(),n0.z(),n1.x(),n1.y(),n1.z()),i-1);
         n0 = -n1;

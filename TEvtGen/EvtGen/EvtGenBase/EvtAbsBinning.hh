@@ -37,7 +37,7 @@ public:
   virtual char* typeLabel(int i) const
   {
     char* a = new char[128];
-    sprintf(a,"%d",i);
+    snprintf(a,128,"%d",i);
     return a;
   }
 

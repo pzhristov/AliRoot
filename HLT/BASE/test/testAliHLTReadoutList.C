@@ -299,7 +299,7 @@ bool CheckEnablingDisablingDDLs()
 		for (size_t j = 0; j < ddls.size(); ++j)
 		{
 			char num[32];
-			sprintf(num, "%d", ddls[j]);
+			snprintf(num, 32, "%d", ddls[j]);
 			enableList += " ";
 			enableList += num;
 		}

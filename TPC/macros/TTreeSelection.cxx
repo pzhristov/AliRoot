@@ -134,11 +134,11 @@ TString TTreeCutAtom::GetSelection(){
   char  command[1000];
   if (fType==kBool) str = fTitle;
   if (fType==kInt){
-    sprintf(command,"(%s==%d)",GetTitle(), TMath::Nint(fVal0));
+    snprintf(command,1000,"(%s==%d)",GetTitle(), TMath::Nint(fVal0));
     str = command;
   }
   if (fType==kRange){
-    sprintf(command,"((%s>%f) &&(%s<%f))",GetTitle(), fVal0,GetTitle(),fVal1);
+    snprintf(command,1000,"((%s>%f) &&(%s<%f))",GetTitle(), fVal0,GetTitle(),fVal1);
     str = command;
   }
   return str;

@@ -56,13 +56,13 @@ void CheckAlienZDCESD(Int_t year=2010, const char* period="10f",
  TH1D * hZNATow[5]; TH1D * hZPATow[5]; 
  char nomehistznc[30], nomehistzpc[30], nomehistzna[30], nomehistzpa[30];
  for(Int_t i=0; i<5; i++){
-   sprintf(nomehistznc,"ZNC-pm%d",i);
+   snprintf(nomehistznc,30,"ZNC-pm%d",i);
    hZNCTow[i] = new TH1D(nomehistznc, nomehistznc, 100, 0.,1200.);
-   sprintf(nomehistzpc,"ZPC-pm%d",i);
+   snprintf(nomehistzpc,30,"ZPC-pm%d",i);
    hZPCTow[i] = new TH1D(nomehistzpc, nomehistzpc, 100, 0.,1200.);
-   sprintf(nomehistzna,"ZNA-pm%d",i);
+   snprintf(nomehistzna,30,"ZNA-pm%d",i);
    hZNATow[i] = new TH1D(nomehistzna, nomehistzna, 100, 0.,1200.);
-   sprintf(nomehistzpa,"ZPA-pm%d",i);
+   snprintf(nomehistzpa,30,"ZPA-pm%d",i);
    hZPATow[i] = new TH1D(nomehistzpa, nomehistzpa, 100, 0.,1200.);
  }
  //
@@ -124,11 +124,11 @@ void CheckAlienZDCESD(Int_t year=2010, const char* period="10f",
   
   int st = fscanf(listruns,"%s\n",esdFileName);    
   Char_t directory[100];
-  sprintf(directory,"/alice/data/%d",year);
+  snprintf(directory,100,"/alice/data/%d",year);
   if(!strstr(esdFileName,directory)) continue;
   sscanf(esdFileName,"/alice/data/%d/LHC%s/000%d/ESDs/pass%d/%s/AliESDs.root",&year,&yperiod,&nRun,&recoPass,&dirESD);
   //sscanf(esdFileName,"/alice/data/%d/LHC%s/000%d/ESDs/hlt_clustering/%s/AliESDs.root",&year,&yperiod,&nRun,&dirESD);
-  sprintf(filnamalien,"alien://%s",esdFileName);
+  snprintf(filnamalien,200,"alien://%s",esdFileName);
   printf("\n Opening file: %s\n",filnamalien);
  
   // open the ESD file

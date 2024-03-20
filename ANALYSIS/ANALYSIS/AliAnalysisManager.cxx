@@ -2631,8 +2631,8 @@ Bool_t AliAnalysisManager::GetFileFromWrapper(const char *filename, const TList 
       Error("GetFileFromWrapper", "TProofOutputFile object not found in output list for file %s", filename);
       return kFALSE;
    }
-   gROOT->ProcessLine(Form("sprintf((char*)%p, \"%%s\", ((TProofOutputFile*)%p)->GetOutputFileName());", fullPath, pof));
-   gROOT->ProcessLine(Form("sprintf((char*)%p, \"%%s\", gProof->GetUrl());",chUrl));
+   gROOT->ProcessLine(Form("snprintf((char*)%p,512,\"%%s\", ((TProofOutputFile*)%p)->GetOutputFileName());", fullPath, pof));
+   gROOT->ProcessLine(Form("snprintf((char*)%p,512,\"%%s\", gProof->GetUrl());",chUrl));
    TString clientUrl(chUrl);
    TString fullPath_str(fullPath);
    if (clientUrl.Contains("localhost")){
@@ -2648,7 +2648,7 @@ Bool_t AliAnalysisManager::GetFileFromWrapper(const char *filename, const TList 
    }
    else if (clientUrl.Contains("__lite__")) { 
      // Special case for ProofLite environement - get file info and copy. 
-     gROOT->ProcessLine(Form("sprintf((char*)%p,\"%%s\",((TProofOutputFile*)%p)->GetDir());", tmp, pof));
+     gROOT->ProcessLine(Form("snprintf((char*)%p,1024,\"%%s\",((TProofOutputFile*)%p)->GetDir());", tmp, pof));
      fullPath_str.Form("%s/%s", tmp, fullPath);
    }
    if (fDebug > 1) 

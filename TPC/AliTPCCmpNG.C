@@ -197,7 +197,7 @@ Int_t Chain(TString baseDir, TString subDirNameMask, TString fn, TChain& chain) 
   while((afile = gSystem->GetDirEntry(dirp))) {
 //    printf("file: %s\n",afile);
     if (strstr(afile,subDirNameMask.Data())) {
-      sprintf(relName,"%s/%s/%s",baseDir.Data(),afile,fn.Data());
+      snprintf(relName,100,"%s/%s/%s",baseDir.Data(),afile,fn.Data());
 //      cerr<<"relName = "<<relName<<endl;
       if(!gSystem->GetPathInfo(relName, &id, &size, &flag, &modTime)) { 
 	rc += chain.Add(relName);      
@@ -713,7 +713,7 @@ Int_t TPCFindGenTracks::TreeDLoop()
 //  Int_t gap=Int_t(0.125*nrows), shift=Int_t(0.5*gap);
   
   char treeDName[100]; 
-  sprintf(treeDName,"TreeD_75x40_100x60_150x60_%d",fEventNr);
+  snprintf(treeDName,100,"TreeD_75x40_100x60_150x60_%d",fEventNr);
   TTree *treeD=(TTree*)fFileTreeD->Get(treeDName);
   AliSimDigits digitsAddress, *digits=&digitsAddress;
   treeD->GetBranch("Segment")->SetAddress(&digits);
@@ -1163,7 +1163,7 @@ Int_t TPCCmpTr::TreeTLoop(Int_t eventNr)
 
   char treeNameBase[11] = "TreeT_TPC_";
   char treeName[20];
-  sprintf(treeName,"%s%d",treeNameBase,eventNr);
+  snprintf(treeName,20,"%s%d",treeNameBase,eventNr);
 
   fTreeRecTracks=(TTree*)fFileRecTracks->Get(treeName);
   if (!fTreeRecTracks) {

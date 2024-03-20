@@ -139,7 +139,7 @@ void AliTRDCreateDummyCDB_DP()
     oneTRDDCS->SetGraph(map);
 
     char ocdbpath[256];
-    sprintf(ocdbpath, "TRD/Calib/%s", oneTRDDCS->GetStoreName().Data());
+    snprintf(ocdbpath,256, "TRD/Calib/%s", oneTRDDCS->GetStoreName().Data());
     metaData = CreateMetaObject(oneTRDDCS->GetStoreName().Data());
 
     StoreObject(ocdbpath, oneTRDDCS, metaData);

@@ -107,7 +107,7 @@ Int_t AliPIDComparison(const Char_t *dir=".") {
       delete gAlice;
       gAlice=0;
    }
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
    AliRunLoader *rl = AliRunLoader::Open(fname);
    if (rl == 0x0) {
       ::Error("AliPIDComparison.C","Can not open session !");
@@ -125,7 +125,7 @@ Int_t AliPIDComparison(const Char_t *dir=".") {
    }
    rl->LoadKinematics();
 
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if (!ef || !ef->IsOpen()) {
       ::Error("AliPIDComparison.C","Can't AliESDs.root !"); 

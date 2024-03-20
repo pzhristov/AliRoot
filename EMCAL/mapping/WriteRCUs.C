@@ -152,10 +152,10 @@ void WriteRCUs(const char *filename="map.root")
   char fname[100];
   for (iRCU=0; iRCU<kNRCU; iRCU++) {
     for (iside=0; iside<kNSides; iside++) {
-      sprintf(fname, "RCU%d%s.data.unsorted",iRCU,sideStr[iside]);
+      snprintf(fname, 100, "RCU%d%s.data.unsorted",iRCU,sideStr[iside]);
       out[iRCU][iside].open(fname);
 
-      sprintf(fname, "RCU%d%s.data",iRCU,sideStr[iside]);
+      snprintf(fname, 100, "RCU%d%s.data",iRCU,sideStr[iside]);
       outFinal[iRCU][iside].open(fname);
 
       outFinal[iRCU][iside] << NChannelsPerRCU[iRCU] << endl;
@@ -310,16 +310,16 @@ void WriteRCUs(const char *filename="map.root")
   // I'm not sure if having the lists ordered is really needed but it is at 
   // least more aestethically pleasing..
   char cmd[200];
-  sprintf(cmd, "mkdir -p tmp"); // provide a temporary storage space - not to pollute the local dir. too much
+  snprintf(cmd, 200, "mkdir -p tmp"); // provide a temporary storage space - not to pollute the local dir. too much
   gSystem->Exec(cmd);
 
   for (iRCU=0; iRCU<kNRCU; iRCU++) {
     for (iside=0; iside<kNSides; iside++) {
-      sprintf(cmd, "sort -n RCU%d%s.data.unsorted >> RCU%d%s.data", 
+      snprintf(cmd, 200, "sort -n RCU%d%s.data.unsorted >> RCU%d%s.data", 
 	      iRCU, sideStr[iside], iRCU, sideStr[iside]);
       cout << "executing " << cmd << endl;
       gSystem->Exec(cmd);
-      sprintf(cmd, "mv RCU%d%s.data.unsorted tmp/.", 
+      snprintf(cmd, 200, "mv RCU%d%s.data.unsorted tmp/.", 
 	      iRCU, sideStr[iside]);
       cout << "executing " << cmd << endl;
       gSystem->Exec(cmd);

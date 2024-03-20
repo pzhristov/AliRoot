@@ -292,11 +292,11 @@ int main(int argc, char **argv) {
   
     printf("DA2 for module %d detected.\n",iMod);
 
-    sprintf(lnam,"gmaplow%d",iMod);
-    sprintf(ltitl,"Quality map for Low gain in Module %d",iMod);
+    snprintf(lnam,128,"gmaplow%d",iMod);
+    snprintf(ltitl,128,"Quality map for Low gain in Module %d",iMod);
 
-    sprintf(hnam,"gmaphigh%d",iMod);
-    sprintf(htitl,"Quality map for High gain in Module %d",iMod);
+    snprintf(hnam,128,"gmaphigh%d",iMod);
+    snprintf(htitl,128,"Quality map for High gain in Module %d",iMod);
     
     maps[0]  = new TH2F(lnam, ltitl, 64,0.,64.,56,0.,56.);
     maps[1]  = new TH2F(hnam, htitl, 64,0.,64.,56,0.,56.);

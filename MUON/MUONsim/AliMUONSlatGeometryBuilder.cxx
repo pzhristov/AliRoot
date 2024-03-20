@@ -319,7 +319,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	Float_t dzSlat3 = -0.25; // see drawing PQ7EN345-6 (Delta_slat=80mm instead 85mm)
 	Float_t zSlat3 = (i%2 ==0)? -(zSlat+dzSlat3) : (zSlat+dzSlat3); // seems not that zSlat3 = zSlat4 & 5 refering to plan PQ7EN345-6 ? -> Indeed, fixed J.C.
 
-	sprintf(idSlatCh5,"SLA%d",i+kNslats3-1);
+	snprintf(idSlatCh5,6,"SLA%d",i+kNslats3-1);
 	detElemId = 509 - (i + kNslats3-1-4);
 	moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId == 508 || detElemId == 509) // Round slat, new rotation due to mapping convention
@@ -334,7 +334,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 						TGeoRotation("rot1",90,angle,90,270+angle,180,0) ); 
 	}
      
-	sprintf(idSlatCh5,"SLA%d",3*kNslats3-2+i);
+	snprintf(idSlatCh5,6,"SLA%d",3*kNslats3-2+i);
 	detElemId = 500 + (i + kNslats3-1-4);
 	moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId == 500 || detElemId == 501) // Round slat, new rotation due to mapping convention
@@ -350,7 +350,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	}
 
 	if (i > 0) { 
-	  sprintf(idSlatCh5,"SLA%d",kNslats3-1-i);
+	  snprintf(idSlatCh5,6,"SLA%d",kNslats3-1-i);
 	  detElemId = 509 + (i + kNslats3-1-4);
   	  moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	  if (detElemId % 2 == 0 ) {
@@ -365,7 +365,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	      GetEnvelopes(moduleId)->AddEnvelope(idSlatCh5, detElemId, true, TGeoTranslation(xSlat3, -ySlat3, -zSlat3 + dzCh3), 
 						  TGeoRotation("rot3",90,angle,90,270+angle,180,0) );
 
-	  sprintf(idSlatCh5,"SLA%d",3*kNslats3-2-i);
+	  snprintf(idSlatCh5,6,"SLA%d",3*kNslats3-2-i);
 	  detElemId = 518 - (i + kNslats3-1-4);
   	  moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	  if (detElemId % 2 == 1) {
@@ -381,7 +381,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 						  TGeoRotation("rot4",90,180+angle,90,270+angle,0,0) );   
 	}
 
-	sprintf(idSlatCh6,"SLB%d",kNslats3-1+i);  
+	snprintf(idSlatCh6,6,"SLB%d",kNslats3-1+i);  
 	detElemId = 609 - (i  + kNslats3-1-4);
   	moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId == 608 || detElemId == 609) // Round slat, new rotation due to mapping convention
@@ -396,7 +396,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 						TGeoRotation("rot5",90,angle,90,270+angle,180,0));
 	}
 
-	sprintf(idSlatCh6,"SLB%d",3*kNslats3-2+i);
+	snprintf(idSlatCh6,6,"SLB%d",3*kNslats3-2+i);
 	detElemId = 600 + (i + kNslats3-1-4);
   	moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId == 600 || detElemId == 601) // Round slat, new rotation due to mapping convention
@@ -412,7 +412,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	}
 
 	if (i > 0) { 
-	  sprintf(idSlatCh6,"SLB%d",kNslats3-1-i);
+	  snprintf(idSlatCh6,6,"SLB%d",kNslats3-1-i);
 	  detElemId = 609 + (i + kNslats3-1-4);
   	  moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	  if (detElemId % 2 == 0 ) {
@@ -427,7 +427,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	      GetEnvelopes(moduleId)->AddEnvelope(idSlatCh6, detElemId, true, TGeoTranslation(xSlat3, -ySlat3, -zSlat3 + dzCh3),
 						  TGeoRotation("rot7",90,angle,90,270+angle,180,0) );
 
-	  sprintf(idSlatCh6,"SLB%d",3*kNslats3-2-i);
+	  snprintf(idSlatCh6,6,"SLB%d",3*kNslats3-2-i);
 	  detElemId = 618 - (i + kNslats3-1-4);
   	  moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	  if (detElemId % 2 == 1) {
@@ -647,8 +647,8 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	  if (i == 0 && quadrant == 2) continue;
 	  if (i == 0 && quadrant == 4) continue;
 
-	  sprintf(idSlatCh5,"SLA%d",ConvertSlatNum(i,quadrant,kNslats3-1));
-	  sprintf(idSlatCh6,"SLB%d",ConvertSlatNum(i,quadrant,kNslats3-1));
+	  snprintf(idSlatCh5,6,"SLA%d",ConvertSlatNum(i,quadrant,kNslats3-1));
+	  snprintf(idSlatCh6,6,"SLB%d",ConvertSlatNum(i,quadrant,kNslats3-1));
 	  Int_t moduleSlatCh5 = GetModuleId(idSlatCh5);
 	  Int_t moduleSlatCh6 = GetModuleId(idSlatCh6);
 	  Float_t xvFrame  = (slatLength3[i] - kVframeLength)/2.;
@@ -1079,7 +1079,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
       Float_t dzCh4 = dzCh;
       Float_t zSlat4 = (i%2 ==0)? -zSlat : zSlat; 
 
-      sprintf(idSlatCh7,"SLC%d",kNslats4-1+i);
+      snprintf(idSlatCh7,6,"SLC%d",kNslats4-1+i);
       detElemId = 713 - (i + kNslats4-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 0) {
@@ -1094,7 +1094,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	  GetEnvelopes(moduleId)->AddEnvelope(idSlatCh7, detElemId, true, TGeoTranslation(xSlat4, ySlat41, -zSlat4 + dzCh4),
 				   TGeoRotation("rot1",90,angle,90,270+angle,180,0) );
 
-      sprintf(idSlatCh7,"SLC%d",3*kNslats4-2+i);
+      snprintf(idSlatCh7,6,"SLC%d",3*kNslats4-2+i);
       detElemId = 700 + (i + kNslats4-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 1) {
@@ -1110,7 +1110,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 					    TGeoRotation("rot2",90,180+angle,90,270+angle,0,0) );
 
       if (i > 0) { 
-	sprintf(idSlatCh7,"SLC%d",kNslats4-1-i);
+	snprintf(idSlatCh7,6,"SLC%d",kNslats4-1-i);
 	detElemId = 713 + (i + kNslats4-1-6);
         moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 0) {
@@ -1125,7 +1125,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	    GetEnvelopes(moduleId)->AddEnvelope(idSlatCh7, detElemId, true, TGeoTranslation(xSlat4, -ySlat41, -zSlat4 + dzCh4),
 						TGeoRotation("rot3",90,angle,90,270+angle,180,0) );
 
-	sprintf(idSlatCh7,"SLC%d",3*kNslats4-2-i);
+	snprintf(idSlatCh7,6,"SLC%d",3*kNslats4-2-i);
 	detElemId = 726 - (i + kNslats4-1-6);
         moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 1) {
@@ -1141,7 +1141,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 					      TGeoRotation("rot4",90,180+angle,90,270+angle,0,0) ); 
       }
 
-      sprintf(idSlatCh8,"SLD%d",kNslats4-1+i);
+      snprintf(idSlatCh8,6,"SLD%d",kNslats4-1+i);
       detElemId = 813 - (i + kNslats4-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 0) {
@@ -1156,7 +1156,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	GetEnvelopes(moduleId)->AddEnvelope(idSlatCh8, detElemId, true, TGeoTranslation(xSlat4, ySlat42, -zSlat4 + dzCh4),
 					    TGeoRotation("rot5",90,angle,90,270+angle,180,0) ); 
 
-      sprintf(idSlatCh8,"SLD%d",3*kNslats4-2+i);
+      snprintf(idSlatCh8,6,"SLD%d",3*kNslats4-2+i);
       detElemId = 800 + (i + kNslats4-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 1) {
@@ -1171,7 +1171,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	GetEnvelopes(moduleId)->AddEnvelope(idSlatCh8, detElemId, true, TGeoTranslation(-xSlat4, ySlat42, zSlat4 - dzCh4),
 					    TGeoRotation("rot6",90,180+angle,90,270+angle,0,0) );
       if (i > 0) { 
-	sprintf(idSlatCh8,"SLD%d",kNslats4-1-i);
+	snprintf(idSlatCh8,6,"SLD%d",kNslats4-1-i);
 	detElemId = 813 + (i + kNslats4-1-6);
         moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 0) {
@@ -1186,7 +1186,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	  GetEnvelopes(moduleId)->AddEnvelope(idSlatCh8, detElemId, true, TGeoTranslation(xSlat4, -ySlat42, -zSlat4 + dzCh4),
 					      TGeoRotation("rot7",90,angle,90,270+angle,180,0) );
 
-	sprintf(idSlatCh8,"SLD%d",3*kNslats4-2-i);
+	snprintf(idSlatCh8,6,"SLD%d",3*kNslats4-2-i);
 	detElemId = 826 - (i + kNslats4-1-6);
         moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 1) {
@@ -1371,8 +1371,8 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	if (i == 0 && quadrant == 2) continue;
 	if (i == 0 && quadrant == 4) continue;
 
-	sprintf(idSlatCh7,"SLC%d",ConvertSlatNum(i,quadrant,kNslats4-1));
-	sprintf(idSlatCh8,"SLD%d",ConvertSlatNum(i,quadrant,kNslats4-1));
+	snprintf(idSlatCh7,6,"SLC%d",ConvertSlatNum(i,quadrant,kNslats4-1));
+	snprintf(idSlatCh8,6,"SLD%d",ConvertSlatNum(i,quadrant,kNslats4-1));
 	Int_t moduleSlatCh7 = GetModuleId(idSlatCh7);
 	Int_t moduleSlatCh8 = GetModuleId(idSlatCh8);
 
@@ -1683,7 +1683,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
       Float_t dzCh5  = dzCh;
       Float_t zSlat5 = (i%2 ==0)? -zSlat : zSlat; 
 
-      sprintf(idSlatCh9,"SLE%d",kNslats5-1+i);
+      snprintf(idSlatCh9,6,"SLE%d",kNslats5-1+i);
       detElemId = 913 - (i + kNslats5-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 0) {
@@ -1697,7 +1697,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
       else
 	GetEnvelopes(moduleId)->AddEnvelope(idSlatCh9, detElemId, true, TGeoTranslation(xSlat5, ySlat5, -zSlat5 + dzCh5),
 					    TGeoRotation("rot1",90,angle,90,270+angle,180,0) );
-      sprintf(idSlatCh9,"SLE%d",3*kNslats5-2+i);
+      snprintf(idSlatCh9,6,"SLE%d",3*kNslats5-2+i);
       detElemId = 900 + (i + kNslats5-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 1) {
@@ -1713,7 +1713,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 					    TGeoRotation("rot2",90,180+angle,90,270+angle,0,0) );      
 
       if (i > 0) { 
-	sprintf(idSlatCh9,"SLE%d",kNslats5-1-i);
+	snprintf(idSlatCh9,6,"SLE%d",kNslats5-1-i);
 	detElemId = 913 + (i + kNslats5-1-6);
 	moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 0) {
@@ -1728,7 +1728,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	  GetEnvelopes(moduleId)->AddEnvelope(idSlatCh9, detElemId, true, TGeoTranslation(xSlat5, -ySlat5, -zSlat5 + dzCh5),
 				     TGeoRotation("rot3",90,angle,90,270+angle,180,0) );
 
-	sprintf(idSlatCh9,"SLE%d",3*kNslats5-2-i);
+	snprintf(idSlatCh9,6,"SLE%d",3*kNslats5-2-i);
 	detElemId = 926 - (i + kNslats5-1-6);
 	moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 1) {
@@ -1744,7 +1744,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 					      TGeoRotation("rot4",90,180+angle,90,270+angle,0,0)  );   
       }
 
-      sprintf(idSlatCh10,"SLF%d",kNslats5-1+i);
+      snprintf(idSlatCh10,6,"SLF%d",kNslats5-1+i);
       detElemId = 1013 - (i + kNslats5-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 0) {
@@ -1759,7 +1759,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	  GetEnvelopes(moduleId)->AddEnvelope(idSlatCh10, detElemId, true, TGeoTranslation(xSlat5, ySlat5, -zSlat5 + dzCh5),
 					      TGeoRotation("rot5",90,angle,90,270+angle,180,0) );
 
-      sprintf(idSlatCh10,"SLF%d",3*kNslats5-2+i);
+      snprintf(idSlatCh10,6,"SLF%d",3*kNslats5-2+i);
       detElemId = 1000 + (i + kNslats5-1-6);
       moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
       if (detElemId % 2 == 1) {
@@ -1775,7 +1775,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 					    TGeoRotation("rot6",90,180+angle,90,270+angle,0,0) );
 
       if (i > 0) { 
-	sprintf(idSlatCh10,"SLF%d",kNslats5-1-i);
+	snprintf(idSlatCh10,6,"SLF%d",kNslats5-1-i);
 	detElemId = 1013 + (i + kNslats5-1-6);
         moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 0) {  
@@ -1790,7 +1790,7 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	  GetEnvelopes(moduleId)->AddEnvelope(idSlatCh10, detElemId, true, TGeoTranslation(xSlat5, -ySlat5, -zSlat5 + dzCh5),
 					      TGeoRotation("rot7",90,angle,90,270+angle,180,0) );
 
-	sprintf(idSlatCh10,"SLF%d",3*kNslats5-2-i);
+	snprintf(idSlatCh10,6,"SLF%d",3*kNslats5-2-i);
 	detElemId = 1026 - (i + kNslats5-1-6);
         moduleId = AliMpDEManager::GetGeomModuleId(detElemId);
 	if (detElemId % 2 == 1) {
@@ -1973,8 +1973,8 @@ void AliMUONSlatGeometryBuilder::CreateGeometry()
 	if (i == 0 && quadrant == 2) continue;
 	if (i == 0 && quadrant == 4) continue;
 
-	sprintf(idSlatCh9,"SLE%d",ConvertSlatNum(i,quadrant,kNslats5-1));
-	sprintf(idSlatCh10,"SLF%d",ConvertSlatNum(i,quadrant,kNslats5-1));
+	snprintf(idSlatCh9,6,"SLE%d",ConvertSlatNum(i,quadrant,kNslats5-1));
+	snprintf(idSlatCh10,6,"SLF%d",ConvertSlatNum(i,quadrant,kNslats5-1));
 	Int_t moduleSlatCh9 = GetModuleId(idSlatCh9);
 	Int_t moduleSlatCh10 = GetModuleId(idSlatCh10);
 	Float_t xvFrame  = (slatLength5[i] - kVframeLength)/2.; // ok

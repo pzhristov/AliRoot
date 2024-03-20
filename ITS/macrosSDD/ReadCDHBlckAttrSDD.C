@@ -109,7 +109,7 @@ void ReadCDHBlckAttrSDD(Int_t  nrun,
 
   TGrid::Connect("alien:",0,0,"t");
   Char_t filnam[200];
-  sprintf(filnam,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.%d.root",year,dir,nrun,year-2000,nrun,n1,n2);
+  snprintf(filnam,200,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.%d.root",year,dir,nrun,year-2000,nrun,n1,n2);
   printf("Open file %s\n",filnam);
   ReadCDHBlckAttrSDD(filnam,firstEv,lastEv,printPhysics);
 }

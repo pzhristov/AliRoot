@@ -67,7 +67,7 @@ TChain * AliReadESDfromdisk(const UInt_t eventsToRead,
     {
       if ( strstr(subdir, pattern) != 0 ) { 
         char file[200] ; 
-        sprintf(file, "%s%s/AliESDs.root", dirName.Data(), subdir); 	
+        snprintf(file, 200, "%s%s/AliESDs.root", dirName.Data(), subdir); 	
         cESDTree->Add(file) ;
       }
     } // while file

@@ -112,36 +112,36 @@ void AliADDecision::FillDecisions(AliESDAD *esdAD)
   UInt_t   itimeADA[8], itimeADC[8];
 
   //Compute average time with basic method(charge weighted average)
-  Double_t timeBasicADA=0, timeBasicADC=0;
-  Double_t weightBasicADA =0., weightBasicADC = 0.;
-  UInt_t   ntimeBasicADA=0, ntimeBasicADC=0;
+  // Double_t timeBasicADA=0, timeBasicADC=0;
+  // Double_t weightBasicADA =0., weightBasicADC = 0.;
+  // UInt_t   ntimeBasicADA=0, ntimeBasicADC=0;
 
-  for (Int_t i = 0; i < 16; ++i) {
-    Float_t adc = esdAD->GetAdc(i);
-    if (adc > GetRecoParam()->GetAdcThresHold()) {
-      Float_t time = esdAD->GetTime(i);
-      if(time > (AliADReconstructor::kInvalidTime+1.e-6)){
-	Float_t timeErr = 1;
-	if (adc>1) timeErr = 1/adc;
+  // for (Int_t i = 0; i < 16; ++i) {
+  //   Float_t adc = esdAD->GetAdc(i);
+  //   if (adc > GetRecoParam()->GetAdcThresHold()) {
+  //     Float_t time = esdAD->GetTime(i);
+  //     if(time > (AliADReconstructor::kInvalidTime+1.e-6)){
+	//       Float_t timeErr = 1;
+	//       if (adc>1) timeErr = 1/adc;
 
-	if (i<8) {
-	  ntimeBasicADC++;
-	  timeBasicADC += time/(timeErr*timeErr);
-	  weightBasicADC += 1./(timeErr*timeErr);
-	} else {
-	  ntimeBasicADA++;
-	  timeBasicADA += time/(timeErr*timeErr);
-	  weightBasicADA += 1./(timeErr*timeErr);
-	}
+	//       if (i<8) {
+	//         ntimeBasicADC++;
+	//         timeBasicADC += time/(timeErr*timeErr);
+	//         weightBasicADC += 1./(timeErr*timeErr);
+	//       } else {
+	//         ntimeBasicADA++;
+	//         timeBasicADA += time/(timeErr*timeErr);
+	//         weightBasicADA += 1./(timeErr*timeErr);
+	//       }
 
-      }
-    }
-  } // end of loop over channels
+  //     }
+  //   }
+  // } // end of loop over channels
 
-  if(weightBasicADA > 1) timeBasicADA /= weightBasicADA;
-  else timeBasicADA = -1024.;
-  if(weightBasicADC > 1) timeBasicADC /= weightBasicADC;
-  else timeBasicADC = -1024.;
+  // if(weightBasicADA > 1) timeBasicADA /= weightBasicADA;
+  // else timeBasicADA = -1024.;
+  // if(weightBasicADC > 1) timeBasicADC /= weightBasicADC;
+  // else timeBasicADC = -1024.;
 
   //Robust time: Pad coincidence and early hit removal
   Double_t timeRobustADA=0, timeRobustADC=0;

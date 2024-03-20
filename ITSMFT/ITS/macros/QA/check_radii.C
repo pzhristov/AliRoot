@@ -43,7 +43,7 @@ Int_t check_radii(const Char_t *dir=".") {
    }
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -90,7 +90,7 @@ Int_t check_radii(const Char_t *dir=".") {
        TClonesArray *ptr = 
        new(clusters+layer) TClonesArray("AliITSUClusterPix",1000);
        Char_t bname[33];
-       sprintf(bname,"ITSRecPoints%d\0",layer);
+       snprintf(bname,33,"ITSRecPoints%d\0",layer);
        branch[layer]=cTree->GetBranch(bname);
        if (!branch[layer]) {
           ::Error("GoodTracksITS","Can't get the clusters branch !"); 

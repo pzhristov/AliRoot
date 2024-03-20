@@ -90,7 +90,7 @@ void Config(const char* directory="",
   //=======================================================================
   //  Create the output file    
   Text_t filename[100];
-  sprintf(filename,"%sgalice.root",directory);
+  snprintf(filename,100,"%sgalice.root",directory);
   cout << ">>> Output file is " << filename << endl;   
   cout << ">>> Config.C: Creating Run Loader ..."<<endl;
   AliRunLoader* rl=0x0;

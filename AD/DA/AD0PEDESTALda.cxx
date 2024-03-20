@@ -158,11 +158,11 @@ int main(int argc, char **argv) {
   char  texte[20];
   for (Int_t i=0; i<16; i++) {
   	for(Int_t j=0; j<2; j++){
-       		sprintf(adcName,"hADC%d%d",i,j);
-       		sprintf(texte,"ADC cell%d int%d",i,j);
+       		snprintf(adcName, 10, "hADC%d%d",i,j);
+       		snprintf(texte, 20, "ADC cell%d int%d",i,j);
        		hADCname[i + 16*j]  = new TH1F(adcName,texte,1024,-0.5, 1023.5);
-       		sprintf(pedName,"hPED%d%d",i,j);
-       		sprintf(texte,"PED cell%d int%d",i,j);
+       		snprintf(pedName, 10, "hPED%d%d",i,j);
+       		snprintf(texte, 20, "PED cell%d int%d",i,j);
        		hPEDname[i + 16*j]  = new TH1F(pedName,texte,1024,-0.5, 1023.5);
        		}
        }
@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
   char Chi2Name[20];
   TH2F *hChi2PerEvent[2];
   for (Int_t i=0; i<2; i++) {
-  	sprintf(Chi2Name,"hChi2PerEventInt%d",i);
+  	snprintf(Chi2Name, 20, "hChi2PerEventInt%d",i);
    	hChi2PerEvent[i] = new TH2F(Chi2Name,Chi2Name,16,0,16,100,0,10);
 	}
    

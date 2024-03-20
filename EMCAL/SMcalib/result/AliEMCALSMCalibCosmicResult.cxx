@@ -178,7 +178,7 @@ void  AliEMCALSMCalibCosmicResult::ReadLEDRefADCValues(int ipart)
   float stripmean[8];
   
   for (int j=firstStrip;j< lastStrip;j++) {
-	sprintf(title,"strip%d",j);
+	snprintf(title,30,"strip%d",j);
   	TH1D* hLedAmp = (TH1D*)fhref->ProjectionY(title,j+1,j+1);
 	stripmean[j-firstStrip] = hLedAmp->GetMean();
 	cout << title << ", mean-Ref="<< hLedAmp->GetMean() << endl;

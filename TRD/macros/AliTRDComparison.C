@@ -284,12 +284,12 @@ void  MaxBinNorm(const char * expr = "TRD0.fTimBinPlane"){
   // max time bin probability distribution
   //
   char  var[100];
-  sprintf(var,"%s>>hispi",expr);
+  snprintf(var,100,"%s>>hispi",expr);
   TH1F * hispi= new TH1F("hispi","hispi",20,1,22);
   comp.fTree->Draw(var,"abs(MC.fPdg)==211&&TRD0.fN>90&&MC.fParticle.P()>3");
   hispi->Scale(1./(hispi->GetEntries()));
   hispi->Draw();
-  sprintf(var,"%s>>hisel",expr);
+  snprintf(var,100,"%s>>hisel",expr);
   TH1F *hisel = new TH1F("hisel","hisel",20,1,22);
   comp.fTree->Draw(var,"abs(MC.fPdg)==11&&TRD0.fN>90&&MC.fParticle.P()>3");
   hisel->Scale(1./(hisel->GetEntries()));
@@ -313,12 +313,12 @@ void  dedxNorm(const char * expr = "TRD0.fdEdxPlane/20"){
   // max time bin probability distribution
   //
   char  var[100];
-  sprintf(var,"%s>>hispi",expr);
+  snprintf(var,100,"%s>>hispi",expr);
   TH1F * hispi= new TH1F("hispi","hispi",100,1,120);
   comp.fTree->Draw(var,"abs(MC.fPdg)==211&&TRD0.fN>90&&MC.fParticle.P()>3");
   hispi->Scale(1./(hispi->GetEntries()));
   hispi->Draw();
-  sprintf(var,"%s>>hisel",expr);
+  snprintf(var,100,"%s>>hisel",expr);
   TH1F *hisel = new TH1F("hisel","hisel",100,1,120);
   comp.fTree->Draw(var,"abs(MC.fPdg)==11&&TRD0.fN>90&&MC.fParticle.P()>3");
   hisel->Scale(1./(hisel->GetEntries()));
@@ -552,7 +552,7 @@ TH1F * MakeCumul(TH1F *his,Bool_t norm = kTRUE)
 {
   TH1F *hcumul = (TH1F*)his->Clone();
   char name[1000];
-  sprintf(name,"N%f",gRandom->Rndm());
+  snprintf(name,1000,"N%f",gRandom->Rndm());
   hcumul->SetName(name);
   hcumul->SetTitle(name);
   //
@@ -580,7 +580,7 @@ TGraph* His01(TH1F *his0,TH1F *his1){
 TH1F * PullCumul(const char *var, TCut cut, Int_t div=200, Float_t max=20){
   TH1F * hpullb = new TH1F("hpullb","hpullb",div,0,max);
   char v2[1000];
-  sprintf(v2,"%s>>hpullb",var);
+  snprintf(v2,1000,"%s>>hpullb",var);
   comp.fTree->Draw(v2, cut);
   TH1F * res = MakeCumul(hpullb);
   delete hpullb;

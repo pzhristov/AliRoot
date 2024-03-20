@@ -45,7 +45,7 @@ void PlotPedestalsvsTime(Int_t year=2011, Int_t firstRun=141820,
   for(Int_t i=0; i<kNchannels; i++){
      graph[i] = new TGraphErrors(0);
      char name[50], title[50];
-     sprintf(name,"graph%d",i); sprintf(title,"Pedestal ch.%d vs. run#",i);
+     snprintf(name,50,"graph%d",i); snprintf(title,50,"Pedestal ch.%d vs. run#",i);
      graph[i]->SetName("graph");  graph[i]->SetTitle("title");
   }
 
@@ -56,12 +56,12 @@ void PlotPedestalsvsTime(Int_t year=2011, Int_t firstRun=141820,
   while(!feof(listruns)){
     int st = fscanf(listruns,"%s\n",filnam);    
     Char_t directory[100];
-    sprintf(directory,"/alice/data/%d",year);
+    snprintf(directory,100,"/alice/data/%d",year);
     if(!strstr(filnam,directory)) continue;
     sscanf(filnam,"/alice/data/%d/OCDB/ZDC/Calib/Pedestals/Run%d_%d_v%d_s%d.root",&year,&nrun,&nrun2,&nv,&ns);
     if(nrun<firstRun) continue;
     if(nrun>lastRun) continue;
-    sprintf(filnamalien,"alien://%s",filnam);
+    snprintf(filnamalien,200,"alien://%s",filnam);
     printf("Opening file: %s\n",filnam);
     TFile *f = TFile::Open(filnamalien);  
     AliCDBEntry *entry = (AliCDBEntry*)f->Get("AliCDBEntry");

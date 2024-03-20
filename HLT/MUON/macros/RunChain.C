@@ -405,7 +405,7 @@ void RunChain(
 				cmd22 += " -nextevent";
 			}
 			char buf[16];
-			sprintf(buf, "%d", i);
+			snprintf(buf, 16, "%d", i);
 			cmd1 += " -datafile "; cmd1 += rawDataPath; cmd1 += "raw"; cmd1 += buf; cmd1 += "/MUONTRK_2560.ddl";
 			cmd2 += " -datafile "; cmd2 += rawDataPath; cmd2 += "raw"; cmd2 += buf; cmd2 += "/MUONTRK_2561.ddl";
 			cmd3 += " -datafile "; cmd3 += rawDataPath; cmd3 += "raw"; cmd3 += buf; cmd3 += "/MUONTRK_2562.ddl";

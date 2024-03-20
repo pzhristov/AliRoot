@@ -63,11 +63,11 @@ void RunD0Trigger(Int_t evFirst=0,Int_t evLast=1,Char_t* path="./") {
 
   // Open file with ITS tracks
   Char_t fnameTrack[1024];
-  sprintf(fnameTrack,"%s/AliITStracksV2.root",path);
+  snprintf(fnameTrack,1024,"%s/AliITStracksV2.root",path);
   TFile* itstrks = TFile::Open(fnameTrack);
 
    // tracks from ITS
-  sprintf(trksName,"TreeT_ITS_%d",ev);
+  snprintf(trksName,100,"TreeT_ITS_%d",ev);
   TTree *itsTree=(TTree*)itstrks->Get(trksName);
   if(!itsTree) continue;
   itsEntries = (Int_t)itsTree->GetEntries();
@@ -162,7 +162,7 @@ void GetPrimaryVertex(int i,Char_t* path="./") {
   int event=i;
 
   Char_t falice[1024];
-  sprintf(falice,"%s/galice.root",path);
+  snprintf(falice,1024,"%s/galice.root",path);
   TFile * galice = new TFile(falice);
   
   TDirectory * curdir;  
@@ -170,7 +170,7 @@ void GetPrimaryVertex(int i,Char_t* path="./") {
   Char_t vname[20];
   galice->cd();
   
-  sprintf(vname,"Vertex_%d",event);
+  snprintf(vname,20,"Vertex_%d",event);
   TArrayF o = 0;
   o.Set(3);
   AliHeader * header = 0;

@@ -93,17 +93,17 @@ void MUONCheckManu(Int_t iCh = 10, Bool_t rootFile = kFALSE)
     TExMap serial;
 
     char fileNameOut[255];
-    sprintf(fileNameOut,"serial_number_%d.dat",iCh);
+    snprintf(fileNameOut,255,"serial_number_%d.dat",iCh);
 
     char fileNameOut1[255];
-    sprintf(fileNameOut1,"serial_number_bad_%d.dat",iCh);
+    snprintf(fileNameOut1,255,"serial_number_bad_%d.dat",iCh);
 
 
     char histoFile[255];
     TFile* fileOut = 0x0;
 
     if (rootFile) {
-      sprintf(histoFile,"GainDE_%d.root",iCh);
+      snprintf(histoFile,255,"GainDE_%d.root",iCh);
       fileOut = new TFile(histoFile,"RECREATE","DE manu gain");
     }
 
@@ -209,28 +209,28 @@ void MUONCheckManu(Int_t iCh = 10, Bool_t rootFile = kFALSE)
 
     if (rootFile) {
 
-	sprintf(name,"hAll_manu_bp");
-	sprintf(title,"MANU gain total for bending");
+	snprintf(name,256,"hAll_manu_bp");
+	snprintf(title,256,"MANU gain total for bending");
 	hAll_manu_bp = new TH1F(name,title,300,1.5,5.0);
 	hAll_manu_bp->SetDirectory(fileOut);
 
-	sprintf(name,"hAll_manu_npb");
-	sprintf(title,"MANU gain total for non-bending");
+	snprintf(name,256,"hAll_manu_npb");
+	snprintf(title,256,"MANU gain total for non-bending");
 	hAll_manu_nbp = new TH1F(name,title,300,1.5,5.0);
 	hAll_manu_nbp->SetDirectory(fileOut);
 
-	sprintf(name,"hAll_manu");
-	sprintf(title,"MANU gain total");
+	snprintf(name,256,"hAll_manu");
+	snprintf(title,256,"MANU gain total");
 	hAll_manu = new TH1F(name,title,300,1.5,5.0);
 	hAll_manu->SetDirectory(fileOut);
 
-	sprintf(name,"hBin_DE");
-	sprintf(title,"DE versus Bin");
+	snprintf(name,256,"hBin_DE");
+	snprintf(title,256,"DE versus Bin");
 	hBin_DE = new TH2F(name,title,5,0,5, 1100, 1, 1100);
 	hBin_DE->SetDirectory(fileOut);
 
-	sprintf(name,"hBin_S");
-	sprintf(title,"Bin_S");
+	snprintf(name,256,"hBin_S");
+	snprintf(title,256,"Bin_S");
 	hBinS = new TH1F(name,title, 300, 600, 1100);
 	hBinS->SetDirectory(fileOut);
     }
@@ -250,13 +250,13 @@ void MUONCheckManu(Int_t iCh = 10, Bool_t rootFile = kFALSE)
 
       if (rootFile) {
 
-	sprintf(name,"hCh_manu_bp_CH%d", iCh);
-	sprintf(title,"MANU gain total for CH%d bending", iCh);
+	snprintf(name,256,"hCh_manu_bp_CH%d", iCh);
+	snprintf(title,256,"MANU gain total for CH%d bending", iCh);
 	hCh_manu_bp[iCh] = new TH1F(name,title,300,1.5,5.0);
 	hCh_manu_bp[iCh]->SetDirectory(fileOut);
 
-	sprintf(name,"hCh_manu_nbp_CH%d", iCh);
-	sprintf(title,"MANU gain total for CH%d non-bending", iCh);
+	snprintf(name,256,"hCh_manu_nbp_CH%d", iCh);
+	snprintf(title,256,"MANU gain total for CH%d non-bending", iCh);
 	hCh_manu_nbp[iCh] = new TH1F(name,title,300,1.5,5.0);
 	hCh_manu_nbp[iCh]->SetDirectory(fileOut);
       }
@@ -281,13 +281,13 @@ void MUONCheckManu(Int_t iCh = 10, Bool_t rootFile = kFALSE)
 
 	if (rootFile) {
 
-	  sprintf(name,"hslat_manu_bp%d",iDE);
-	  sprintf(title,"MANU gain for DE %d bending",iDE);
+	  snprintf(name,256,"hslat_manu_bp%d",iDE);
+	  snprintf(title,256,"MANU gain for DE %d bending",iDE);
 	  hslat_manu_bp[iDE] = new TH1F(name,title,300,1.5,4.5);
 	  hslat_manu_bp[iDE]->SetDirectory(fileOut);
 
-	  sprintf(name,"hslat_manu_nbp%d",iDE);
-	  sprintf(title,"MANU gain for DE %d non-bending",iDE);
+	  snprintf(name,256,"hslat_manu_nbp%d",iDE);
+	  snprintf(title,256,"MANU gain for DE %d non-bending",iDE);
 	  hslat_manu_nbp[iDE] = new TH1F(name,title,300,1.5,4.5);
 	  hslat_manu_nbp[iDE]->SetDirectory(fileOut);
 	}
