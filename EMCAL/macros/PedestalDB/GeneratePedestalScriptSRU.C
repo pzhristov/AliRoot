@@ -159,17 +159,17 @@ PrintScript(const int runno)
   int Port = 0x1001; // 4097
 
   char dirname[40];
-  sprintf(dirname,"scriptsSRU_Run%d", runno);
+  snprintf(dirname, 40, "scriptsSRU_Run%d", runno);
 
   char cmd[500];
-  sprintf(cmd,"mkdir -p %s/SM{A,C}{0,1,2,3,4,5,9,10,11,12}", dirname);
+  snprintf(cmd,500,"mkdir -p %s/SM{A,C}{0,1,2,3,4,5,9,10,11,12}", dirname);
   gSystem->Exec(cmd);
 
-  sprintf(cmd,"echo \"cp info.txt GeneratePedestalScriptSRU.C %s/.\" > scp.sh", dirname);
+  snprintf(cmd,500,"echo \"cp info.txt GeneratePedestalScriptSRU.C %s/.\" > scp.sh", dirname);
   gSystem->Exec(cmd);
-  sprintf(cmd,"echo \"scp -r -p %s arc24:pedestals/.\" >> scp.sh", dirname);
+  snprintf(cmd,500,"echo \"scp -r -p %s arc24:pedestals/.\" >> scp.sh", dirname);
   gSystem->Exec(cmd);
-  sprintf(cmd,"echo \"ssh -t arc24 \'cd pedestals; scp -r -p %s emc@alidcscom702:controls/pedestals/.\'\" >> scp.sh", dirname);
+  snprintf(cmd,500,"echo \"ssh -t arc24 \'cd pedestals; scp -r -p %s emc@alidcscom702:controls/pedestals/.\'\" >> scp.sh", dirname);
   gSystem->Exec(cmd);
 
   char filename[100];
@@ -190,26 +190,26 @@ PrintScript(const int runno)
     if (iSM>11) isect += 3; // skip non-installed sectors
 
     char IP[100];
-    if (iSM == 0) { sprintf(IP, "10.160.36.158"); } // SMA0 
-    else if (iSM == 1) { sprintf(IP, "10.160.36.159"); } // SMC0
-    else if (iSM == 2) { sprintf(IP, "10.160.36.160"); } // SMA1 
-    else if (iSM == 3) { sprintf(IP, "10.160.36.161"); } // SMC1
-    else if (iSM == 4) { sprintf(IP, "10.160.36.162"); } // SMA2 
-    else if (iSM == 5) { sprintf(IP, "10.160.36.163"); } // SMC2
-    else if (iSM == 6) { sprintf(IP, "10.160.36.164"); } // SMA3 
-    else if (iSM == 7) { sprintf(IP, "10.160.36.165"); } // SMC3
-    else if (iSM == 8) { sprintf(IP, "10.160.36.166"); } // SMA4 
-    else if (iSM == 9) { sprintf(IP, "10.160.36.167"); } // SMC4
-    else if (iSM == 10) { sprintf(IP, "10.160.36.168"); } // SMA5
-    else if (iSM == 11) { sprintf(IP, "10.160.36.169"); } // SMC5
-    else if (iSM == 12) { sprintf(IP, "10.160.36.170"); } // SMA9
-    else if (iSM == 13) { sprintf(IP, "10.160.36.171"); } // SMC9
-    else if (iSM == 14) { sprintf(IP, "10.160.36.172"); } // SMA10
-    else if (iSM == 15) { sprintf(IP, "10.160.36.173"); } // SMC10
-    else if (iSM == 16) { sprintf(IP, "10.160.36.174"); } // SMA11
-    else if (iSM == 17) { sprintf(IP, "10.160.36.175"); } // SMC11
-    else if (iSM == 18) { sprintf(IP, "10.160.36.176"); } // SMA12
-    else if (iSM == 19) { sprintf(IP, "10.160.36.177"); } // SMC12
+    if (iSM == 0) { snprintf(IP, 100, "10.160.36.158"); } // SMA0 
+    else if (iSM == 1) { snprintf(IP, 100, "10.160.36.159"); } // SMC0
+    else if (iSM == 2) { snprintf(IP, 100, "10.160.36.160"); } // SMA1 
+    else if (iSM == 3) { snprintf(IP, 100, "10.160.36.161"); } // SMC1
+    else if (iSM == 4) { snprintf(IP, 100, "10.160.36.162"); } // SMA2 
+    else if (iSM == 5) { snprintf(IP, 100, "10.160.36.163"); } // SMC2
+    else if (iSM == 6) { snprintf(IP, 100, "10.160.36.164"); } // SMA3 
+    else if (iSM == 7) { snprintf(IP, 100, "10.160.36.165"); } // SMC3
+    else if (iSM == 8) { snprintf(IP, 100, "10.160.36.166"); } // SMA4 
+    else if (iSM == 9) { snprintf(IP, 100, "10.160.36.167"); } // SMC4
+    else if (iSM == 10) { snprintf(IP, 100, "10.160.36.168"); } // SMA5
+    else if (iSM == 11) { snprintf(IP, 100, "10.160.36.169"); } // SMC5
+    else if (iSM == 12) { snprintf(IP, 100, "10.160.36.170"); } // SMA9
+    else if (iSM == 13) { snprintf(IP, 100, "10.160.36.171"); } // SMC9
+    else if (iSM == 14) { snprintf(IP, 100, "10.160.36.172"); } // SMA10
+    else if (iSM == 15) { snprintf(IP, 100, "10.160.36.173"); } // SMC10
+    else if (iSM == 16) { snprintf(IP, 100, "10.160.36.174"); } // SMA11
+    else if (iSM == 17) { snprintf(IP, 100, "10.160.36.175"); } // SMC11
+    else if (iSM == 18) { snprintf(IP, 100, "10.160.36.176"); } // SMA12
+    else if (iSM == 19) { snprintf(IP, 100, "10.160.36.177"); } // SMC12
 
     // printf("iSM %d iside %d isect %d IP %s\n", iSM, iside, isect, IP);
 
@@ -244,7 +244,7 @@ PrintScript(const int runno)
     // OK, let's generate the files for all active FECs/DTCs
     for (iDTC=0; iDTC<kNDTC; iDTC++) {
       if (activeDTC[iDTC] == 0) { continue; }
-      sprintf(filename, "%s/SM%1s%d/set_ped_DTC%02d.txt", 
+      snprintf(filename, 100, "%s/SM%1s%d/set_ped_DTC%02d.txt", 
 	      dirname, sideStr[iside], isect, iDTC);
       ofstream fout(filename);
 
@@ -254,7 +254,7 @@ PrintScript(const int runno)
       int ipos = iFEC + 10*ibranch;
 
       // write DTC file header..
-      sprintf(scriptLine, "%s # IP\n%d       #UDP port", IP, Port);
+      snprintf(scriptLine, 200, "%s # IP\n%d       #UDP port", IP, Port);
       fout << scriptLine << endl;
 
       int dtcselUpper = 0;
@@ -265,10 +265,10 @@ PrintScript(const int runno)
       else { // crate == 1
         dtcselUpper = (1 << ipos);
       }
-      sprintf(scriptLine, "%08x # DTC SEL Upper\n%08x # DTC SEL Lower",
+      snprintf(scriptLine, 200, "%08x # DTC SEL Upper\n%08x # DTC SEL Lower",
 	      dtcselUpper, dtcselLower);
       fout << scriptLine << endl;
-      sprintf(scriptLine, "%08x # FEE GTL Address\n%08x # Branch %s, Card %d",
+      snprintf(scriptLine, 200, "%08x # FEE GTL Address\n%08x # Branch %s, Card %d",
 	      0x3, iFEC + 16*ibranch, branchStr[ibranch], iFEC);
       fout << scriptLine << endl;
       // end header
@@ -288,12 +288,12 @@ PrintScript(const int runno)
 	      }
 	      // 
 	      int writeAddr = SRUAltroWrite | (ibranch << 16) | (iFEC << 12) | (ichip << 9) | (ichan << 5) | VFPED; 
-	      sprintf(scriptLine, "%08x # Branch %s, Card %d, Altro %d, Chan %d", 
+	      snprintf(scriptLine, 200, "%08x # Branch %s, Card %d, Altro %d, Chan %d", 
 		      writeAddr, branchStr[ibranch], iFEC, ichip, ichan);
 	      fout << scriptLine << endl;
 	      
 	      int writeVal = Ped; 
-	      sprintf(scriptLine, "%08x # Pedestal 0x%x = %d", 
+	      snprintf(scriptLine, 200, "%08x # Pedestal 0x%x = %d", 
 		       writeVal, Ped, Ped);
 	      fout << scriptLine << endl;
 	      

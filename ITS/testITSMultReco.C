@@ -32,7 +32,7 @@
     gAlice=0;
   }
 
-  sprintf(fileName,"%s/galice.root",dir);
+  snprintf(fileName,256,"%s/galice.root",dir);
   runLoader = AliRunLoader::Open(fileName);
 /*  if (runLoader == 0x0) {
     cout << "Can not open session"<<endl;
@@ -41,13 +41,13 @@
   
   // get geometry (here geometry.root is used, change it if needed)
   if (!gGeoManager) {
-    sprintf(fileName,"%s/geometry.root",dir);
+    snprintf(fileName,256,"%s/geometry.root",dir);
     AliGeomManager::LoadGeometry(fileName);
   }
 
   // open the ESD file and get the tree
 
-  sprintf(fileName,"%s/AliESDs.root",dir);
+  snprintf(fileName,256,"%s/AliESDs.root",dir);
   TFile esdFile(fileName, "READ");
   esdTree = (TTree*)esdFile.Get("esdTree");
   esd->ReadFromTree(esdTree);

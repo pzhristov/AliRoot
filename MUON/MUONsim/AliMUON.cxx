@@ -455,7 +455,7 @@ void AliMUON::SDigits2Digits()
 /// Write TreeD here only 
 
     char hname[30];
-    //    sprintf(hname,"TreeD%d",fLoader->GetHeader()->GetEvent());
+    //    snprintf(hname,30,"TreeD%d",fLoader->GetHeader()->GetEvent());
     fLoader->TreeD()->Write(hname,TObject::kOverwrite);
     fLoader->TreeD()->Reset();
 }

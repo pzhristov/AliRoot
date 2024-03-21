@@ -79,7 +79,7 @@ size_t remove_all_aux(const char *name) {
       }
       const size_t S = strlen(name) + strlen(entry_name) + 2;
       char next[S];
-      sprintf(next, "%s/%s", name, entry_name);
+      snprintf(next, S, "%s/%s", name, entry_name);
       // if this is a directory and not a symbolic link; we recurse
       if (IsDirectory(next)) {
         counter += remove_all_aux(next);

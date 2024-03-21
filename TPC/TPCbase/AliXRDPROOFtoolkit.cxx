@@ -689,11 +689,11 @@ void AliXRDPROOFtoolkit::JoinTreesIndex(const char * outputFile, const char * ou
       for (Int_t ibr=0; ibr<nbranches; ibr++){
 	TBranch * br = (TBranch*)(tree->GetListOfBranches()->At(ibr));
 	if (treeName.Length()>0){
-	  sprintf(brName,"%s.%s",treeName.Data(), br->GetName());
-	  sprintf(brTitle,"%s.%s",treeName.Data(), br->GetTitle());
+	  snprintf(brName,10000,"%s.%s",treeName.Data(), br->GetName());
+	  snprintf(brTitle,10000,"%s.%s",treeName.Data(), br->GetTitle());
 	}else{
-	  sprintf(brName,"%s",br->GetName());
-	  sprintf(brTitle,"%s",br->GetTitle());
+	  snprintf(brName,10000,"%s",br->GetName());
+	  snprintf(brTitle,10000,"%s",br->GetTitle());
 	}
 	void* addr = 0;
 	TString className=br->GetClassName();

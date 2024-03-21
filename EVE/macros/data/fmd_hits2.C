@@ -34,14 +34,14 @@ fmd_hits2(const char *varexp    = "fX:fY:fZ",
   //PH on some platforms (alphalinuxgcc, solariscc5, etc.)
   //PH  TEvePointSet* points = new TEvePointSet(Form("FMD Hits '%s'", selection));
   char form[1000];
-  sprintf(form,"FMD Hits '%s'", selection);
+  snprintf(form,1000,"FMD Hits '%s'", selection);
   TEvePointSet* points = new TEvePointSet(form);
 
   TEvePointSelector ps(ht, points, varexp, selection);
   ps.Select();
 
   //PH  points->SetTitle(Form("N=%d", points->Size()));
-  sprintf(form,"N=%d", points->Size());
+  snprintf(form,1000,"N=%d", points->Size());
   points->SetTitle(form);
   points->SetMarkerSize(.5);
   points->SetMarkerColor(2);

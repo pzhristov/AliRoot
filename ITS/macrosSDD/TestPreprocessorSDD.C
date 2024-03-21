@@ -66,11 +66,11 @@ void TestPreprocessorSDD(Char_t *optRunType="PULSER"){
   if(optRunType=="PULSER"){
     gSystem->Exec("rm SDDbase_ddl*.data");
     gSystem->Exec("rm fee.conf");
-    sprintf(theDir,"ITS/Calib/CalibSDD");
+    snprintf(theDir,100,"ITS/Calib/CalibSDD");
     doCheck=kTRUE;
   }else if(optRunType=="INJECTOR"){ 
     gSystem->Exec("rm SDDinj_ddl*.data");
-    sprintf(theDir,"ITS/Calib/DriftSpeedSDD");
+    snprintf(theDir,100,"ITS/Calib/DriftSpeedSDD");
     doCheck=kTRUE;
   } 
 
@@ -85,7 +85,7 @@ void TestPreprocessorSDD(Char_t *optRunType="PULSER"){
     }
   }
 
-  sprintf(theDir,"ITS/DCS/DataSDD");
+  snprintf(theDir,100,"ITS/DCS/DataSDD");
   AliCDBEntry* chkEntryDCS = AliCDBManager::Instance()->GetStorage(AliShuttleInterface::GetMainCDB())
   			->Get(theDir, 7);
   if (!chkEntryDCS){

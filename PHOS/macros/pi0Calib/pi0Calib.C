@@ -56,7 +56,7 @@ void pi0Calib(const char* file="Sum_All_Emc.root")
     for(Int_t iX=0; iX<64; iX++) {
       for(Int_t iZ=0; iZ<56; iZ++) {
 
-	sprintf(hname,"%d_%d_%d",iMod,iX,iZ);
+	snprintf(hname,128,"%d_%d_%d",iMod,iX,iZ);
 	h1 = (TH1F*)f.Get(hname);
 	if(!h1) continue;
 	if(h1->GetEntries()<fMinEntr) continue;

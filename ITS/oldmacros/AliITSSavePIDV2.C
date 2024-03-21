@@ -33,7 +33,7 @@ TFile *fpid = new TFile("AliITStracksV2Pid.root","recreate");
 //
  for (int nev=0; nev<= evNumber2; nev++) {
    char tname[30];
-   sprintf(tname,"TreeT_ITS_%d;1",nev);
+   snprintf(tname,30, "TreeT_ITS_%d;1",nev);
    TTree *tracktree=(TTree*)file->Get(tname);
    TBranch *tbranch=tracktree->GetBranch("tracks");
 	
@@ -41,7 +41,7 @@ TFile *fpid = new TFile("AliITStracksV2Pid.root","recreate");
    cout<<"Found "<<nentr<<" ITS tracks in event No "<<nev<<endl;
 
    char tpidname[30];
-   sprintf(tpidname,"TreeT%d",nev);
+   snprintf(tpidname,30,"TreeT%d",nev);
    AliITStrackV2Pid pidtmp;
    TTree itspidTree(tpidname,"Tree with PID");
    AliITStrackV2Pid *outpid=&pidtmp;

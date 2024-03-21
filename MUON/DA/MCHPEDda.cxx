@@ -231,7 +231,7 @@ int main(Int_t argc, const char **argv)
   UShort_t charge;
 
   Char_t dum[256] ="";
-  sprintf(dum,"%sPEDda",getenv("DATE_DETECTOR_CODE")); //  DATE_DETECTOR_CODE = MCH 
+  snprintf(dum,256,"%sPEDda",getenv("DATE_DETECTOR_CODE")); //  DATE_DETECTOR_CODE = MCH 
   const char* prefixDA = dum ; // program prefix
   const char* prefixLDC = getenv("DATE_ROLE_NAME"); // LDC name
   if(prefixLDC == NULL)  prefixLDC ="MCH" ;
@@ -244,7 +244,7 @@ int main(Int_t argc, const char **argv)
   muonPedestal->SetStatusDA(statusDA);
 
   // Output log file initialisations
-  sprintf(flatFile,"%s.log",prefixDA);
+  snprintf(flatFile,256,"%s.log",prefixDA);
   logOutputFile=flatFile;
   AliLog::SetStreamOutput(&filcout); // Print details on logfile
   filcout.open(logOutputFile.Data());
@@ -263,7 +263,7 @@ int main(Int_t argc, const char **argv)
     { 
       Int_t flag_hist, nEvthres,maxEvts;
       char line[80];
-      sprintf(dbfile,"mutrkpedvalues");
+      snprintf(dbfile,256,"mutrkpedvalues");
       status=daqDA_DB_getFile(dbfile,dbfile);
       if(status) {fprintf(stderr," !!! ERROR  : input file %s is missing, status = %d\n",dbfile,status);
 	fprintf(stderr,"\n%s : -------- %s ending in ERROR !!!! -------- (status= %d) \n",prefixLDC,prefixDA,-1);
@@ -288,7 +288,7 @@ int main(Int_t argc, const char **argv)
   // nConfig=1: configuration ascii file config_$DATE_ROLE_NAME read from DetDB
   if(nConfig)
     {
-      sprintf(dbfile,"config_%s",getenv("DATE_ROLE_NAME"));
+      snprintf(dbfile,256,"config_%s",getenv("DATE_ROLE_NAME"));
       status=daqDA_DB_getFile(dbfile,dbfile);
       if(status) {fprintf(stderr," !!! ERROR  : Configuration file %s is missing, status = %d\n",dbfile,status);
 	fprintf(stderr,"\n%s : -------- %s ending in ERROR !!!! -------- (status= %d) \n",prefixLDC,prefixDA,-1);
@@ -507,7 +507,7 @@ int main(Int_t argc, const char **argv)
   delete rawReader;
   delete rawStream;
 
-  sprintf(flatFile,"%s.ped",prefixDA);
+  snprintf(flatFile,256,"%s.ped",prefixDA);
   if(shuttleFile.IsNull())shuttleFile=flatFile;
   muonPedestal->SetAliNEvents(nEvents);
   muonPedestal->SetAliRunNumber(runNumber);

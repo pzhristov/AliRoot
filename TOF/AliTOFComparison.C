@@ -92,7 +92,7 @@ Int_t AliTOFComparison(const Char_t *dir=".") {
 
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodTracksTOF.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTOF.root",dir);
 
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
@@ -127,7 +127,7 @@ Int_t AliTOFComparison(const Char_t *dir=".") {
      delete gAlice;//if everything was OK here it is already NULL
      gAlice = 0x0;
    }
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (rl == 0x0) {
       cerr<<"Can not open session"<<endl;
@@ -141,7 +141,7 @@ Int_t AliTOFComparison(const Char_t *dir=".") {
    tofl->LoadRecPoints("read");
 
 
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
       ::Error("AliTOFComparison.C","Can't open AliESDs.root !");
@@ -323,7 +323,7 @@ Int_t GoodTracksTOF(const Char_t *dir) {
    }
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -347,7 +347,7 @@ Int_t GoodTracksTOF(const Char_t *dir) {
    Int_t nev=rl->GetNumberOfEvents();
    ::Info("GoodTracksTOF","Number of events : %d\n",nev);  
 
-   sprintf(fname,"%s/GoodTracksITS.root",dir);
+   snprintf(fname,100,"%s/GoodTracksITS.root",dir);
    TFile *itsFile=TFile::Open(fname);
    if ((!itsFile)||(!itsFile->IsOpen())) {
        ::Error("GoodTracksTOF","Can't open the GoodTracksITS.root !");
@@ -370,7 +370,7 @@ Int_t GoodTracksTOF(const Char_t *dir) {
    itsBranch->SetAddress(&itsRefs);
 
 
-   sprintf(fname,"%s/GoodTracksTOF.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTOF.root",dir);
    TFile *tofFile=TFile::Open(fname,"recreate");
    TClonesArray dummy("AliTrackReference",1000), *tofRefs=&dummy;
    TTree tofTree("tofTree","Tree with info about the reconstructable TOF tracks");

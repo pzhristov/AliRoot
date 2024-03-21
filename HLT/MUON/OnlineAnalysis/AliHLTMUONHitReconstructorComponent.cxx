@@ -1352,7 +1352,7 @@ bool AliHLTMUONHitReconstructorComponent::GenerateLookupTable(
 		
 		assert( AliHLTUInt32_t(row) < comp.fLutSize );
 		
-		sprintf(str, "%d\t%d\t%d\t%d\t%.15e\t%.15e\t%.15e\t%.15e\t%d\t%.15e\t%.15e\t%.15e\t%.15e\t%d\t%d",
+		snprintf(str, 4096, "%d\t%d\t%d\t%d\t%.15e\t%.15e\t%.15e\t%.15e\t%d\t%.15e\t%.15e\t%.15e\t%.15e\t%d\t%d",
 			idManuChannel, comp.fLut[row].fDetElemId, comp.fLut[row].fIX,
 			comp.fLut[row].fIY, comp.fLut[row].fRealX,
 			comp.fLut[row].fRealY, comp.fLut[row].fRealZ,

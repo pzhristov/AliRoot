@@ -69,7 +69,7 @@ Int_t AliCascadeFindVertices(Int_t nev=5) {
 
      if (rc==0) {
         Char_t ename[100]; 
-        sprintf(ename,"%d",i);
+        snprintf(ename,100,"%d",i);
         casf->cd();
         if (!event->Write(ename)) rc++;
      } 

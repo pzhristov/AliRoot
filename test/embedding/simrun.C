@@ -15,11 +15,11 @@
   char sfield[1024];
   char senergy[1024];
 
-  sprintf(srun,"");
-  sprintf(sevent,"");
-  sprintf(sprocess,"");
-  sprintf(sfield,"");
-  sprintf(senergy,"");
+  snprintf(srun,1024,"");
+  snprintf(sevent,1024,"");
+  snprintf(sprocess,1024,"");
+  snprintf(sfield,1024,"");
+  snprintf(senergy,1024,"");
 
   for (int i=0; i< gApplication->Argc();i++){
 #ifdef VERBOSEARGS
@@ -27,25 +27,25 @@
 #endif
     if (!(strcmp(gApplication->Argv(i),"--run")))
       nrun = atoi(gApplication->Argv(i+1));
-    sprintf(srun,"%d",nrun);
+    snprintf(srun,1024,"%d",nrun);
 
     if (!(strcmp(gApplication->Argv(i),"--event")))
       nevent = atoi(gApplication->Argv(i+1));
-    sprintf(sevent,"%d",nevent);
+    snprintf(sevent,1024,"%d",nevent);
 
     if (!(strcmp(gApplication->Argv(i),"--process")))
-      sprintf(sprocess, gApplication->Argv(i+1));
+      snprintf(sprocess,1024, gApplication->Argv(i+1));
 
     if (!(strcmp(gApplication->Argv(i),"--field")))
-      sprintf(sfield,gApplication->Argv(i+1));
+      snprintf(sfield,1024,gApplication->Argv(i+1));
 
     if (!(strcmp(gApplication->Argv(i),"--energy")))
-      sprintf(senergy,gApplication->Argv(i+1));
+      snprintf(senergy,1024,gApplication->Argv(i+1));
 
   }
 
   seed = nrun * 100000 + nevent;
-  sprintf(sseed,"%d",seed);
+  snprintf(sseed,1024,"%d",seed);
 
   if (seed==0) {
     fprintf(stderr,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");

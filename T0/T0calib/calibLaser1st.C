@@ -72,8 +72,8 @@ void calibLaser1st(Int_t run, Int_t nruns)
   
   for(Int_t ic=0; ic<24; ic++) {
     {
-      sprintf(buf1,"QTC%i",ic+1);
-      sprintf(buf4,"LEDminCFD%i",ic+1);
+      snprintf(buf1,20,"QTC%i",ic+1);
+      snprintf(buf4,20,"LEDminCFD%i",ic+1);
       hQTC[ic] = new TH1I(buf1,"QTC", 2500, 0, 10000);
       h1CFDminLED[ic] = new TH1I(buf4,"LED - CFD", 500, 0, 1000);
       

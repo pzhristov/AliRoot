@@ -58,7 +58,7 @@ void overlayPlots(TString plottype="track" /*or event*/,const char* option="HLT"
   gStyle->SetTitleX(gStyle->GetPadLeftMargin());
  
   char filenames[100];
-  sprintf(filenames,"%s",fi.c_str());
+  snprintf(filenames,100,"%s",fi.c_str());
   ifstream infile;
   infile.open(filenames);
   if(!infile){
@@ -172,7 +172,7 @@ void overlayPlots(TString plottype="track" /*or event*/,const char* option="HLT"
 	if(i>0) printStats(g[i-1], g[i]);
 	
       ff->Close();
-      sprintf( cut,"%s",cutnames[i].c_str() );
+      snprintf( cut,100,"%s",cutnames[i].c_str() );
       if((j==2&&plottype.Contains("track")) || ((j==6&&plottype.Contains("event")))) {
 
 	l->AddEntry(g[i],cut,"l");	    	
@@ -195,7 +195,7 @@ void overlayPlots(TString plottype="track" /*or event*/,const char* option="HLT"
 
   d->Update(); 
 
-  sprintf(filenames,"%s",plotname.c_str());
+  snprintf(filenames,100,"%s",plotname.c_str());
   cout << filenames << endl;
   if( bAddRunName){
     d->SaveAs(Form("overlay_%s_for%s.root",option,filenames));

@@ -147,7 +147,7 @@ Int_t SetupOutputDirectory(){
   Int_t runNumber = (theSeed%100000000 + 100000000*labIndex);
 
   Char_t name[100];
-  sprintf(name, "touch run_%d", runNumber);
+  snprintf(name,100, "touch run_%d", runNumber);
   gSystem->Exec(name);
 
   return runNumber;

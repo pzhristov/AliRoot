@@ -11,6 +11,6 @@ void testcvsKeyWords(){
     const Char_t *cvsId="$Id$";
     Char_t string[100];
 
-    sprintf(string,"%s %s %s",cvsDate,cvsRevision,cvsId);
+    snprintf(string,100,"%s %s %s",cvsDate,cvsRevision,cvsId);
     printf("%s\n",string);
 }

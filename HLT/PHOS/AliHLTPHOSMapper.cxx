@@ -41,7 +41,7 @@ AliHLTPHOSMapper::AliHLTPHOSMapper():
         ,fModuleId(-1)
         ,fDDLId(-1)
 {
-    sprintf(fFilepath, "./");
+    snprintf(fFilepath, 1024, "./");
 }
 
 

@@ -27,7 +27,7 @@ void CheckTDCHistos(Int_t nRun=0,  Bool_t optPlot=kTRUE)
   TGrid::Connect("alien:",0,0,"t");
   
   char histoFName[150];
-  sprintf(histoFName,"alien:///alice/data/2011/Reference/ZDC/%d_tdcReference.root",nRun);
+  snprintf(histoFName,150,"alien:///alice/data/2011/Reference/ZDC/%d_tdcReference.root",nRun);
 
   TFile *file = TFile::Open(histoFName);
   file->cd();
@@ -67,7 +67,7 @@ void CheckTDCHistos(Int_t nRun=0,  Bool_t optPlot=kTRUE)
     hTDC[t]->Draw();
   }
   char psname[16];
-  sprintf(psname,"TDCrun%d.gif",nRun);
+  snprintf(psname,16,"TDCrun%d.gif",nRun);
   c6->Print(psname);
  }
 }

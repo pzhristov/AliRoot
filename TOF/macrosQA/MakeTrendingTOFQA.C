@@ -23,9 +23,9 @@ Int_t MakeTrendingTOFQA(char * runlist, Int_t year=2012, char *period="LHC12a", 
   char trendFileName[100]; 
   //Define trending output
   if (trainId==0){
-    sprintf(trendFileName,"treeTOFQA_%s_%s.root",period,pass);  
+    snprintf(trendFileName,100,"treeTOFQA_%s_%s.root",period,pass);  
   }else{
-    sprintf(trendFileName,"treeTOFQA_QA%i_%s_%s.root",trainId,period,pass);
+    snprintf(trendFileName,100,"treeTOFQA_QA%i_%s_%s.root",trainId,period,pass);
   }
   TFile * trendFile=new TFile(trendFileName,"recreate");
   FILE * files = fopen(runlist, "r") ; 
@@ -39,11 +39,11 @@ Int_t MakeTrendingTOFQA(char * runlist, Int_t year=2012, char *period="LHC12a", 
 	  
     //get QAtrain output
     if (trainId==0){
-      if (!isMC) sprintf(infile,"alien:///alice/data/%i/%s/000%d/%s/QAresults%s.root",year,period,runNumber,pass,nameSuffix);
-      else sprintf(infile,"alien:///alice/sim/%i/%s/%d/QAresults%s.root",year,period,runNumber,nameSuffix);
+      if (!isMC) snprintf(infile,300,"alien:///alice/data/%i/%s/000%d/%s/QAresults%s.root",year,period,runNumber,pass,nameSuffix);
+      else snprintf(infile,300,"alien:///alice/sim/%i/%s/%d/QAresults%s.root",year,period,runNumber,nameSuffix);
     } else{
-      if (!isMC) sprintf(infile,"alien:///alice/data/%i/%s/000%d/ESDs/%s/QA%i/QAresults%s.root",year,period,runNumber,pass,trainId,nameSuffix);
-      else sprintf(infile,"alien:///alice/sim/%i/%s/%d/QA%i/QAresults%s.root",year,period,runNumber,trainId,nameSuffix);
+      if (!isMC) snprintf(infile,300,"alien:///alice/data/%i/%s/000%d/ESDs/%s/QA%i/QAresults%s.root",year,period,runNumber,pass,trainId,nameSuffix);
+      else snprintf(infile,300,"alien:///alice/sim/%i/%s/%d/QA%i/QAresults%s.root",year,period,runNumber,trainId,nameSuffix);
     }
 
     Printf("============== Opening QA file(s) for run %i =======================\n",runNumber);
@@ -51,8 +51,8 @@ Int_t MakeTrendingTOFQA(char * runlist, Int_t year=2012, char *period="LHC12a", 
     //run post-analysis
     if (RunESDQApostAnalysis(infile,runNumber,isMC,kTRUE,displayAll,includeStartTime)==0){
       filesCounter++;
-      sprintf(postFileName,"postQA_%i.root",runNumber);
-      sprintf(treePostFileName,"treePostQA_%i.root",runNumber);
+      snprintf(postFileName,20,"postQA_%i.root",runNumber);
+      snprintf(treePostFileName,20,"treePostQA_%i.root",runNumber);
 	    
       if (MakePostQAtree(runNumber, isMC, postFileName, treePostFileName, includeStartTime)==0){
 	chainTree->Add(treePostFileName); 
@@ -77,7 +77,7 @@ Int_t MakeTrendingHistoFromTreeList(char * fileList, TString treeName = "trendTr
   char infile[300]; 
   char trendFileName[100]; 
   //Define trending output
-  sprintf(trendFileName,"trendingHistoTOFQA_%s.root",fileList);  
+  snprintf(trendFileName,100,"trendingHistoTOFQA_%s.root",fileList);  
   TFile * trendFile=new TFile(trendFileName,"recreate");
   FILE * files = fopen(fileList, "r") ; 
 
@@ -303,7 +303,7 @@ Int_t MakeTrendingFromTreeWithErrors(TChain * fin,char* trendFileName=NULL, Bool
   for (Int_t irun=0;irun<nRuns;irun++){
     ttree->GetEntry(irun);
     
-    sprintf(runlabel,"%i",runNumber);
+    snprintf(runlabel,6,"%i",runNumber);
     
     hAvMulti->SetBinContent(irun+1, avMulti);
     hAvMulti->GetXaxis()->SetBinLabel(irun+1,runlabel);
@@ -396,7 +396,7 @@ Int_t MakeTrendingFromTreeWithErrors(TChain * fin,char* trendFileName=NULL, Bool
   }
   
   char  outfilename[200];
-  sprintf(outfilename, "trend_%s",trendFileName);
+  snprintf(outfilename,200, "trend_%s",trendFileName);
   TFile * fout=new TFile(outfilename,"recreate");
   fout->cd();
   lista.Write();
@@ -865,7 +865,7 @@ Int_t RunESDQApostAnalysis(char *qafilename=NULL, Int_t runNumber=-1, Bool_t isM
   
   //DEFINE OUTPUT FILE 
   char outfilename[60];
-  sprintf(outfilename,"postQA_%i.root",runNumber);
+  snprintf(outfilename,60,"postQA_%i.root",runNumber);
   TFile * fout=new TFile(outfilename,"recreate");
 
   TH1I* hRunNumber=new TH1I("hRunNumber","hRunNumber;run",1,runNumber,runNumber+1);
@@ -930,7 +930,7 @@ Int_t RunESDQApostAnalysis(char *qafilename=NULL, Int_t runNumber=-1, Bool_t isM
   if (hTot->GetEntries()>1){
     orphansRatio=((Float_t) hTot->GetBinContent(1))/((Float_t) hTot->GetEntries()) ;
   }
-  sprintf(orphansTxt,"orphans/matched tracks = %.4f ",orphansRatio);
+  snprintf(orphansTxt,200,"orphans/matched tracks = %.4f ",orphansRatio);
   TH1F * hOrphansRatio=new TH1F("hOrphansRatio","Percentage of signals with only leading edge; percentage (%)",1000,0.,100.);
   hOrphansRatio->Fill(orphansRatio*100.);  
 
@@ -960,7 +960,7 @@ Int_t RunESDQApostAnalysis(char *qafilename=NULL, Int_t runNumber=-1, Bool_t isM
   if (hL->GetEntries()>1){
     negLengthRatio=(hL->Integral(1,750))/((Float_t) hL->GetEntries()) ;
   }
-  sprintf(negLengthTxt,"tracks with L<350cm /matched tracks = %.5f ",negLengthRatio);
+  snprintf(negLengthTxt,200,"tracks with L<350cm /matched tracks = %.5f ",negLengthRatio);
   TH1F * hLnegRatio=new TH1F("hLnegRatio","Ratio of TOF-matched tracks with L<350cm; ratio (%)",10000,0.,100.);
   hLnegRatio->Fill(negLengthRatio*100);
   
@@ -1015,9 +1015,9 @@ Int_t RunESDQApostAnalysis(char *qafilename=NULL, Int_t runNumber=-1, Bool_t isM
   char profilename[30];
   const Int_t ybinMin = 0;
   const Int_t ybinMax =hDxPos4profile->GetYaxis()->GetNbins() ;
-  sprintf(profilename,"profDxPos");
+  snprintf(profilename,30,"profDxPos");
   TProfile * profDxPos = (TProfile*)hDxPos4profile->ProfileX(profilename, ybinMin,ybinMax); 
-  sprintf(profilename,"profDxNeg");
+  snprintf(profilename,30,"profDxNeg");
   profDxPos->SetLineWidth(2);
   TProfile * profDxNeg = (TProfile*)hDxNeg4profile->ProfileX(profilename, ybinMin, ybinMax); 
   profDxNeg->SetLineWidth(2);  
@@ -1604,7 +1604,7 @@ Int_t RunESDQApostAnalysis(char *qafilename=NULL, Int_t runNumber=-1, Bool_t isM
 char * SetQAtrainOutputName(Int_t run=0,Int_t year=2011,char *period="LHC11a", char* pass="cpass1",Int_t trainId=76){
   
   char infile[200];
-  sprintf(infile,"alien:///alice/data/%i/%s/000%d/ESDs/%s/QA%i/QAresults.root",year,period,runNumber,pass,trainId);
+  snprintf(infile,200,"alien:///alice/data/%i/%s/000%d/ESDs/%s/QA%i/QAresults.root",year,period,runNumber,pass,trainId);
   return infile;
   
 }

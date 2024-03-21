@@ -29,11 +29,11 @@ void AliTRDtoTOFanalysis()
   TObjArray tarray(2000);
 
   char   tname[100];
-  sprintf(tname,"seedsTRDtoTOF2_%d",nEvent);
+  snprintf(tname,100,"seedsTRDtoTOF2_%d",nEvent);
   //  for other radial positions use different trees:     
-  //    sprintf(tname,"seedsTRDtoTOF1_%d",nEvent);     
-  //    sprintf(tname,"seedsTRDtoPHOS_%d",nEvent);     
-  //    sprintf(tname,"seedsTRDtoRHIC_%d",nEvent);     
+  //    snprintf(tname,100,"seedsTRDtoTOF1_%d",nEvent);     
+  //    snprintf(tname,100,"seedsTRDtoPHOS_%d",nEvent);     
+  //    snprintf(tname,100,"seedsTRDtoRHIC_%d",nEvent);     
 
   TTree *tracktree=(TTree*)tf->Get(tname);
 

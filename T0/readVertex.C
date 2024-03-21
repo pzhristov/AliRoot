@@ -29,7 +29,7 @@ void readVertex(Int_t evNumber=1)
  // Event ------------------------- LOOP  
   for (Int_t j=0; j<evNumber; j++){
     
-    sprintf(nameTR,"T0_R_%d",j);
+    snprintf(nameTR,8,"T0_R_%d",j);
     printf("%s\n",nameTR);
     TObject *tr = (TObject*)gDirectory->Get(nameTR);
     cout<<" tr "<<tr<<endl;

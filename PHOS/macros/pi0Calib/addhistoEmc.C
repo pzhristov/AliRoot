@@ -12,7 +12,7 @@ void addhistoEmc(const char* list="list.txt", char *newname=0)
   char SumName[20];
 
   if (!newname) {
-    sprintf(SumName,"Sum_All_Emc.root");
+    snprintf(SumName,20,"Sum_All_Emc.root");
     newname=SumName;
     printf("\n  === Default output file name is %s ===\n",newname);
   }
@@ -30,8 +30,8 @@ void addhistoEmc(const char* list="list.txt", char *newname=0)
   for(Int_t iMod=0; iMod<5; iMod++) {
     for(Int_t iX=0; iX<64; iX++) {
       for(Int_t iZ=0; iZ<56; iZ++) {
-        sprintf(hnam,"%d_%d_%d",iMod,iX,iZ);
-        sprintf(htit,"Two-gamma inv. mass for mod %d, cell (%d,%d)",iMod,iX,iZ);
+        snprintf(hnam,80,"%d_%d_%d",iMod,iX,iZ);
+        snprintf(htit,80,"Two-gamma inv. mass for mod %d, cell (%d,%d)",iMod,iX,iZ);
         hst[iMod][iX][iZ] = new TH1F(hnam,htit,100,0.,300.);
       }
     }

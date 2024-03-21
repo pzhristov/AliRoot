@@ -56,7 +56,7 @@ AliHLTPHOSRcuHistogramProducerComponent::Deinit()
   //See html documentation of base class
   cout << "AliHLTPHOSRcuHistogramProducerComponent::Deinit()" << endl;
   char* arg = new char[9];
-  sprintf(arg, "recreate");
+  snprintf(arg, 9, "recreate");
   fRcuHistoProducerPtr->WriteAllHistograms(arg);
   return 0;
 }
@@ -211,7 +211,7 @@ int  AliHLTPHOSRcuHistogramProducerComponent::DoEvent( const AliHLTComponentEven
   if( (fPhosEventCount%fHistoWriteFrequency == 0) &&  ( fPhosEventCount != 0))
     {
       char* arg = new char[9];
-      sprintf(arg, "recreate");
+      snprintf(arg, 9, "recreate");
       fRcuHistoProducerPtr->WriteAllHistograms(arg);
     }
   return 0;

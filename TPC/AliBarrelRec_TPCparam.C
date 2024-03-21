@@ -124,7 +124,7 @@ void AliBarrelRec_TPCparam(Int_t firstEvent=0,Int_t lastEvent=0) {
     rl->GetEvent(i);
 
     //***** Primary vertex from SPD from file 
-    sprintf(zver,"Event%d/Vertex",i);
+    snprintf(zver,100,"Event%d/Vertex",i);
     vertexSPD = (AliESDVertex*)ppZ->Get(zver);
     if(!vertexSPD) {
       esdTree->Fill(); event->Reset();

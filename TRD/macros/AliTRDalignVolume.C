@@ -326,7 +326,7 @@ int align_volume(TArrayI volIds, TArrayI volIdRefs, int iterations,
     te.DrawTextNDC(xpos,ypos-=0.04,res->GetName());
     te.DrawTextNDC(xpos,ypos-=0.07,"Aligning volumes");
     for (int i=0; i<volIds.GetSize(); i++) {
-      sprintf(buf,"%d (%s) ",volIds.At(i),AliGeomManager::SymName(volIds.At(i)));
+      snprintf(buf,2000,"%d (%s) ",volIds.At(i),AliGeomManager::SymName(volIds.At(i)));
       te.DrawTextNDC(xpos+0.05,ypos-=0.04,buf);
       if (volIds.GetSize()>4 && i==1) { // cut it short
 	te.DrawTextNDC(xpos+0.05,ypos-=0.04,"...etc...");
@@ -335,7 +335,7 @@ int align_volume(TArrayI volIds, TArrayI volIdRefs, int iterations,
     }
     te.DrawTextNDC(xpos,ypos-=0.04,"to reference volumes");
     for (int i=0; i<volIdRefs.GetSize(); i++) {
-      sprintf(buf,"%d (%s) ",volIdRefs.At(i),AliGeomManager::SymName(volIdRefs.At(i)));
+      snprintf(buf,2000,"%d (%s) ",volIdRefs.At(i),AliGeomManager::SymName(volIdRefs.At(i)));
       te.DrawTextNDC(xpos+0.05,ypos-=0.04,buf);
     }
     
@@ -348,12 +348,12 @@ int align_volume(TArrayI volIds, TArrayI volIdRefs, int iterations,
     te.DrawTextNDC(xpos+0.05,ypos1-=0.04,"tilt in z");
     te.DrawTextNDC(xpos+0.05,ypos1-=0.04,"tilt in r");
     te.SetTextAlign(33);    
-    sprintf(buf,"%.3f",pa[0]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
-    sprintf(buf,"%.3f",pa[1]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
-    sprintf(buf,"%.3f",pa[2]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
-    sprintf(buf,"%.4f",pa[3]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
-    sprintf(buf,"%.4f",pa[4]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
-    sprintf(buf,"%.4f",pa[5]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
+    snprintf(buf,2000,"%.3f",pa[0]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
+    snprintf(buf,2000,"%.3f",pa[1]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
+    snprintf(buf,2000,"%.3f",pa[2]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
+    snprintf(buf,2000,"%.4f",pa[3]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
+    snprintf(buf,2000,"%.4f",pa[4]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
+    snprintf(buf,2000,"%.4f",pa[5]); te.DrawTextNDC(xpos+0.45,ypos-=0.04,buf);
     te.SetTextAlign(13);    
     if (showflag==1) te.DrawTextNDC(xpos,ypos-=0.07,"Residuals shown before alignment");
     if (showflag==2) te.DrawTextNDC(xpos,ypos-=0.07,"Residuals shown after alignment");
@@ -461,9 +461,9 @@ void align_module_layers(int module, int iterations, double level) {
       alt->GetAlignObj(voluid)->SetLocalPars(0,0,0,0,0,0);
       if (ntresi) delete ntresi;
       ntresi = makeNtuple(res,"kuku",0);
-      sprintf(buf,"dy>>hidy%02d_%d_befo(100,-2,2)",i,layer); 
+      snprintf(buf,1000,"dy>>hidy%02d_%d_befo(100,-2,2)",i,layer); 
       ntresi->Draw(buf);
-      sprintf(buf,"hidy%02d_%d_befo",i,layer); 
+      snprintf(buf,1000,"hidy%02d_%d_befo",i,layer); 
       dy=(TH1F*) gDirectory->Get(buf);
       //      peakfit(dy,0.1,0.1,par);
       nteva->Fill(det,module,layer,i-0.2,0,0,0,0,0,0,
@@ -471,9 +471,9 @@ void align_module_layers(int module, int iterations, double level) {
 
       if (ntresi) delete ntresi;
       ntresi = makeNtuple(res,"kuku",1);
-      sprintf(buf,"dy>>hidy%02d_%d_afte(100,-2,2)",i,layer); 
+      snprintf(buf,1000,"dy>>hidy%02d_%d_afte(100,-2,2)",i,layer); 
       ntresi->Draw(buf);
-      sprintf(buf,"hidy%02d_%d_afte",i,layer); 
+      snprintf(buf,1000,"hidy%02d_%d_afte",i,layer); 
       dy=(TH1F*) gDirectory->Get(buf);
       //      peakfit(dy,0.1,0.1,par);
       dy->DrawCopy();
@@ -515,13 +515,13 @@ void align_module_layers_plot(int iterations, double ymax) {
     int col=0;
     for (int i=0; i<iterations; i++) {
       int row = AliGeomManager::kTRD6-layer;
-      sprintf(buf,"hidy%02d_%d_befo",i,layer); 
+      snprintf(buf,1000,"hidy%02d_%d_befo",i,layer); 
       TH1F *hidy = (TH1F*) gDirectory->Get(buf);
       if (!hidy) break;
       hidy->SetMaximum(ymax);
       //printf("drawing %s %ld in pad %d\n",buf,hidy,row*ncol+i+1);
       c->cd(row*ncol+col+1); hidy->Draw("same"); col++;
-      sprintf(buf,"hidy%02d_%d_afte",i,layer); 
+      snprintf(buf,1000,"hidy%02d_%d_afte",i,layer); 
       hidy = (TH1F*) gDirectory->Get(buf);
       hidy->SetMaximum(ymax);
       //printf("drawing %s %ld in pad %d\n",buf,hidy,row*ncol+i+1);

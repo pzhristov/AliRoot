@@ -92,7 +92,7 @@ int AliHLTTPCRawClusterDumpComponent::DoEvent(const AliHLTComponentEventData &ev
 	int nBlocks = evtData.fBlockCnt;
 	static int nEvent = 0;
 	char filename[1024];
-	sprintf(filename, "event_tpc_dump.%d", nEvent++);
+	snprintf(filename, 1024, "event_tpc_dump.%d", nEvent++);
 	FILE* fp = fopen(filename, "w+b");
 	if (fp == NULL) return(-EINVAL);
 	

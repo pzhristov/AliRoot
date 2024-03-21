@@ -327,10 +327,10 @@ pluginHandler = pluginManager->FindHandler("AliReconstructor", "ITS");
       TTree* fTreeR = new TTree("TreeR", "Reconstructed Points Container"); //make a tree
       Char_t option[5];
 
-      if(idet==0)sprintf(option,"ALL");
-      else if(idet==1)sprintf(option,"SPD");
-      else if(idet==2)sprintf(option,"SDD");
-      else if(idet==3)sprintf(option,"SSD");
+      if(idet==0)snprintf(option,5,"ALL");
+      else if(idet==1)snprintf(option,5,"SPD");
+      else if(idet==2)snprintf(option,5,"SDD");
+      else if(idet==3)snprintf(option,5,"SSD");
       printf("\t\t===========>option is %s\n",option);
 
       rpcont->PrepareToRead();
@@ -384,10 +384,10 @@ void ITSQArecoparam(Int_t runNb=150000,Int_t year=2011,Char_t period[10]="LHC11a
 
   char path2[200];
 
-  sprintf(path2,"/alice/data/");
+  snprintf(path2,200,"/alice/data/");
   printf("path %s\n",path2);
   char rawfilename[200];
-  sprintf(rawfilename,"%04i/%s/%09i/raw/%02i%09i*.*.root",year,period,runNb,year-2000,runNb);
+  snprintf(rawfilename,200,"%04i/%s/%09i/raw/%02i%09i*.*.root",year,period,runNb,year-2000,runNb);
 
 
   Int_t number=0;
@@ -416,7 +416,7 @@ void ITSQArecoparam(Int_t runNb=150000,Int_t year=2011,Char_t period[10]="LHC11a
     }
 
   char *filetouse=(char*)filenamedef.Data();//=filenamedef.Data(); //=NULL;
-  //sprintf(filetouse,"%s",(char*)filenamedef.Data());
+  //snprintf(filetouse, strlen(filetouse)/sizeof(char),"%s",(char*)filenamedef.Data());
 
   printf("File to use = %s\n\n",filetouse);
 

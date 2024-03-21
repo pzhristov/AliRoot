@@ -73,7 +73,7 @@ Int_t AliPMDesdmake(Int_t nevt = 1)
       pmdtracker->Clusters2Tracks(event);
 
       bf->cd();
-      sprintf(ename,"in%d",ievt);
+      snprintf(ename,100,"in%d",ievt);
       event->Write(ename); bf->Flush();
       
       delete pmdtracker;  

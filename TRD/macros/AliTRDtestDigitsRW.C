@@ -67,12 +67,12 @@ void AliTRDtestDigitsRW(Int_t thresh = 0, Int_t maxDet = 540)
     {
       char cname[255];
       char ctitle[255];
-      sprintf(cname, "h2Drct_%d", ir);
-      sprintf(ctitle, "D Row %d;col;tbin;value", ir);
+      snprintf(cname,255, "h2Drct_%d", ir);
+      snprintf(ctitle,255, "D Row %d;col;tbin;value", ir);
       h2Drct[ir] = new TH2F(cname, ctitle, 144, 0, 144, 30, 0, 30);
 
-      sprintf(cname, "h2Rrct_%d", ir);
-      sprintf(ctitle, "R Row %d;col;tbin;value", ir);
+      snprintf(cname,255, "h2Rrct_%d", ir);
+      snprintf(ctitle,255, "R Row %d;col;tbin;value", ir);
       h2Rrct[ir] = new TH2F(cname, ctitle, 144, 0, 144, 30, 0, 30);
     }
 

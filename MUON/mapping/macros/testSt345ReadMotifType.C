@@ -25,7 +25,7 @@ Int_t test(AliMpDataStreams& dataStreams, AliMpMotifReader& r, const char letter
   Int_t n = 0;
   for ( Int_t i = from; i <= to; ++i ) 
   {
-    sprintf(m,"%c%d",letter,i);
+    snprintf(m,256,"%c%d",letter,i);
     AliMpMotifType* motifType = r.BuildMotifType(dataStreams,m);
     if ( motifType ) 
     {

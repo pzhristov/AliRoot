@@ -130,7 +130,7 @@ int main(int argc, char **argv) {
   // DA configuration from configuration file
   //
   //retrieve configuration file
-  sprintf(localfile,"./%s",CONFIG_FILE);
+  snprintf(localfile,255,"./%s",CONFIG_FILE);
   status = daqDA_DB_getFile(CONFIG_FILE,localfile);
   if (status) {
     printf("TPCCEda: Failed to get configuration file (%s) from DAQdetDB, status=%d\n", CONFIG_FILE, status);
@@ -201,7 +201,7 @@ int main(int argc, char **argv) {
   //see if we should force the trigger id
   if (forceTriggerId>-1){
     char c[5];
-    sprintf(c,"%d",forceTriggerId);
+    snprintf(c,5,"%d",forceTriggerId);
     char *table[5] = {"PHY","Y","*",c,NULL};
     monitorDeclareTableExtended(table);
   }
@@ -210,7 +210,7 @@ int main(int argc, char **argv) {
   // if  test setup get parameters from $DAQDA_TEST_DIR
   if (!mapping){
     /* copy locally the mapping file from daq detector config db */
-    sprintf(localfile,"./%s",MAPPING_FILE);
+    snprintf(localfile,255,"./%s",MAPPING_FILE);
     status = daqDA_DB_getFile(MAPPING_FILE,localfile);
     if (status) {
       printf("TPCCEda: Failed to get mapping file (%s) from DAQdetDB, status=%d\n", MAPPING_FILE, status);

@@ -107,7 +107,7 @@ Int_t AliTPCComparison
 
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodTracksTPC.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTPC.root",dir);
 
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
@@ -137,10 +137,10 @@ Int_t AliTPCComparison
    branch->SetAddress(&refs);
 
 
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
-      sprintf(fname,"%s/AliESDtpc.root",dir);
+      snprintf(fname,100,"%s/AliESDtpc.root",dir);
       ef=TFile::Open(fname);
       if ((!ef)||(!ef->IsOpen())) {
          ::Error("AliTPCComparison.C","Can't open AliESDtpc.root !");
@@ -375,7 +375,7 @@ Int_t AliTPCComparison
 
 Int_t GoodTracksTPC(const Char_t *dir) {
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -428,7 +428,7 @@ Int_t GoodTracksTPC(const Char_t *dir) {
    ::Info("GoodTracksTPC","Number of events : %d\n",nev);  
 
 
-   sprintf(fname,"%s/GoodTracksTPC.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTPC.root",dir);
    TFile *file=TFile::Open(fname,"recreate");
 
    TClonesArray dummy("AliTrackReference",1000), *refs=&dummy;

@@ -24248,19 +24248,19 @@ Int_t AliITSDisplayTracksV1(const char *fname = "galice.root", Int_t evNum = 0) 
 		cout << "A problem occurred when getting the TreeR!!!" << endl;
 		return;
 	}
-        AliITSRecPoint *recp=0;	
-        TClonesArray  *recPoints = ITS->RecPoints();
+   AliITSRecPoint *recp=0;	
+   TClonesArray  *recPoints = ITS->RecPoints();
 
 	// Gets found tracks...
-       const char *filename="itstracks.root";	
-       TFile *file = (TFile*)gROOT->GetListOfFiles()->FindObject(filename);
-       if (!file) file = new TFile(filename);
+   const char *filename="itstracks.root";	
+   TFile *file = (TFile*)gROOT->GetListOfFiles()->FindObject(filename);
+   if (!file) file = new TFile(filename);
 
-       char tname[30];   
+   char tname[30];   
 
 //  get tracks from ITSiotrack.root
   Int_t nev=0;	
-  sprintf(tname,"TreeT%d",nev);
+  snprintf(tname,30,"TreeT%d",nev);
    TTree *tracktree=(TTree*)file->Get(tname);
    TBranch *tbranch=tracktree->GetBranch("ITStracks");
    //cout<<" nev = "<<nev<<"\n";   

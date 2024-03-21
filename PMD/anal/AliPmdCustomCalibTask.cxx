@@ -115,13 +115,13 @@ void AliPmdCustomCalibTask::UserCreateOutputObjects() {
   // Cell-wise ADC
   for(Int_t i = 0; i < 48; i++)  {
     for(Int_t j = 0; j < 96; j++) {
-      sprintf(name,"fHistPreAdcRaw%02dCol%02d",i,j);
-      sprintf(title,"ADC Distribution for PRE | SM %d - Raw%02dCol%02d",fSmn,i,j);
+      snprintf(name,100,"fHistPreAdcRaw%02dCol%02d",i,j);
+      snprintf(title,200,"ADC Distribution for PRE | SM %d - Raw%02dCol%02d",fSmn,i,j);
       fHistAdcPreRC[i][j] = new TH1F(name,title,120,0,1200);
       fOutput->Add(fHistAdcPreRC[i][j]);
       
-      sprintf(name,"fHistCpvAdcRaw%02dCol%02d",i,j);
-      sprintf(title,"ADC Distribution for CPV | SM %d - Raw%02dCol%02d",fSmn,i,j);
+      snprintf(name,100,"fHistCpvAdcRaw%02dCol%02d",i,j);
+      snprintf(title,200,"ADC Distribution for CPV | SM %d - Raw%02dCol%02d",fSmn,i,j);
       fHistAdcCpvRC[i][j] = new TH1F(name,title,120,0,1200);
       fOutput->Add(fHistAdcCpvRC[i][j]);
     }

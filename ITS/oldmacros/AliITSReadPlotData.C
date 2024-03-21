@@ -203,7 +203,7 @@ Int_t AliITSReadPlotData( Int_t evNum = 0, char *filename = "galice.root", TStri
     case 1: xm = 7.5; zm = 8.0; break;
     case 2: xm = 7.5; zm = 4.5; break;
     }
-    sprintf(msg, "Module index=%d lay=%d lad=%d det=%d", ID[0], ID[1], ID[2], ID[3]);
+    snprintf(msg, 250, "Module index=%d lay=%d lad=%d det=%d", ID[0], ID[1], ID[2], ID[3]);
     TH2F *hhits = new TH2F("hhits", msg, 500, -xm, xm, 500, -zm, zm);     // Histogram of hits
     TH2F *hrecs = new TH2F("hrecs", msg, 500, -xm, xm, 500, -zm, zm);     // Histogram of recpoints
     TH2F *hdigits = new TH2F("hdigits", msg, 500, -xm, xm, 500, -zm, zm); // Histogram of digits

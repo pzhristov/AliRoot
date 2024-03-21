@@ -54,7 +54,7 @@ void MakeOCDBTempTree
     // SuperModule
     Sec = iSM/2;
     int iside = iSM%2; 
-    sprintf(Side,"%s",sideStr[iside]);
+    snprintf(Side,10,"%s",sideStr[iside]);
     
     for (int ip=0; ip<8; ip++) 
     {

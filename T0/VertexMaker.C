@@ -8,7 +8,7 @@ void VertexMaker(Int_t evNumber=1)
   }
 
   char filename[100];
-  sprintf(filename,"galice.root");
+  snprintf(filename,100,"galice.root");
   AliRunLoader* rl = AliRunLoader::Open("galice.root",AliConfig::GetDefaultEventFolderName(),"read");
   if (rl == 0x0)
    {

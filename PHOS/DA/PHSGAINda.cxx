@@ -300,7 +300,7 @@ int main(int argc, char **argv) {
   char totfile[80];
   
   //Write the Total file (accumulated statistics for number of runs)
-  sprintf(totfile,"PHOS_Calib_Total.root");
+  snprintf(totfile,80,"PHOS_Calib_Total.root");
   TFile * ftot = new TFile(totfile,"recreate");
   
 //   if (!ftot->IsZombie()){
@@ -315,7 +315,7 @@ int main(int argc, char **argv) {
 // 	for(Int_t iZ=0; iZ<56; iZ++) {
 	
 // 	  for(Int_t iGain=0; iGain<2; iGain++) {
-// 	    sprintf(h2name,"%d_%d_%d_%d",iMod,iX,iZ,iGain);
+// 	    snprintf(h2name,80,"%d_%d_%d_%d",iMod,iX,iZ,iGain);
 // 	    TH2F* h2tot = (TH2F*)ftot->Get(h2name);
 // 	    const TH2F* h2run = dAs[iMod]->GetTimeEnergyHistogram(iX,iZ,iGain); // Time vs Energy
 // 	    if(!h2tot && h2run) h2run->Write();

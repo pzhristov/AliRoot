@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
   //
   //retrieve configuration file
   char localfile[255];
-  sprintf(localfile,"./%s",CONFIG_FILE);
+  snprintf(localfile,255,"./%s",CONFIG_FILE);
   status = daqDA_DB_getFile(CONFIG_FILE,localfile);
   if (status) {
     printf("TPCQAda: Failed to get configuration file (%s) from DAQdetDB, status=%d\n", CONFIG_FILE, status);

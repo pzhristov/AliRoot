@@ -199,8 +199,8 @@ AliHLTPHOSOnlineDisplayFourierTab::FillHistograms(const AliHLTPHOSRcuFFTDataStru
     {
       if( fFourierHistoNew[gain] == 0)
 	{
-	  sprintf(tmptitle, "PSD averaged over all %s channels: Most recent event", Gain2Text(gain, ' ')); 
-	  sprintf(tmpname,  "PSD_averaged_over_all_%s_channels__most_recent_event", Gain2Text(gain, '_'));  
+	  snprintf(tmptitle, 256, "PSD averaged over all %s channels: Most recent event", Gain2Text(gain, ' ')); 
+	  snprintf(tmpname, 256,  "PSD_averaged_over_all_%s_channels__most_recent_event", Gain2Text(gain, '_'));  
 	  fFourierHistoNew[gain] = new TH1D(tmpname, tmptitle,  (size/2) +1, 0, SAMPLINGFREQUENCY/2);
 	  fFourierHistoNew[gain]->GetXaxis()->SetTitle("f/MHz");
 	  fFourierHistoNew[gain]->GetYaxis()->SetTitle("Power (arbitrary units)"); 
@@ -209,8 +209,8 @@ AliHLTPHOSOnlineDisplayFourierTab::FillHistograms(const AliHLTPHOSRcuFFTDataStru
 	}
       if (fFourierHistoOld[gain] == 0)
 	{
-	  sprintf(tmptitle, "PSD averaged over all %s channels: Previous event", Gain2Text(gain, ' ')); 
-	  sprintf(tmpname,  "PSD_averaged_over_all_%s_channels__previous_event", Gain2Text(gain, '_')); 
+	  snprintf(tmptitle, 256, "PSD averaged over all %s channels: Previous event", Gain2Text(gain, ' ')); 
+	  snprintf(tmpname, 256,  "PSD_averaged_over_all_%s_channels__previous_event", Gain2Text(gain, '_')); 
 	  fFourierHistoOld[gain] = new TH1D(tmpname, tmptitle,  (size/2) +1, 0, SAMPLINGFREQUENCY/2);
 	  fFourierHistoOld[gain]->GetXaxis()->SetTitle("f/MHz");
 	  fFourierHistoOld[gain]->GetYaxis()->SetTitle("Power (arbitrary units)"); 
@@ -219,8 +219,8 @@ AliHLTPHOSOnlineDisplayFourierTab::FillHistograms(const AliHLTPHOSRcuFFTDataStru
 	}
       if( fFourierHistoAccumulated[gain] == 0 )
 	{
-	  sprintf(tmptitle, "PSD averaged over all %s channels: All events", Gain2Text(gain, ' ')); 
-	  sprintf(tmpname,  "PSD_averaged_over_all_%s_channels__All_events", Gain2Text(gain, '_')); 
+	  snprintf(tmptitle, 256, "PSD averaged over all %s channels: All events", Gain2Text(gain, ' ')); 
+	  snprintf(tmpname, 256,  "PSD_averaged_over_all_%s_channels__All_events", Gain2Text(gain, '_')); 
 	  fFourierHistoAccumulated[gain] = new TH1D(tmpname, tmptitle,  (size/2) +1, 0, SAMPLINGFREQUENCY/2);
 	  fFourierHistoAccumulated[gain]->GetXaxis()->SetTitle("f/MHz");
 	  fFourierHistoAccumulated[gain]->GetYaxis()->SetTitle("Power (arbitrary units)"); 
@@ -256,7 +256,7 @@ AliHLTPHOSOnlineDisplayFourierTab::InitDisplay(TGTab  *tabPtr)
  
       //     Gain2Text
       fOnlineDisplayPtr->Gain2Text(gain,gainLabel);
-      sprintf(label, "PHOS Fourier transform %s", gainLabel);
+      snprintf(label, 256, "PHOS Fourier transform %s", gainLabel);
       fgLegoPlotPtr[gain] = new AliHLTPHOSOnlineDisplayTH2D(fOnlineDisplayPtr, label, label, 
       							    NXCOLUMNSMOD*NMODULES , 0, NXCOLUMNSMOD*NMODULES,  
       							    NZROWSMOD,   0, NZROWSMOD);   
@@ -379,16 +379,16 @@ AliHLTPHOSOnlineDisplayFourierTab::Gain2Text(const int gain, const char delimete
   // See header file for documentation
   if(gain ==  LOWGAIN)
     {
-      sprintf(fGainText, "low%cgain", delimeter);
+      snprintf(fGainText, 256, "low%cgain", delimeter);
 
     }
   else if(gain ==  HIGHGAIN)
     {
-      sprintf(fGainText, "high%cgain", delimeter);
+      snprintf(fGainText, 256, "high%cgain", delimeter);
     }
   else
     {
-      sprintf(fGainText, "Error, invalid gain");
+      snprintf(fGainText, 256, "Error, invalid gain");
     }
   return fGainText;
 }

@@ -4849,7 +4849,7 @@ void AliITSv11GeometrySSD::SetLadderSupport(Int_t nedges){
 											  xmothervertex[i],ymothervertex[i]);
 	lowerladdersupportshape[i]->DefineSection(0,0.);
     lowerladdersupportshape[i]->DefineSection(1,fgkMountingBlockSupportWidth[1]);
-	sprintf(lowerladdersupportname,"LowerLadderSupportNameLay%d",i+5);
+	snprintf(lowerladdersupportname,30,"LowerLadderSupportNameLay%d",i+5);
     lowerladdersupport[i] = new TGeoVolume(lowerladdersupportname,
 							lowerladdersupportshape[i],fSSDSupportRingAl);
 	lowerladdersupport[i]->SetLineColor(fColorAl);

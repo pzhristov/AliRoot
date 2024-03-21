@@ -130,7 +130,7 @@ Int_t AliITSUComparisonCooked
 
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodTracksCooked.root",dir);
+   snprintf(fname,100,"%s/GoodTracksCooked.root",dir);
 
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
@@ -160,10 +160,10 @@ Int_t AliITSUComparisonCooked
    branch->SetAddress(&refs);
 
 
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
-      sprintf(fname,"%s/AliESDits.root",dir);
+      snprintf(fname,100,"%s/AliESDits.root",dir);
       ef=TFile::Open(fname);
       if ((!ef)||(!ef->IsOpen())) {
          ::Error("AliITSUComparisonCooked.C","Can't open AliESDits.root !");
@@ -398,7 +398,7 @@ Int_t GoodTracksCooked(const Char_t *dir) {
    }
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -422,7 +422,7 @@ Int_t GoodTracksCooked(const Char_t *dir) {
    Int_t nev=rl->GetNumberOfEvents();
    ::Info("GoodTracksCooked","Number of events : %d\n",nev);  
 
-   sprintf(fname,"%s/GoodTracksCooked.root",dir);
+   snprintf(fname,100,"%s/GoodTracksCooked.root",dir);
    TFile *itsFile=TFile::Open(fname,"recreate");
    TClonesArray dummy2("AliTrackReference",1000), *itsRefs=&dummy2;
    TTree itsTree("itsTree","Tree with info about the reconstructable ITS tracks");
@@ -464,7 +464,7 @@ Int_t GoodTracksCooked(const Char_t *dir) {
        TClonesArray *ptr = 
        new(clusters+layer) TClonesArray("AliITSUClusterPix",1000);
        Char_t bname[33];
-       sprintf(bname,"ITSRecPoints%d\0",layer);
+       snprintf(bname,33,"ITSRecPoints%d\0",layer);
        branch[layer]=cTree->GetBranch(bname);
        if (!branch[layer]) {
           ::Error("GoodTracksCooked","Can't get the clusters branch !"); 

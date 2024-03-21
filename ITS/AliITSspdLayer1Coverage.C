@@ -86,8 +86,8 @@ void AliITSspdLayer1Coverage(TString hfn="galice.root",Int_t mod=-1,
   Char_t name[20],title[40];
   TH2I *detCoverage[4*2*10];
   for(i=0;i<4*2*10;i++){
-    sprintf(name,"detCoverage[%d]",i);
-    sprintf(title,"Cell coverage for SPD module %d",i);
+    snprintf(name,20,"detCoverage[%d]",i);
+    snprintf(title,40,"Cell coverage for SPD module %d",i);
     detCoverage[i] = new TH2I(name,title,160,(Double_t *)zbin,256,-0.64,+0.64);
   } // end for i
   Double_t xg,yg,zg,xl,yl,zl,phi;

@@ -92,7 +92,7 @@ AliHLTPHOSRawAnalyzerPeakFinderComponent::LoadPFVector(int startIndex, int nSamp
   char tmpPFPath[fCaloConstants->GetPFMAXPATHLENGTH()];
   Double_t * tmpAVector = new Double_t[nSamples];
   Double_t * tmpTVector = new Double_t[nSamples]; 
-  sprintf(tmpPFPath,"%s%s/start%dN%dtau%dfs%d.txt", getenv("ALICE_ROOT"), PFVECTORDIR, startIndex, nSamples, tau, fs);
+  snprintf(tmpPFPath, fCaloConstants->GetPFMAXPATHLENGTH(),"%s%s/start%dN%dtau%dfs%d.txt", getenv("ALICE_ROOT"), PFVECTORDIR, startIndex, nSamples, tau, fs);
   FILE *fp;
   fp = fopen(tmpPFPath, "r");
   

@@ -160,7 +160,7 @@ AliHLTEMCALMapper::DDL2RcuMapFileName(const int ddlIndex) const //0=4608, 1=4607
 	}
 	int tmprcuindex = ddlIndex%2;
 	snprintf(rname, rnamelen, "RCU%d%c.data",  tmprcuindex,  tmpSide );
-	//sprintf(rname,"RCU%d%c.data", ddlIndex/NRCUSPERSECTOR, tmpSide );
+	//snprintf(rname,rnamelen,"RCU%d%c.data", ddlIndex/NRCUSPERSECTOR, tmpSide );
 	return rname;
 }
 

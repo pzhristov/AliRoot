@@ -141,7 +141,7 @@ void WriteAOD(Option_t* datatype, Int_t first = -1,Int_t last = -1,
      dirs->SetOwner();
      for (Int_t i = first; i<=last; i++)
       { 
-        sprintf(buff,"%s/%s/%s/%d",basedir,field,serie,i);
+        snprintf(buff, 50, "%s/%s/%s/%d",basedir,field,serie,i);
         TObjString *odir= new TObjString(buff);
         dirs->Add(odir);
       }

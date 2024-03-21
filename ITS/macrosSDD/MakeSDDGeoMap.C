@@ -74,8 +74,8 @@ void MakeSDDGeoMap(){
     xnt[8]=theta;
     xnt[9]=phi;
     ntsddgeo->Fill(xnt);
-    sprintf(modtxt,"%d",iMod);
-    sprintf(ladtxt,"L%d",lad);
+    snprintf(modtxt,3,"%d",iMod);
+    snprintf(ladtxt,8,"L%d",lad);
     if(det==1){ 
       text[it]=new TLatex(1.1*pos[0],1.1*pos[1],modtxt);
       text[it]->SetTextAlign(22);

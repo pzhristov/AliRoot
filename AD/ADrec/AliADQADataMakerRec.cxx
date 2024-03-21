@@ -799,7 +799,6 @@ void AliADQADataMakerRec::MakeRaws(AliRawReader* rawReader)
   Int_t    mulADC = 0 ;
   Double_t timeADA =0., timeADC = 0.;
   Double_t weightADA =0., weightADC = 0.;
-  UInt_t   itimeADA=0, itimeADC=0;
   Double_t chargeADA=0., chargeADC=0.;
   Double_t chargeTrigADA=0., chargeTrigADC=0.;
 
@@ -918,13 +917,11 @@ void AliADQADataMakerRec::MakeRaws(AliRawReader* rawReader)
         if (adc[offlineCh]>1) timeErr = 1/adc[offlineCh];
 
         if (offlineCh<8) {
-          itimeADC++;
           timeADC += time[offlineCh]/(timeErr*timeErr);
           weightADC += 1./(timeErr*timeErr);
           if (adc[offlineCh]>1) FillRawsData(kTimeSlewingADC,TMath::Log10(1.0/adc[offlineCh]),time[offlineCh]);
         }
         else{
-          itimeADA++;
           timeADA += time[offlineCh]/(timeErr*timeErr);
           weightADA += 1./(timeErr*timeErr);
           if (adc[offlineCh]>1) FillRawsData(kTimeSlewingADA,TMath::Log10(1.0/adc[offlineCh]),time[offlineCh]);
@@ -1056,7 +1053,7 @@ void AliADQADataMakerRec::MakeRaws(AliRawReader* rawReader)
     FillRawsData(kChargeADC,chargeADC);
     FillRawsData(kChargeAD,chargeADA + chargeADC);
     if(mulADA!=0)FillRawsData(kChargeADA_PC,chargeTrigADA/mulADA);
-    if(mulADC!=0)FillRawsData(kChargeADC_PC,chargeTrigADA/mulADC);
+    if(mulADC!=0)FillRawsData(kChargeADC_PC,chargeTrigADC/mulADC);
 
     //Decisions
     Int_t windowOffset = (fCalibData->GetTriggerCountOffset(0) - 3242)*25;

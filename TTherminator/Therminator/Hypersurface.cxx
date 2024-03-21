@@ -6,12 +6,12 @@ Hypersurface::Hypersurface(const char *dirname) {
 // Read FOHSI.txt file and init parameters
   char *dirfull;
   dirfull = (char *) malloc(sizeof(char)*strlen(dirname) + 5);
-  sprintf(dirfull, "%s", dirname);
+  snprintf(dirfull, strlen(dirname) + 5,"%s", dirname);
   if (strlen(dirfull) > 0) 
     if (dirfull[strlen(dirfull)-1] != '/')
       strcat(dirfull, "/");
   FName = (char *) malloc(sizeof(char)* strlen(dirfull)+ 50);
-  sprintf(FName,"%sFOHSI.txt", dirfull);
+  snprintf(FName,strlen(dirfull)+ 50,"%sFOHSI.txt", dirfull);
   HSFile = new ifstream;
   HSFile->open(FName);
   if(HSFile->is_open()) {
@@ -67,7 +67,7 @@ Hypersurface::Hypersurface(const char *dirname) {
   delete HSFile;
 
   // Read FOHSa.txt file and fill array
-  sprintf(FName,"%sFOHSa.txt", dirfull);
+  snprintf(FName,strlen(dirfull)+ 50,"%sFOHSa.txt", dirfull);
   //  FName = "FOHSa.txt";
   HSFile = new ifstream;
   HSFile->open(FName);
@@ -84,7 +84,7 @@ Hypersurface::Hypersurface(const char *dirname) {
   delete HSFile;
 
   // Read FOHSv.txt file and fill array
-  sprintf(FName,"%sFOHSv.txt", dirfull);
+  snprintf(FName,strlen(dirfull)+ 50,"%sFOHSv.txt", dirfull);
   //  FName = "FOHSv.txt";
   HSFile = new ifstream;
   HSFile->open(FName);
@@ -101,7 +101,7 @@ Hypersurface::Hypersurface(const char *dirname) {
   delete HSFile;
 
   // Read FOHSd.txt file and fill array
-  sprintf(FName,"%sFOHSd.txt", dirfull);
+  snprintf(FName,strlen(dirfull)+ 50,"%sFOHSd.txt", dirfull);
   //  FName = "FOHSd.txt";
   HSFile = new ifstream;
   HSFile->open(FName);
@@ -118,7 +118,7 @@ Hypersurface::Hypersurface(const char *dirname) {
   delete HSFile;
 
   // Read FOHSDpd.txt file and fill array
-  sprintf(FName,"%sFOHSDpd.txt", dirfull);
+  snprintf(FName,strlen(dirfull)+ 50,"%sFOHSDpd.txt", dirfull);
   //  FName = "FOHSDpd.txt";
   HSFile = new ifstream;
   HSFile->open(FName);
@@ -135,7 +135,7 @@ Hypersurface::Hypersurface(const char *dirname) {
   delete HSFile;
 
   // Read FOHSDzd.txt file and fill array
-  sprintf(FName,"%sFOHSDzd.txt", dirfull);
+  snprintf(FName,strlen(dirfull)+ 50,"%sFOHSDzd.txt", dirfull);
   //  FName = "FOHSDzd.txt";
   HSFile = new ifstream;
   HSFile->open(FName);

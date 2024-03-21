@@ -180,13 +180,13 @@ void tpcanal(Int_t sec, Int_t row, Int_t pad, Float_t * res=0,
       gtpc.GetPad2().SetGridy();   
       fitText = new TPaveText(0.1,0.7,0.4,0.9,"NDC");
       gtpc.GetHis3()->Draw();
-      sprintf(s,"p0 fit on interval %3.0f+- %3.0f",xmin,xmax);
+      snprintf(s,100,"p0 fit on interval %3.0f+- %3.0f",xmin,xmax);
       fitText->AddText(s);
     }
   g1->GetParameters(&par[0]);
   Float_t error = g1->GetParError(0);
 
-  sprintf(s,"%0.3f+- %0.3f",par[0],error);
+  snprintf(s,100,"%0.3f+- %0.3f",par[0],error);
   if (bdraw == kTRUE)
     {
       gtpc.GetHis3()->Fit("pol0_r","R0Q");  
@@ -237,8 +237,8 @@ void tpcanalall(Int_t isec =1, Int_t lstep = 1,Float_t tmin=400)
   pad1->cd();
   char s[220];
   char sh[220];
-  sprintf(s,"occu_sector%d",isec);
-  sprintf(sh,"Occupancy in sector %d as function of pad raw",isec);  
+  snprintf(s,220,"occu_sector%d",isec);
+  snprintf(sh,220,"Occupancy in sector %d as function of pad raw",isec);  
   TH1F * occudep = new TH1F(s,sh,300,xmin,xmax);
   Float_t   res[20];
   Float_t   x;
@@ -271,7 +271,7 @@ void tpcanalall(Int_t isec =1, Int_t lstep = 1,Float_t tmin=400)
   error[0]=g1->GetParError(0);
   error[1]=g1->GetParError(1);   
   Float_t  chi = g1->GetChisquare();
-  sprintf(s,"Linear fit     ocupancy = (%2.3f - %2.3f) +(%2.1f+- %2.1f).r   chi2 = %2.2f",
+  snprintf(s,220,"Linear fit     ocupancy = (%2.3f - %2.3f) +(%2.1f+- %2.1f).r   chi2 = %2.2f",
 	  par[0],error[0],1000*par[1],1000*error[1],chi);
   comment->AddText(s);
  //(1-exp([0]1/(r*2+[1]**2)  fit
@@ -283,7 +283,7 @@ void tpcanalall(Int_t isec =1, Int_t lstep = 1,Float_t tmin=400)
     error[0]=g1->GetParError(0);
     //    error[1]=g1->GetParError(1);
     chi = g1->GetChisquare();
-    sprintf(s,"(1-exp(P1/(x^2) fit   P1=(%2.3f+- %2.3f)    chi2=%2.2f ",
+    snprintf(s,220,"(1-exp(P1/(x^2) fit   P1=(%2.3f+- %2.3f)    chi2=%2.2f ",
   	  par[0],error[0],chi);
     comment->AddText(s);
   c_occu->Update();
@@ -350,7 +350,7 @@ void tpcdraw(Int_t sec, Int_t row, Int_t pad)
   fitText = new TPaveText(0.15,0.7,0.3,0.9,"NDC");
   fitText->AddText("p0 fit on interval <150-500>");
   char s[100];
-  sprintf(s,"%0.3f+- %0.3f",par[0],error);
+  snprintf(s,100,"%0.3f+- %0.3f",par[0],error);
   fitText->AddText(s);
   fitText->Draw();
   gtpc.GetPad2().Update();     
@@ -532,11 +532,11 @@ void probability(Float_t param = 1, Float_t x1 = 0.9, Float_t x2 = 1.3,
   Float_t y1=0;
   Float_t y2;
   char s[120];
-  sprintf(s,"1-exp(-[1]/x**%f)",over);
+  snprintf(s,120,"1-exp(-[1]/x**%f)",over);
   cout<<s<<"\n";
   TF1 *funr1 = new TF1("funr1",s,x1,x2);
   funr1->SetParameters(1,param);
-  sprintf(s,"Probability  according 1-exp(-%1.3f/x**%1.1f distribution)",
+  snprintf(s,120,"Probability  according 1-exp(-%1.3f/x**%1.1f distribution)",
 	  param,over);
   pad1->cd();
   TH1F * hOccuT = new TH1F("hOccuT",s,5*N,x1,x2);
@@ -552,7 +552,7 @@ void probability(Float_t param = 1, Float_t x1 = 0.9, Float_t x2 = 1.3,
   //fitting calculated dependence with linear fit and with
   //generic function
   pad1->cd();
-  sprintf(s,"[1]/(x**%1.1f)",over);
+  snprintf(s,120,"[1]/(x**%1.1f)",over);
   TF1 *lin1 = new TF1("lin1","pol1",x1,x2);
   lin1->SetLineColor(2);
   lin1->SetLineWidth(5);
@@ -560,7 +560,7 @@ void probability(Float_t param = 1, Float_t x1 = 0.9, Float_t x2 = 1.3,
   hOccuT->Draw();
   hOccuT->Fit("lin1","S+");
 
-  sprintf(s,"[1]/(x**%1.1f)",over);
+  snprintf(s,120,"[1]/(x**%1.1f)",over);
   TF1 *funorig = new TF1("funorig",s,x1,x2);
   funorig->SetLineColor(3);
   funorig->SetLineWidth(5);
@@ -592,7 +592,7 @@ void probability(Float_t param = 1, Float_t x1 = 0.9, Float_t x2 = 1.3,
   TText *title = comment->AddText("Estimation of occupancy dependence on R position");
   title->SetTextSize(0.04);
   comment->AddText("Observed efect of probability saturation");
-  sprintf(s,"Supposed generic flux dependence : %1.3f/(x**%1.1f)",param,over);
+  snprintf(s,120,"Supposed generic flux dependence : %1.3f/(x**%1.1f)",param,over);
   comment->AddText(s);
   comment->AddText("Probility : 1-exp(-flux*mean particle \"pad x time\" area)");
   comment->AddText("Full line  linear fit ");

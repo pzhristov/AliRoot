@@ -8,9 +8,9 @@ void makeTriggerFile(char xory, int n)
 
   xory = toupper(xory);
 
-  sprintf(padPosFileName,"padPos%c%d.dat",xory,n);
-  sprintf(motifName,"%c%d",xory,n);
-  sprintf(motifFileName,"motif%s.dat",motifName);
+  snprintf(padPosFileName,80,"padPos%c%d.dat",xory,n);
+  snprintf(motifName,4,"%c%d",xory,n);
+  snprintf(motifFileName,80,"motif%s.dat",motifName);
 
   FILE* fpadpos = fopen(padPosFileName,"w");
 

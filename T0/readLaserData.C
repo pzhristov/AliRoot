@@ -57,13 +57,13 @@ void readLaserData(Int_t runNumber=905)
     } 
   for(Int_t ic=0; ic<12; ic++) {
     {
-      sprintf(buf1,"QTC%i",ic+1);
-      sprintf(buf2,"CFD_QTC%i",ic+1);
-      sprintf(buf3,"CFD_LED%i",ic+1);
-      sprintf(buf4,"LED-CFD%i",ic+1);
-      sprintf(buf5,"56__%i",ic+1);
-      sprintf(buf6,"55__%i",ic+1);
-      sprintf(buf7,"mpd%i",ic+1);
+      snprintf(buf1,10,"QTC%i",ic+1);
+      snprintf(buf2,10,"CFD_QTC%i",ic+1);
+      snprintf(buf3,10,"CFD_LED%i",ic+1);
+      snprintf(buf4,10,"LED-CFD%i",ic+1);
+      snprintf(buf5,10,"56__%i",ic+1);
+      snprintf(buf6,10,"55__%i",ic+1);
+      snprintf(buf7,10,"mpd%i",ic+1);
       
       
       hQTC[ic] = new TH1F(buf1,"QTC",10000,0,10000.0);
@@ -88,7 +88,7 @@ void readLaserData(Int_t runNumber=905)
   
   
   Char_t filename[13];
-  sprintf(filename,"t0%i.raw",runNumber);
+  snprintf(filename,13,"t0%i.raw",runNumber);
    AliRawReader *reader = new AliRawReaderDate(filename);
  // AliRawReader *reader = new AliRawReaderFile();
    reader->LoadEquipmentIdsMap("T0map.txt");
@@ -195,8 +195,8 @@ void readLaserData(Int_t runNumber=905)
       
      
   Char_t filehist[40]; 
- sprintf(filehist,"t0tree%i.root",runNumber);
- //  sprintf(filehist,"test.root",runNumber);
+ snprintf(filehist,40,"t0tree%i.root",runNumber);
+ //  snprintf(filehist,40,"test.root",runNumber);
  TFile *hist = new TFile(filehist,"RECREATE");
   cout<<" writing hist in file "<<filehist<<endl;
 

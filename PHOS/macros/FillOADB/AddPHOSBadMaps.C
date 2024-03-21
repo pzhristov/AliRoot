@@ -23,7 +23,7 @@ void AddPHOSBadMaps(){
   char key[55] ;
   if(fLHC10e->IsOpen()){
     for(Int_t mod=1;mod<4; mod++){
-      sprintf(key,"PHOS_BadMap_mod%d",mod) ;
+      snprintf(key,55,"PHOS_BadMap_mod%d",mod) ;
       TH2I * h = (TH2I*)fLHC10e->Get(key) ;
       if(!h)
         lhc10e->AddAt(0x0,mod);

@@ -72,7 +72,7 @@ bool CheckIfOutputIsOk()
   for (int i = 0; i < 4; i++)
   {
     char name[1024];
-    sprintf(name, "HLTGlobalTrigger;%d", i+1);
+    snprintf(name, 1024, "HLTGlobalTrigger;%d", i+1);
     decision[i] = dynamic_cast<AliHLTTriggerDecision*>(file.Get(name));
     if (decision[i] == NULL)
     {

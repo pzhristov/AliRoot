@@ -113,7 +113,7 @@ Int_t AliTRDComparisonV2
 
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodTracksTRD.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTRD.root",dir);
 
    TFile *refFile=TFile::Open(fname,"old");
    if (!refFile || !refFile->IsOpen()) {
@@ -143,10 +143,10 @@ Int_t AliTRDComparisonV2
    branch->SetAddress(&refs);
 
 
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if ((!ef)||(!ef->IsOpen())) {
-      sprintf(fname,"%s/AliESDtrd.root",dir);
+      snprintf(fname,100,"%s/AliESDtrd.root",dir);
       ef=TFile::Open(fname);
       if ((!ef)||(!ef->IsOpen())) {
          ::Error("AliTRDComparisonV2.C","Can't open AliESDtrd.root !");
@@ -385,7 +385,7 @@ Int_t GoodTracksTRD(const Char_t *dir) {
    }
 
    Char_t fname[100];
-   sprintf(fname,"%s/galice.root",dir);
+   snprintf(fname,100,"%s/galice.root",dir);
 
    AliRunLoader *rl = AliRunLoader::Open(fname,"COMPARISON");
    if (!rl) {
@@ -400,7 +400,7 @@ Int_t GoodTracksTRD(const Char_t *dir) {
    Int_t nev=rl->GetNumberOfEvents();
    ::Info("GoodTracksTRD","Number of events : %d\n",nev);  
 
-   sprintf(fname,"%s/GoodTracksTPC.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTPC.root",dir);
    TFile *tpcFile=TFile::Open(fname);
    if ((!tpcFile)||(!tpcFile->IsOpen())) {
        ::Error("GoodTracksTRD","Can't open the GoodTracksTPC.root !");
@@ -422,7 +422,7 @@ Int_t GoodTracksTRD(const Char_t *dir) {
    }
    tpcBranch->SetAddress(&tpcRefs);
 
-   sprintf(fname,"%s/GoodTracksTRD.root",dir);
+   snprintf(fname,100,"%s/GoodTracksTRD.root",dir);
    TFile *trdFile=TFile::Open(fname,"recreate");
    TClonesArray dummy2("AliTrackReference",1000), *trdRefs=&dummy2;
    TTree trdTree("trdTree","Info about the reconstructable TRD tracks");

@@ -95,12 +95,12 @@ AliFITAlign::AliFITAlign(Int_t reportloc, Int_t side, Int_t reportglob) :
   //  fUser = new Char_t[10];
   fFileGlob = Form("%s/FIT/Survey_%d_V0.txt",path.Data(),reportglob);
   fUser = Form("%s/FIT/Survey_%d_V0.txt",path.Data(),reportglob);
-  // sprintf(path,gSystem->Getenv("ALICE_ROOT")); 
+  // snprintf(path,50,gSystem->Getenv("ALICE_ROOT")); 
   //
-  // sprintf(fFileLoc,"%s/FIT/Survey_%d_FIT.txt",path,reportloc);
-  // sprintf(fFileGlob,"%s/FIT/Survey_%d_V0.txt",path,reportglob);
+  // snprintf(fFileLoc,80,"%s/FIT/Survey_%d_FIT.txt",path,reportloc);
+  // snprintf(fFileGlob,80,"%s/FIT/Survey_%d_V0.txt",path,reportglob);
   //
-  // sprintf(fUser,gSystem->Getenv("alien_API_USER"));
+  // snprintf(fUser,gSystem->Getenv("alien_API_USER"));
 }
 //_________________________________________________________________________
 AliFITAlign::AliFITAlign(const AliFITAlign &align) :
@@ -300,7 +300,7 @@ void AliFITAlign::StoreAlignObj()
     // save on file
     const char* filename = "FITSurveyMisalignment.root";
     //  Char_t fullname[80];
-    //  sprintf(fullname,"%s/FIT/Align/Data/%s",gSystem->Getenv("ALICE_ROOT"),filename);
+    //  snprintf(fullname,80,"%s/FIT/Align/Data/%s",gSystem->Getenv("ALICE_ROOT"),filename);
     TString fullname = Form("%s/FIT/Align/Data/%s",gSystem->Getenv("ALICE_ROOT"), filename);
     TFile *f = new TFile(fullname.Data(),"RECREATE");
     if(!f){

@@ -329,7 +329,7 @@ int rec_hlt_trd(const TString filename, TString outPath, const TString extra)
     Int_t triggerval = 0;
     for(std::vector<unsigned char>::iterator it = triggerconfs.begin(); it < triggerconfs.end(); it++)
       triggerval += *it;
-    sprintf(triggerbuf, "?Trigger=%d", triggerval);
+    snprintf(triggerbuf, 256, "?Trigger=%d", triggerval);
     filestring += triggerbuf; // This line does the trigger selection. It has to be uncommented if one wants to apply trigger selection
   }
   printf("Filename: %s\n", filestring.Data());

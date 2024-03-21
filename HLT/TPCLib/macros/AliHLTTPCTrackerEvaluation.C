@@ -190,20 +190,20 @@ Int_t AliHLTTPCTrackerEvaluation(const Char_t *dir=".", const char* input="AliHL
    Char_t name[15];  Char_t title[100];
    
    for(Int_t i=0; i<15; i++){
-       sprintf(name,"hProjPt%i",i+1);
-       sprintf(title,"(Pt_{MC}-Pt_{Rec})/Pt_{MC} @ Pt#in[%f, %f] GeV/c", i-0.5, i+0.5);
+       snprintf(name,15,"hProjPt%i",i+1);
+       snprintf(title,100,"(Pt_{MC}-Pt_{Rec})/Pt_{MC} @ Pt#in[%f, %f] GeV/c", i-0.5, i+0.5);
        hProjPt[i] = new TH1D(name, title, 50, -3, -3); 
        
-       sprintf(name,"hProjPhi%i",i+1);
-       sprintf(title,"(#phi_{MC}-#phi_{Rec}) @ #phi#in[%f, %f] GeV/c", i-0.5, i+0.5);
+       snprintf(name,15,"hProjPhi%i",i+1);
+       snprintf(title,100,"(#phi_{MC}-#phi_{Rec}) @ #phi#in[%f, %f] GeV/c", i-0.5, i+0.5);
        hProjPhi[i] = new TH1D(name, title, 50, -16, -16);        
       
-       sprintf(name,"hProjLambda%i",i+1);
-       sprintf(title,"(#lambda_{MC}-#lambda_{Rec}) @ #lambda#in[%f, %f] GeV/c", i-0.5, i+0.5);
+       snprintf(name,15,"hProjLambda%i",i+1);
+       snprintf(title,100,"(#lambda_{MC}-#lambda_{Rec}) @ #lambda#in[%f, %f] GeV/c", i-0.5, i+0.5);
        hProjLambda[i] = new TH1D(name, title, 50, -16, -16);        
        
-       sprintf(name,"hProjY%i",i+1);
-       sprintf(title,"(Y_{MC}-Y_{Rec}) @ Y#in[%f, %f] GeV/c", i-0.5, i+0.5);
+       snprintf(name,15,"hProjY%i",i+1);
+       snprintf(title,100,"(Y_{MC}-Y_{Rec}) @ Y#in[%f, %f] GeV/c", i-0.5, i+0.5);
        hProjY[i] = new TH1D(name, title, 50, -16, -16);   
        
        // here you add the hProjZ[] histograms    KKK 
@@ -222,7 +222,7 @@ Int_t AliHLTTPCTrackerEvaluation(const Char_t *dir=".", const char* input="AliHL
 //---------------------------------------------------------------------------------------
 
    Char_t fname[100];
-   sprintf(fname,"%s/GoodTPCTracks.root",dir);
+   snprintf(fname,100,"%s/GoodTPCTracks.root",dir);
 
    TFile *refFile = TFile::Open(fname,"old");
    if(!refFile || !refFile->IsOpen()){
@@ -258,7 +258,7 @@ Int_t AliHLTTPCTrackerEvaluation(const Char_t *dir=".", const char* input="AliHL
 
    //------------ access the HLT output --------------------
 
-   sprintf(fname,"%s/%s", dir, input);
+   snprintf(fname,100,"%s/%s", dir, input);
    TFile *ef = TFile::Open(fname);
    
    if( !ef || !ef->IsOpen() ){
@@ -564,11 +564,11 @@ Int_t AliHLTTPCTrackerEvaluation(const Char_t *dir=".", const char* input="AliHL
    Char_t  fakeBuf[100];
    Char_t  cloneBuf[100];
 
-   sprintf(fakeBuf,"%d", (Int_t)fakeData);
+   snprintf(fakeBuf,100,"%d", (Int_t)fakeData);
    TString fakeStr = fakeBuf;
    fakeStr.Append(" %");
    
-   sprintf(cloneBuf,"%d", (Int_t)cloneData);
+   snprintf(cloneBuf,100,"%d", (Int_t)cloneData);
    TString cloneStr = cloneBuf;
    cloneStr.Append(" %");
      
@@ -743,7 +743,7 @@ Int_t AliHLTTPCTrackerEvaluation(const Char_t *dir=".", const char* input="AliHL
 Int_t GoodTPCTracks(const Char_t *dir){
 
   Char_t fname[100];
-  sprintf(fname,"%s/galice.root",dir);
+  snprintf(fname,100,"%s/galice.root",dir);
 
   AliRunLoader *runLoader = AliRunLoader::Open(fname,"COMPARISON");
   if (!runLoader) {
@@ -799,7 +799,7 @@ Int_t GoodTPCTracks(const Char_t *dir){
   Int_t nEvents = runLoader->GetNumberOfEvents();
   ::Info("GoodTPCTracks","Number of events : %d\n", nEvents);  
 
-  sprintf(fname,"%s/GoodTPCTracks.root",dir);
+  snprintf(fname,100,"%s/GoodTPCTracks.root",dir);
   TFile *file = TFile::Open(fname,"recreate");
 
   TClonesArray dummy("AliTrackReference",1000), *refs = &dummy;

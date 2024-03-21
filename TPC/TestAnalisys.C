@@ -100,9 +100,9 @@ void MakePictures(char *dirname){
   //
   const Int_t kMinCl = 200;
   char chshell[100];
-  sprintf(chshell,"mkdir %s", dirname);
+  snprintf(chshell,100,"mkdir %s", dirname);
   gSystem->Exec(chshell); 
-  sprintf(chshell,"cd %s", dirname);
+  snprintf(chshell,100,"cd %s", dirname);
   gSystem->Exec(chshell);
   //
   //
@@ -113,7 +113,7 @@ void MakePictures(char *dirname){
     char chcut2[100];
     char chdesc[100];
     TProfile * prof;
-    sprintf(chshell,"Cl.fX>0&&Cl.fDetector==%d",isector);
+    snprintf(chshell,100,"Cl.fX>0&&Cl.fDetector==%d",isector);
     Int_t ncl = comp.fTree->Draw("Cl.fY",chshell);
     if (ncl<kMinCl) continue;
     printf("MakePictures sector %d\n",isector);
@@ -124,46 +124,46 @@ void MakePictures(char *dirname){
     // charge row
     //
     c.cd();
-    sprintf(chdesc,"%s Sector %d IROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector);
+    snprintf(chdesc,100,"%s Sector %d IROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector);
     prof = ProfileQRow(chcut1, chdesc, 70);
-    sprintf(chshell,"%s/qrow_sec%dIROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/qrow_sec%dIROC.eps", dirname,isector);
     prof->Draw();
     c.Update();
     c.Print(chshell);
     prof = ProfileMaxRow(chcut1, chdesc, 70);
-    sprintf(chshell,"%s/maxrow_sec%dIROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/maxrow_sec%dIROC.eps", dirname,isector);
     prof->Draw();
     c.Update();
     c.Print(chshell);
     //
-    sprintf(chdesc,"%s Sector %d OROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector+36);
+    snprintf(chdesc,100,"%s Sector %d OROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector+36);
     prof = ProfileQRow(chcut1, chdesc, 100);
-    sprintf(chshell,"%s/qrow_sec%dOROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/qrow_sec%dOROC.eps", dirname,isector);
     prof->Draw();
     c.Update();
     c.Print(chshell);
     prof = ProfileMaxRow(chcut1, chdesc, 100);
-    sprintf(chshell,"%s/maxrow_sec%dOROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/maxrow_sec%dOROC.eps", dirname,isector);
     prof->Draw();
     c.Update();
     c.Print(chshell);
     //
     // charge phi
     //
-    sprintf(chdesc,"%s Sector %d IROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector);
+    snprintf(chdesc,100,"%s Sector %d IROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector);
     prof = ProfileMaxPhi(chcut1, chdesc,20);
-    sprintf(chshell,"%s/qphi_sec%dIROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/qphi_sec%dIROC.eps", dirname,isector);
     prof->Draw();
     c.Update();
     c.Print(chshell);
     //
-    sprintf(chdesc,"%s Sector %d OROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector+36);
+    snprintf(chdesc,100,"%s Sector %d OROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector+36);
     prof = ProfileMaxPhi(chcut1, chdesc,20);
-    sprintf(chshell,"%s/qphi_sec%dOROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/qphi_sec%dOROC.eps", dirname,isector);
     prof->Draw();
     c.Update();
     c.Print(chshell);
@@ -171,47 +171,47 @@ void MakePictures(char *dirname){
     //   charge z
     //
     c.cd();
-    sprintf(chdesc,"%s Sector %d IROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector);
+    snprintf(chdesc,100,"%s Sector %d IROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector);
     prof = ProfileQZ(chcut1, chdesc,20);
-    sprintf(chshell,"%s/qz_sec%dIROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/qz_sec%dIROC.eps", dirname,isector);
     //    prof->Draw();
     c.Update();
     c.Print(chshell);
     //
     c.cd();
-    sprintf(chdesc,"%s Sector %d OROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector+36);
+    snprintf(chdesc,100,"%s Sector %d OROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector+36);
     prof = ProfileQZ(chcut1, chdesc,20);
-    sprintf(chshell,"%s/qz_sec%dOROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/qz_sec%dOROC.eps", dirname,isector);
     //prof->Draw();
     c.Update();
     c.Print(chshell);
     //
     // Picture noise
     //
-    sprintf(chdesc,"%s Sector %d IROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Sector==%d", isector);
+    snprintf(chdesc,100,"%s Sector %d IROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Sector==%d", isector);
     TCanvas *cnoise = NoiseSector(chcut1, chdesc,70,70);
-    sprintf(chshell,"%s/noise_sec%dIROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/noise_sec%dIROC.eps", dirname,isector);
     cnoise->Print(chshell);
-    sprintf(chdesc,"%s Sector %d OROC",runDesc.Data(), isector);
-    sprintf(chcut1,"Sector==%d", isector+36);
+    snprintf(chdesc,100,"%s Sector %d OROC",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Sector==%d", isector+36);
     cnoise = NoiseSector(chcut1, chdesc,70,70);
-    sprintf(chshell,"%s/noise_sec%dOROC.eps", dirname,isector);
+    snprintf(chshell,100,"%s/noise_sec%dOROC.eps", dirname,isector);
     cnoise->Print(chshell);
     //
     // systematic
     //
     c.cd();
-    sprintf(chdesc,"%s Sector %d",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d||Cl.fDetector==%d", isector, isector+36);
+    snprintf(chdesc,100,"%s Sector %d",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d||Cl.fDetector==%d", isector, isector+36);
     SysYX(chcut1,chdesc);
-    sprintf(chshell,"%s/deltayx_sec%d.eps", dirname,isector);
+    snprintf(chshell,100,"%s/deltayx_sec%d.eps", dirname,isector);
     c.Print(chshell);
     c.cd();
     SysZX(chcut1,chdesc);
-    sprintf(chshell,"%s/deltazx_sec%d.eps", dirname,isector);
+    snprintf(chshell,100,"%s/deltazx_sec%d.eps", dirname,isector);
     c.Print(chshell);
     
     //
@@ -219,27 +219,27 @@ void MakePictures(char *dirname){
     //  
     if (ncl<500) continue;  //not enough statistic
     //
-    sprintf(chdesc,"%s Sector %d",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector);
-    sprintf(chcut2,"Cl.fDetector==%d", isector+36);
+    snprintf(chdesc,100,"%s Sector %d",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector);
+    snprintf(chcut2,100,"Cl.fDetector==%d", isector+36);
     c.cd();
     PRFYZ(chcut1, chcut2,chdesc);
-    sprintf(chshell,"%s/prfyz_sec%d.eps", dirname,isector);
+    snprintf(chshell,100,"%s/prfyz_sec%d.eps", dirname,isector);
     c.Print(chshell);
-    sprintf(chcut1,"Sector==%d", isector);
-    sprintf(chcut2,"Sector==%d", isector+36);
+    snprintf(chcut1,100,"Sector==%d", isector);
+    snprintf(chcut2,100,"Sector==%d", isector+36);
     PRFZZ(chcut1, chcut2,chdesc);
-    sprintf(chshell,"%s/prfzz_sec%d.eps", dirname,isector);
+    snprintf(chshell,100,"%s/prfzz_sec%d.eps", dirname,isector);
     c.Print(chshell);
     //
     // y resolution
     //
-    sprintf(chdesc,"%s Sector %d",runDesc.Data(), isector);
-    sprintf(chcut1,"Cl.fDetector==%d", isector);
-    sprintf(chcut2,"Cl.fDetector==%d", isector+36);
+    snprintf(chdesc,100,"%s Sector %d",runDesc.Data(), isector);
+    snprintf(chcut1,100,"Cl.fDetector==%d", isector);
+    snprintf(chcut2,100,"Cl.fDetector==%d", isector+36);
     c.cd();
     ResYZ(chcut1, chcut2,chdesc);
-    sprintf(chshell,"%s/resyz_sec%d.eps", dirname,isector);
+    snprintf(chshell,100,"%s/resyz_sec%d.eps", dirname,isector);
     c.Print(chshell);
     //
   }
@@ -263,7 +263,7 @@ void AddChains(Int_t run){
   runDesc+=run;
   // TPC tracks
   //
-  sprintf(strcl,"ls  *%d*/TPCtracks.root > files.txt", run);
+  snprintf(strcl,100,"ls  *%d*/TPCtracks.root > files.txt", run);
   gSystem->Exec(strcl);
   in0.open("files.txt");
   for (;in0>>sfile;){
@@ -278,7 +278,7 @@ void AddChains(Int_t run){
   }
   //
   // Fitted signals
-  sprintf(strcl,"ls  *%d*/FitSignal.root > files.txt", run);
+  snprintf(strcl,100,"ls  *%d*/FitSignal.root > files.txt", run);
   gSystem->Exec(strcl);
   in1.open("files.txt");
   for (;in1>>sfile;){
@@ -293,7 +293,7 @@ void AddChains(Int_t run){
   }
   //
   // Fitted pedestal
-  sprintf(strcl,"ls  *%d*/TPCsignal.root > files.txt", run);
+  snprintf(strcl,100,"ls  *%d*/TPCsignal.root > files.txt", run);
   gSystem->Exec(strcl);
   in2.open("files.txt");
   for (;in2>>sfile;){
@@ -309,7 +309,7 @@ void AddChains(Int_t run){
   }
   //
   // Random signals
-  sprintf(strcl,"ls  *%d*/TPCsignal.root > files.txt", run);
+  snprintf(strcl,100,"ls  *%d*/TPCsignal.root > files.txt", run);
   gSystem->Exec(strcl);
   in4.open("files.txt");
   for (;in4>>sfile;){
@@ -327,7 +327,7 @@ void AddChains(Int_t run){
   // Rec points trees
   //
   printf("\n IMPORT REC points");
-  sprintf(strcl,"ls  *%d*/*RecPoints* > files.txt", run);
+  snprintf(strcl,100,"ls  *%d*/*RecPoints* > files.txt", run);
   gSystem->Exec(strcl);
   in3.open("files.txt");
   for (;in3>>sfile;){
@@ -335,7 +335,7 @@ void AddChains(Int_t run){
     printf("%s\n",sfile.Data());    
     TFile fcl(sfile.Data());
     char tname[100];
-    sprintf(tname,"%s/%s/TreeR",sfile.Data(),fcl.GetListOfKeys()->At(0)->GetName());
+    snprintf(tname,100,"%s/%s/TreeR",sfile.Data(),fcl.GetListOfKeys()->At(0)->GetName());
     chaincl2.Add(tname);
     //    chainPed.Add(sfile.Data());
   }
@@ -397,9 +397,9 @@ void PRFYZ(TCut cut0, TCut cut1,  char * description){
   char chouter[100];
   char chinner[100];
   prfOuterY->Fit(f1);
-  sprintf(chouter,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chouter,100,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfInnerY->Fit(f1);
-  sprintf(chinner,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chinner,100,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfOuterY->Draw();
   prfInnerY->Draw("same");
   TString desc = description;
@@ -430,9 +430,9 @@ void PRFZZ(TCut cut0, TCut cut1,  char * description){
   char chouter[100];
   char chinner[100];
   prfOuterY->Fit(f1);
-  sprintf(chouter,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chouter,100,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfInnerY->Fit(f1);
-  sprintf(chinner,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chinner,100,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfOuterY->Draw();
   prfInnerY->Draw("same");
   TString desc = description;
@@ -466,9 +466,9 @@ void ResYZ(TCut cut0, TCut cut1,  char * description){
   char chouter[100];
   char chinner[100];
   prfOuterY->Fit(f1);
-  sprintf(chouter,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chouter,100,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfInnerY->Fit(f1);
-  sprintf(chinner,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chinner,100,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfOuterY->Draw();
   prfInnerY->Draw("same");
   TString desc = description;
@@ -506,7 +506,7 @@ TProfile * ProfileMaxRow(TCut cut0, char *name, Int_t max){
 
   TProfile *profA = new TProfile(name,name,max,0,max-1);
   char expr[100];
-  sprintf(expr,"Cl.fMax:Cl.fRow>>%s",name);
+  snprintf(expr,100,"Cl.fMax:Cl.fRow>>%s",name);
   comp.fTree->Draw(expr,"abs(Cl.fZ)>0&&Cl.fMax<500"+cut0,"prof");
   profA->SetXTitle("Pad Row");
   profA->SetYTitle("Amplitude at maxima (ADC)");
@@ -518,7 +518,7 @@ TProfile * ProfileMaxPhi(TCut cut0, char *name, Int_t max){
 
   TProfile *profA = new TProfile(name,name,max,-0.14,0.14);
   char expr[100];
-  sprintf(expr,"Cl.fMax:Cl.fY/Cl.fX>>%s",name);
+  snprintf(expr,100,"Cl.fMax:Cl.fY/Cl.fX>>%s",name);
   comp.fTree->Draw(expr,"abs(Cl.fZ)>0&&Cl.fMax<500"+cut0,"prof");
   profA->SetXTitle("Local #phi(rad)");
   profA->SetYTitle("Amplitude at maxima (ADC)");
@@ -530,7 +530,7 @@ TProfile * ProfileQRow(TCut cut0, char *name, Int_t max){
 
   TProfile *profA = new TProfile(name,name,max,0,max-1);
   char expr[100];
-  sprintf(expr,"Cl.fQ:Cl.fRow>>%s",name);
+  snprintf(expr,100,"Cl.fQ:Cl.fRow>>%s",name);
   comp.fTree->Draw(expr,"abs(Cl.fZ)>0&&Cl.fMax<500"+cut0,"prof");
   profA->SetXTitle("Pad Row");
   profA->SetYTitle("Total charge(ADC)");
@@ -542,7 +542,7 @@ TProfile * ProfileQPhi(TCut cut0, char *name, Int_t max){
 
   TProfile *profA = new TProfile(name,name,max,-0.14,0.14);
   char expr[100];
-  sprintf(expr,"Cl.fQ:Cl.fY/Cl.fX>>%s",name);
+  snprintf(expr,100,"Cl.fQ:Cl.fY/Cl.fX>>%s",name);
   comp.fTree->Draw(expr,"abs(Cl.fZ)>0&&Cl.fMax<500"+cut0,"prof");
   profA->SetXTitle("Local #phi(rad)");
   profA->SetYTitle("Total charge (ADC)");
@@ -556,7 +556,7 @@ TProfile * ProfileQZ(TCut cut0, char *name, Int_t max){
   TF1 * f1 = new TF1("f1","[0]*exp(-[1]*(250-x))");
   TProfile *profA = new TProfile(name,name,max,0,250);
   char expr[100];
-  sprintf(expr,"Cl.fQ:abs(Cl.fZ)>>%s",name);
+  snprintf(expr,100,"Cl.fQ:abs(Cl.fZ)>>%s",name);
   comp.fTree->Draw(expr,"abs(Cl.fZ)>0&&Cl.fMax<500"+cut0,"prof");
   profA->SetXTitle("Z position (cm)"); 
   profA->SetYTitle("Amplitude (ADC)");
@@ -565,7 +565,7 @@ TProfile * ProfileQZ(TCut cut0, char *name, Int_t max){
   f1->SetParameter(0,fline->GetParameter(0));
   f1->SetParameter(1,fline->GetParameter(1));
   profA->Fit(f1);
-  sprintf(chc,"Exponential fit params: p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chc,100,"Exponential fit params: p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   printf("%s",chc);
   TLegend *legend = new TLegend(0.25,0.12,0.85,0.25, chc);
   legend->Draw();
@@ -578,13 +578,13 @@ TProfile * ProfileMaxZ(TCut cut0, char *name, Int_t max){
   TF1 * f1 = new TF1("f1","[0]+[1]*[0]*(250-x)");
   TProfile *profA = new TProfile(name,name,max,0,250);
   char expr[100];
-  sprintf(expr,"Cl.fMax:abs(Cl.fZ)>>%s",name);
+  snprintf(expr,100,"Cl.fMax:abs(Cl.fZ)>>%s",name);
   comp.fTree->Draw(expr,"abs(Cl.fZ)>0&&Cl.fMax<500"+cut0,"prof");
   profA->SetXTitle("Z position (cm)"); 
   profA->SetYTitle("Amplitude at maxima (ADC)");
   char chc[100];
   profA->Fit(f1);
-  sprintf(chc,"p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chc,100,"p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   TLegend *legend = new TLegend(0.25,0.12,0.85,0.35, chc);
   legend->Draw();
   return profA;
@@ -612,9 +612,9 @@ void P3Z(TCut cut0, TCut cut1,  char * description){
   char chouter[100];
   char chinner[100];
   prfOuterY->Fit(f1);
-  sprintf(chouter,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chouter,100,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfInnerY->Fit(f1);
-  sprintf(chinner,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chinner,100,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfOuterY->Draw();
   prfInnerY->Draw("same");
   TString desc = description;
@@ -647,9 +647,9 @@ void P5Z(TCut cut0, TCut cut1,  char * description){
   char chouter[100];
   char chinner[100];
   prfOuterY->Fit(f1);
-  sprintf(chouter,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chouter,100,"Outer sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfInnerY->Fit(f1);
-  sprintf(chinner,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
+  snprintf(chinner,100,"Inner sector : p_{0} = %f  p_{1} = %f",f1->GetParameter(0),f1->GetParameter(1));
   prfOuterY->Draw();
   prfInnerY->Draw("same");
    TString desc = description;
@@ -671,10 +671,10 @@ TCanvas *  NoiseSector(TCut cut0,  char * description, Int_t maxrow, Int_t maxpa
   c->cd(2);
   Float_t rand  = gRandom->Rndm();
   char name[100];
-  sprintf(name,"prof%f",rand);
+  snprintf(name,100,"prof%f",rand);
   TProfile2D * prof= new TProfile2D(name,name,maxrow, 0, maxrow-1, 2*maxpad,-maxpad,maxpad);
   char expr[100];
-  sprintf(expr,"GSigma:RPad:Row>>%s",name);
+  snprintf(expr,100,"GSigma:RPad:Row>>%s",name);
   prof->SetXTitle("Pad row");
   prof->SetYTitle("Pad number");
   compP.fTree->Draw(expr,cut0,"profcolz");

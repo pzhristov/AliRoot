@@ -35,7 +35,7 @@ Int_t setupPar(const char* pararchivename) {
   ///////////////////
   if (pararchivename) {
     char processline[1024];
-    sprintf(processline,".! tar xzf %s.par",pararchivename);
+    snprintf(processline,1024,".! tar xzf %s.par",pararchivename);
     gROOT->ProcessLine(processline);
     const char* ocwd = gSystem->WorkingDirectory();
     gSystem->ChangeDirectory(pararchivename);

@@ -96,7 +96,7 @@ void AddToReport(const char *prefix,const char * name, Float_t size[2], Float_t 
   /// add branch info to array
 
   char fullname[10000];
-  sprintf(fullname,"%s.%s",prefix,name);
+  snprintf(fullname,10000,"%s.%s",prefix,name);
   aReport.AddLast(new TObjString(fullname));
   Int_t entry = aReport.GetEntries();
   if (totSize.GetSize()<entry){

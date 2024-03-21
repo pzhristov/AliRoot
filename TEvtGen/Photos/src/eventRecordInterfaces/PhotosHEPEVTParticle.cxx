@@ -323,7 +323,7 @@ bool PhotosHEPEVTParticle::isMotherOf  (PhotosHEPEVTParticle *p)
 
 void PhotosHEPEVTParticle::print(){
   char buf[256];
-  sprintf(buf,"P: (%2i) %6i %2i | %11.4e %11.4e %11.4e %11.4e | %11.4e | M: %2i %2i | D: %2i %2i\n",
+  snprintf(buf, 256,"P: (%2i) %6i %2i | %11.4e %11.4e %11.4e %11.4e | %11.4e | M: %2i %2i | D: %2i %2i\n",
           m_barcode, m_pdgid, m_status, m_px, m_py, m_pz, m_e, m_generated_mass,
           m_first_mother, m_second_mother,   m_daughter_start, m_daughter_end);
 

@@ -218,7 +218,7 @@ AliHLTPHOSOnlineDisplay::ScanArguments(int argc, char** argv)
 	  if(i+1 <= argc)
 	    {
 	      i++;
-	      sprintf(fgHosts[fgNHosts],"%s", argv[i]);
+	      snprintf(fgHosts[fgNHosts],fgNHosts,"%s", argv[i]);
 	      fgNHosts ++; 
 	      cout <<"fgNHosts set to "<< fgNHosts <<endl;
 	      hostIsSet = kTRUE; 
@@ -286,17 +286,17 @@ AliHLTPHOSOnlineDisplay::Gain2Text(const int gain,  char *txt) const
   if(gain == LOWGAIN)
     {
       
-      sprintf(txt,"Low Gain");
+      snprintf(txt,strlen(txt)/sizeof(char),"Low Gain");
     }
 
   else if(gain == HIGHGAIN)
     {
-      sprintf(txt,"High Gain");
+      snprintf(txt,strlen(txt)/sizeof(char),"High Gain");
     }
 
   else
     {
-      sprintf(txt,"Error!! invalid gain %d", gain);
+      snprintf(txt,strlen(txt)/sizeof(char),"Error!! invalid gain %d", gain);
     }
   
 }

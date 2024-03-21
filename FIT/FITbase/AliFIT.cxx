@@ -171,7 +171,7 @@ void AliFIT::MakeBranch(Option_t* option)
   //    R         Make a branch of  AliT0RecPointUps
   //
   //  char branchname[20];
-  // sprintf(branchname,"%s",GetName());
+  // snprintf(branchname,20,"%s",GetName());
   //  strncpy(branchname, GetName(), 20);
   TString branchname = Form("%s", GetName());
 

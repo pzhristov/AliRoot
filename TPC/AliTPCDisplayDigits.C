@@ -30,11 +30,11 @@ Int_t AliTPCDisplayDigits(Int_t eventn, int sec, int row, int lab=-1,
    if (!par) { cerr<<"TPC parameters have not been found !\n"; return 2; }
 
    Char_t s[80];
-   sprintf(s,"Sector %d   Row %d\n",sec,row);
+   snprintf(s,80,"Sector %d   Row %d\n",sec,row);
    TH2F *h = new TH2F("h",s,max_t_chan,min_t,max_t,max_p_chan,min_p,max_p);
    
    Char_t  name[100];
-   sprintf(name,"TreeD_75x40_100x60_150x60_%d",eventn);
+   snprintf(name,100,"TreeD_75x40_100x60_150x60_%d",eventn);
 
    TTree *t=(TTree*)f->Get(name);
    if (!t) { cerr<<"TPC digits have not been found !\n"; return 3; }

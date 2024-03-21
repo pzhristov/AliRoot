@@ -10019,7 +10019,7 @@ TObjArray * AliTPCtracker::ReadSeedsFromHLT()
 
   TObject* pClusterAccess=fHLTClusterAccess;
   char params[64];
-  sprintf(params, "%p", this);
+  snprintf(params,64, "%p", this);
   pClusterAccess->Execute("createSeeds", params, NULL);
   pClusterAccess->Copy(*seeds);
   

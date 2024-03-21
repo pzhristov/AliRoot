@@ -294,9 +294,9 @@ TH1I* AliTRUPedestalOutput::GetTRUSignals ( UInt_t mod, UInt_t row, UInt_t branc
   {
     // else Initilize
     char name[256];
-    sprintf(name, "fTRUSignals_m:%d_r:%d_b:%d_x:%02d_z:%02d", mod, row, branch, x, z);
+    snprintf(name,256, "fTRUSignals_m:%d_r:%d_b:%d_x:%02d_z:%02d", mod, row, branch, x, z);
     char title[256];
-    sprintf(title, "TRU Signal mod:%d row:%d branch:%d x:%02d z:%02d", mod, row, branch, x, z);
+    snprintf(title,256, "TRU Signal mod:%d row:%d branch:%d x:%02d z:%02d", mod, row, branch, x, z);
   
     TH1I* hist = new TH1I(name, title, 1024, 0, 1024);
     hist->GetXaxis()->SetTitle("Bin");

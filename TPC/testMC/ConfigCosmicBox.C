@@ -507,7 +507,7 @@ AliGenerator* GeneratorFactory(PprRun_t srun) {
 	  generCosmic->SetPart(13*sign);
 	  generCosmic->SetVertexSmear(kPerEvent);
 	  char gname[1000];
-	  sprintf(gname,"G_%d",ipart);
+	  snprintf(gname,1000,"G_%d",ipart);
 	  gener->AddGenerator(generCosmic,gname,1);
 	}
 

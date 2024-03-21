@@ -81,42 +81,42 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
 
   // LAYERS: volids 14336 to 14341
   strcpy(modlist,"ITSMilleModuleList: 0-79");
-  sprintf(symname,"%s  %s","ITS/SPD0",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SPD0",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
   j++; volid++;
 
   strcpy(modlist,"ITSMilleModuleList: 80-239");
-  sprintf(symname,"%s  %s","ITS/SPD1",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SPD1",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
   j++; volid++;
 
   strcpy(modlist,"ITSMilleModuleList: 240-323");
-  sprintf(symname,"%s  %s","ITS/SDD2",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SDD2",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
   j++; volid++;
 
   strcpy(modlist,"ITSMilleModuleList: 324-499");
-  sprintf(symname,"%s  %s","ITS/SDD3",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SDD3",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
   j++; volid++;
 
   strcpy(modlist,"ITSMilleModuleList: 500-1247");
-  sprintf(symname,"%s  %s","ITS/SSD4",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SSD4",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
   j++; volid++;
 
   strcpy(modlist,"ITSMilleModuleList: 1248-2197");
-  sprintf(symname,"%s  %s","ITS/SSD5",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SSD5",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -124,7 +124,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
 
   // SPD BARREL: volid 14342
   strcpy(modlist,"ITSMilleModuleList: 0-239");
-  sprintf(symname,"%s  %s","ITS/SPD/Barrel",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SPD/Barrel",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -132,14 +132,14 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   
   // SPD HALF BARREL: volids 14343-14344
   strcpy(modlist,"ITSMilleModuleList: 0-39 80-159");
-  sprintf(symname,"%s  %s","ITS/SPD/HalfBarrel0",modlist); // up
+  snprintf(symname,4096,"%s  %s","ITS/SPD/HalfBarrel0",modlist); // up
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
   j++; volid++;
 
   strcpy(modlist,"ITSMilleModuleList: 40-79 160-239");
-  sprintf(symname,"%s  %s","ITS/SPD/HalfBarrel1",modlist); // down
+  snprintf(symname,4096,"%s  %s","ITS/SPD/HalfBarrel1",modlist); // down
   m.Clear(); // global frame
   //m.RotateZ(180.);
   //m.RotateY(180.); // just negY->posY
@@ -152,15 +152,15 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
     // sect 0: 0-7  80-95
     // sect 1: 8-15 96-111
     // ...
-    sprintf(modlist,"ITSMilleModuleList: %d-%d %d-%d",is*8,is*8+7,is*16+80,is*16+80+15);
-    sprintf(symname,"ITS/SPD0/Sector%d",is);
+    snprintf(modlist,4096,"ITSMilleModuleList: %d-%d %d-%d",is*8,is*8+7,is*16+80,is*16+80+15);
+    snprintf(symname,4096,"ITS/SPD0/Sector%d",is);
     if (AliGeomManager::GetMatrix(symname))
       m=(*AliGeomManager::GetMatrix(symname));
     else {
       Error(macroname,"cannot find matrix for SPD sector\n");
       return;
     }
-    sprintf(symname,"%s%d  %s","ITS/SPD0/Sector",is,modlist);
+    snprintf(symname,4096,"%s%d  %s","ITS/SPD0/Sector",is,modlist);
 
     new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
     *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -171,7 +171,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   for (int is=0; is<60; is++) {
     // Stave0: 0-3
 //     // ...
-    sprintf(modlist," ITSMilleModuleList: %d-%d",is*4,is*4+3);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d",is*4,is*4+3);
     strcpy(symname,AliITSgeomTGeo::GetSymName(is*4));
     char *clad=strstr(symname,"Ladder");
     if (clad) *(clad-1) = NULL;
@@ -205,7 +205,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   for (int is=0; is<120; is++) {
     // HalfStave0: 0-1
 //     // ...
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",is*2,is*2+1);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",is*2,is*2+1);
     strcpy(symname,AliITSgeomTGeo::GetSymName(is*2));
     char *clad=strstr(symname,"Ladder");
     if (clad) *(clad-1) = NULL;
@@ -230,13 +230,13 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   strcpy(modlist,"ITSMilleModuleList: ");
   for (int ii=0; ii<40; ii++) {
     int ij=ii/2;
-    if (!(ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if (!(ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
   for (int ii=80; ii<160; ii++) {
     int ij=ii/2;
-    if (!(ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if (!(ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
-  sprintf(symname,"%s  %s","ITS/SPD/HalfBarrel0fw",modlist); // up/fw
+  snprintf(symname,4096,"%s  %s","ITS/SPD/HalfBarrel0fw",modlist); // up/fw
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -245,13 +245,13 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   strcpy(modlist,"ITSMilleModuleList: ");
   for (int ii=0; ii<40; ii++) {
     int ij=ii/2;
-    if ((ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if ((ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
   for (int ii=80; ii<160; ii++) {
     int ij=ii/2;
-    if ((ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if ((ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
-  sprintf(symname,"%s  %s","ITS/SPD/HalfBarrel0bw",modlist); // up/bw
+  snprintf(symname,4096,"%s  %s","ITS/SPD/HalfBarrel0bw",modlist); // up/bw
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -260,13 +260,13 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   strcpy(modlist,"ITSMilleModuleList: ");
   for (int ii=40; ii<80; ii++) {
     int ij=ii/2;
-    if (!(ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if (!(ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
   for (int ii=160; ii<240; ii++) {
     int ij=ii/2;
-    if (!(ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if (!(ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
-  sprintf(symname,"%s  %s","ITS/SPD/HalfBarrel1fw",modlist); // down/fw
+  snprintf(symname,4096,"%s  %s","ITS/SPD/HalfBarrel1fw",modlist); // down/fw
   m.Clear(); // global frame
   //m.RotateZ(180.);
   //m.RotateY(180.); // just negY->posY
@@ -277,13 +277,13 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   strcpy(modlist,"ITSMilleModuleList: ");
   for (int ii=40; ii<80; ii++) {
     int ij=ii/2;
-    if ((ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if ((ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
   for (int ii=160; ii<240; ii++) {
     int ij=ii/2;
-    if ((ij%2)) sprintf(modlist,"%s %d",modlist,ii); 
+    if ((ij%2)) snprintf(modlist,4096,"%s %d",modlist,ii); 
   }
-  sprintf(symname,"%s  %s","ITS/SPD/HalfBarrel1bw",modlist); // down/bw
+  snprintf(symname,4096,"%s  %s","ITS/SPD/HalfBarrel1bw",modlist); // down/bw
   m.Clear(); // global frame
   //m.RotateZ(180.);
   //m.RotateY(180.); // just negY->posY
@@ -302,7 +302,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   for (int is=0; is<14; is++) {
     // Ladder: 0-5
     //     // ...
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",240+is*6,240+is*6+5);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",240+is*6,240+is*6+5);
     strcpy(symname,AliITSgeomTGeo::GetSymName(240+is*6));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;
@@ -327,7 +327,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   for (int is=0; is<22; is++) {
     // Ladder: 0-7
     //     // ...
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",324+is*8,324+is*8+7);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",324+is*8,324+is*8+7);
     strcpy(symname,AliITSgeomTGeo::GetSymName(324+is*8));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;
@@ -360,7 +360,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   for (int is=0; is<34; is++) {
     // Ladder: 0-5
     //     // ...
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",500+is*22,500+is*22+21);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",500+is*22,500+is*22+21);
     strcpy(symname,AliITSgeomTGeo::GetSymName(500+is*22));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;
@@ -385,7 +385,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   for (int is=0; is<38; is++) {
     // Ladder: 0-7
     //     // ...
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",1248+is*25,1248+is*25+24);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",1248+is*25,1248+is*25+24);
     strcpy(symname,AliITSgeomTGeo::GetSymName(1248+is*25));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;
@@ -408,7 +408,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   
   // SSD BARREL: volid 16072
   strcpy(modlist,"ITSMilleModuleList: 500-2197");
-  sprintf(symname,"%s  %s","ITS/SSD/Barrel",modlist);
+  snprintf(symname,4096,"%s  %s","ITS/SSD/Barrel",modlist);
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -418,7 +418,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   // SSD HALF BARREL: volids 16073-16074
   // SSD HALF BARREL UP: volid 16073
   strcpy(modlist,"ITSMilleModuleList: 500-873 1248-1722");
-  sprintf(symname,"%s  %s","ITS/SSD/HalfBarrel0",modlist); // up
+  snprintf(symname,4096,"%s  %s","ITS/SSD/HalfBarrel0",modlist); // up
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -426,7 +426,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   
   // SSD HALF BARREL DOWN: volid 16074
   strcpy(modlist,"ITSMilleModuleList: 874-1246 1723-2197");
-  sprintf(symname,"%s  %s","ITS/SSD/HalfBarrel1",modlist); // down
+  snprintf(symname,4096,"%s  %s","ITS/SSD/HalfBarrel1",modlist); // down
   m.Clear(); // global frame
   new(alobj[j]) AliAlignObjParams(symname, volid, m, kTRUE);
   *(strstr(symname,"ITSMilleModuleList"))=NULL ;printf("added module %s with volid %d \n",symname,volid);
@@ -442,7 +442,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   for (int is=0; is<34; is++) {
     // Ladder: 0-33
     // first half
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",500+is*22,500+is*22+11);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",500+is*22,500+is*22+11);
     strcpy(symname,AliITSgeomTGeo::GetSymName(500+is*22));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;
@@ -464,7 +464,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
     j++; volid++;
 
     // second half
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",500+is*22+12,500+is*22+21);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",500+is*22+12,500+is*22+21);
     strcpy(symname,AliITSgeomTGeo::GetSymName(500+is*22));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;
@@ -490,7 +490,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
   // SSD5 Ladders: volids 16143 to 16218
   for (int is=0; is<38; is++) {
     //  first half
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",1248+is*25,1248+is*25+11);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",1248+is*25,1248+is*25+11);
     strcpy(symname,AliITSgeomTGeo::GetSymName(1248+is*25));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;
@@ -512,7 +512,7 @@ void MakeITSMilleSuperModules(char *geomfile="geometry.root") {
     j++; volid++;
 
     // second half
-    sprintf(modlist," ITSMilleModuleList: %d-%d ",1248+is*25+12,1248+is*25+24);
+    snprintf(modlist,4096," ITSMilleModuleList: %d-%d ",1248+is*25+12,1248+is*25+24);
     strcpy(symname,AliITSgeomTGeo::GetSymName(1248+is*25));
     char *clad=strstr(symname,"Sensor");
     if (clad) *(clad-1) = NULL;

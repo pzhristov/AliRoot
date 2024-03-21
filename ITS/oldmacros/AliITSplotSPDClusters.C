@@ -64,18 +64,18 @@ void AliITSplotSPDClusters(const char* filename="galice_80.root"){
     Float_t diffCoeff= resp0->DistanceOverVoltage();//Get Value of Diffusion Coefficient parameter d/v.
     diffCoeff *= resp0->Temperature();
     diffCoeff = TMath::Sqrt(diffCoeff*8.6173376e-5);// K_Boltzman/e_Coulumb
-    char    aDiffCoeff[100];            //Character array for sprintf
+    char    aDiffCoeff[100];            //Character array for snprintf
 
-    sprintf(aDiffCoeff,"Number of SPD Clusters in x, layer 1, DiffCoeff=%f #sqrt{cm}",
+    snprintf(aDiffCoeff,100,"Number of SPD Clusters in x, layer 1, DiffCoeff=%f #sqrt{cm}",
 	    diffCoeff);
     TH1D *hclx1 = new TH1D("hclx1",aDiffCoeff,15,0.5,15.5);
-    sprintf(aDiffCoeff,"Number of SPD Clusters in z, layer 1, DiffCoeff=%f #sqrt{cm}",
+    snprintf(aDiffCoeff,100,"Number of SPD Clusters in z, layer 1, DiffCoeff=%f #sqrt{cm}",
 	    diffCoeff);
     TH1D *hclz1 = new TH1D("hclz1",aDiffCoeff,5,0.5,5.5);
-    sprintf(aDiffCoeff,"Number of SPD Clusters in x, layer 2, DiffCoeff=%f #sqrt{cm}",
+    snprintf(aDiffCoeff,100,"Number of SPD Clusters in x, layer 2, DiffCoeff=%f #sqrt{cm}",
 	    diffCoeff);
     TH1D *hclx2 = new TH1D("hclx2",aDiffCoeff,15,0.5,15.5);
-    sprintf(aDiffCoeff,"Number of SPD Clusters in z, layer 2, DiffCoeff=%f #sqrt{cm}",
+    snprintf(aDiffCoeff,100,"Number of SPD Clusters in z, layer 2, DiffCoeff=%f #sqrt{cm}",
 	    diffCoeff);
     TH1D *hclz2 = new TH1D("hclz2",aDiffCoeff,5,0.5,5.5);
     // Create Arrays with clusters from:  Data, Ba/Sa Model, old version of
@@ -178,7 +178,7 @@ void AliITSplotSPDClusters(const char* filename="galice_80.root"){
     Int_t evnt,i,n,nc;
     Float_t nclx = 0,nclz = 0;
     for(evnt=0;evnt<nevents;evnt++){
-	sprintf(tn,"TreeC%d",evnt);
+	snprintf(tn,20,"TreeC%d",evnt);
 	tc = (TTree*) file->Get(tn);
 	spdBranch = tc->GetBranch("ITSClustersSPD");
 	spdBranch->SetAddress(&spdClustcA);
@@ -224,7 +224,7 @@ void AliITSplotSPDClusters(const char* filename="galice_80.root"){
     hclz2->SetMinimum(0.000257);
     hclz2->SetMaximum(1.01);
 
-    sprintf(aDiffCoeff,"SPD Clusters with Diffusion Coefficent=%f",diffCoeff);
+    snprintf(aDiffCoeff,100,"SPD Clusters with Diffusion Coefficent=%f",diffCoeff);
     TCanvas *cSPDclusters = new TCanvas("cSPDclusters",aDiffCoeff,
 				       400,10,600,776);
     cSPDclusters->Divide(2, 2);

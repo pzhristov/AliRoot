@@ -554,9 +554,9 @@ void FastVsSlowSimEff(Int_t id=0,Int_t PbPb=0) {
 
   char h[100];
   if (PbPb==0) 
-    sprintf(h,"-fran");
+    snprintf(h,100,"-fran");
   else 
-    sprintf(h,"-Anna");
+    snprintf(h,100,"-Anna");
 
   TFile f1(Form("root/FastVsSlow_CurrentITS-PbPb%s.root",h));
   TFile f2(Form("root/FastVsSlow_NewSPDs-PbPb%s.root",h));

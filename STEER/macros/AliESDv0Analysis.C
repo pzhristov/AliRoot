@@ -27,7 +27,7 @@ Int_t AliESDv0Analysis(const Char_t *dir=".") {
       hm->SetXTitle("Mass (GeV/c**2)");
    }
    Char_t fname[100];
-   sprintf(fname,"%s/AliESDs.root",dir);
+   snprintf(fname,100,"%s/AliESDs.root",dir);
    TFile *ef=TFile::Open(fname);
    if (!ef||!ef->IsOpen()) {cerr<<"Can't AliESDs.root !\n"; return 1;}
    cerr<<"\n****** "<<fname<<" ******\n";

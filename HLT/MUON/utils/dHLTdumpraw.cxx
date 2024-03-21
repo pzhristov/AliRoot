@@ -2577,7 +2577,7 @@ const char* TryDecodeDataSpec(const char* filename)
 			num += substr[pos+i];
 		AliHLTUInt32_t spec = AliHLTMUONUtils::EquipIdToSpec(num.Atoi());
 		static char strbuf[32];
-		sprintf(&strbuf[0], "0x%8.8X", spec);
+		snprintf(&strbuf[0], 32, "0x%8.8X", spec);
 		return &strbuf[0];
 	}
 	

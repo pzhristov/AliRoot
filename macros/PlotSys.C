@@ -185,12 +185,12 @@ void TopVMDetector(){
     fout->cd(fgkDetectorName[idet]);
     char cdet[100];
     char cdvm[100];
-    sprintf(cdet,"id0==%d",idet);
+    snprintf(cdet,100,"id0==%d",idet);
     char expr[100];
-    sprintf(expr,"deltaVM:sname>>hhh");  
+    snprintf(expr,100,"deltaVM:sname>>hhh");  
     //
     Float_t thDVM = TopUsage(tree,"deltaVM",cdet,ctop);
-    sprintf(cdvm,"%s&&deltaVM>%f",cdet, thDVM);
+    snprintf(cdvm,100,"%s&&deltaVM>%f",cdet, thDVM);
     //
     tree->Draw(expr,cdvm,"GOFF"); 
     his2 = (TH2F*)(tree->GetHistogram())->Clone("xxx");
@@ -203,7 +203,7 @@ void TopVMDetector(){
     delete his2;
     //
     //    
-    sprintf(expr,"VM:sname>>hhh");
+    snprintf(expr,100,"VM:sname>>hhh");
     tree->Draw(expr,cdvm,"goff"); 
     his2 = (TH2F*)(tree->GetHistogram())->Clone("yyy");
     delete tree->GetHistogram();
@@ -233,12 +233,12 @@ void TopCPUDetector(){
     fout->cd(fgkDetectorName[idet]);
     char cdet[100];
     char cdtime[100];
-    sprintf(cdet,"id0==%d",idet);
+    snprintf(cdet,100,"id0==%d",idet);
     char expr[100];
-    sprintf(expr,"deltaT:sname>>hhh");  
+    snprintf(expr,100,"deltaT:sname>>hhh");  
     //
     Float_t thDT = TopUsage(tree,"deltaT",cdet,ctop);
-    sprintf(cdtime,"%s&&deltaT>%f",cdet, thDT);
+    snprintf(cdtime,100,"%s&&deltaT>%f",cdet, thDT);
     //
     tree->Draw(expr,cdtime,"goff"); 
     his2 = (TH2F*)(tree->GetHistogram())->Clone("dtsname");
@@ -262,7 +262,7 @@ void SumDetector(){
   pFile = fopen (sumFile,"w");
   char cdet[100];
   char expr[100];
-  sprintf(cdet,"id0>=0&&id2>=0");
+  snprintf(cdet,100,"id0>=0&&id2>=0");
   Double_t sumdTAll  = SumUsage(tree,"deltaT",cdet);
   Double_t sumdVMAll = SumUsage(tree,"deltaVM",cdet);
   printf("%s%s%s%s%s\n","Det/C:","sumDt/F:","sumDvm/F:","fracDt/F:","fracDvm/F");
@@ -270,8 +270,8 @@ void SumDetector(){
   fprintf(pFile,"%s%s%s%s%s\n","Det/C:","sumDt/F:","sumDvm/F:","fracDt/F:","fracDvm/F");
   fprintf(pFile,"%s\t%f\t%f\t%f\t%f\t\n","all", sumdTAll,sumdVMAll,100.,100.);
   for (Int_t idet=0; idet<kNDetectors; idet++){
-    sprintf(cdet,"id0==%d&&id2>=0",idet);
-    sprintf(expr,"deltaT:sname>>hhh");  
+    snprintf(cdet,100,"id0==%d&&id2>=0",idet);
+    snprintf(expr,100,"deltaT:sname>>hhh");  
     Double_t sumdT  = SumUsage(tree,"deltaT",cdet);
     Double_t sumdVM = SumUsage(tree,"deltaVM",cdet);
     printf("%s\t%f\t%f\t%f\t%f\t\n",fgkDetectorName[idet], sumdT,sumdVM,100.*sumdT/sumdTAll, 100.*sumdVM/sumdVMAll); 

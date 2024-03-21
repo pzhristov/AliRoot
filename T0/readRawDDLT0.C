@@ -6,28 +6,28 @@ void readRawDDLT0()
   Char_t buf1[10], buf2[10], buf3[10], buf4[10], buf5[10], buf6[10],buf7[10];
   for (Int_t ic=0; ic<8; ic++)
     {
-      sprintf(buf1,"CFD%i",ic+1);
+      snprintf(buf1,10,"CFD%i",ic+1);
       hCFD[ic]= new TH1F(buf1,"CFD",500,0.5,6000.5);
-      sprintf(buf2,"LED%i",ic+1);
+      snprintf(buf2,10,"LED%i",ic+1);
       hLED[ic]= new TH1F(buf2,"LED",500,-0.5,2000.5);
       //LED-CFD
-      sprintf(buf6,"ADC_%i",ic+1);
+      snprintf(buf6,10,"ADC_%i",ic+1);
       hADC[ic]= new TH1F(buf6,"QT1",500,0,6000);
     }
   
   for (Int_t iq=0; iq<4; iq++)
     {
       //QT01 - QT04
-      sprintf(buf3,"QT0%i",iq+1);
+      snprintf(buf3,10,"QT0%i",iq+1);
       hQT01[iq]= new TH1F(buf3,"QT01",500,0,6000);
-      sprintf(buf4,"QT1_%i",iq+1);
+      snprintf(buf4,10,"QT1_%i",iq+1);
       //QT11 - QT14 
       hQT02[iq]= new TH1F(buf4,"QT02",500,0,6000);
-      sprintf(buf5,"QTD_%i",iq+1);
+      snprintf(buf5,10,"QTD_%i",iq+1);
       //QT11-QT01 ....
       hQTD[iq]= new TH1F(buf5,"QTdiff",5000,1500,6000);
 
-      sprintf(buf7,"QTCFD_%i",iq+1);
+      snprintf(buf7,10,"QTCFD_%i",iq+1);
       hQTCFD[iq]= new TH2F(buf7,"QT vs CFD",500,0,6000,500,0,5000);
   }
 
@@ -60,7 +60,7 @@ void readRawDDLT0()
    /*
   Char_t filedata[20];
 
-  sprintf(filedata,"START%i.root",runNumber);
+  snprintf(filedata,20,"START%i.root",runNumber);
   TFile *f1 = new TFile(filedata);
   //  f1->ls();
   TTree *tree = (TTree *)f1->Get("raw");
@@ -180,7 +180,7 @@ void readRawDDLT0()
     }
 
   Char_t filehist[20]; 
-  sprintf(filehist,"hist%i.root",runNumber);
+  snprintf(filehist,20,"hist%i.root",runNumber);
   TFile *hist = new TFile(filehist,"RECREATE");
 
   hLEDCFD->Write();

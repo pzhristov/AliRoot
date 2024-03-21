@@ -27,7 +27,7 @@ void CheckPedestalHistos(Int_t nRun=0,  Int_t optPlot = 1)
   TGrid::Connect("alien:",0,0,"t");
   
   char histoFName[150];
-  sprintf(histoFName,"alien:///alice/data/2012/Reference/ZDC/%d_pedestalReference.root",nRun);
+  snprintf(histoFName,150,"alien:///alice/data/2012/Reference/ZDC/%d_pedestalReference.root",nRun);
 
   int const kNChannels = 24;
   //
@@ -44,58 +44,58 @@ void CheckPedestalHistos(Int_t nRun=0,  Int_t optPlot = 1)
   char namhist1lg[50], namhist2lg[50], namhist3lg[50];
   for(Int_t j=0; j<kNChannels; j++){
      if(j<=4){ // ZNC
-       sprintf(namhist1hg,"PedZNChg_%d",j);
-       sprintf(namhist2hg,"PedZNChgOutOfTime_%d",j);
-       sprintf(namhist3hg,"PedCorrZNChg_%d",j);
+       snprintf(namhist1hg,50,"PedZNChg_%d",j);
+       snprintf(namhist2hg,50,"PedZNChgOutOfTime_%d",j);
+       snprintf(namhist3hg,50,"PedCorrZNChg_%d",j);
        //
-       sprintf(namhist1lg,"PedZNClg_%d",j);
-       sprintf(namhist2lg,"PedZNClgOutOfTime_%d",j);
-       sprintf(namhist3lg,"PedCorrZNClg_%d",j);
+       snprintf(namhist1lg,50,"PedZNClg_%d",j);
+       snprintf(namhist2lg,50,"PedZNClgOutOfTime_%d",j);
+       snprintf(namhist3lg,50,"PedCorrZNClg_%d",j);
      }
      else if(j>=5 && j<=9){ // ZPC
-       sprintf(namhist1hg,"PedZPChg_%d",j-5);
-       sprintf(namhist2hg,"PedZPChgOutOfTime_%d",j-5);
-       sprintf(namhist3hg,"PedCorrZPChg_%d",j-5);
+       snprintf(namhist1hg,50,"PedZPChg_%d",j-5);
+       snprintf(namhist2hg,50,"PedZPChgOutOfTime_%d",j-5);
+       snprintf(namhist3hg,50,"PedCorrZPChg_%d",j-5);
        //
-       sprintf(namhist1lg,"PedZPClg_%d",j-5);
-       sprintf(namhist2lg,"PedZPClgOutOfTime_%d",j-5);
-       sprintf(namhist3lg,"PedCorrZPClg_%d",j-5);       
+       snprintf(namhist1lg,50,"PedZPClg_%d",j-5);
+       snprintf(namhist2lg,50,"PedZPClgOutOfTime_%d",j-5);
+       snprintf(namhist3lg,50,"PedCorrZPClg_%d",j-5);       
      }
      else if(j==10 || j==11){ // ZEM
-       sprintf(namhist1hg,"PedZEMhg_%d",j-9);
-       sprintf(namhist2hg,"PedZEMhgOutOfTime_%d",j-9);
-       sprintf(namhist3hg,"PedCorrZEMhg_%d",j-9);
+       snprintf(namhist1hg,50,"PedZEMhg_%d",j-9);
+       snprintf(namhist2hg,50,"PedZEMhgOutOfTime_%d",j-9);
+       snprintf(namhist3hg,50,"PedCorrZEMhg_%d",j-9);
        //
-       sprintf(namhist1lg,"PedZEMlg_%d",j-9);
-       sprintf(namhist2lg,"PedZEMlgOutOfTime_%d",j-9);
-       sprintf(namhist3lg,"PedCorrZEMlg_%d",j-9);
+       snprintf(namhist1lg,50,"PedZEMlg_%d",j-9);
+       snprintf(namhist2lg,50,"PedZEMlgOutOfTime_%d",j-9);
+       snprintf(namhist3lg,50,"PedCorrZEMlg_%d",j-9);
      }
      else if(j>=12 && j<=16){ // ZNA
-       sprintf(namhist1hg,"PedZNAhg_%d",j-12);
-       sprintf(namhist2hg,"PedZNAhgOutOfTime_%d",j-12);
-       sprintf(namhist3hg,"PedCorrZNAhg_%d",j-12);
+       snprintf(namhist1hg,50,"PedZNAhg_%d",j-12);
+       snprintf(namhist2hg,50,"PedZNAhgOutOfTime_%d",j-12);
+       snprintf(namhist3hg,50,"PedCorrZNAhg_%d",j-12);
        //
-       sprintf(namhist1lg,"PedZNAlg_%d",j-12);
-       sprintf(namhist2lg,"PedZNAlgOutOfTime_%d",j-12);
-       sprintf(namhist3lg,"PedCorrZNAlg_%d",j-12);
+       snprintf(namhist1lg,50,"PedZNAlg_%d",j-12);
+       snprintf(namhist2lg,50,"PedZNAlgOutOfTime_%d",j-12);
+       snprintf(namhist3lg,50,"PedCorrZNAlg_%d",j-12);
      }
      else if(j>=17 && j<=21){ // ZPA
-       sprintf(namhist1hg,"PedZPAhg_%d",j-17);
-       sprintf(namhist2hg,"PedZPAhgOutOfTime_%d",j-17);
-       sprintf(namhist3hg,"PedCorrZPAhg_%d",j-17);
+       snprintf(namhist1hg,50,"PedZPAhg_%d",j-17);
+       snprintf(namhist2hg,50,"PedZPAhgOutOfTime_%d",j-17);
+       snprintf(namhist3hg,50,"PedCorrZPAhg_%d",j-17);
        //
-       sprintf(namhist1lg,"PedZPAlg_%d",j-17);
-       sprintf(namhist2lg,"PedZPAlgOutOfTime_%d",j-17);
-       sprintf(namhist3lg,"PedCorrZPAlg_%d",j-17);
+       snprintf(namhist1lg,50,"PedZPAlg_%d",j-17);
+       snprintf(namhist2lg,50,"PedZPAlgOutOfTime_%d",j-17);
+       snprintf(namhist3lg,50,"PedCorrZPAlg_%d",j-17);
      }
      else if(j==22 || j==23){ //Reference PMs
-       sprintf(namhist1hg,"PedRefhg_%d",j-22);
-       sprintf(namhist2hg,"PedRefhgOutOfTime_%d",j-22);
-       sprintf(namhist3hg,"PedCorrRefhg_%d",j-22);
+       snprintf(namhist1hg,50,"PedRefhg_%d",j-22);
+       snprintf(namhist2hg,50,"PedRefhgOutOfTime_%d",j-22);
+       snprintf(namhist3hg,50,"PedCorrRefhg_%d",j-22);
        //
-       sprintf(namhist1lg,"PedReflg_%d",j-22);
-       sprintf(namhist2lg,"PedReflgOutOfTime_%d",j-22);
-       sprintf(namhist3lg,"PedCorrReflg_%d",j-22);
+       snprintf(namhist1lg,50,"PedReflg_%d",j-22);
+       snprintf(namhist2lg,50,"PedReflgOutOfTime_%d",j-22);
+       snprintf(namhist3lg,50,"PedCorrReflg_%d",j-22);
      }
      // --- High gain chain histos
      hPedhg[j] = (TH1F*) file->Get(namhist1hg);

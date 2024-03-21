@@ -33,16 +33,16 @@ Char_t *hisnam3 = new Char_t[50];
    for(Int_t isid=0;isid<2;isid++){
      Int_t index=2*imod+isid;       //260*2 position
 
-     sprintf(hisnam,"chargeMap%d",index);
-     sprintf(histit,"Total Charge, module number %d",index);
+     snprintf(hisnam,50,"chargeMap%d",index);
+     snprintf(histit,50,"Total Charge, module number %d",index);
      hModuleChargeMap[index]=new TH2F(hisnam,histit,256,-0.5,255.5,256,-0.5,255.5);  
 
-     sprintf(hisnam2,"countsMap%d",index);
-     sprintf(histit2,"Number of Counts, module number %d",index);
+     snprintf(hisnam2,50,"countsMap%d",index);
+     snprintf(histit2,50,"Number of Counts, module number %d",index);
      hModuleCountsMap[index] = new TH2F(hisnam2,histit2,256,-0.5,255.5,256,-0.5,255.5);
      /*
        for(Int_t ianode=0; ianode<anode; ianode++){                         // BL!!!
-       sprintf(hisnam3,"BL_module_%d_%d",index,ianode); 
+       snprintf(hisnam3,50,"BL_module_%d_%d",index,ianode); 
        //cout<<hisnam3 <<endl;
        hModuleSideBL[index][ianode] = new TH1F(hisnam3,hisnam3,256,0.,1024.);
      }

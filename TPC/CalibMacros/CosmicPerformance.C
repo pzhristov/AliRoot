@@ -181,13 +181,13 @@ void MakeZPlot(){
   
   for (Int_t i=0;i<5;i++){
     char hname[100];
-    sprintf(hname,"dP%ivZ",i);
+    snprintf(hname,100,"dP%ivZ",i);
     //
     if ( histoDPZ[i]==0){
       histoDPZ[i]= new TH2F(hname, hname,10,-240,240,100,-range[i],range[i]);
-      sprintf(hname,"sP%ivZ",i);
+      snprintf(hname,100,"sP%ivZ",i);
       histoSPZ[i]= new TH2F(hname, hname,10,-240,240,100,0,range[i]/3);
-      sprintf(hname,"pP%ivZ",i);
+      snprintf(hname,100,"pP%ivZ",i);
       histoPPZ[i]= new TH2F(hname, hname,10,-240,240,100,-6,6);
     }
     //
@@ -239,13 +239,13 @@ void Make1PtPlot(){
   
   for (Int_t i=0;i<5;i++){
     char hname[100];
-    sprintf(hname,"dP%iv1Pt",i);
+    snprintf(hname,100,"dP%iv1Pt",i);
     //
     if ( histoDP1Pt[i]==0){
       histoDP1Pt[i]= new TH2F(hname, hname,6,0.02,0.75,100,-range[i],range[i]);
-      sprintf(hname,"sP%ivZ",i);
+      snprintf(hname,100,"sP%ivZ",i);
       histoSP1Pt[i]= new TH2F(hname, hname,6,0.02,0.75,100,0,range[i]/3);
-      sprintf(hname,"pP%ivZ",i);
+      snprintf(hname,100,"pP%ivZ",i);
       histoPP1Pt[i]= new TH2F(hname, hname,6,0.02,0.75,100,-6,6);
     }
     //

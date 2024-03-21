@@ -12,7 +12,7 @@ void hlt_plot() {
   Char_t outname[256];
 
   for (int i=0; i<4; i++) {
-    sprintf(outname, "can%d",i);
+    snprintf(outname, 256, "can%d",i);
     c[i]= new TCanvas(outname,"",0,0,600,400);
     c[i]->Divide(2,2);    
  }
@@ -55,16 +55,16 @@ void hlt_plot() {
 
   }
   
-  sprintf(outname, "fAmp.gif");
+  snprintf(outname, 256, "fAmp.gif");
   c[0]->SaveAs(outname);
   
-  sprintf(outname, "fTime.gif");
+  snprintf(outname, 256, "fTime.gif");
   c[1]->SaveAs(outname);
 
-  sprintf(outname, "fAT.gif");
+  snprintf(outname, 256, "fAT.gif");
   c[2]->SaveAs(outname);
 
-  sprintf(outname, "fCellVsEne.gif");
+  snprintf(outname, 256, "fCellVsEne.gif");
   c[3]->SaveAs(outname);
 
 
@@ -73,7 +73,7 @@ void hlt_plot() {
  fCellEne->Draw();
  fClusCellEne->SetLineColor(kRed);
  fClusCellEne->Draw("same");
- sprintf(outname, "ClusCellEne.gif");
+ snprintf(outname, 256, "ClusCellEne.gif");
  c4->SaveAs(outname);
 
 }

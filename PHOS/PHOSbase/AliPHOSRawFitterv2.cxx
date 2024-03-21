@@ -283,7 +283,7 @@ Bool_t AliPHOSRawFitterv2::Eval(const UShort_t *signal, Int_t sigStart, Int_t si
       h->Draw() ;
       fffit->Draw("same") ;
 /*
-      sprintf(title,"mod%d_x%d_z%d_HG_qu%4.1f",fModule,fCellX,fCellZ,fQuality) ;
+      snprintf(title,155,"mod%d_x%d_z%d_HG_qu%4.1f",fModule,fCellX,fCellZ,fQuality) ;
       TFile fout("samples_bad.root","update") ;
       h->Write(title);
       fout.Close() ;

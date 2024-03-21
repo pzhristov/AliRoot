@@ -546,14 +546,14 @@ void plot2D( THnSparse* h, TText *hText, TString folder, cuts cut ){
 TString cutsToString( cuts cut ){
  
   TString strcuts = "";
-  char s[300]; sprintf(s, "eta%2g_%2g_Pt%2g_%2g_DCAr%2g_%2g_DCAz%2g_%2g_TPCclus%d_%d_ITSclus%d_%d_Zvertex%2g_cent%d_%d", 
+  char s[300]; snprintf(s, 300, "eta%2g_%2g_Pt%2g_%2g_DCAr%2g_%2g_DCAz%2g_%2g_TPCclus%d_%d_ITSclus%d_%d_Zvertex%2g_cent%d_%d", 
                            cut.minEta,cut.maxEta,cut.minPt,cut.maxPt,cut.minDCAr,cut.maxDCAr,cut.minDCAz,cut.maxDCAz,cut.minTPCclus,cut.maxTPCclus,cut.minITSclus,
 			   cut.maxITSclus,cut.vertexZ,cut.minV0cent,cut.maxV0cent);
   strcuts = s; strcuts.ReplaceAll(" ","");
  
   if(cut.vertexStatus!=2){
     char v[10]; 
-    sprintf(v, "_VS%d",cut.vertexStatus);
+    snprintf(v, 10, "_VS%d",cut.vertexStatus);
     strcuts+=v;
   }
   return strcuts;

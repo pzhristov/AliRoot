@@ -418,12 +418,12 @@ AliMUONDataInterface::NtupleTrigger(const char* treeLetter)
   if (sTreeLetter == "D") 
   {
     AliInfo(Form("reading from Digits\n"));
-    sprintf(fileNameOut,"TriggerCheckFromDigits.root");
+    snprintf(fileNameOut,30,"TriggerCheckFromDigits.root");
   } 
   else if (sTreeLetter == "R") 
   {
     AliInfo(Form("reading from RecPoints\n"));
-    sprintf(fileNameOut,"TriggerCheckFromRP.root");
+    snprintf(fileNameOut,30,"TriggerCheckFromRP.root");
   }
   
   // loop on events

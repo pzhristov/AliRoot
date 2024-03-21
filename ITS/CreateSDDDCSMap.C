@@ -318,31 +318,31 @@ TMap* CreateRealisticMap( TTimeStamp startTime, TTimeStamp stopTime )
 
             } /*for( timeLoop )*/
 
-            sprintf( dpName, "SDD_LAYER%i_LADDER%02d_MODULE%d_OK", iLay, iLad, iMod );
+            snprintf( dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_OK", iLay, iLad, iMod );
             aliasName = dpName;
             aliasMap->Add( new TObjString(aliasName), valueSetOK );
 
-            sprintf( dpName, "SDD_LAYER%i_LADDER%02d_MODULE%d_HV", iLay, iLad, iMod );
+            snprintf( dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_HV", iLay, iLad, iMod );
             aliasName = dpName;
             aliasMap->Add( new TObjString(aliasName), valueSetHV );
 
-            sprintf( dpName, "SDD_LAYER%i_LADDER%02d_MODULE%d_MV", iLay, iLad, iMod );
+            snprintf( dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_MV", iLay, iLad, iMod );
             aliasName = dpName;
             aliasMap->Add( new TObjString(aliasName), valueSetMV );
 
-            sprintf( dpName, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L", iLay, iLad, iMod );
+            snprintf( dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L", iLay, iLad, iMod );
             aliasName = dpName;
             aliasMap->Add( new TObjString(aliasName), valueSetTL );
 
-            sprintf( dpName, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R", iLay, iLad, iMod );
+            snprintf( dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R", iLay, iLad, iMod );
             aliasName = dpName;
             aliasMap->Add( new TObjString(aliasName), valueSetTR );
 
-            sprintf( dpName, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L_STATE", iLay, iLad, iMod );
+            snprintf( dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L_STATE", iLay, iLad, iMod );
             aliasName = dpName;
             aliasMap->Add( new TObjString(aliasName), valueSetStTL );
 
-            sprintf( dpName, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R_STATE", iLay, iLad, iMod );
+            snprintf( dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R_STATE", iLay, iLad, iMod );
             aliasName = dpName;
             aliasMap->Add( new TObjString(aliasName), valueSetStTR );
 
@@ -417,7 +417,7 @@ TMap* CreateRandomMap( Int_t maxRecords , Int_t randomTimeStamps  )
             AliDCSValue* dcsVal;
             Int_t timeStamp;
 
-            sprintf(dpName,"SDD_LAYER%i_LADDER%02d_MODULE%d_OK", iLay,iLad,iMod);
+            snprintf(dpName, 50, "SDD_LAYER%i_LADDER%02d_MODULE%d_OK", iLay,iLad,iMod);
             aliasName=dpName;
 	    nrOfRecords = (Int_t)(maxRecords * ( gRandom->Rndm() ) );
             timeStamp = 1000000000;
@@ -436,7 +436,7 @@ TMap* CreateRandomMap( Int_t maxRecords , Int_t randomTimeStamps  )
             aliasMap->Add(new TObjString(aliasName), valueSetOK);
             created += nrOfRecords;
 
-            sprintf(dpName,"SDD_LAYER%i_LADDER%02d_MODULE%d_HV", iLay, iLad,iMod);
+            snprintf(dpName,50,"SDD_LAYER%i_LADDER%02d_MODULE%d_HV", iLay, iLad,iMod);
             aliasName=dpName;
             nrOfRecords = (Int_t)(maxRecords * ( gRandom->Rndm() ));
             timeStamp = 1000000000;
@@ -452,7 +452,7 @@ TMap* CreateRandomMap( Int_t maxRecords , Int_t randomTimeStamps  )
             aliasMap->Add(new TObjString(aliasName), valueSetH);
             created += nrOfRecords;
 
-            sprintf(dpName,"SDD_LAYER%i_LADDER%02d_MODULE%d_MV", iLay, iLad,iMod);
+            snprintf(dpName,50,"SDD_LAYER%i_LADDER%02d_MODULE%d_MV", iLay, iLad,iMod);
             aliasName=dpName;
 	    nrOfRecords = (Int_t)(maxRecords * ( gRandom->Rndm() ));
             timeStamp = 1000000000;
@@ -468,7 +468,7 @@ TMap* CreateRandomMap( Int_t maxRecords , Int_t randomTimeStamps  )
             aliasMap->Add(new TObjString(aliasName), valueSetM);
             created += nrOfRecords;
 
-            sprintf(dpName,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L", iLay, iLad,iMod);
+            snprintf(dpName,50,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L", iLay, iLad,iMod);
             aliasName=dpName;
 	    nrOfRecords = (Int_t)(maxRecords * ( gRandom->Rndm() ));
             timeStamp = 1000000000;
@@ -484,7 +484,7 @@ TMap* CreateRandomMap( Int_t maxRecords , Int_t randomTimeStamps  )
             aliasMap->Add(new TObjString(aliasName), valueSetTL);
             created += nrOfRecords;
 
-            sprintf(dpName,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R", iLay, iLad,iMod);
+            snprintf(dpName,50,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R", iLay, iLad,iMod);
             aliasName=dpName;
 	    nrOfRecords = (Int_t)(maxRecords * ( gRandom->Rndm() ));
 	    timeStamp = 1000000000;
@@ -500,7 +500,7 @@ TMap* CreateRandomMap( Int_t maxRecords , Int_t randomTimeStamps  )
             aliasMap->Add(new TObjString(aliasName), valueSetTR);
             created += nrOfRecords;
 
-            sprintf(dpName,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L_STATE", iLay, iLad,iMod);
+            snprintf(dpName,50,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L_STATE", iLay, iLad,iMod);
             aliasName=dpName;
 	    nrOfRecords = (Int_t)(maxRecords * ( gRandom->Rndm() ));
             timeStamp = 1000000000;
@@ -519,7 +519,7 @@ TMap* CreateRandomMap( Int_t maxRecords , Int_t randomTimeStamps  )
             aliasMap->Add(new TObjString(aliasName), valueSetStTL);
             created += nrOfRecords;
 
-            sprintf(dpName,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R_STATE", iLay, iLad,iMod);
+            snprintf(dpName,50,"SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R_STATE", iLay, iLad,iMod);
             aliasName=dpName;
 	    nrOfRecords = (Int_t)(maxRecords * ( gRandom->Rndm() ));
             timeStamp = 1000000000;
@@ -561,10 +561,10 @@ void GenerateOutputFiles( TMap *map, char *dir )
   Int_t  nHVEntries, nMVEntries, nTLEntries, nTREntries;
   Int_t  nOKEntries, nStTLEntries, nStTREntries;
 
-  sprintf(cmd,"ls -l %s >/dev/null 2>&1",dir);
+  snprintf(cmd,100,"ls -l %s >/dev/null 2>&1",dir);
   if(gSystem->Exec(cmd)!=0){
     printf("%s --- NOT EXISTS -- create it\n",dir);
-    sprintf(cmd,"mkdir %s",dir);
+    snprintf(cmd,100,"mkdir %s",dir);
     gSystem->Exec(cmd);
   }
 
@@ -581,7 +581,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
         for(Int_t iMod = 0; iMod < maxMod; iMod++)
         {
 
-           sprintf( buffer, "%s/DCSMapContent_SDD_LAYER%i_LADDER%02d_MODULE%d.txt", dir, iLay, iLad, iMod );
+           snprintf( buffer, 100, "%s/DCSMapContent_SDD_LAYER%i_LADDER%02d_MODULE%d.txt", dir, iLay, iLad, iMod );
 
            fprintf( stderr, "Creating file %s ... ", buffer );
            outputFile = fopen( buffer, "w" );
@@ -594,7 +594,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
              fprintf( stderr, "\n" );
 
 
-           sprintf( buffer, "SDD_LAYER%i_LADDER%02d_MODULE%d_HV", iLay, iLad, iMod );
+           snprintf( buffer, 100, "SDD_LAYER%i_LADDER%02d_MODULE%d_HV", iLay, iLad, iMod );
            TObjArray* arrHV = (TObjArray*) map->GetValue( buffer );
            if( arrHV == NULL ) 
            {
@@ -604,7 +604,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
            else
             nHVEntries = arrHV->GetEntries();
 
-           sprintf( buffer, "SDD_LAYER%i_LADDER%02d_MODULE%d_MV", iLay, iLad, iMod );
+           snprintf( buffer, 100, "SDD_LAYER%i_LADDER%02d_MODULE%d_MV", iLay, iLad, iMod );
            TObjArray* arrMV = (TObjArray*) map->GetValue( buffer );
            if( arrMV == NULL ) 
            {
@@ -614,7 +614,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
            else
             nMVEntries = arrMV->GetEntries();
 
-           sprintf( buffer, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L", iLay, iLad, iMod );
+           snprintf( buffer, 100, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L", iLay, iLad, iMod );
            TObjArray* arrTL = (TObjArray*) map->GetValue( buffer );
            if( arrTL == NULL ) 
            {
@@ -624,7 +624,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
            else
             nTLEntries = arrTL->GetEntries();
 
-           sprintf( buffer, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R", iLay, iLad, iMod );
+           snprintf( buffer, 100, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R", iLay, iLad, iMod );
            TObjArray* arrTR = (TObjArray*) map->GetValue( buffer );
            if( arrTR == NULL ) 
            {
@@ -634,7 +634,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
            else
             nTREntries = arrTR->GetEntries();
 
-           sprintf( buffer, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L_STATE", iLay, iLad, iMod );
+           snprintf( buffer, 100, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_L_STATE", iLay, iLad, iMod );
            TObjArray* arrStTL = (TObjArray*) map->GetValue( buffer );
            if( arrStTL == NULL ) 
            {
@@ -644,7 +644,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
            else
             nStTLEntries = arrStTL->GetEntries();
 
-           sprintf( buffer, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R_STATE", iLay, iLad, iMod );
+           snprintf( buffer, 100, "SDD_LAYER%i_LADDER%02d_MODULE%d_TEMP_R_STATE", iLay, iLad, iMod );
            TObjArray* arrStTR = (TObjArray*) map->GetValue( buffer );
            if( arrStTR == NULL ) 
            {
@@ -654,7 +654,7 @@ void GenerateOutputFiles( TMap *map, char *dir )
            else
             nStTREntries = arrStTR->GetEntries();
 
-           sprintf( buffer, "SDD_LAYER%i_LADDER%02d_MODULE%d_OK", iLay, iLad, iMod );
+           snprintf( buffer, 100, "SDD_LAYER%i_LADDER%02d_MODULE%d_OK", iLay, iLad, iMod );
            TObjArray* arrOK = (TObjArray*) map->GetValue( buffer );
            if( arrOK == NULL ) 
            {

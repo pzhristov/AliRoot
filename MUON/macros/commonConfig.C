@@ -53,7 +53,7 @@ void commonConfig(const char* directory="",
   //=======================================================================
 
   Text_t filename[100];
-  sprintf(filename,"%sgalice.root",directory);
+  snprintf(filename,100,"%sgalice.root",directory);
   AliRunLoader* rl 
     = AliRunLoader::Open(filename,
 			 AliConfig::GetDefaultEventFolderName(),

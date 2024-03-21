@@ -99,7 +99,7 @@ void MUONSurveyCh8L() {
 //   const int   filetype  = 111; // portrait  
   const int   filetype  = 112; // landscape  
   
-  sprintf(filename,"surveyChamber8L.ps");
+  snprintf(filename,100,"surveyChamber8L.ps");
   
   Int_t nSlats = 13;
 
@@ -182,7 +182,7 @@ void MUONSurveyCh8L() {
     // Get button targets survey points
     vTemp.SetXYZ(0., 0., 0.);
     if (iSlat+1<10) {
-      sprintf(sPointName,"60%d%d",iSlat+1,1);
+      snprintf(sPointName,10,"60%d%d",iSlat+1,1);
       pointSBT[0] = (AliSurveyPoint *)points->FindObject(sPointName);
       if(!pointSBT[0]) {
 	cout << "Error! No button targets ... " << endl;
@@ -190,7 +190,7 @@ void MUONSurveyCh8L() {
       }
       vSBT.SetXYZ(pointSBT[0]->GetX(),pointSBT[0]->GetY(),pointSBT[0]->GetZ());
       vTemp+=vSBT;
-      sprintf(sPointName,"60%d%d",iSlat+1,2);
+      snprintf(sPointName,10,"60%d%d",iSlat+1,2);
       pointSBT[1] = (AliSurveyPoint *)points->FindObject(sPointName);
       if(!pointSBT[1]) {
 	cout << "Error! No button targets ... " << endl;
@@ -200,7 +200,7 @@ void MUONSurveyCh8L() {
       vTemp-=vSBT;
     }
     else {
-      sprintf(sPointName,"6%d%d",iSlat+1,1);
+      snprintf(sPointName,10,"6%d%d",iSlat+1,1);
       pointSBT[0] = (AliSurveyPoint *)points->FindObject(sPointName);
       if(!pointSBT[0]) {
 	cout << "Error! No button targets ... " << endl;
@@ -208,7 +208,7 @@ void MUONSurveyCh8L() {
       }
       vSBT.SetXYZ(pointSBT[0]->GetX(),pointSBT[0]->GetY(),pointSBT[0]->GetZ());
       vTemp+=vSBT;
-      sprintf(sPointName,"6%d%d",iSlat+1,2);
+      snprintf(sPointName,10,"6%d%d",iSlat+1,2);
       pointSBT[1] = (AliSurveyPoint *)points->FindObject(sPointName);
       if(!pointSBT[1]) {
 	cout << "Error! No button targets ... " << endl;
@@ -231,7 +231,7 @@ void MUONSurveyCh8L() {
 
   // Chamber plane sticker targets
   for (int iPoint=0; iPoint<9; iPoint++) {
-    sprintf(sPointName,"700%d",iPoint+1);
+    snprintf(sPointName,10,"700%d",iPoint+1);
     pointCPST = (AliSurveyPoint *)points->FindObject(sPointName);
     if(!pointCPST) {
       printf("Point %s is missing ...\n",sPointName);
@@ -240,7 +240,7 @@ void MUONSurveyCh8L() {
     hCPSTry->Fill(pointCPST->GetX(),pointCPST->GetZ(),pointCPST->GetY());
   }
   for (int iPoint=9; iPoint<18; iPoint++) {
-    sprintf(sPointName,"70%d",iPoint+1);
+    snprintf(sPointName,10,"70%d",iPoint+1);
     pointCPST = (AliSurveyPoint *)points->FindObject(sPointName);
     if(!pointCPST) {
       printf("Point %s is missing ...\n",sPointName);
@@ -252,10 +252,10 @@ void MUONSurveyCh8L() {
   // Chamber Side Targets
   for (int iPoint=0; iPoint<25; iPoint++) {
     if (iPoint+1<10) {   
-      sprintf(sPointName,"800%d",iPoint+1);
+      snprintf(sPointName,10,"800%d",iPoint+1);
     }
     else {
-      sprintf(sPointName,"80%d",iPoint+1);
+      snprintf(sPointName,10,"80%d",iPoint+1);
     }
     pointCST = (AliSurveyPoint *)points->FindObject(sPointName);
     if(!pointCPST) {
@@ -283,10 +283,10 @@ void MUONSurveyCh8L() {
       iSSBT[iSlat][0] = 2;
       iSSBT[iSlat][1] = 8;
       if (iSlat+1<10) {
-	sprintf(sPointName,"50%d%d",iSlat+1,iPoint+1);
+	snprintf(sPointName,10,"50%d%d",iSlat+1,iPoint+1);
       }
       else {
-	sprintf(sPointName,"5%d%d",iSlat+1,iPoint+1);
+	snprintf(sPointName,10,"5%d%d",iSlat+1,iPoint+1);
       }
       pointSST = (AliSurveyPoint *)points->FindObject(sPointName);
       if(!pointSST) {
@@ -324,7 +324,7 @@ void MUONSurveyCh8L() {
   char fsName[100] = "fSlat00"; 
   TF2 **fSlat = new TF2*[nSlats];
   for(Int_t iSlat=0; iSlat<nSlats; iSlat++){
-    sprintf(fsName,"fSlat%d",iSlat+1);
+    snprintf(fsName,100,"fSlat%d",iSlat+1);
     fSlat[iSlat] = new TF2(fsName,eqPlane,xMin,xMax,yMin,yMax,3);
   }
 
@@ -333,9 +333,9 @@ void MUONSurveyCh8L() {
   TF2 ***fXcSlat = new TF2**[nSlats];
   for(Int_t iSlat=0; iSlat<nSlats; iSlat++){
     fXcSlat[iSlat] = new TF2*[2];
-    sprintf(fxcName,"fXcnSlat%d",iSlat+1);
+    snprintf(fxcName,100,"fXcnSlat%d",iSlat+1);
     fXcSlat[iSlat][0] = new TF2(fxcName,xnCenter,xMin,xMax,yMin,yMax,7);
-    sprintf(fxcName,"fXcpSlat%d",iSlat+1);
+    snprintf(fxcName,100,"fXcpSlat%d",iSlat+1);
     fXcSlat[iSlat][1] = new TF2(fxcName,xpCenter,xMin,xMax,yMin,yMax,7);   
   }
 
@@ -344,9 +344,9 @@ void MUONSurveyCh8L() {
   TF2 ***fYcSlat = new TF2**[nSlats];
   for(Int_t iSlat=0; iSlat<nSlats; iSlat++){
     fYcSlat[iSlat] = new TF2*[2];
-    sprintf(fycName,"fYcnSlat%d",iSlat+1);
+    snprintf(fycName,100,"fYcnSlat%d",iSlat+1);
     fYcSlat[iSlat][0] = new TF2(fycName,ynCenter,yMin,yMax,yMin,yMax,8);
-    sprintf(fycName,"fYcpSlat%d",iSlat+1);
+    snprintf(fycName,100,"fYcpSlat%d",iSlat+1);
     fYcSlat[iSlat][1] = new TF2(fycName,ypCenter,yMin,yMax,yMin,yMax,8);   
   }
 
@@ -355,9 +355,9 @@ void MUONSurveyCh8L() {
   TF2 ***fZcSlat = new TF2**[nSlats];
   for(Int_t iSlat=0; iSlat<nSlats; iSlat++){
     fZcSlat[iSlat] = new TF2*[2];
-    sprintf(fzcName,"fZcnSlat%d",iSlat+1);
+    snprintf(fzcName,100,"fZcnSlat%d",iSlat+1);
     fZcSlat[iSlat][0] = new TF2(fzcName,znCenter,zMin,zMax,zMin,zMax,8);
-    sprintf(fzcName,"fZcpSlat%d",iSlat+1);
+    snprintf(fzcName,100,"fZcpSlat%d",iSlat+1);
     fZcSlat[iSlat][1] = new TF2(fzcName,zpCenter,zMin,zMax,zMin,zMax,8);   
   }
 
@@ -368,13 +368,13 @@ void MUONSurveyCh8L() {
     fPhiXSlat[iSlat] = new TF2**[2];
     for (Int_t iX =0; iX<2; iX++)
       fPhiXSlat[iSlat][iX] = new TF2*[2];
-    sprintf(fphixName,"fPhiXnnSlat%d",iSlat+1);
+    snprintf(fphixName,100,"fPhiXnnSlat%d",iSlat+1);
     fPhiXSlat[iSlat][0][0] = new TF2(fphixName,phixnn,xMin,xMax,xMin,xMax,7);
-    sprintf(fphixName,"fPhixnpSlat%d",iSlat+1);
+    snprintf(fphixName,100,"fPhixnpSlat%d",iSlat+1);
     fPhiXSlat[iSlat][0][1] = new TF2(fphixName,phixnp,xMin,xMax,xMin,xMax,7);   
-    sprintf(fphixName,"fPhiXpnSlat%d",iSlat+1);
+    snprintf(fphixName,100,"fPhiXpnSlat%d",iSlat+1);
     fPhiXSlat[iSlat][1][0] = new TF2(fphixName,phixpn,xMin,xMax,xMin,xMax,7);
-    sprintf(fphixName,"fPhixppSlat%d",iSlat+1);
+    snprintf(fphixName,100,"fPhixppSlat%d",iSlat+1);
     fPhiXSlat[iSlat][1][1] = new TF2(fphixName,phixpp,xMin,xMax,xMin,xMax,7);   
   }
 
@@ -385,13 +385,13 @@ void MUONSurveyCh8L() {
     fPhiYSlat[iSlat] = new TF2**[2];
     for (Int_t iY =0; iY<2; iY++)
       fPhiYSlat[iSlat][iY] = new TF2*[2];
-    sprintf(fphiyName,"fPhiYnnSlat%d",iSlat+1);
+    snprintf(fphiyName,100,"fPhiYnnSlat%d",iSlat+1);
     fPhiYSlat[iSlat][0][0] = new TF2(fphiyName,phiynn,yMin,yMax,yMin,yMax,7);
-    sprintf(fphiyName,"fPhiYnpSlat%d",iSlat+1);
+    snprintf(fphiyName,100,"fPhiYnpSlat%d",iSlat+1);
     fPhiYSlat[iSlat][0][1] = new TF2(fphiyName,phiynp,yMin,yMax,yMin,yMax,7);   
-    sprintf(fphiyName,"fPhiYpnSlat%d",iSlat+1);
+    snprintf(fphiyName,100,"fPhiYpnSlat%d",iSlat+1);
     fPhiYSlat[iSlat][1][0] = new TF2(fphiyName,phiypn,yMin,yMax,yMin,yMax,7);
-    sprintf(fphiyName,"fPhiYppSlat%d",iSlat+1);
+    snprintf(fphiyName,100,"fPhiYppSlat%d",iSlat+1);
     fPhiYSlat[iSlat][1][1] = new TF2(fphiyName,phiypp,yMin,yMax,yMin,yMax,7);   
   }
 
@@ -456,7 +456,7 @@ void MUONSurveyCh8L() {
   // syst. transformation of the button targets
   //
   for (int iSlat=0; iSlat<nSlats; iSlat++) {
-    sprintf(fsName,"fSlat%d",iSlat+1);
+    snprintf(fsName,100,"fSlat%d",iSlat+1);
     cout << "Fitting Slat" << iSlat+1 << " ..." << endl;
 
     // Fit a plane to the sticker targets
@@ -487,13 +487,13 @@ void MUONSurveyCh8L() {
     // Get button targets survey points
     for (Int_t iPoint=0; iPoint<2; iPoint++) {
       if (iSlat+1<10) {
-	sprintf(sPointName,"60%d%d",iSlat+1,iPoint+1);
+	snprintf(sPointName,10,"60%d%d",iSlat+1,iPoint+1);
 	pointSBT[iPoint] = (AliSurveyPoint *)points->FindObject(sPointName);
 	if(!pointSBT[iPoint]) {
 	  cout << "Error! No button targets ... " << endl;
 	  break;       
 	}
-	sprintf(sPointName,"50%d%d",iSlat+1,iSSBT[iSlat][iPoint]);
+	snprintf(sPointName,10,"50%d%d",iSlat+1,iSSBT[iSlat][iPoint]);
 	pointSSBT[iPoint] = (AliSurveyPoint *)points->FindObject(sPointName);
 	if(!pointSSBT[iPoint]) {
 	  cout << "Error! No sticker target ... " << sPointName << endl;
@@ -501,13 +501,13 @@ void MUONSurveyCh8L() {
 	}
       }
       else {
-	sprintf(sPointName,"6%d%d",iSlat+1,iPoint+1);
+	snprintf(sPointName,10,"6%d%d",iSlat+1,iPoint+1);
 	pointSBT[iPoint] = (AliSurveyPoint *)points->FindObject(sPointName);
 	if(!pointSBT[iPoint]) {
 	  cout << "Error! No button targets ... " << endl;
 	  break;
 	}
-	sprintf(sPointName,"5%d%d",iSlat+1,iSSBT[iSlat][iPoint]);
+	snprintf(sPointName,10,"5%d%d",iSlat+1,iSSBT[iSlat][iPoint]);
 	pointSSBT[iPoint] = (AliSurveyPoint *)points->FindObject(sPointName);
 	if(!pointSSBT[iPoint]) {
 	  cout << "Error! No sticker targets ... " << sPointName << endl;
@@ -856,7 +856,7 @@ void MUONSurveyCh8L() {
   }
  
   // Inv Mass, Multiplicity
-  sprintf(str,"Chamber 8L");
+  snprintf(str,100,"Chamber 8L");
   TCanvas *cvn0 = new TCanvas("cvn0",str,cWidth,cHeight);
   canvas = cvn0;
   canvas->Range(0,0,21,29);
@@ -903,7 +903,7 @@ void MUONSurveyCh8L() {
   }
 
   // Inv Mass, Multiplicity
-  sprintf(str,"Chamber 8L");
+  snprintf(str,100,"Chamber 8L");
   TCanvas *cvn1 = new TCanvas("cvn1",str,cWidth,cHeight);
   canvas = cvn1;
   canvas->Range(0,0,21,29);
@@ -946,7 +946,7 @@ void MUONSurveyCh8L() {
   hSSTlpy->Draw("surf2z");
 
   // Inv Mass, Multiplicity
-  sprintf(str,"Chamber 8L");
+  snprintf(str,100,"Chamber 8L");
   TCanvas *cvn2 = new TCanvas("cvn2",str,cWidth,cHeight);
   canvas = cvn2;
   canvas->Range(0,0,21,29);

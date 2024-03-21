@@ -74,7 +74,7 @@ void DecodeRecoCocktail(
 /// \param outFileName  The output filename containing AliMUONTrackLight and AliMUONPairLight objects.
 
   char startingDir[200]; 
-  sprintf (startingDir,"%s",gSystem->pwd()); 
+  snprintf (startingDir,200,"%s",gSystem->pwd()); 
   gSystem->cd(recodir); 
 
   TClonesArray *muonArray   = new TClonesArray("AliMUONTrackLight",10); 

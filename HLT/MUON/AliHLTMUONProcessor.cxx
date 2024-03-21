@@ -764,7 +764,7 @@ void AliHLTMUONProcessor::DumpEvent(
 	char strbuf[1024];
 
 	std::string filename = fDumpPath;
-	sprintf(strbuf, "dump_event-0x%16.16llX.log", evtData.fEventID);
+	snprintf(strbuf, 1024, "dump_event-0x%16.16llX.log", evtData.fEventID);
 	filename += strbuf;
 	fstream logfile(filename.c_str(), fstream::out | fstream::trunc);
 	if (logfile.fail())
@@ -774,22 +774,22 @@ void AliHLTMUONProcessor::DumpEvent(
 	}
 
 	filename = fDumpPath;
-	sprintf(strbuf, "dump_event-0x%16.16llX-eventdata.bin", evtData.fEventID);
+	snprintf(strbuf, 1024, "dump_event-0x%16.16llX-eventdata.bin", evtData.fEventID);
 	filename += strbuf;
 	logfile << "Dumping event data structure to file: " << filename << std::endl;
 	DumpBuffer(&evtData, sizeof(AliHLTComponentEventData), filename.c_str());
 
 	filename = fDumpPath;
-	sprintf(strbuf, "dump_event-0x%16.16llX-triggerdata.bin", evtData.fEventID);
+	snprintf(strbuf, 1024, "dump_event-0x%16.16llX-triggerdata.bin", evtData.fEventID);
 	filename += strbuf;
 	logfile << "Dumping trigger data structure to file: " << filename << std::endl;
 	DumpBuffer(&trigData, sizeof(AliHLTComponentTriggerData), filename.c_str());
 
 	for (unsigned int n = 0; n < evtData.fBlockCnt; n++)
 	{
-		sprintf(strbuf, "dump_event-0x%16.16llX-block-0x%8.8X", evtData.fEventID, n);
+		snprintf(strbuf, 1024, "dump_event-0x%16.16llX-block-0x%8.8X", evtData.fEventID, n);
 		filename = strbuf;
-		sprintf(strbuf, "0x%8.8X", blocks[n].fSpecification);
+		snprintf(strbuf, 1024, "0x%8.8X", blocks[n].fSpecification);
 		logfile << "Found block with data type = " << DataType2Text(blocks[n].fDataType)
 			<< ", specification = " << strbuf << ". Dumping to file: "
 			<< filename << "-data.bin" << std::endl;
@@ -797,16 +797,16 @@ void AliHLTMUONProcessor::DumpEvent(
 	}
 
 	filename = fDumpPath;
-	sprintf(strbuf, "dump_event-0x%16.16llX-output-buffer.bin", evtData.fEventID);
+	snprintf(strbuf, 1024, "dump_event-0x%16.16llX-output-buffer.bin", evtData.fEventID);
 	filename += strbuf;
 	logfile << "Dumping output buffer to file: " << filename << std::endl;
 	DumpBuffer(outputPtr, size, filename.c_str());
 
 	for (size_t i = 0; i < outputBlocks.size(); i++)
 	{
-		sprintf(strbuf, "dump_event-0x%16.16llX-output-block-0x%8.8X", evtData.fEventID, int(i));
+		snprintf(strbuf, 1024, "dump_event-0x%16.16llX-output-block-0x%8.8X", evtData.fEventID, int(i));
 		filename = strbuf;
-		sprintf(strbuf, "0x%8.8X", outputBlocks[i].fSpecification);
+		snprintf(strbuf, 1024, "0x%8.8X", outputBlocks[i].fSpecification);
 		logfile << "Generated output data block with type = "
 			<< DataType2Text(outputBlocks[i].fDataType)
 			<< ", specification = " << strbuf << ". Dumping to file: "
@@ -828,7 +828,7 @@ void AliHLTMUONProcessor::DumpEvent(
 	char strbuf[1024];
 
 	std::string filename = fDumpPath;
-	sprintf(strbuf, "dump_event-0x%16.16llX.log", evtData.fEventID);
+	snprintf(strbuf, 1024, "dump_event-0x%16.16llX.log", evtData.fEventID);
 	filename += strbuf;
 	fstream logfile(filename.c_str(), fstream::out | fstream::trunc);
 	if (logfile.fail())
@@ -838,13 +838,13 @@ void AliHLTMUONProcessor::DumpEvent(
 	}
 
 	filename = fDumpPath;
-	sprintf(strbuf, "dump_event-0x%16.16llX-eventdata.bin", evtData.fEventID);
+	snprintf(strbuf, 1024, "dump_event-0x%16.16llX-eventdata.bin", evtData.fEventID);
 	filename += strbuf;
 	logfile << "Dumping event data structure to file: " << filename << std::endl;
 	DumpBuffer(&evtData, sizeof(AliHLTComponentEventData), filename.c_str());
 
 	filename = fDumpPath;
-	sprintf(strbuf, "dump_event-0x%16.16llX-triggerdata.bin", evtData.fEventID);
+	snprintf(strbuf, 1024, "dump_event-0x%16.16llX-triggerdata.bin", evtData.fEventID);
 	filename += strbuf;
 	logfile << "Dumping trigger data structure to file: " << filename << std::endl;
 	DumpBuffer(&trigData, sizeof(AliHLTComponentTriggerData), filename.c_str());
@@ -852,9 +852,9 @@ void AliHLTMUONProcessor::DumpEvent(
 	for (int i = 0; i < GetNumberOfInputBlocks(); i++)
 	{
 		const AliHLTComponentBlockData* block = GetInputBlock(i);
-		sprintf(strbuf, "dump_event-0x%16.16llX-block-0x%8.8X", evtData.fEventID, i);
+		snprintf(strbuf, 1024, "dump_event-0x%16.16llX-block-0x%8.8X", evtData.fEventID, i);
 		filename = strbuf;
-		sprintf(strbuf, "0x%8.8X", block->fSpecification);
+		snprintf(strbuf, 1024, "0x%8.8X", block->fSpecification);
 		logfile << "Found block with data type = " << DataType2Text(block->fDataType)
 			<< ", specification = " << strbuf << ". Dumping to file: "
 			<< filename << "-data.bin" << std::endl;

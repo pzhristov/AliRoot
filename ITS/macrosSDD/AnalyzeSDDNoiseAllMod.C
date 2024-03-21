@@ -47,7 +47,7 @@ void AnalyzeSDDNoiseAllMod(Char_t *datafil,
 	base[index]=new AliITSOnlineSDDBase(iddl,imod,isid);	
 	if(adcfreq==40) base[index]->SetLastGoodTB(254);
 	else base[index]->SetLastGoodTB(126);
-	sprintf(hisnam,"h%02dc%02ds%d",iddl,imod,isid);
+	snprintf(hisnam,20,"h%02dc%02ds%d",iddl,imod,isid);
 	histo[index]=new TH2F(hisnam,"",256,-0.5,255.5,256,-0.5,255.5);
       }
     }
@@ -113,7 +113,7 @@ void AnalyzeSDDNoiseAllMod(Char_t *datafil,
 	    Int_t index2=kSides*imod+isid;
 	    c0->cd(index2+1);
 	    histo[index]->DrawCopy("colz");
-	    sprintf(text,"DDL %d channel %d Side %d",nDDL,imod,isid);
+	    snprintf(text,50,"DDL %d channel %d Side %d",nDDL,imod,isid);
 	    t0->DrawLatex(0.15,0.92,text);
 	    c0->Update();
 	  }
@@ -202,7 +202,7 @@ void AnalyzeSDDNoiseAllMod(Char_t *datafil,
 	    Int_t index2=kSides*imod+isid;
 	    c0->cd(index2+1);
 	    histo[index]->DrawCopy("colz");
-	    sprintf(text,"DDL %d channel %d Side %d",nDDL,imod,isid);
+	    snprintf(text,50,"DDL %d channel %d Side %d",nDDL,imod,isid);
 	    t0->DrawLatex(0.15,0.92,text);
 	    c0->Update();
 	  }
@@ -317,7 +317,7 @@ void AnalyzeSDDNoiseAllMod(Char_t *datafil,
     for(Int_t isid=0;isid<kSides;isid++){
       Int_t index1=kSides*(kModPerDDL*nDDL+imod)+isid;
       Int_t index2=kSides*imod+isid;
-      sprintf(text,"DDL %d channel %d Side %d",nDDL,imod,isid);
+      snprintf(text,50,"DDL %d channel %d Side %d",nDDL,imod,isid);
       hbas[index2]=corr[index1]->GetBaselineAnodeHisto();
       hrawn[index2]=corr[index1]->GetRawNoiseAnodeHisto();
       hcorrn[index2]=corr[index1]->GetCorrNoiseAnodeHisto();
@@ -388,7 +388,7 @@ void AnalyzeSDDNoiseAllMod(Char_t *datafil,
   for(Int_t iddl=0; iddl<kTotDDL;iddl++){
     for(Int_t imod=0; imod<kModPerDDL;imod++){
       for(Int_t isid=0;isid<kSides;isid++){
-	sprintf(delfil,"rm SDDbase_step1_ddl%02dc%02d_sid%d.data",iddl,imod,isid);
+	snprintf(delfil,100,"rm SDDbase_step1_ddl%02dc%02d_sid%d.data",iddl,imod,isid);
 	gSystem->Exec(delfil);
       }
     }
@@ -404,7 +404,7 @@ void AnalyzeSDDNoiseAllMod(Int_t nrun, Int_t n2, Int_t year=2009, Char_t* dir="L
 
   TGrid::Connect("alien:",0,0,"t");
   Char_t filnam[200];
-  sprintf(filnam,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
+  snprintf(filnam,200,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
   printf("Open file %s\n",filnam);
   AnalyzeSDDNoiseAllMod(filnam,adcfreq,nDDL,firstEv,lastEv);
 }

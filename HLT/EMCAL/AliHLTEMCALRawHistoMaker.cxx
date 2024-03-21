@@ -92,33 +92,33 @@ AliHLTEMCALRawHistoMaker::AliHLTEMCALRawHistoMaker():
 
 
 
-    //sprintf(title, "Row vs Col : SM %d ", i);
-    //sprintf(id, "hAmp%d", i);
+    //snprintf(title, 100, "Row vs Col : SM %d ", i);
+    //snprintf(id, 100, "hAmp%d", i);
     //hAmp[i] = new TProfile2D(id,title, 48, -0.5, 47.5, 24, -0.5, 23.5); 
-    //sprintf(id, "hTime%d", i);
+    //snprintf(id, 100, "hTime%d", i);
     //hTime[i] = new TProfile2D(id,title, 48, -0.5, 47.5, 24, -0.5, 23.5); 
 
 
-    sprintf(title, "X_Z AMP: SM %d ", i);
-    sprintf(id, "fAmp%d", i);
+    snprintf(title, 100, "X_Z AMP: SM %d ", i);
+    snprintf(id, 100, "fAmp%d", i);
     fAmp[i] = new TProfile2D(id,title, 48, -0.5, 47.5, 24, -0.5, 23.5); 
     
     hList->Add(fAmp[i]);
     
-    sprintf(title, "X_Z TIME: SM %d ", i);
-    sprintf(id, "fTime%d", i);
+    snprintf(title, 100, "X_Z TIME: SM %d ", i);
+    snprintf(id, 100, "fTime%d", i);
     fTime[i] = new TProfile2D(id,title, 48, -0.5, 47.5, 24, -0.5, 23.5); 
 
     hList->Add(fTime[i]);
 
-    sprintf(title, "AMP_TIME: SM %d ", i);
-    sprintf(id, "fAT%d", i);
+    snprintf(title, 100, "AMP_TIME: SM %d ", i);
+    snprintf(id, 100, "fAT%d", i);
     fAT[i] = new TH2F(id,title, 1024, -0.5, 1023.5, 200, -0.5, 199.5);
     
     hList->Add(fAT[i]);
 
-    sprintf(title, "Cell_Energy: SM %d ", i);
-    sprintf(id, "fCellVsEne%d", i);
+    snprintf(title, 100, "Cell_Energy: SM %d ", i);
+    snprintf(id, 100, "fCellVsEne%d", i);
     fCellVsEne[i] = new TH2F(id,title,50 ,0, 50, 10, 0, 10);
     
     hList->Add(fCellVsEne[i]);

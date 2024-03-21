@@ -242,12 +242,12 @@ Int_t AliITSGeoPlot (Int_t evesel=0, char *opt="All+ClustersV2", TString filenam
   Char_t title1[50]="";
   Char_t title2[50]="";
   if(userec){ 
-    sprintf(title1,"Radii of recpoints - %s","SPD");
-    sprintf(title2,"Z of recpoints - %s","SPD");
+    snprintf(title1,50,"Radii of recpoints - %s","SPD");
+    snprintf(title2,50,"Z of recpoints - %s","SPD");
   }
   if(useclustersv2){
-    sprintf(title1,"Radii of clustersV2 - %s","SPD");
-    sprintf(title2,"Z of clustersV2 - %s","SPD");
+    snprintf(title1,50,"Radii of clustersV2 - %s","SPD");
+    snprintf(title2,50,"Z of clustersV2 - %s","SPD");
   }
   TH2F *rrspd = new TH2F("rrspd",title1,50,-10.,10.,50,-10.,10.);
   TH1F *zrspd = new TH1F("zrspd",title2,100,-30.,30.);
@@ -271,12 +271,12 @@ Int_t AliITSGeoPlot (Int_t evesel=0, char *opt="All+ClustersV2", TString filenam
   Char_t title3[50];
   Char_t title4[50];
   if(userec){ 
-    sprintf(title3,"Radii of recpoints - %s","SDD");
-    sprintf(title4,"Z of recpoints - %s","SDD");
+    snprintf(title3,50,"Radii of recpoints - %s","SDD");
+    snprintf(title4,50,"Z of recpoints - %s","SDD");
   }
   if(useclustersv2){
-    sprintf(title3,"Radii of clustersV2 - %s","SDD");
-    sprintf(title4,"Z of clustersV2 - %s","SDD");
+    snprintf(title3,50,"Radii of clustersV2 - %s","SDD");
+    snprintf(title4,50,"Z of clustersV2 - %s","SDD");
   }
   TH2F *rrsdd = new TH2F("rrsdd",title3,50,-40.,40.,50,-40.,40.);   
   TH1F *zrsdd = new TH1F("zrsdd",title4,100,-40.,40.);
@@ -300,12 +300,12 @@ Int_t AliITSGeoPlot (Int_t evesel=0, char *opt="All+ClustersV2", TString filenam
   Char_t title5[50];
   Char_t title6[50];
   if(userec){ 
-    sprintf(title5,"Radii of recpoints - %s","SSD");
-    sprintf(title6,"Z of recpoints - %s","SSD");
+    snprintf(title5,50,"Radii of recpoints - %s","SSD");
+    snprintf(title6,50,"Z of recpoints - %s","SSD");
   }
   if(useclustersv2){
-    sprintf(title5,"Radii of clustersV2 - %s","SSD");
-    sprintf(title6,"Z of clustersV2 - %s","SSD");
+    snprintf(title5,50,"Radii of clustersV2 - %s","SSD");
+    snprintf(title6,50,"Z of clustersV2 - %s","SSD");
   }
 
   TH2F *rrssd = new TH2F("rrssd",title5,50,-50.,50.,50,-50.,50.);

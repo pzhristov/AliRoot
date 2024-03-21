@@ -91,7 +91,7 @@ Int_t AliITSOccupancy(TString FileHits="galice.root", TString FileDigits="galice
     Int_t minID = gm->GetModuleIndex(lay+1, 1, 1);
     Int_t maxID = gm->GetModuleIndex(lay+1, nlads, ndets);
     Text_t ffname[20];
-    sprintf(ffname, "h_%d", lay+1);
+    snprintf(ffname,20, "h_%d", lay+1);
     below[lay] = new TH1F(ffname, "Total z distribution of digits", nbins[lay], -zmax[lay], zmax[lay]);
     cout << "Evaluating total channels number of layer " << lay+1 << endl;
     for (Int_t I = minID; I <= maxID; I++) {		
@@ -110,7 +110,7 @@ Int_t AliITSOccupancy(TString FileHits="galice.root", TString FileDigits="galice
         }
       }
     }
-    sprintf(ffname, "H_%d", lay+1);
+    snprintf(ffname,20, "H_%d", lay+1);
     above[lay] = new TH1F(ffname, "histo", nbins[lay], -zmax[lay], zmax[lay]);
   }
 		
@@ -172,7 +172,7 @@ Int_t AliITSOccupancy(TString FileHits="galice.root", TString FileDigits="galice
   for (Int_t I = 1; I < 7; I++) {
     view->cd(I);
     Text_t title[50];
-    sprintf(title, "Layer %d: %4.2f%c", I, mean[I-1], '%');
+    snprintf(title,50, "Layer %d: %4.2f%c", I, mean[I-1], '%');
     title[6] = (Text_t)I + '0';
     above[I-1]->SetTitle(title);
     above[I-1]->SetStats(kFALSE);

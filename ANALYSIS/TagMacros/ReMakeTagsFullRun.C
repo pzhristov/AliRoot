@@ -56,7 +56,7 @@ void ReMakeTagsFullRun(const char *esdfile, Int_t runno)
     fname[0] = '\0';
     (*istr) >> fname;
     if (strlen(fname) > 10) {
-      sprintf(pname, "alien://%s", fname);
+      snprintf(pname, 2000, "alien://%s", fname);
       chain->Add(pname);
     }
   }

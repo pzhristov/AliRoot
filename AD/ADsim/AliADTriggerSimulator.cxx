@@ -288,13 +288,13 @@ void AliADTriggerSimulator::Run() {
   Int_t nBBflagsADC = 0;
   Int_t nBGflagsADA = 0;
   Int_t nBGflagsADC = 0;
-  Float_t chargeADA   = 0.;
-  Float_t chargeADC   = 0.;
+  // Float_t chargeADA   = 0.;
+  // Float_t chargeADC   = 0.;
 
-  for(int i=0;i<16;i++) {
-    if(i<8) chargeADC += fCharges[i];
-    else chargeADA += fCharges[i];
-  }
+  // for(int i=0;i<16;i++) {
+  //   if(i<8) chargeADC += fCharges[i];
+  //   else chargeADA += fCharges[i];
+  // }
 
   for(Int_t iChannel=0; iChannel<4; iChannel++) {//Loop over pairs of pads
     //Enable time is used to turn off the coincidence

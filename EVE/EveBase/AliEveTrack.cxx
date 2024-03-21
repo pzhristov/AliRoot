@@ -148,24 +148,24 @@ void AliEveTrack::ImportHits()
     //PH on some platforms (alphalinuxgcc, solariscc5, etc.)
     //PH  h = its_hits("fX:fY:fZ", Form("ITS.fTrack==%d", label));
     char form[1000];
-    sprintf(form,"ITS.fTrack==%d", fLabel);
+    snprintf(form,1000,"ITS.fTrack==%d", fLabel);
     h = its_hits("fX:fY:fZ", form, this);
     if (h) h->SetMarkerSize(1);
     
     TEveUtil::LoadMacro("tpc_hits.C");
-    sprintf(form,"TPC2.fArray.fTrackID==%d", fLabel);
+    snprintf(form,1000,"TPC2.fArray.fTrackID==%d", fLabel);
     h = tpc_hits("TPC2.fArray.fR:TPC2.fArray.fFi:TPC2.fArray.fZ",form, this);
     //PH  h = tpc_hits("TPC2.fArray.fR:TPC2.fArray.fFi:TPC2.fArray.fZ",
     //PH	       Form("TPC2.fArray.fTrackID==%d", label));
     if (h) h->SetMarkerSize(1);
     
     TEveUtil::LoadMacro("trd_hits.C");
-    sprintf(form,"TRD.fTrack==%d", fLabel);
+    snprintf(form,1000,"TRD.fTrack==%d", fLabel);
     h = trd_hits("fX:fY:fZ", form, this);
     if (h) h->SetMarkerSize(1);
     
     TEveUtil::LoadMacro("tof_hits.C");
-    sprintf(form,"TOF.fTrack==%d", fLabel);
+    snprintf(form,1000,"TOF.fTrack==%d", fLabel);
     h = tof_hits("fX:fY:fZ", form, this);
     if (h) h->SetMarkerSize(1);
     
@@ -216,10 +216,10 @@ void AliEveTrack::ImportClustersFromLabel()
     clusters->SetMarkerColor(4);
 
     char form[1000];
-    sprintf(form,"Clusters lab=%d", fLabel);
+    snprintf(form,1000,"Clusters lab=%d", fLabel);
     clusters->SetName(form);
     char tip[1000];
-    sprintf(tip,"N=%d", clusters->Size());
+    snprintf(tip,1000,"N=%d", clusters->Size());
     clusters->SetTitle(tip);
     gEve->AddElement(clusters, this);
     gEve->Redraw3D();

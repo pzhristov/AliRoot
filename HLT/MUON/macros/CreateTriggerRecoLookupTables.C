@@ -67,7 +67,7 @@ void CreateTriggerRecoLookupTables(
 	for (Int_t ddl = 20; ddl < 22; ddl++)
 	{
 		Char_t filename[64];
-		sprintf(filename, "Lut%d.dat", ddl+1);
+		snprintf(filename, 64, "Lut%d.dat", ddl+1);
 		cout << "Generating LUT for DDL " << ddl+1
 			<< " and writing output to file " << filename << endl;
 		bool ok = AliHLTMUONTriggerReconstructorComponent::GenerateLookupTable(

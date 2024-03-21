@@ -96,13 +96,13 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
   
   // Open file with ITS tracks
   Char_t fnameTrack[1024];
-  //sprintf(fnameTrack,"%s/AliITStracksV2.root",path);
-  sprintf(fnameTrack,"%s/AliITStracksV2.root",path);
+  //snprintf(fnameTrack, 1024,"%s/AliITStracksV2.root",path);
+  snprintf(fnameTrack, 1024,"%s/AliITStracksV2.root",path);
   TFile* itstrks = TFile::Open(fnameTrack);
   
   Char_t refFile[1024];
-  //sprintf(fnameTrack,"%s/ITStracksRefFile.root",path);
-  sprintf(refFile,"%s/ITStracksRefFile.root",path);
+  //snprintf(fnameTrack, 1024,"%s/ITStracksRefFile.root",path);
+  snprintf(refFile,1024,"%s/ITStracksRefFile.root",path);
   TFile* itsrefs = TFile::Open(refFile);
   
 
@@ -122,7 +122,7 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
   TH1F *h4 = new TH1F("h4","Eta of D0",100,-5,5);
   
   Char_t falice[1024];
-  sprintf(falice,"%s/galice.root",path);
+  snprintf(falice,1024,"%s/galice.root",path);
   TFile *f = new TFile(falice);   
   gAlice=(AliRun*)f->Get("gAlice");
   int nEvent=gAlice->GetEventsPerRun();
@@ -139,7 +139,7 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
     cout<<"\n Event: "<<ev<<endl;
     
     // tracks from ITS
-    sprintf(trksName,"TreeT_ITS_%d",ev);
+    snprintf(trksName,100,"TreeT_ITS_%d",ev);
     TTree *itsTree=(TTree*)itstrks->Get(trksName);
     if(!itsTree) continue;
     itsEntries = (Int_t)itsTree->GetEntries();
@@ -147,7 +147,7 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
     
     // tree from reference file
     
-    sprintf(refsName,"Tree_Ref_%d",ev);
+    snprintf(refsName,100,"Tree_Ref_%d",ev);
     TTree *refTree=(TTree*)itsrefs->Get(refsName);
     refTree->SetBranchAddress("rectracks",&rectrk);
 
@@ -265,27 +265,27 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
       pt->SetBorderSize(1);
       pt->AddText("Cuts:");
       Char_t st[1024];
-      sprintf(st,"First Pt:         %g",kPtCut);
+      snprintf(st, 1024,"First Pt:         %g",kPtCut);
       pt->AddText(st);
-      sprintf(st,"d0 low:           %g",kd0Cut);
+      snprintf(st, 1024,"d0 low:           %g",kd0Cut);
       pt->AddText(st);
-      sprintf(st,"d0 high:          %g",kd0CutHigh);
+      snprintf(st, 1024,"d0 high:          %g",kd0CutHigh);
       pt->AddText(st);
-      sprintf(st,"V0 low:           %g",cuts[0]);
+      snprintf(st, 1024,"V0 low:           %g",cuts[0]);
       pt->AddText(st);
-      sprintf(st,"V0 high:          %g",cuts[1]);
+      snprintf(st, 1024,"V0 high:          %g",cuts[1]);
       pt->AddText(st);
-      sprintf(st,"InvMass Diff:     %g",cuts[2]);
+      snprintf(st, 1024,"InvMass Diff:     %g",cuts[2]);
       pt->AddText(st);
-      sprintf(st,"cosPointingAngle: %g",cuts[3]);
+      snprintf(st, 1024,"cosPointingAngle: %g",cuts[3]);
       pt->AddText(st);
-      sprintf(st,"d0d0:             %g",cuts[4]);
+      snprintf(st, 1024,"d0d0:             %g",cuts[4]);
       pt->AddText(st);
-      sprintf(st,"cosThetaStar:     %g",cuts[5]);
+      snprintf(st, 1024,"cosThetaStar:     %g",cuts[5]);
       pt->AddText(st);
-      sprintf(st,"PtChild:          %g",cuts[6]);
+      snprintf(st, 1024,"PtChild:          %g",cuts[6]);
       pt->AddText(st);
-      sprintf(st,"DCA:              %g",cutDCA);
+      snprintf(st, 1024,"DCA:              %g",cutDCA);
       pt->AddText(st);
       pt->Draw();
       c_1->Modified();
@@ -304,27 +304,27 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
       pt->SetBorderSize(1);
       pt->AddText("Cuts:");
       Char_t st[1024];
-      sprintf(st,"First Pt:         %g",kPtCut);
+      snprintf(st, 1024,"First Pt:         %g",kPtCut);
       pt->AddText(st);
-      sprintf(st,"d0 low:           %g",kd0Cut);
+      snprintf(st, 1024,"d0 low:           %g",kd0Cut);
       pt->AddText(st);
-      sprintf(st,"d0 high:          %g",kd0CutHigh);
+      snprintf(st, 1024,"d0 high:          %g",kd0CutHigh);
       pt->AddText(st);
-      sprintf(st,"V0 low:           %g",cuts[0]);
+      snprintf(st, 1024,"V0 low:           %g",cuts[0]);
       pt->AddText(st);
-      sprintf(st,"V0 high:          %g",cuts[1]);
+      snprintf(st, 1024,"V0 high:          %g",cuts[1]);
       pt->AddText(st);
-      sprintf(st,"InvMass Diff:     %g",cuts[2]);
+      snprintf(st, 1024,"InvMass Diff:     %g",cuts[2]);
       pt->AddText(st);
-      sprintf(st,"cosPointAng: %g",cuts[3]);
+      snprintf(st, 1024,"cosPointAng: %g",cuts[3]);
       pt->AddText(st);
-      sprintf(st,"d0d0:             %g",cuts[4]);
+      snprintf(st, 1024,"d0d0:             %g",cuts[4]);
       pt->AddText(st);
-      sprintf(st,"cosTheta*:     %g",cuts[5]);
+      snprintf(st, 1024,"cosTheta*:     %g",cuts[5]);
       pt->AddText(st);
-      sprintf(st,"PtChild:          %g",cuts[6]);
+      snprintf(st, 1024,"PtChild:          %g",cuts[6]);
       pt->AddText(st);
-      sprintf(st,"DCA:              %g",cutDCA);
+      snprintf(st, 1024,"DCA:              %g",cutDCA);
       pt->AddText(st);
       pt->Draw();
       c_1->Modified();
@@ -340,7 +340,7 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
   if(h){
     if(!PtD0){
       Char_t outName[1024];
-      sprintf(outName,"%s/ReconstructedD0.root",path);
+      snprintf(outName,1024,"%s/ReconstructedD0.root",path);
       TFile* outroot = new TFile(outName,"recreate");
       h1->Write();
       h3->Write();
@@ -350,7 +350,7 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
   }
   if(PtD0){
     Char_t outName[1024];
-    sprintf(outName,"%s/ReconstructedD0.root",path);
+    snprintf(outName,1024,"%s/ReconstructedD0.root",path);
     TFile* outroot = new TFile(outName,"recreate");
     h1->Write();
     h2->Write();
@@ -360,35 +360,35 @@ void RunD0offline(Char_t* path="./",bool h=false,bool PtD0=false) {
     delete outroot;
   }
   Char_t foutName[1024];
-  sprintf(foutName,"%s/Cuts",path);
+  snprintf(foutName,1024,"%s/Cuts",path);
   ofstream fout(foutName);
   Char_t st2[1024];
-  sprintf(st2,"First Pt:       %g",kPtCut);
+  snprintf(st2, 1024,"First Pt:       %g",kPtCut);
   fout<<st2<<endl;
-  sprintf(st2,"d0 low:         %g",kd0Cut);
+  snprintf(st2, 1024,"d0 low:         %g",kd0Cut);
   fout<<st2<<endl;
-  sprintf(st2,"d0 high:        %g",kd0CutHigh);
+  snprintf(st2, 1024,"d0 high:        %g",kd0CutHigh);
   fout<<st2<<endl;
-  sprintf(st2,"V0 low:         %g",cuts[0]);
+  snprintf(st2, 1024,"V0 low:         %g",cuts[0]);
   fout<<st2<<endl;
-  sprintf(st2,"V0 high:        %g",cuts[1]);
+  snprintf(st2, 1024,"V0 high:        %g",cuts[1]);
   fout<<st2<<endl;
-  sprintf(st2,"InvMass Diff:   %g",cuts[2]);
+  snprintf(st2, 1024,"InvMass Diff:   %g",cuts[2]);
   fout<<st2<<endl;
-  sprintf(st2,"cosPointAng:    %g",cuts[3]);
+  snprintf(st2, 1024,"cosPointAng:    %g",cuts[3]);
   fout<<st2<<endl;
-  sprintf(st2,"d0d0:           %g",cuts[4]);
+  snprintf(st2, 1024,"d0d0:           %g",cuts[4]);
   fout<<st2<<endl;
-  sprintf(st2,"cosTheta*:      %g",cuts[5]);
+  snprintf(st2, 1024,"cosTheta*:      %g",cuts[5]);
   fout<<st2<<endl;
-  sprintf(st2,"PtChild:        %g",cuts[6]);
+  snprintf(st2, 1024,"PtChild:        %g",cuts[6]);
   fout<<st2<<endl;
-  sprintf(st2,"DCA:            %g",cutDCA);
+  snprintf(st2, 1024,"DCA:            %g",cutDCA);
   fout<<st2<<endl;
   fout.close();
 
   Char_t fName[1024];
-  sprintf(fName,"%s/Events",path);
+  snprintf(fName,1024,"%s/Events",path);
   ofstream fevent(fName);
   for(int i=0;i<nD0;i++){fevent<<event[i]<<endl;}
   fevent.close();
@@ -447,7 +447,7 @@ void GetPrimaryVertex(int i,Char_t* path="./") {
   int event=i;
 
   Char_t falice[1024];
-  sprintf(falice,"%s/galice.root",path);
+  snprintf(falice,1024,"%s/galice.root",path);
   TFile * galice = new TFile(falice);
   
   TDirectory * curdir;  
@@ -455,7 +455,7 @@ void GetPrimaryVertex(int i,Char_t* path="./") {
   Char_t vname[20];
   galice->cd();
   
-  sprintf(vname,"Vertex_%d",event);
+  snprintf(vname,20,"Vertex_%d",event);
   TArrayF o = 0;
   o.Set(3);
   AliHeader * header = 0;
@@ -480,7 +480,7 @@ void GetPrimaryVertex(int i,Char_t* path="./") {
 PtD0(Char_t* path="./",TH1F * h1,TH1F * h4){
   
   Char_t falice[1024];
-  sprintf(falice,"%s/galice.root",path);  
+  snprintf(falice,1024,"%s/galice.root",path);  
   TFile *f = new TFile(falice);
   gAlice=(AliRun*)f->Get("gAlice");
   

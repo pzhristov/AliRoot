@@ -14,9 +14,9 @@ void analysis(Int_t first = -1, Int_t last = -1, const char* directory=".")
     dirs = new TObjArray(last-first+1);
     for (Int_t i = first; i<=last; i++)
      {
-//     sprintf(buff,"%s/%s/%s/%05.5d",basedir,field,serie,i);
+//     snprintf(buff, 50, "%s/%s/%s/%05.5d",basedir,field,serie,i);
        printf("%s/%d\n",directory,i);
-       sprintf(buff,"%s/%d",directory,i);
+       snprintf(buff, 50, "%s/%d",directory,i);
        TObjString *odir= new TObjString(buff);
        dirs->Add(odir);
      }

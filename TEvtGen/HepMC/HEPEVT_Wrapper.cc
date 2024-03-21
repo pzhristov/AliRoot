@@ -55,11 +55,11 @@ namespace HepMC {
     void HEPEVT_Wrapper::print_legend( std::ostream& ostr )
     {
 	char outline[81];
-	sprintf( outline,"%4s %4s %4s %5s   %10s, %9s, %9s, %9s, %10s",
+	snprintf( outline, 81,"%4s %4s %4s %5s   %10s, %9s, %9s, %9s, %10s",
 		 "Indx","Stat","Par-","chil-",
 		 "(  P_x","P_y","P_z","Energy","M ) ");
 	ostr << outline << std::endl;
-	sprintf( outline,"%9s %4s %4s    %10s, %9s, %9s, %9s) %9s",
+	snprintf( outline, 81,"%9s %4s %4s    %10s, %9s, %9s, %9s) %9s",
 		 "ID ","ents","dren",
 		 "Prod (   X","Y","Z","cT", "[mm]");
 	ostr << outline << std::endl;
@@ -72,12 +72,12 @@ namespace HepMC {
 	/// fortran array index starts at 1) So if there's 100 particles, the
 	/// last valid index is 100-1=99
 	char outline[81];
-	sprintf( outline,
+	snprintf( outline, 81,
 		 "%4d %+4d %4d %4d    (%9.3g, %9.3g, %9.3g, %9.3g, %9.3g)"
 		 ,i, status(i), first_parent(i), first_child(i),
 		 px(i), py(i), pz(i), e(i), m(i) );
 	ostr << outline << "\n";
-	sprintf( outline,"%+9d %4d %4d    (%9.3g, %9.3g, %9.3g, %9.3g)",
+	snprintf( outline, 81,"%+9d %4d %4d    (%9.3g, %9.3g, %9.3g, %9.3g)",
 		 // old version was:" (%+9.2e, %+9.2e, %+9.2e, %+9.2e)"
 		 id(i), last_parent(i), last_child(i), 
 		 x(i), y(i), z(i), t(i) );
@@ -91,7 +91,7 @@ namespace HepMC {
 	/// inconsistencies in the mother/daughter pointers
 	bool isConsistent=true;
         char header[81];
-        sprintf( header,
+        snprintf( header, 81,
                  "\n\n\t**** WARNINGInconsistent HEPEVT input, Event %10d ****"
 		 , HEPEVT_Wrapper::event_number() );
 

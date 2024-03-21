@@ -47,7 +47,7 @@ void testManuListSt345(Char_t* fileNamePre = "BusPatchToManu")
   // loop over DDL station 345
   for (Int_t iDDL = 8; iDDL < 20; ++iDDL) {
 
-    sprintf(fileName,"%s%d%s", fileNamePre, iDDL, ".dat");
+    snprintf(fileName,255,"%s%d%s", fileNamePre, iDDL, ".dat");
  
     FILE* fp = fopen(fileName,"w");
     printf("DDL # %d\n", iDDL);

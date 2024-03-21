@@ -182,7 +182,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
   for(Int_t ispecie=0;ispecie<AliRecoParam::kNSpecies;ispecie++){
     //__________________________________________________________________
     //raw data
-    sprintf(filepath,"ITS/Raws/%s",AliRecoParam::GetEventSpecieName(ispecie));
+    snprintf(filepath,100,"ITS/Raws/%s",AliRecoParam::GetEventSpecieName(ispecie));
     printf("%s",filepath);
     TString especie(filepath);
     if(!especie.Contains(eventspecie)){printf("...Found and Skipped\n");continue;}
@@ -200,13 +200,13 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t iraws=2;iraws<4;iraws++){//non expert raws
 	canvas1->cd(iraws-1);
 	
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[iraws].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[iraws].Data());
 	printf("histo name %s ",Rawsexpertname[iraws].Data());
 	historaw=(TH2D*)mergedfile.Get(histoname);
 	if(historaw){printf("...Found\n"); 	  historaw->Multiply(f1,fCNinv);  historaw->DrawCopy("colz");}
 	else
 	  {
-	    sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[iraws].Data());
+	    snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[iraws].Data());
 	    printf("...Not found\nSecond try for histo name %s ",Rawsexpertname[iraws].Data());
 	    historaw=(TH2D*)mergedfile.Get(histoname);
 	    if(historaw){printf("...Found\n");	  historaw->Multiply(f1,fCNinv);historaw->DrawCopy("colz");} 
@@ -222,7 +222,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data());
@@ -235,7 +235,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       cannum++;
       for(Int_t inraws=0;inraws<2;inraws++){//non expert raws
 	canvas1->cd(inraws+1);
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[inraws].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[inraws].Data());
 	printf("histo name %s ",Rawsexpertname[inraws].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);	
 	// 	  -----------------This is the part were I divide between the number of chunks to normalize the histogram----------------
@@ -258,7 +258,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -273,7 +273,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t iraws=0;iraws<2;iraws++){//non expert raws
 	canvas1->cd(iraws+1);
 	
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[iraws].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[iraws].Data());
 	printf("histo name %s",Rawsnonexpertname[iraws].Data());
 	historaw=(TH2D*)mergedfile.Get(histoname);
 	if(historaw){
@@ -284,7 +284,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	}
 	else
 	  {
-	    sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[iraws].Data());
+	    snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[iraws].Data());
 	    printf("...Not Found.\n Second Try for histo name %s",Rawsnonexpertname[iraws].Data());
 	    historaw=(TH2D*)mergedfile.Get(histoname);
 	    if(historaw){
@@ -304,7 +304,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -319,7 +319,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t iraws=2;iraws<4;iraws++){//non expert raws
 	canvas1->cd(iraws-1);
 	
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[iraws].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[iraws].Data());
 	printf("histo name %s",Rawsnonexpertname[iraws].Data());
 	historaw=(TH2D*)mergedfile.Get(histoname);
 	if(historaw){
@@ -338,7 +338,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -352,7 +352,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       canvas1->Divide(2,1);
       for(Int_t iraws=4;iraws<rawtot-1;iraws++){//non expert raws
 	canvas1->cd(iraws-3);
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[iraws].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[iraws].Data());
 	printf("histo name %s",Rawsexpertname[iraws].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2)
@@ -370,7 +370,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -384,7 +384,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("5\n");
       cannum++;
       for (Int_t i=4;i<rawtot-1;i++){
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[i].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[i].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2){
 	  fmax=historaw2->GetMaximum();
@@ -401,9 +401,9 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       fmaxmargin=1.1*fmaxold;
       for(Int_t irrpp=4;irrpp<rawtot-1;irrpp++){//non expert raws
 	
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[irrpp].Data());
 	printf("histo name %s",Rawsexpertname[irrpp].Data());
-	sprintf(layer, "layer %d",irrpp-1);
+	snprintf(layer,10, "layer %d",irrpp-1);
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	gStyle->SetOptStat(0);
 	
@@ -425,7 +425,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -434,7 +434,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("6\n");
       canvas1->Clear();
       for(Int_t i=0;i<2;i++){updatecanvas[i]=kTRUE;}
-      sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[rawtot-1].Data());
+      snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[rawtot-1].Data());
       printf("histo name %s",Rawsexpertname[rawtot-1].Data());
       cannum++;
       historaw2=(TH1F*)mergedfile.Get(histoname);
@@ -451,7 +451,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	  {
 	    canvas1->Update();
 	    if(kDoEps){
-	      sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	      snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	      canvas1->SaveAs(namecanvas);
 	    }
 	    canvas1->Print(psfile.Data()); 
@@ -463,7 +463,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
     
     //_______________________________________________________________________________
     //rec point
-    sprintf(filepath,"ITS/RecPoints/%s",AliRecoParam::GetEventSpecieName(ispecie));
+    snprintf(filepath,100,"ITS/RecPoints/%s",AliRecoParam::GetEventSpecieName(ispecie));
     printf("%s\n",filepath);
     directory2=(TDirectory*)mergedfile.Get(filepath);
     if(directory2){
@@ -476,7 +476,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t irp=0;irp<2;irp++){//non expert rec point
 	canvas1->cd(irp+1);
 	
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irp].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irp].Data());
 	printf("histo name %s ",RecPointsnonexpertname[irp].Data());
 	histodraw=(TH2F*)mergedfile.Get(histoname);
 	if(histodraw){printf("...Found\n");histodraw->DrawCopy("colz");}else{updatecanvas[irp]=kFALSE;printf("...Not Found: the histogram or this QA has been done before the histograms was added to QA\n");}
@@ -486,7 +486,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -502,7 +502,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t irrp=2;irrp<4;irrp++){//non expert raws
 	canvas1->cd(irrp-1);
 	
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrp].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrp].Data());
 	printf("histo name %s",RecPointsnonexpertname[irrp].Data() );
 	histodraw=(TH2F*)mergedfile.Get(histoname);
 	if(histodraw){printf("...Found\n");histodraw->DrawCopy("colz");}else{updatecanvas[irrp-2]=kFALSE;printf("...Not Found: the histogram or this QA has been done before the histograms was added to QA\n");}
@@ -512,7 +512,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -528,7 +528,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t irrpp=4;irrpp<6;irrpp++){//non expert raws
 	canvas1->cd(irrpp-3);
 	
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
 	printf("histo name %s",RecPointsnonexpertname[irrpp].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	
@@ -539,7 +539,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -554,7 +554,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t irrpp=6;irrpp<8;irrpp++){//non expert raws
 	canvas1->cd(irrpp-5);
 	//	  printf("histo name\n");
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
 	printf("histo name %s",RecPointsnonexpertname[irrpp].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2){printf("...Found\n");historaw2->DrawCopy();}else{updatecanvas[irrpp-6]=kFALSE;printf("...Not Found: the histogram or this QA has been done before the histograms was added to QA\n");}
@@ -564,7 +564,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -576,7 +576,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("11\n");
       cannum++;
       //canvas1->Divide(2,1);
-      sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[rlocaldistro].Data());
+      snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[rlocaldistro].Data());
       printf("histo name %s",RecPointsexpertname[rlocaldistro].Data());
       histodraw=(TH2F*)mergedfile.Get(histoname);
 
@@ -585,7 +585,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       if(updatecanvas[0]==kTRUE){
 	canvas1->Update();
 	if(kDoEps){
-	  sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	  snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	  canvas1->SaveAs(namecanvas);
 	}
 	canvas1->Print(psfile.Data()); 
@@ -601,7 +601,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->cd(i);
 
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  histodraw=(TH2F*)mergedfile.Get(histoname);
 
@@ -612,7 +612,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -628,7 +628,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->cd(i-2);
 
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  histodraw=(TH2F*)mergedfile.Get(histoname);
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 
@@ -642,7 +642,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -659,7 +659,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->cd(i-4);
 
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  historaw2=(TH1F*)mergedfile.Get(histoname);
 
@@ -676,7 +676,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -692,7 +692,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->cd(i-6);
 
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  historaw2=(TH1F*)mergedfile.Get(histoname);
 
@@ -703,7 +703,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -717,7 +717,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t i=9;i<11;i++)
 	{
 	  canvas1->cd(i-8);
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  historaw2=(TH1F*)mergedfile.Get(histoname);
 
@@ -728,7 +728,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -742,7 +742,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("17\n");
       cannum++;
       for (Int_t i=4;i<6;i++){
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[i].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[i].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2){
 	  fmax=historaw2->GetMaximum();
@@ -759,9 +759,9 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       fmaxmargin=1.1*fmaxold;
       for(Int_t irrpp=4;irrpp<6;irrpp++){//non expert raws
     
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
 	printf("histo name %s",RecPointsnonexpertname[irrpp].Data());
-	sprintf(layer, "layer %d",irrpp-1);
+	snprintf(layer, 10, "layer %d",irrpp-1);
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	gStyle->SetOptStat(0);
 	  
@@ -784,7 +784,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -796,7 +796,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("18\n");
       cannum++;
       for (Int_t i=6;i<8;i++){
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[i].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[i].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2){
 	  fmax=historaw2->GetMaximum();
@@ -809,9 +809,9 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       }
       for(Int_t irrpp=6;irrpp<8;irrpp++){//non expert raws
     
-	sprintf(histoname,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[irrpp].Data());
 	printf("histo name %s",RecPointsnonexpertname[irrpp].Data());
-	sprintf(layer, "layer %d",irrpp-3);
+	snprintf(layer, 10, "layer %d",irrpp-3);
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	gStyle->SetOptStat(0);
 	  
@@ -835,7 +835,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -851,7 +851,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t i=11;i<13;i++)
 	{
 	  canvas1->cd(i-10);
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  historaw2=(TH1F*)mergedfile.Get(histoname);
 
@@ -862,7 +862,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -875,7 +875,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("20\n");
       cannum++;
       for (Int_t i=11;i<13;i++){
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2){
 	  fmax=historaw2->GetMaximum();
@@ -892,9 +892,9 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       fmaxmargin=1.1*fmaxold;
       for(Int_t irrpp=11;irrpp<13;irrpp++){//non expert raws
 	  
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[irrpp].Data());
 	printf("histo name %s",RecPointsexpertname[irrpp].Data());
-	sprintf(layer, "layer %d",irrpp-8);
+	snprintf(layer, 10, "layer %d",irrpp-8);
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	gStyle->SetOptStat(0);
 	  
@@ -916,7 +916,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -931,7 +931,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t i=13;i<15;i++)
 	{
 	  canvas1->cd(i-12);
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  historaw=(TH2D*)mergedfile.Get(histoname);
 
@@ -942,7 +942,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -959,7 +959,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t i=15;i<17;i++)
 	{
 	  canvas1->cd(i-14);
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  historaw2=(TH1F*)mergedfile.Get(histoname);
 
@@ -970,7 +970,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -983,7 +983,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("23\n");
       cannum++;
       for (Int_t i=15;i<17;i++){
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2){
 	  fmax=historaw2->GetMaximum();
@@ -1000,9 +1000,9 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       fmaxmargin=1.1*fmaxold;
       for(Int_t irrpp=15;irrpp<17;irrpp++){//non expert raws
     
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[irrpp].Data());
 	printf("histo name %s",RecPointsexpertname[irrpp].Data());
-	sprintf(layer, "layer %d",irrpp-12);
+	snprintf(layer, 10, "layer %d",irrpp-12);
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	gStyle->SetOptStat(0);
 	  
@@ -1024,7 +1024,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -1041,7 +1041,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       for(Int_t i=17;i<19;i++)
 	{
 	  canvas1->cd(i-16);
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	  printf("histo name %s",RecPointsexpertname[i].Data());
 	  historaw2=(TH1F*)mergedfile.Get(histoname);
 		
@@ -1052,7 +1052,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -1067,7 +1067,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       printf("25\n");
       cannum++;
       for (Int_t i=17;i<19;i++){
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[i].Data());
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	if(historaw2){
 	  fmax=historaw2->GetMaximum();
@@ -1082,9 +1082,9 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       fmaxmargin=1.1*fmaxold;
       for(Int_t irrpp=17;irrpp<19;irrpp++){//non expert raws
     
-	sprintf(histoname,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[irrpp].Data());
+	snprintf(histoname,200,"%s/Expert/%s_%s",filepath,AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[irrpp].Data());
 	printf("histo name %s",RecPointsexpertname[irrpp].Data());
-	sprintf(layer, "layer %d",irrpp-14);
+	snprintf(layer, 10, "layer %d",irrpp-14);
 	historaw2=(TH1F*)mergedfile.Get(histoname);
 	gStyle->SetOptStat(0);
 	  
@@ -1106,7 +1106,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -1120,7 +1120,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       cannum++;
 
 
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[rtot-1].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[rtot-1].Data());
 	  printf("histo name %s",RecPointsexpertname[rtot-1].Data());
 	  historaw2=(TH1F*)mergedfile.Get(histoname);
 
@@ -1137,7 +1137,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	{
 	  canvas1->Update();
 	  if(kDoEps){
-	    sprintf(namecanvas,"%s.eps",canvassavedname[cannum].Data());
+	    snprintf(namecanvas,50,"%s.eps",canvassavedname[cannum].Data());
 	    canvas1->SaveAs(namecanvas);
 	  }
 	  canvas1->Print(psfile.Data()); 
@@ -1154,7 +1154,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       
       for(Int_t isave=0;isave<nonrawtot;isave++)
 	{
-	  sprintf(histoname,"ITS/Raws/%s/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[isave].Data());
+	  snprintf(histoname,200,"ITS/Raws/%s/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),Rawsnonexpertname[isave].Data());
 	  historaw=(TH2D*)mergedfile.Get(histoname);
 	  historaw->Write();
 	  printf("Saved  %s\n",histoname);
@@ -1163,7 +1163,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       
       for(Int_t isave1=0;isave1<rawtot;isave1++)
 	{
-	  sprintf(histoname,"ITS/Raws/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[isave1].Data());
+	  snprintf(histoname,200,"ITS/Raws/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),Rawsexpertname[isave1].Data());
 	  if(isave1==2||isave1==3)
 	    {
 	      historaw=(TH2D*)mergedfile.Get(histoname);
@@ -1181,7 +1181,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
       
       for(Int_t isave2=0;isave2<nrtot;isave2++)
 	{
-	  sprintf(histoname,"ITS/RecPoints/%s/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[isave2].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsnonexpertname[isave2].Data());
 	  if(isave2<4||isave2==17||isave2==18)
 	    {
 	      historaw=(TH2D*)mergedfile.Get(histoname);
@@ -1198,7 +1198,7 @@ void PlotQASDD(Char_t fileName[100]="File.QA.111333.2010.LHC09b.pass2.root",Bool
 	}
       for(Int_t isave3=0;isave3<rtot;isave3++)
 	{
-	  sprintf(histoname,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[isave3].Data());
+	  snprintf(histoname,200,"ITS/RecPoints/%s/Expert/%s_%s",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[isave3].Data());
 	  //printf(histoname,"ITS/RecPoints/%s/Expert/%s_%s \n",AliRecoParam::GetEventSpecieName(ispecie),AliRecoParam::GetEventSpecieName(ispecie),RecPointsexpertname[isave3].Data());
 	  if(isave3<3||isave3==11||isave3==12||isave3==17||isave3==18)
 	    {

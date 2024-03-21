@@ -491,33 +491,33 @@ void PlotDriftSpeed(AliCDBEntry *inject, Bool_t optVerbose){
 
   char tit0[100];
   Int_t nrun=0;
-  sprintf(tit0,"Temperature vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Temperature vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Temperature vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Temperature vs. mod. number - Run %d",nrun);
   tempvsmod0->SetTitle(tit0);
   tempvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Drift Speed vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Drift Speed vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Drift Speed vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Drift Speed vs. mod. number - Run %d",nrun);
   vvsmod0->SetTitle(tit0);
   vvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Degree of poly fit vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Degree of poly fit vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Degree of poly fit vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Degree of poly fit vs. mod. number - Run %d",nrun);
   poldegvsmod0->SetTitle(tit0);
   poldegvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Anode with max. vdrift vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Anode with max. vdrift vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Anode with max. vdrift vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Anode with max. vdrift vs. mod. number - Run %d",nrun);
   anmaxvsmod0->SetTitle(tit0);
   anmaxvsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Delta Vdrift 128-0 vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Delta Vdrift 128-0 vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Delta Vdrift 128-0 vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Delta Vdrift 128-0 vs. mod. number - Run %d",nrun);
   dvcevsmod0->SetTitle(tit0);
   dvcevsmod1->SetTitle(tit0);
 
-  sprintf(tit0,"Delta Vdrift 256-0 vs. mod. number");
-  if(nrun!=0)sprintf(tit0,"Delta Vdrift 256-0 vs. mod. number - Run %d",nrun);
+  snprintf(tit0,100,"Delta Vdrift 256-0 vs. mod. number");
+  if(nrun!=0)snprintf(tit0,100,"Delta Vdrift 256-0 vs. mod. number - Run %d",nrun);
   dveevsmod0->SetTitle(tit0);
   dveevsmod1->SetTitle(tit0);
 

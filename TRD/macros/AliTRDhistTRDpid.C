@@ -52,44 +52,44 @@ Bool_t AliTRDhistTRDpid(Int_t oFile=1)
   // Histograms for dedx of e and pi track in TRD 
   
   for (Int_t imom = 0; imom < kNMom; imom++) {
-    sprintf(text,"h1dEdxEL%01d",imom+1);
+    snprintf(text,200,"h1dEdxEL%01d",imom+1);
     h1dEdxEL[imom] = new TH1F(text,"dE/dx  Dist.",200,0,4000);
     h1dEdxEL[imom]->GetXaxis()->SetTitle("dE/dx_{TRD}(arbitrary units)");
     h1dEdxEL[imom]->GetYaxis()->SetTitle("Entries");
     h1dEdxEL[imom]->SetLineColor(kRed);
     
-    sprintf(text,"h1dEdxPI%01d",imom+1);  
+    snprintf(text,200,"h1dEdxPI%01d",imom+1);  
     h1dEdxPI[imom] = new TH1F(text,"dE/dx  Dist.",200,0,4000);
     //  TH1F *h1dEdxPI[imom] = new TH1F("","",250,0,2500);
     h1dEdxPI[imom]->GetXaxis()->SetTitle("dE/dx_{TRD} (arbitrary units)");
     h1dEdxPI[imom]->GetYaxis()->SetTitle("Entries");
     h1dEdxPI[imom]->SetLineColor(kBlue);
 
-    sprintf(text,"h1dEdxMU%01d",imom+1);  
+    snprintf(text,200,"h1dEdxMU%01d",imom+1);  
     h1dEdxMU[imom] = new TH1F(text,"dE/dx  Dist.",200,0,4000);
     h1dEdxMU[imom]->GetXaxis()->SetTitle("dE/dx_{TRD}(arbitrary units)");
     h1dEdxMU[imom]->GetYaxis()->SetTitle("Entries");
     h1dEdxMU[imom]->SetLineColor(kGreen);
     
-    sprintf(text,"h1dEdxKA%01d",imom+1);  
+    snprintf(text,200,"h1dEdxKA%01d",imom+1);  
     h1dEdxKA[imom] = new TH1F(text,"dE/dx  Dist.",200,0,4000);
     h1dEdxKA[imom]->GetXaxis()->SetTitle("dE/dx_{TRD}(arbitrary units)");
     h1dEdxKA[imom]->GetYaxis()->SetTitle("Entries");
     h1dEdxKA[imom]->SetLineColor(7);
     
-    sprintf(text,"h1dEdxPR%01d",imom+1); 
+    snprintf(text,200,"h1dEdxPR%01d",imom+1); 
     h1dEdxPR[imom] = new TH1F(text,"dE/dx  Dist.",200,0,4000);
     h1dEdxPR[imom]->GetXaxis()->SetTitle("dE/dx_{TRD}(arbitrary units)");
     h1dEdxPR[imom]->GetYaxis()->SetTitle("Entries");
     h1dEdxPR[imom]->SetLineColor(6);
     
-    sprintf(text,"h1MaxTimBinEL%01d",imom+1);  
+    snprintf(text,200,"h1MaxTimBinEL%01d",imom+1);  
     h1MaxTimBinEL[imom] = new TH1F(text,"Dist. Time Bin of max. Cluster for e(Red) and pi(Blue)",30,0,30);
     h1MaxTimBinEL[imom]->GetXaxis()->SetTitle("Time Bin of Maximum Cluster");
     h1MaxTimBinEL[imom]->GetYaxis()->SetTitle("Entries");
     h1MaxTimBinEL[imom]->SetLineColor(2);
     
-    sprintf(text,"h1MaxTimBinPI%01d",imom+1);  
+    snprintf(text,200,"h1MaxTimBinPI%01d",imom+1);  
     h1MaxTimBinPI[imom] = new TH1F(text,"Time Bin of max. Cluster Pion",30,0,30);
     h1MaxTimBinPI[imom]->SetLineColor(4);
   }
@@ -108,8 +108,8 @@ Bool_t AliTRDhistTRDpid(Int_t oFile=1)
   Char_t esdFileName[200];
   for (Int_t imom = 0; imom < kNMom; imom++) {
 
-    sprintf(gAliceFileName,"~/work/data/%s/galice.root", FileDir[imom]);
-    sprintf(esdFileName,"~/work/data/%s/AliESDs.root", FileDir[imom]);
+    snprintf(gAliceFileName,200,"~/work/data/%s/galice.root", FileDir[imom]);
+    snprintf(esdFileName,200,"~/work/data/%s/AliESDs.root", FileDir[imom]);
 
   // open run loader and load gAlice, kinematics and header
   AliRunLoader* runLoader = AliRunLoader::Open(gAliceFileName);
@@ -280,7 +280,7 @@ Bool_t AliTRDhistTRDpid(Int_t oFile=1)
   // write the output histograms to a file
   
   Char_t fileresponse[200];
-  sprintf(fileresponse,"TRDdEdxHistogramsV%d.root",oFile);
+  snprintf(fileresponse,200,"TRDdEdxHistogramsV%d.root",oFile);
   
   TFile* outputFile = TFile::Open(fileresponse, "recreate");
   if (!outputFile || !outputFile->IsOpen()) {

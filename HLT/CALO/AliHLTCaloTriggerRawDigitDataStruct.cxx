@@ -131,26 +131,26 @@ void PrintRawDigit(const AliHLTCaloTriggerRawDigitDataStruct &dig) {
 
 void SPrintRawDigit(const AliHLTCaloTriggerRawDigitDataStruct &dig, char *outputbuffer) {
   char *currentpos = outputbuffer, tempstr[1024];
-  sprintf(tempstr, "===\n| Digit  id: %4d /  %d Time Samples: \n", dig.fID, dig.fNTimeSamples);
+  snprintf(tempstr, 1024, "===\n| Digit  id: %4d /  %d Time Samples: \n", dig.fID, dig.fNTimeSamples);
   strcpy(currentpos, tempstr);
   currentpos += strlen(tempstr)/sizeof(char);
   for (Int_t i=0; i < dig.fNTimeSamples; i++) {
     Int_t timeBin, amp;
     GetTimeSample(dig, i, timeBin, amp);
-    sprintf(tempstr, "| (%d,%d) ",timeBin,amp);
+    snprintf(tempstr, 1024, "| (%d,%d) ",timeBin,amp);
     strcpy(currentpos, tempstr);
     currentpos += strlen(tempstr)/sizeof(char);
   }
-  sprintf(tempstr, "| L0: (%d,%d) / %d Time(s): \n",GetTriggerBit(dig, kL0,1),GetTriggerBit(dig, kL0,0), dig.fNL0Times);
+  snprintf(tempstr, 1024, "| L0: (%d,%d) / %d Time(s): \n",GetTriggerBit(dig, kL0,1),GetTriggerBit(dig, kL0,0), dig.fNL0Times);
   strcpy(currentpos, tempstr);
   currentpos += strlen(tempstr)/sizeof(char);
   for (Int_t i = 0; i < dig.fNL0Times; i++) {
     Int_t time;
-    if (GetL0Time(dig, i, time)) sprintf(tempstr, "| %d ",time);
+    if (GetL0Time(dig, i, time)) snprintf(tempstr, 1024, "| %d ",time);
     strcpy(currentpos, tempstr);
     currentpos += strlen(tempstr)/sizeof(char);
   }
-  sprintf(currentpos, "| L1: g high (%d,%d) g low (%d,%d) j high (%d,%d) j low (%d,%d) / Time sum: %d\n",
+  snprintf(currentpos, strlen(currentpos)/sizeof(char), "| L1: g high (%d,%d) g low (%d,%d) j high (%d,%d) j low (%d,%d) / Time sum: %d\n",
        GetTriggerBit(dig, kL1GammaHigh,1),GetTriggerBit(dig, kL1GammaHigh,0),GetTriggerBit(dig, kL1GammaLow,1),GetTriggerBit(dig, kL1GammaLow,0),
        GetTriggerBit(dig, kL1JetHigh,1),  GetTriggerBit(dig, kL1JetHigh,0),  GetTriggerBit(dig, kL1JetLow,1),  GetTriggerBit(dig, kL1JetLow,0),
        dig.fL1TimeSum);

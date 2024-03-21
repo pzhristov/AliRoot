@@ -58,16 +58,16 @@ void AnalyzeSDDInjectorsAllMod(Char_t *datafil,
   TH1F** hvdriftr=new TH1F*[260];  
   Char_t hisnam[20];
   for(Int_t idet=0; idet<260;idet++){
-    sprintf(hisnam,"vdriftl%03d",idet);
+    snprintf(hisnam,20,"vdriftl%03d",idet);
     hvdriftl[idet]=new TH1F(hisnam,"",500,5.5,8.0);
-    sprintf(hisnam,"vdriftr%03d",idet);
+    snprintf(hisnam,20,"vdriftr%03d",idet);
     hvdriftr[idet]=new TH1F(hisnam,"",500,5.5,8.0);
   }
   for(Int_t iddl=0; iddl<kTotDDL;iddl++){
     for(Int_t imod=0; imod<kModPerDDL;imod++){
       for(Int_t isid=0;isid<kSides;isid++){
 	Int_t index=kSides*(kModPerDDL*iddl+imod)+isid;
-	sprintf(hisnam,"h%02dc%02ds%d",iddl,imod,isid);
+	snprintf(hisnam,20,"h%02dc%02ds%d",iddl,imod,isid);
 
 	histo[index]=new TH2F(hisnam,"",256,-0.5,255.5,256,-0.5,255.5);
 	anal[index]=new AliITSOnlineSDDInjectors(iddl,imod,isid);
@@ -203,14 +203,14 @@ void AnalyzeSDDInjectorsAllMod(Char_t *datafil,
 	    c0->cd(index2+1);
 	    histo[index]->SetMaximum(100.);
 	    histo[index]->DrawCopy("colz");
-	    sprintf(text,"DDL %d channel %d Side %d",nDDL,imod,isid);
+	    snprintf(text,50,"DDL %d channel %d Side %d",nDDL,imod,isid);
 	    t0->DrawLatex(0.15,0.92,text);
 	    c0->Update();
 	    c1->cd(index2+1);
 	    gvel[index]=anal[index]->GetDriftSpeedGraph();
 	    gvel[index]->SetMarkerStyle(20);
 	    gvel[index]->SetTitle("");
-	    sprintf(gname,"gvel%dev%d",index,iev);
+	    snprintf(gname,15,"gvel%dev%d",index,iev);
 	    gvel[index]->SetName(gname);
 	    //	    gvel[index]->SetMinimum(0);
 	    //gvel[index]->SetMaximum(200);
@@ -315,7 +315,7 @@ void AnalyzeSDDInjectorsAllMod(Char_t *datafil,
   gvvsmod0->SetMaximum(gvmax);
   gvvsmod0->GetXaxis()->SetTitle("Module Number");
   Char_t title[50];
-  sprintf(title,"Vdrift at injector pad %d",jpad);
+  snprintf(title,50,"Vdrift at injector pad %d",jpad);
   gvvsmod0->GetYaxis()->SetTitle(title);  
   gvvsmod1->Draw("PSAME");
   TLatex* tleft=new TLatex(0.7,0.82,"Side 0");
@@ -343,7 +343,7 @@ void AnalyzeSDDInjectorsAllMod(Char_t *datafil,
   gtvsmod0->SetMinimum(gtmin);
   gtvsmod0->SetMaximum(gtmax);
   gtvsmod0->GetXaxis()->SetTitle("Module Number");
-  sprintf(title,"Estimated Temperature (K)");
+  snprintf(title,50,"Estimated Temperature (K)");
   gtvsmod0->GetYaxis()->SetTitle(title);  
   gtvsmod1->Draw("PSAME");
   tleft->Draw();
@@ -391,7 +391,7 @@ void AnalyzeSDDInjectorsAllMod(Int_t nrun, Int_t n2, Int_t year=2010, Char_t* di
 
   TGrid::Connect("alien:",0,0,"t");
   Char_t filnam[200];
-  sprintf(filnam,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
+  snprintf(filnam,200,"alien:///alice/data/%d/%s/%09d/raw/%02d%09d%03d.10.root",year,dir,nrun,year-2000,nrun,n2);
   printf("Open file %s\n",filnam);
   AnalyzeSDDInjectorsAllMod(filnam,adcfreq,nDDL,firstEv,lastEv,jpad,statuscut);
 }

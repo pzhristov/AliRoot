@@ -114,18 +114,18 @@ void AliPMDAnalysisMCTaskSE::UserCreateOutputObjects()
     Float_t gbin = 2.3 + i*0.2;
     
     char a[40];
-    sprintf(a,"hResponseEtaBin%2.1fto%2.1f",gbin, gbin+0.2);
+    snprintf(a,40,"hResponseEtaBin%2.1fto%2.1f",gbin, gbin+0.2);
     char b[40];
-    sprintf(b,"hTrueEtaBin%2.1fto%2.1f",gbin, gbin+0.2);
+    snprintf(b,40,"hTrueEtaBin%2.1fto%2.1f",gbin, gbin+0.2);
     char c[40];
-    sprintf(c,"hMeasuredEtaBin%2.1fto%2.1f",gbin, gbin+0.2);
+    snprintf(c,40,"hMeasuredEtaBin%2.1fto%2.1f",gbin, gbin+0.2);
 
     char aa[40];
-    sprintf(aa," Responce Matrix from \eta - %2.1f to %2.1f",gbin, gbin+0.2);
-    char bb[40];
-    sprintf(bb," True Multiplicity of #gamma from \eta %2.1f to %2.1f",gbin, gbin+0.2);
-    char cc[40];
-    sprintf(cc," Measured multiplicity of gamma [#gamma_{like}] from \eta %2.1f to %2.1f",gbin, gbin+0.2);
+    snprintf(aa,40," Responce Matrix from \eta - %2.1f to %2.1f",gbin, gbin+0.2);
+    char bb[80];
+    snprintf(bb,80," True Multiplicity of #gamma from \eta %2.1f to %2.1f",gbin, gbin+0.2);
+    char cc[80];
+    snprintf(cc,80," Measured multiplicity of gamma [#gamma_{like}] from \eta %2.1f to %2.1f",gbin, gbin+0.2);
     
 
     fhResponse[i] = new TH2F(a,aa,kMultBin,gMultMin,gMultMax,kMultBin,gMultMin,gMultMax);

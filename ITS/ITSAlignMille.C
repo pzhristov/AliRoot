@@ -36,7 +36,7 @@ int ITSAlignMille(int fromev=1, int toev=1, int fromentry=0, int nentries=-1, ch
   char st[200];
   
   for (int iev=fromev; iev<=toev; iev++) {
-    sprintf(st,"%s/AliTrackPoints.%d.root",dir,iev);
+    snprintf(st,200,"%s/AliTrackPoints.%d.root",dir,iev);
     chain->Add(st);
   }
   

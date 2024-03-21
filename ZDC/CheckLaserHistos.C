@@ -27,7 +27,7 @@ void CheckLaserHistos(Int_t nRun=0, Int_t optPlot = 1)
   TGrid::Connect("alien:",0,0,"t");
   
   char histoFName[150];
-  sprintf(histoFName,"alien:///alice/data/2010/Reference/ZDC/%d_laserReference.root",nRun);
+  snprintf(histoFName,150,"alien:///alice/data/2010/Reference/ZDC/%d_laserReference.root",nRun);
   
   TFile *file = TFile::Open(histoFName);
   file->cd();
@@ -50,20 +50,20 @@ void CheckLaserHistos(Int_t nRun=0, Int_t optPlot = 1)
   char hnamZNClg[20], hnamZPClg[20], hnamZNAlg[20], hnamZPAlg[20];
   char hnamZEMhg[20], hnamZEMlg[20];
   for(Int_t j=0; j<5; j++){
-    sprintf(hnamZNChg,"ZNChg-tow%d",j);
-    sprintf(hnamZPChg,"ZPChg-tow%d",j);
-    sprintf(hnamZNAhg,"ZNAhg-tow%d",j);
-    sprintf(hnamZPAhg,"ZPAhg-tow%d",j);
+    snprintf(hnamZNChg,20,"ZNChg-tow%d",j);
+    snprintf(hnamZPChg,20,"ZPChg-tow%d",j);
+    snprintf(hnamZNAhg,20,"ZNAhg-tow%d",j);
+    snprintf(hnamZPAhg,20,"ZPAhg-tow%d",j);
     //
     hZNChg[j] = new TH1F(hnamZNChg, hnamZNChg, 100, 0., 1000.);
     hZPChg[j] = new TH1F(hnamZPChg, hnamZPChg, 100, 0., 1000.);
     hZNAhg[j] = new TH1F(hnamZNAhg, hnamZNAhg, 100, 0., 1000.);
     hZPAhg[j] = new TH1F(hnamZPAhg, hnamZPAhg, 100, 0., 1000.);
     //
-    sprintf(hnamZNClg,"ZNClg-tow%d",j);
-    sprintf(hnamZPClg,"ZPClg-tow%d",j);
-    sprintf(hnamZNAlg,"ZNAlg-tow%d",j);
-    sprintf(hnamZPAlg,"ZPAlg-tow%d",j);
+    snprintf(hnamZNClg,20,"ZNClg-tow%d",j);
+    snprintf(hnamZPClg,20,"ZPClg-tow%d",j);
+    snprintf(hnamZNAlg,20,"ZNAlg-tow%d",j);
+    snprintf(hnamZPAlg,20,"ZPAlg-tow%d",j);
     //
     hZNClg[j] = new TH1F(hnamZNClg, hnamZNClg, 100, 0., 4000.);
     hZPClg[j] = new TH1F(hnamZPClg, hnamZPClg, 100, 0., 4000.);
@@ -71,8 +71,8 @@ void CheckLaserHistos(Int_t nRun=0, Int_t optPlot = 1)
     hZPAlg[j] = new TH1F(hnamZPAlg, hnamZPAlg, 100, 0., 4000.);
     //
     if(j<2){
-      sprintf(hnamZEMhg,"ZEM%dhg",j);
-      sprintf(hnamZEMlg,"ZEM%dlg",j);
+      snprintf(hnamZEMhg,20,"ZEM%dhg",j);
+      snprintf(hnamZEMlg,20,"ZEM%dlg",j);
       //
       hZEMhg[j] = new TH1F(hnamZEMhg, hnamZEMhg, 100, 0., 1000.);      
       hZEMlg[j] = new TH1F(hnamZEMlg, hnamZEMlg, 100, 0., 4000.);      

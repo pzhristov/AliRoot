@@ -73,8 +73,8 @@ AliHLTPHOSRcuHistogramProducer::AliHLTPHOSRcuHistogramProducer(AliHLTUInt8_t mod
     }
   else
     {
-      //  sprintf(fHistoOutDir,"%s/rundir/output/histograms",tmp);
-      sprintf(fHistoOutDir,"%s/rundir/output/histograms/",tmp);
+      //  snprintf(fHistoOutDir,512,"%s/rundir/output/histograms",tmp);
+      snprintf(fHistoOutDir,512,"%s/rundir/output/histograms/",tmp);
     }
   Init();
 }
@@ -90,7 +90,7 @@ void
 AliHLTPHOSRcuHistogramProducer::SetHistoOutDir(char *outDir)
 {
   //comment
-  sprintf(fHistoOutDir,"%s", outDir);
+  snprintf(fHistoOutDir,512,"%s", outDir);
 }
 
 void 
@@ -98,7 +98,7 @@ AliHLTPHOSRcuHistogramProducer::SetDefaultHistoOutDir()
 {
   //comment
   char *tmp = getenv("HOME/rundir"); 
-  sprintf(fHistoOutDir,"%s/rundir/output/histograms", tmp);
+  snprintf(fHistoOutDir,512,"%s/rundir/output/histograms", tmp);
   //testing wether or not directry exist
   FILE *fp = fopen(fHistoOutDir, "w");
   
@@ -129,7 +129,7 @@ AliHLTPHOSRcuHistogramProducer::Init()
 
   for(int gain=0; gain< NGAINS; gain++)
     {
-      sprintf(tmpHistoName, "DeadChanneMap_Module%d_rcuz%d_rcux%d_gain%d",(int)fModuleID,  fRcuZ, fRcuX, gain);
+      snprintf(tmpHistoName, 512, "DeadChanneMap_Module%d_rcuz%d_rcux%d_gain%d",(int)fModuleID,  fRcuZ, fRcuX, gain);
       //    fDeadChannelMapHistogramPtrs[gain] = new TH2D( tmpHistoName, tmpHistoName, NBINS, XBINLOW, XBINUP);
       fDeadChannelMapHistogramPtrs[gain] = new TH2D(tmpHistoName, tmpHistoName,  
 				      NXCOLUMNSRCU , 0, NXCOLUMNSRCU , 
@@ -151,14 +151,14 @@ AliHLTPHOSRcuHistogramProducer::Init()
 	      fTimingAverageValues[x][z][gain] = 0; 
 	      fHits[x][z][gain]                = 0;
 	      fDeadChannelMap[x][z][gain]      = 0;
-	      sprintf(tmpHistoName, "Edistribution_%d_%d_%d_%d",(int)fModuleID,  geomx, geomz, gain);
+	      snprintf(tmpHistoName, 512, "Edistribution_%d_%d_%d_%d",(int)fModuleID,  geomx, geomz, gain);
 	      //	      fEnergyHistogramPtrs[x][z][gain] = 0;
 	      fEnergyHistogramPtrs[x][z][gain] = new TH1F( tmpHistoName, tmpHistoName, NBINS, XBINLOW, XBINUP);
-	      sprintf(tmpHistoName, "TOFdistribution_module%d_x%d_z%d_gain%d", (int)fModuleID,  geomx, geomz, gain);
+	      snprintf(tmpHistoName, 512, "TOFdistribution_module%d_x%d_z%d_gain%d", (int)fModuleID,  geomx, geomz, gain);
 	      
 	      //	      fTimingHistogramPtrs[x][z][gain] = 0;
 	      
-	      //	      sprintf(tmpHistoName, "DeadChanneMap_%d_%d_%d_%d",(int)fModuleID,  geomx, geomz, gain);
+	      //	      snprintf(tmpHistoName, 512, "DeadChanneMap_%d_%d_%d_%d",(int)fModuleID,  geomx, geomz, gain);
 	      //	      fDeadChannelMapHistogramPtrs[x][z][gain] = new TH1D( tmpHistoName, tmpHistoName, N_BINS, XBIN_LOW, XBIN_UP);
 
 
@@ -291,7 +291,7 @@ AliHLTPHOSRcuHistogramProducer::WriteAllHistograms(char *opt)
   fUtilitiesPtr->ResetArray(timeString, 256);
   
 
-  sprintf(runNumberFile, "%s/rundir/runNumber.txt", getenv("HOME"));
+  snprintf(runNumberFile, 256, "%s/rundir/runNumber.txt", getenv("HOME"));
 
   FILE *fp = fopen(runNumberFile, "r");
 
@@ -301,16 +301,16 @@ AliHLTPHOSRcuHistogramProducer::WriteAllHistograms(char *opt)
       ScanTimeString(timeString);  
       //      cout << "WARNING, could not find file "<< runNumberFile  <<endl;
       //      cout <<"Filename will be stamped with data and time instead " << endl;
-      sprintf(tmpEFileName, "%s/Energy/EnergyHistograms_%s_mod%d_rcuZ%d_rcuX%d.root", fHistoOutDir, timeString, (int)fModuleID, (int)fRcuZ, (int)fRcuZ);
-      sprintf(tmpDeadFileName_gain0, "%s/DeadMap/DeadChannelHistograms_%s_mod%d_rcuZ%d_rcuX%d_LG.root", fHistoOutDir, timeString, (int)fModuleID, (int)fRcuZ, (int)fRcuZ); 
-      sprintf(tmpDeadFileName_gain1, "%s/DeadMap/DeadChannelHistograms_%s_mod%d_rcuZ%d_rcuX%d_HG.root", fHistoOutDir, timeString, (int)fModuleID, (int)fRcuZ, (int)fRcuZ); 
+      snprintf(tmpEFileName, 256, "%s/Energy/EnergyHistograms_%s_mod%d_rcuZ%d_rcuX%d.root", fHistoOutDir, timeString, (int)fModuleID, (int)fRcuZ, (int)fRcuZ);
+      snprintf(tmpDeadFileName_gain0, 256, "%s/DeadMap/DeadChannelHistograms_%s_mod%d_rcuZ%d_rcuX%d_LG.root", fHistoOutDir, timeString, (int)fModuleID, (int)fRcuZ, (int)fRcuZ); 
+      snprintf(tmpDeadFileName_gain1, 256, "%s/DeadMap/DeadChannelHistograms_%s_mod%d_rcuZ%d_rcuX%d_HG.root", fHistoOutDir, timeString, (int)fModuleID, (int)fRcuZ, (int)fRcuZ); 
     } 
   else
     {
       res = fscanf(fp, "%d", &runNumber);
-      sprintf(tmpEFileName, "%s/Energy/EnergyHisttograms_run%d_mod%d_rcuZ%d_rcuX%d.root", fHistoOutDir, runNumber, (int)fModuleID, (int)fRcuZ, (int)fRcuX);
-      sprintf(tmpDeadFileName_gain0, "%s/DeadMap/DeadChannleHistograms_run%d_mod%d_rcuZ%d_rcuX%d_LG.root", fHistoOutDir, runNumber, (int)fModuleID, (int)fRcuZ, (int)fRcuX);
-      sprintf(tmpDeadFileName_gain1, "%s/DeadMap/DeadChannleHistograms_run%d_mod%d_rcuZ%d_rcuX%d_HG.root", fHistoOutDir, runNumber, (int)fModuleID, (int)fRcuZ, (int)fRcuX);
+      snprintf(tmpEFileName, 256, "%s/Energy/EnergyHisttograms_run%d_mod%d_rcuZ%d_rcuX%d.root", fHistoOutDir, runNumber, (int)fModuleID, (int)fRcuZ, (int)fRcuX);
+      snprintf(tmpDeadFileName_gain0, 256, "%s/DeadMap/DeadChannleHistograms_run%d_mod%d_rcuZ%d_rcuX%d_LG.root", fHistoOutDir, runNumber, (int)fModuleID, (int)fRcuZ, (int)fRcuX);
+      snprintf(tmpDeadFileName_gain1, 256, "%s/DeadMap/DeadChannleHistograms_run%d_mod%d_rcuZ%d_rcuX%d_HG.root", fHistoOutDir, runNumber, (int)fModuleID, (int)fRcuZ, (int)fRcuX);
       fclose(fp);
     }
 

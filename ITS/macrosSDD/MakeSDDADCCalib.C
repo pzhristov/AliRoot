@@ -120,7 +120,7 @@ void MakeSDDADCCalib(Int_t run = 245705,TString foldname = "15o_Bunch4",TString 
 
   Char_t path[200];
     
-  //    sprintf(path,"alien:///alice/data/%04i/%s/%09i/cpass1_pass1/QAresults_barrel.root",year,period.Data(),run);
+  //    snprintf(path,200,"alien:///alice/data/%04i/%s/%09i/cpass1_pass1/QAresults_barrel.root",year,period.Data(),run);
   //    TFile *fin = TFile::Open(path);
   //    if(!fin)return;
   //    TDirectory *dirFile = (TDirectory*)fin->Get("ITSAlignQA");
@@ -133,8 +133,8 @@ void MakeSDDADCCalib(Int_t run = 245705,TString foldname = "15o_Bunch4",TString 
     
   TFile *fin;
   if(!readLocal) {
-    sprintf(path,"alien:///alice/data/%04i/%s/%09i/cpass1_pass1/OCDB/CalibObjects.root",year,period.Data(),run);
-    //        sprintf(path,"alien:///alice/data/%04i/%s/%09i/zdc_special_wTPC_cpass1/OCDB/CalibObjects.root",year,period.Data(),run);
+    snprintf(path,200,"alien:///alice/data/%04i/%s/%09i/cpass1_pass1/OCDB/CalibObjects.root",year,period.Data(),run);
+    //        snprintf(path,200,"alien:///alice/data/%04i/%s/%09i/zdc_special_wTPC_cpass1/OCDB/CalibObjects.root",year,period.Data(),run);
     fin = TFile::Open(path);
   }
   else fin = new TFile(Form("%s/%s",foldname.Data(),filename.Data()));

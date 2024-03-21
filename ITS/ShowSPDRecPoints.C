@@ -105,88 +105,88 @@ void ShowSPDRecPoints(Int_t RunStart, Int_t RunStop){
             new TH2F("nCl2_nCl1","# SPD clusters on layer 2 vs # on layer 1",200,0.,200.,200,0.,200.);
   hMultSPDcl2_MultSPDcl1->GetXaxis()->SetTitle("# clusters (inner layer)");
   hMultSPDcl2_MultSPDcl1->GetYaxis()->SetTitle("# clusters (outer layer)");                                                                                                                         
-  Char_t name[10];
+  Char_t name[100];
   Char_t title[20];
   for (Int_t iLay=0;iLay<2;iLay++) {
-    sprintf(name,"hmod%d",iLay+1);
+    snprintf(name,100,"hmod%d",iLay+1);
     hmod[iLay]=new TH1F(name,"SPD clusters - Module number",totmod,modmin,modmax);
     hmod[iLay]->GetXaxis()->SetTitle("Module number");
     hmod[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hxloc%d",iLay+1);
+    snprintf(name,100,"hxloc%d",iLay+1);
     hxl[iLay]=new TH1F(name,"SPD clusters - Local x coordinate",100,-4.,4.);
     hxl[iLay]->GetXaxis()->SetTitle("Local x [cm]");
     hxl[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hzloc%d",iLay+1);
+    snprintf(name,100,"hzloc%d",iLay+1);
     hzl[iLay]=new TH1F(name,"SPD clusters - Local z coordinate",100,-4.,4.);
     hzl[iLay]->GetXaxis()->SetTitle("Local z [cm]");
     hzl[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hxgl%d",iLay+1);
+    snprintf(name,100,"hxgl%d",iLay+1);
     hxg[iLay]=new TH1F(name,"SPD clusters - Global x coordinate",100,-xlim[iLay],xlim[iLay]);
     hxg[iLay]->GetXaxis()->SetTitle("Global x [cm]");
     hxg[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hygl%d",iLay+1);
+    snprintf(name,100,"hygl%d",iLay+1);
     hyg[iLay]=new TH1F(name,"SPD clusters - Global y coordinate",100,-xlim[iLay],xlim[iLay]);
     hyg[iLay]->GetXaxis()->SetTitle("Global y [cm]");
     hyg[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hzgl%d",iLay+1);
+    snprintf(name,100,"hzgl%d",iLay+1);
     hzg[iLay]=new TH1F(name,"SPD clusters - Global z coordinate",150,-zlim[iLay],zlim[iLay]);
     hzg[iLay]->GetXaxis()->SetTitle("Global z [cm]");
     hzg[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hr%d",iLay+1);
+    snprintf(name,100,"hr%d",iLay+1);
     hr[iLay]=new TH1F(name,"SPD clusters - r",100,0.,50.);
     hr[iLay]->GetXaxis()->SetTitle("r [cm]");
     hr[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hphi%d",iLay+1);
+    snprintf(name,100,"hphi%d",iLay+1);
     hphi[iLay]=new TH1F(name,"SPD clusters - #phi",100,0.,2*TMath::Pi()); 
     hphi[iLay]->GetXaxis()->SetTitle("#phi [rad]");
     hphi[iLay]->GetYaxis()->SetTitle("Entries");
-    sprintf(name,"hType%d",iLay+1);
+    snprintf(name,100,"hType%d",iLay+1);
     hType[iLay]=new TH1F(name,"SPD clusters - Type",100,0.,100.);
     hType[iLay]->GetXaxis()->SetTitle("Cluster type");
     hType[iLay]->GetYaxis()->SetTitle("Entries");
 
-    sprintf(name,"hMultSPDcl%d",iLay+1);
+    snprintf(name,100,"hMultSPDcl%d",iLay+1);
     hMultSPDcl[iLay]=new TH1F(name,"Cluster multiplicity",200,0.,200.);
     hMultSPDcl[iLay]->GetXaxis()->SetTitle("Cluster multiplicity");
     hMultSPDcl[iLay]->GetYaxis()->SetTitle("Entries");
 
-    sprintf(name,"hNy_Nz%d",iLay+1);
+    snprintf(name,100,"hNy_Nz%d",iLay+1);
     hNy_Nz[iLay]=new TH2F(name,"SPD clusters - Length",100,0.,100.,100,0.,100.);
     hNy_Nz[iLay]->GetXaxis()->SetTitle("z length");
     hNy_Nz[iLay]->GetYaxis()->SetTitle("y length");
-    sprintf(name,"hPhi_Z%d",iLay+1);
+    snprintf(name,100,"hPhi_Z%d",iLay+1);
     hPhi_Z[iLay]=new TH2F(name,"SPD clusters - #phi vs z",150,-zlim[iLay],zlim[iLay],100,0.,2*TMath::Pi());
     hPhi_Z[iLay]->GetXaxis()->SetTitle("Global z [cm]");
     hPhi_Z[iLay]->GetYaxis()->SetTitle("#phi [rad]");
-    sprintf(name,"hr_phi%d",iLay+1);
+    snprintf(name,100,"hr_phi%d",iLay+1);
     hr_phi[iLay]=new TH2F(name,"SPD clusters - #phi_r",500,0.,50.,100,0.,2*TMath::Pi());
     hr_phi[iLay]->GetXaxis()->SetTitle("r [cm]");
     hr_phi[iLay]->GetYaxis()->SetTitle("#phi [rad]");
-    sprintf(name,"hx_y%d",iLay+1);
+    snprintf(name,100,"hx_y%d",iLay+1);
     hx_y[iLay]=new TH2F(name,"SPD clusters - y_x",200,-10.,10.,200,-10.,10.);
     hx_y[iLay]->GetXaxis()->SetTitle("x [cm]");
     hx_y[iLay]->GetYaxis()->SetTitle("y [cm]");
-    sprintf(name,"hx_y_z%d",iLay+1);
+    snprintf(name,100,"hx_y_z%d",iLay+1);
     hx_y_z[iLay]=new TH3F(name,"SPD clusters - y_x",200,-10.,10.,200,-10.,10.,150,-15.,15.);
     hx_y_z[iLay]->GetXaxis()->SetTitle("z [cm]");
     hx_y_z[iLay]->GetYaxis()->SetTitle("x [cm]");
     hx_y_z[iLay]->GetZaxis()->SetTitle("y [cm]");
   }
   for (Int_t iSec=0; iSec<10; iSec++) {
-    sprintf(name,"hnCl2_nCl1_Sector%d",iSec);
-    sprintf(title,"Sector %d",iSec+1);
+    snprintf(name,100,"hnCl2_nCl1_Sector%d",iSec);
+    snprintf(title,20,"Sector %d",iSec+1);
     hnCl2_nCl1_Sec[iSec]=new TH2F(name,title,200,0.,200.,200,0.,200.);
     hnCl2_nCl1_Sec[iSec]->GetXaxis()->SetTitle("# clusters (inner layer)");
     hnCl2_nCl1_Sec[iSec]->GetYaxis()->SetTitle("# clusters (outer layer)");
-    sprintf(name,"hnCl2vsnCl1_Sector%d",iSec);
-    sprintf(title,"Sector %d",iSec+1);
+    snprintf(name,100,"hnCl2vsnCl1_Sector%d",iSec);
+    snprintf(title,20,"Sector %d",iSec+1);
     hnCl2vsnCl1_Sec[iSec]=new TProfile(name,title,200,0.,200.,0.,200.);
     hnCl2vsnCl1_Sec[iSec]->GetXaxis()->SetTitle("# clusters (inner layer)");
     hnCl2vsnCl1_Sec[iSec]->GetYaxis()->SetTitle("# clusters (outer layer)");
   }
   for (Int_t iHalfSec=0; iHalfSec<20; iHalfSec++) {
-    sprintf(name,"hnCl2_nCl1_HalfSector%d",iHalfSec);
-    sprintf(title,"Half-Sector %d",iHalfSec+1);
+    snprintf(name,100,"hnCl2_nCl1_HalfSector%d",iHalfSec);
+    snprintf(title,20,"Half-Sector %d",iHalfSec+1);
     hnCl2_nCl1_HSec[iHalfSec]=new TH2F(name,title,200,0.,200.,200,0.,200.);
     hnCl2_nCl1_HSec[iHalfSec]->GetXaxis()->SetTitle("# clusters (inner layer)");
     hnCl2_nCl1_HSec[iHalfSec]->GetYaxis()->SetTitle("# clusters (outer layer)");
@@ -222,11 +222,11 @@ void ShowSPDRecPoints(Int_t RunStart, Int_t RunStop){
  
     // retrives geometry 
     if (!gGeoManager) {
-      sprintf(str,"%s/ppMinBias%04d/geometry.root",dir,run);
+      snprintf(str,256,"%s/ppMinBias%04d/geometry.root",dir,run);
       AliGeomManager::LoadGeometry(str);  
     }
 
-    sprintf(str,"%s/ppMinBias%04d/galice.root",dir,run);
+    snprintf(str,256,"%s/ppMinBias%04d/galice.root",dir,run);
     AliRunLoader*  rl = AliRunLoader::Open(str);
 
     if (rl == 0x0){                                 
@@ -402,8 +402,8 @@ void ShowSPDRecPoints(Int_t RunStart, Int_t RunStop){
   Char_t ctit[30];
   for(Int_t iLay=0;iLay<2;iLay++){
     hNy_Nz[iLay]->Write();
-    sprintf(name,"can%d",iLay+1);
-    sprintf(ctit,"Layer %d",iLay+1);
+    snprintf(name,100,"can%d",iLay+1);
+    snprintf(ctit,30,"Layer %d",iLay+1);
     c[iLay]=new TCanvas(name,ctit,1200,900);
     c[iLay]->Divide(3,3);
     c[iLay]->cd(1);
