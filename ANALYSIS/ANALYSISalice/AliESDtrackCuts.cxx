@@ -2423,12 +2423,12 @@ Int_t AliESDtrackCuts::CountAcceptedTracks(const AliESDEvent* const esd)
    //###################################################################################
    // defining histograms
 
-   fhCutStatistics = new TH1F("cut_statistics","cut statistics",kNCuts+4,-0.5,kNCuts+3.5);
+   fhCutStatistics = new TH1F("cut_statistics","cut statistics",(int)kNCuts+4,-0.5,(float)kNCuts+3.5);
 
    fhCutStatistics->GetXaxis()->SetBinLabel(1,"n tracks");
    fhCutStatistics->GetXaxis()->SetBinLabel(2,"n cut tracks");
 
-   fhCutCorrelation = new TH2F("cut_correlation","cut correlation",kNCuts,-0.5,kNCuts-0.5,kNCuts,-0.5,kNCuts-0.5);;
+   fhCutCorrelation = new TH2F("cut_correlation","cut correlation",(int)kNCuts,-0.5,(float)kNCuts-0.5,(float)kNCuts,-0.5,(float)kNCuts-0.5);;
 
    for (Int_t i=0; i<kNCuts; i++) {
      fhCutStatistics->GetXaxis()->SetBinLabel(i+4,fgkCutNames[i]);

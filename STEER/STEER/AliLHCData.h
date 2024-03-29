@@ -91,7 +91,7 @@ class AliLHCData : public TObject
   void                  SetFillNumber(Int_t fill)                          {fFillNumber = fill;}
   void                  SetTMin(Double_t t)                                {fTMin = t<0?0:(t>1e10?1e10:t);}
   void                  SetTMax(Double_t t)                                {fTMax = t<0?0:(t>1e10?1e10:t);}
-  Bool_t                IsRun2()                                     const {return fTMin>kY2015;}
+  Bool_t                IsRun2()                                     const {return fTMin>(double)kY2015;}
   //
   virtual void          Print(const Option_t *opt="")                const;
   TGraph*               ExportGraph(Int_t *coord, Int_t elID=0)      const;

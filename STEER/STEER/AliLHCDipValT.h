@@ -183,11 +183,12 @@ Element AliLHCDipValT<Element>::GetValue(Int_t i) const
 template<class Element>
 void AliLHCDipValT<Element>::SetSize(Int_t sz)
 {
-  //resize
-  Element* arr = 0;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
   if (sz>0) {
+    Element* arr = nullptr;
     arr = new Element[sz];
-    int nc = GetSizeTotal() > sz ? sz:GetSizeTotal(); // n elems to copy
+    int nc = GetSizeTotal() > sz ? sz : GetSizeTotal(); // n elems to copy
     if (nc && fArray) memcpy(arr, fArray, nc*sizeof(Element));
     if (nc<sz) memset(arr+nc, 0, (sz-nc)*sizeof(Element));
     if (fArray) delete[] fArray;
@@ -199,6 +200,7 @@ void AliLHCDipValT<Element>::SetSize(Int_t sz)
     fArray = 0;
     fSizeTot = 0;
   }
+#pragma GCC diagnostic pop
 }
 
 //__________________________________________________________________________

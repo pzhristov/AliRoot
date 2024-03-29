@@ -160,7 +160,7 @@ void AliADDecision::FillDecisions(AliESDAD *esdAD)
     if (adc1 > GetRecoParam()->GetAdcThresHold() && adc2 > GetRecoParam()->GetAdcThresHold()) {
       Float_t time1 = esdAD->GetTime(i);
       Float_t time2 = esdAD->GetTime(i+4);
-      if(time1 > (AliADReconstructor::kInvalidTime+1.e-6) && time2 > (AliADReconstructor::kInvalidTime+1.e-6)){
+      if(time1 > ((float)AliADReconstructor::kInvalidTime+1.e-6) && time2 > ((float)AliADReconstructor::kInvalidTime+1.e-6)){
 	Float_t timeErr1 = 1/adc1;
 	Float_t timeErr2 = 1/adc2;
 	Float_t timeDiff = TMath::Abs(time1-time2);
@@ -190,7 +190,7 @@ void AliADDecision::FillDecisions(AliESDAD *esdAD)
     if (adc1 > GetRecoParam()->GetAdcThresHold() && adc2 > GetRecoParam()->GetAdcThresHold()) {
       Float_t time1 = esdAD->GetTime(i);
       Float_t time2 = esdAD->GetTime(i+4);
-      if(time1 > (AliADReconstructor::kInvalidTime+1.e-6) && time2 > (AliADReconstructor::kInvalidTime+1.e-6)){
+      if(time1 > ((float)AliADReconstructor::kInvalidTime+1.e-6) && time2 > ((float)AliADReconstructor::kInvalidTime+1.e-6)){
 	Float_t timeErr1 = 1/adc1;
 	Float_t timeErr2 = 1/adc2;
 	Float_t timeDiff = TMath::Abs(time1-time2);
@@ -244,7 +244,7 @@ void AliADDecision::FillDecisions(AliESDAD *esdAD)
   else if (timeADA > (-fADADist + GetRecoParam()->GetTimeWindowBGALow()) &&
 	   timeADA < (-fADADist + GetRecoParam()->GetTimeWindowBGAUp()))
     esdAD->SetADADecision(AliESDAD::kADBG);
-  else if (timeADA > (AliADReconstructor::kInvalidTime + 1e-6))
+  else if (timeADA > ((float)AliADReconstructor::kInvalidTime + 1e-6))
     esdAD->SetADADecision(AliESDAD::kADFake);
 
   if (timeADC > (fADCDist + GetRecoParam()->GetTimeWindowBBCLow()) &&
@@ -253,7 +253,7 @@ void AliADDecision::FillDecisions(AliESDAD *esdAD)
   else if (timeADC > (-fADCDist + GetRecoParam()->GetTimeWindowBGCLow()) &&
 	   timeADC < (-fADCDist + GetRecoParam()->GetTimeWindowBGCUp()))
     esdAD->SetADCDecision(AliESDAD::kADBG);
-  else if (timeADC > (AliADReconstructor::kInvalidTime + 1e-6))
+  else if (timeADC > ((float)AliADReconstructor::kInvalidTime + 1e-6))
     esdAD->SetADCDecision(AliESDAD::kADFake);
 
   UInt_t aBBtriggerADA = 0; // bit mask for Beam-Beam trigger in ADA

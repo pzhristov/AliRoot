@@ -190,7 +190,7 @@ AliPID::AliPID() :
   Init();
   // set default values (= equal probabilities)
   for (Int_t i = 0; i < kSPECIESCN; i++)
-    fProbDensity[i] = 1./kSPECIESCN;
+    fProbDensity[i] = 1./(double)kSPECIESCN;
 }
 
 //_______________________________________________________________________

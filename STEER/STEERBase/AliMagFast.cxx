@@ -246,7 +246,7 @@ Bool_t AliMagFast::GetSegmentSol(const float xyz[3], int& zSeg,int &rSeg, int &q
 {
   // get segment of point location
   const float &x=xyz[kX],&y=xyz[kY],&z=xyz[kZ];
-  const float zGridSpaceInv = 1/(fgkSolZMax*2/kNSolZRanges);
+  const float zGridSpaceInv = 1.f/(fgkSolZMax*2/(float)kNSolZRanges);
   zSeg = -1;
   if (z<fgkSolZMax) {
     if (z>-fgkSolZMax) zSeg = (z+fgkSolZMax)*zGridSpaceInv; // solenoid params

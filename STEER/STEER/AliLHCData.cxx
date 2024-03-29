@@ -292,7 +292,7 @@ TObjArray* AliLHCData::GetDCSEntry(const char* key,int &entry,int &last,double t
   Bool_t found = kFALSE;
   for (entry=0;entry<ntot;entry++) {
     ent = (AliDCSArray*)arr->At(entry);
-    if (ent->GetTimeStamp()>=tmin-kMarginSOR && ent->GetTimeStamp()<=tmax+kMarginEOR) {
+    if (ent->GetTimeStamp()>=tmin-(float)kMarginSOR && ent->GetTimeStamp()<=tmax+(float)kMarginEOR) {
       found = kTRUE;
       if (ent->GetTimeStamp()>tmin) break;
     }
@@ -316,7 +316,7 @@ TObjArray* AliLHCData::GetDCSEntry(const char* key,int &entry,int &last,double t
     if (ent->GetTimeStamp()>tmax) break;
   }
   if (last == ntot) last--;
-  else if (ent->GetTimeStamp()>tmax+kMarginEOR) last--;
+  else if (ent->GetTimeStamp()>tmax+(float)kMarginEOR) last--;
   //
   return arr;
 }
