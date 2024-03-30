@@ -93,10 +93,10 @@ namespace {
 	printf("\n  Sector %d", fOldS);
       }
       if (t % 4 == 0)                   printf("\n   %3d-%3d ", t, t+3);
-      if (m == AliESDFMD::kInvalidMult) printf("------/");
-      else                              printf("%6.3f/", m);
-      if (e == AliESDFMD::kInvalidEta)  printf("------ ");
-      else                              printf("%6.3f ", e);
+      if (m == (float)AliESDFMD::kInvalidMult) printf("------/");
+      else                                     printf("%6.3f/", m);
+      if (e == (float)AliESDFMD::kInvalidEta)  printf("------ ");
+      else                                     printf("%6.3f ", e);
 
       return kTRUE;
     }

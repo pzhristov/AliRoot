@@ -117,7 +117,7 @@ void AliESDpid::MakeTPCPID(AliESDtrack *track) const
 
   if (mismatch) {
     for (Int_t j=0; j<AliPID::kSPECIES; j++) {
-      p[j] = 1./AliPID::kSPECIES;
+      p[j] = 1./(double)AliPID::kSPECIES;
     }
   }
 
@@ -186,7 +186,7 @@ void AliESDpid::MakeITSPID(AliESDtrack *track) const
 
     if (mismatch) {
       for (Int_t j=0; j<AliPID::kSPECIES; j++) {
-        p[j] = 1./AliPID::kSPECIES;
+        p[j] = 1./(double)AliPID::kSPECIES;
       }
     }
 
