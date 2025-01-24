@@ -39,14 +39,14 @@ struct CfFragment {
 
   size_t digitsStart = 0; // Start digits in this fragment. Only used when zero suppression is skipped
 
-  unsigned int index = 0;
+  uint32_t index = 0;
 
   bool hasBacklog = false;
   bool hasFuture = false;
   tpccf::TPCTime totalSliceLength = 0;
   tpccf::TPCFragmentTime maxSubSliceLength = 0;
 
-  GPUdDefault() CfFragment() CON_DEFAULT;
+  GPUdDefault() CfFragment() = default;
 
   GPUd() CfFragment(tpccf::TPCTime totalSliceLen, tpccf::TPCFragmentTime maxSubSliceLen) : CfFragment(0, false, 0, totalSliceLen, maxSubSliceLen) {}
 
@@ -57,7 +57,7 @@ struct CfFragment {
     return CfFragment{index + 1, hasFuture, tpccf::TPCTime(start + length - (hasFuture ? 2 * OverlapTimebins : 0)), totalSliceLength, maxSubSliceLength};
   }
 
-  GPUdi() unsigned int count() const
+  GPUdi() uint32_t count() const
   {
     return (totalSliceLength + maxSubSliceLength - 4 * OverlapTimebins - 1) / (maxSubSliceLength - 2 * OverlapTimebins);
   }
@@ -109,7 +109,7 @@ struct CfFragment {
   }
 
  private:
-  GPUd() CfFragment(uint index_, bool hasBacklog_, tpccf::TPCTime start_, tpccf::TPCTime totalSliceLen, tpccf::TPCFragmentTime maxSubSliceLen)
+  GPUd() CfFragment(uint32_t index_, bool hasBacklog_, tpccf::TPCTime start_, tpccf::TPCTime totalSliceLen, tpccf::TPCFragmentTime maxSubSliceLen)
   {
     this->index = index_;
     this->hasBacklog = hasBacklog_;

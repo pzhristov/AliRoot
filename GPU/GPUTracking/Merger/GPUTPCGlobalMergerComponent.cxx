@@ -95,7 +95,7 @@ AliHLTComponentDataType GPUTPCGlobalMergerComponent::GetOutputDataType()
   return kAliHLTMultipleDataType;
 }
 
-int GPUTPCGlobalMergerComponent::GetOutputDataTypes(AliHLTComponentDataTypeList& tgtList)
+int32_t GPUTPCGlobalMergerComponent::GetOutputDataTypes(AliHLTComponentDataTypeList& tgtList)
 {
   // see header file for class documentation
 
@@ -135,24 +135,24 @@ void GPUTPCGlobalMergerComponent::SetDefaultConfiguration()
   fBenchmark.SetTimer(1, "reco");
 }
 
-int GPUTPCGlobalMergerComponent::ReadConfigurationString(const char* arguments)
+int32_t GPUTPCGlobalMergerComponent::ReadConfigurationString(const char* arguments)
 {
   // Set configuration parameters for the CA merger component from the string
 
-  int iResult = 0;
+  int32_t iResult = 0;
   if (!arguments) {
     return iResult;
   }
 
   TString allArgs = arguments;
   TString argument;
-  int bMissingParam = 0;
+  int32_t bMissingParam = 0;
 
   TObjArray* pTokens = allArgs.Tokenize(" ");
 
-  int nArgs = pTokens ? pTokens->GetEntries() : 0;
+  int32_t nArgs = pTokens ? pTokens->GetEntries() : 0;
 
-  for (int i = 0; i < nArgs; i++) {
+  for (int32_t i = 0; i < nArgs; i++) {
     argument = ((TObjString*)pTokens->At(i))->GetString();
     if (argument.IsNull()) {
       continue;
@@ -218,7 +218,7 @@ int GPUTPCGlobalMergerComponent::ReadConfigurationString(const char* arguments)
   return iResult;
 }
 
-int GPUTPCGlobalMergerComponent::ReadCDBEntry(const char* cdbEntry, const char* chainId)
+int32_t GPUTPCGlobalMergerComponent::ReadCDBEntry(const char* cdbEntry, const char* chainId)
 {
   // see header file for class documentation
 
@@ -250,7 +250,7 @@ int GPUTPCGlobalMergerComponent::ReadCDBEntry(const char* cdbEntry, const char* 
   return ReadConfigurationString(pString->GetString().Data());
 }
 
-int GPUTPCGlobalMergerComponent::Configure(const char* cdbEntry, const char* chainId, const char* commandLine)
+int32_t GPUTPCGlobalMergerComponent::Configure(const char* cdbEntry, const char* chainId, const char* commandLine)
 {
   // Configure the component
   // There are few levels of configuration,
@@ -262,7 +262,7 @@ int GPUTPCGlobalMergerComponent::Configure(const char* cdbEntry, const char* cha
 
   //* read the default CDB entry
 
-  int iResult = ReadCDBEntry(nullptr, chainId);
+  int32_t iResult = ReadCDBEntry(nullptr, chainId);
   if (iResult) {
     return iResult;
   }
@@ -299,7 +299,7 @@ int GPUTPCGlobalMergerComponent::Configure(const char* cdbEntry, const char* cha
   GPUSettingsGRP grp;
   GPUSettingsRec rec;
   GPUSettingsProcessing devProc;
-  grp.solenoidBz = fSolenoidBz;
+  grp.solenoidBzNominalGPU = fSolenoidBz;
   if (fClusterErrorCorrectionY > 1.e-4) {
     rec.tpc.clusterError2CorrectionY = fClusterErrorCorrectionY * fClusterErrorCorrectionY;
   }
@@ -328,31 +328,31 @@ int GPUTPCGlobalMergerComponent::Configure(const char* cdbEntry, const char* cha
   return 0;
 }
 
-int GPUTPCGlobalMergerComponent::DoInit(int argc, const char** argv)
+int32_t GPUTPCGlobalMergerComponent::DoInit(int argc, const char** argv)
 {
   // see header file for class documentation
 
   TString arguments = "";
-  for (int i = 0; i < argc; i++) {
+  for (int32_t i = 0; i < argc; i++) {
     if (!arguments.IsNull()) {
       arguments += " ";
     }
     arguments += argv[i];
   }
 
-  int retVal = Configure(nullptr, nullptr, arguments.Data());
+  int32_t retVal = Configure(nullptr, nullptr, arguments.Data());
 
   return retVal;
 }
 
-int GPUTPCGlobalMergerComponent::Reconfigure(const char* cdbEntry, const char* chainId)
+int32_t GPUTPCGlobalMergerComponent::Reconfigure(const char* cdbEntry, const char* chainId)
 {
   // Reconfigure the component from OCDB
 
   return Configure(cdbEntry, chainId, nullptr);
 }
 
-int GPUTPCGlobalMergerComponent::DoDeinit()
+int32_t GPUTPCGlobalMergerComponent::DoDeinit()
 {
   // see header file for class documentation
   if (fChain == fgCurrentMergerReconstruction) {
@@ -364,11 +364,11 @@ int GPUTPCGlobalMergerComponent::DoDeinit()
   return 0;
 }
 
-int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData, const AliHLTComponentBlockData* blocks, AliHLTComponentTriggerData& /*trigData*/, AliHLTUInt8_t* outputPtr, AliHLTUInt32_t& size, AliHLTComponentBlockDataList& outputBlocks)
+int32_t GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData, const AliHLTComponentBlockData* blocks, AliHLTComponentTriggerData& /*trigData*/, AliHLTUInt8_t* outputPtr, AliHLTUInt32_t& size, AliHLTComponentBlockDataList& outputBlocks)
 {
   // see header file for class documentation
-  int iResult = 0;
-  unsigned int maxBufferSize = size;
+  int32_t iResult = 0;
+  uint32_t maxBufferSize = size;
 
   size = 0;
 
@@ -383,7 +383,7 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
 
   fChain->GetTPCMerger().Clear();
 
-  int nSlicesSet = 0;
+  int32_t nSlicesSet = 0;
   const AliHLTComponentBlockData* const blocksEnd = blocks + evtData.fBlockCnt;
   for (const AliHLTComponentBlockData* block = blocks; block < blocksEnd; ++block) {
     if (block->fDataType != GPUTPCDefinitions::fgkTrackletsDataType) {
@@ -392,7 +392,7 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
 
     fBenchmark.AddInput(block->fSize);
 
-    int slice = AliHLTTPCDefinitions::GetMinSliceNr(*block);
+    int32_t slice = AliHLTTPCDefinitions::GetMinSliceNr(*block);
     if (slice < 0 || slice >= AliHLTTPCGeometry::GetNSlice()) {
       HLTError("invalid slice number %d extracted from specification 0x%08lx,  skipping block of type %s", slice, block->fSpecification, DataType2Text(block->fDataType).c_str());
       // just remember the error, if there are other valid blocks ignore the error, return code otherwise
@@ -423,22 +423,22 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
   fBenchmark.Stop(1);
 
   // Fill output
-  unsigned int mySize = 0;
+  uint32_t mySize = 0;
   {
     AliHLTTracksData* outPtr = (AliHLTTracksData*)(outputPtr);
     AliHLTExternalTrackParam* currOutTrack = outPtr->fTracklets;
     mySize = ((AliHLTUInt8_t*)currOutTrack) - ((AliHLTUInt8_t*)outputPtr);
     outPtr->fCount = 0;
-    int nTracks = fChain->GetTPCMerger().NOutputTracks();
+    int32_t nTracks = fChain->GetTPCMerger().NOutputTracks();
 
-    for (int itr = 0; itr < nTracks; itr++) {
+    for (int32_t itr = 0; itr < nTracks; itr++) {
       // convert GPUTPCGMMergedTrack to AliHLTTrack
 
       const GPUTPCGMMergedTrack& track = fChain->GetTPCMerger().OutputTracks()[itr];
       if (!track.OK()) {
         continue;
       }
-      unsigned int dSize = sizeof(AliHLTExternalTrackParam) + track.NClusters() * sizeof(unsigned int);
+      uint32_t dSize = sizeof(AliHLTExternalTrackParam) + track.NClusters() * sizeof(uint32_t);
 
       if (mySize + dSize > maxBufferSize) {
         HLTWarning("Output buffer size exceed (buffer size %d, current size %d), %d tracks are not stored", maxBufferSize, mySize, nTracks - itr + 1);
@@ -453,7 +453,7 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
 
       // normalize the angle to +-Pi
 
-      currOutTrack->fAlpha = tp.GetAlpha() - CAMath::Nint(tp.GetAlpha() / CAMath::TwoPi()) * CAMath::TwoPi();
+      currOutTrack->fAlpha = tp.GetAlpha() - CAMath::Round(tp.GetAlpha() / CAMath::TwoPi()) * CAMath::TwoPi();
       currOutTrack->fX = tp.GetX();
       currOutTrack->fY = tp.GetY();
       currOutTrack->fZ = tp.GetZ();
@@ -464,19 +464,19 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
       currOutTrack->fq1Pt = tp.GetSigned1Pt();
       currOutTrack->fSinPhi = tp.GetSnp();
       currOutTrack->fTgl = tp.GetTgl();
-      for (int i = 0; i < 15; i++) {
+      for (int32_t i = 0; i < 15; i++) {
         currOutTrack->fC[i] = tp.GetCovariance()[i];
       }
       currOutTrack->fTrackID = itr;
       currOutTrack->fFlags = 0;
       currOutTrack->fNPoints = 0;
-      for (int i = 0; i < track.NClusters(); i++) {
+      for (int32_t i = 0; i < track.NClusters(); i++) {
         if (fChain->GetTPCMerger().Clusters()[track.FirstClusterRef() + i].state & GPUTPCGMMergedTrackHit::flagReject) {
           continue;
         }
         currOutTrack->fPointIDs[currOutTrack->fNPoints++] = fChain->GetTPCMerger().Clusters()[track.FirstClusterRef() + i].num;
       }
-      dSize = sizeof(AliHLTExternalTrackParam) + currOutTrack->fNPoints * sizeof(unsigned int);
+      dSize = sizeof(AliHLTExternalTrackParam) + currOutTrack->fNPoints * sizeof(uint32_t);
 
       currOutTrack = (AliHLTExternalTrackParam*)(((Byte_t*)currOutTrack) + dSize);
       mySize += dSize;
@@ -496,19 +496,19 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
   }
 
   if (fNWays > 1 && fNWaysOuter) {
-    unsigned int newSize = 0;
+    uint32_t newSize = 0;
     AliHLTTracksData* outPtr = (AliHLTTracksData*)(outputPtr + size);
     AliHLTExternalTrackParam* currOutTrack = outPtr->fTracklets;
     newSize = ((AliHLTUInt8_t*)currOutTrack) - (outputPtr + size);
     outPtr->fCount = 0;
-    int nTracks = fChain->GetTPCMerger().NOutputTracks();
+    int32_t nTracks = fChain->GetTPCMerger().NOutputTracks();
 
-    for (int itr = 0; itr < nTracks; itr++) {
+    for (int32_t itr = 0; itr < nTracks; itr++) {
       const GPUTPCGMMergedTrack& track = fChain->GetTPCMerger().OutputTracks()[itr];
       if (!track.OK()) {
         continue;
       }
-      unsigned int dSize = sizeof(AliHLTExternalTrackParam);
+      uint32_t dSize = sizeof(AliHLTExternalTrackParam);
 
       if (mySize + newSize + dSize > maxBufferSize) {
         HLTWarning("Output buffer size exceed (buffer size %d, current size %d), %d tracks are not stored", maxBufferSize, mySize + newSize + dSize, nTracks - itr + 1);
@@ -523,7 +523,7 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
 
       // normalize the angle to +-Pi
 
-      currOutTrack->fAlpha = track.OuterParam().alpha - CAMath::Nint(tp.GetAlpha() / CAMath::TwoPi()) * CAMath::TwoPi();
+      currOutTrack->fAlpha = track.OuterParam().alpha - CAMath::Round(tp.GetAlpha() / CAMath::TwoPi()) * CAMath::TwoPi();
       currOutTrack->fX = track.OuterParam().X;
       currOutTrack->fY = track.OuterParam().P[0];
       currOutTrack->fZ = track.OuterParam().P[1];
@@ -534,7 +534,7 @@ int GPUTPCGlobalMergerComponent::DoEvent(const AliHLTComponentEventData& evtData
       currOutTrack->fq1Pt = track.OuterParam().P[4];
       currOutTrack->fSinPhi = track.OuterParam().P[2];
       currOutTrack->fTgl = track.OuterParam().P[3];
-      for (int i = 0; i < 15; i++) {
+      for (int32_t i = 0; i < 15; i++) {
         currOutTrack->fC[i] = track.OuterParam().C[i];
       }
       currOutTrack->fTrackID = itr;

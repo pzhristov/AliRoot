@@ -28,7 +28,7 @@
 using namespace GPUCA_NAMESPACE::gpu;
 using namespace o2::tpc;
 
-GPUd() void GPUTPCGMSliceTrack::Set(const GPUTPCGMMerger* merger, const GPUTPCTrack* sliceTr, float alpha, int slice)
+GPUd() void GPUTPCGMSliceTrack::Set(const GPUTPCGMMerger* merger, const GPUTPCTrack* sliceTr, float alpha, int32_t slice)
 {
   const GPUTPCBaseTrackParam& t = sliceTr->Param();
   mOrigTrack = sliceTr;
@@ -38,19 +38,19 @@ GPUd() void GPUTPCGMSliceTrack::Set(const GPUTPCGMMerger* merger, const GPUTPCTr
   mParam.mDzDs = t.GetDzDs();
   mParam.mSinPhi = t.GetSinPhi();
   mParam.mQPt = t.GetQPt();
-  mParam.mCosPhi = sqrt(1.f - mParam.mSinPhi * mParam.mSinPhi);
+  mParam.mCosPhi = CAMath::Sqrt(1.f - mParam.mSinPhi * mParam.mSinPhi);
   mParam.mSecPhi = 1.f / mParam.mCosPhi;
   mAlpha = alpha;
   mSlice = slice;
   if (merger->Param().par.earlyTpcTransform) {
     mTZOffset = t.GetZOffset();
   } else {
-    mTZOffset = merger->GetConstantMem()->calibObjects.fastTransform->convZOffsetToVertexTime(slice, t.GetZOffset(), merger->Param().par.continuousMaxTimeBin);
+    mTZOffset = merger->GetConstantMem()->calibObjects.fastTransformHelper->getCorrMap()->convZOffsetToVertexTime(slice, t.GetZOffset(), merger->Param().continuousMaxTimeBin);
   }
   mNClusters = sliceTr->NHits();
 }
 
-GPUd() void GPUTPCGMSliceTrack::Set(const GPUTPCGMTrackParam& trk, const GPUTPCTrack* sliceTr, float alpha, int slice)
+GPUd() void GPUTPCGMSliceTrack::Set(const GPUTPCGMTrackParam& trk, const GPUTPCTrack* sliceTr, float alpha, int32_t slice)
 {
   mOrigTrack = sliceTr;
   mParam.mX = trk.GetX();
@@ -59,7 +59,7 @@ GPUd() void GPUTPCGMSliceTrack::Set(const GPUTPCGMTrackParam& trk, const GPUTPCT
   mParam.mDzDs = trk.GetDzDs();
   mParam.mSinPhi = trk.GetSinPhi();
   mParam.mQPt = trk.GetQPt();
-  mParam.mCosPhi = sqrt(1.f - mParam.mSinPhi * mParam.mSinPhi);
+  mParam.mCosPhi = CAMath::Sqrt(1.f - mParam.mSinPhi * mParam.mSinPhi);
   mParam.mSecPhi = 1.f / mParam.mCosPhi;
   mAlpha = alpha;
   mSlice = slice;
@@ -84,7 +84,7 @@ GPUd() void GPUTPCGMSliceTrack::SetParam2(const GPUTPCGMTrackParam& trk)
   mParam2.mDzDs = trk.GetDzDs();
   mParam2.mSinPhi = trk.GetSinPhi();
   mParam2.mQPt = trk.GetQPt();
-  mParam2.mCosPhi = sqrt(1.f - mParam2.mSinPhi * mParam2.mSinPhi);
+  mParam2.mCosPhi = CAMath::Sqrt(1.f - mParam2.mSinPhi * mParam2.mSinPhi);
   mParam2.mSecPhi = 1.f / mParam2.mCosPhi;
   mParam2.mC0 = trk.GetCov(0);
   mParam2.mC2 = trk.GetCov(2);
@@ -97,7 +97,7 @@ GPUd() void GPUTPCGMSliceTrack::SetParam2(const GPUTPCGMTrackParam& trk)
   mParam2.mC14 = trk.GetCov(14);
 }
 
-GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int iSlice, float maxSinPhi, float sinPhiMargin)
+GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int32_t iSlice, float maxSinPhi, float sinPhiMargin)
 {
   float lastX;
   if (merger->Param().par.earlyTpcTransform && !merger->Param().rec.tpc.mergerReadFromTrackerDirectly) {
@@ -106,7 +106,7 @@ GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int i
     //float lastX = merger->Param().tpcGeometry.Row2X(mOrigTrack->Cluster(mOrigTrack->NClusters() - 1).GetRow()); // TODO: again, why does this reduce efficiency?
     float y, z;
     const GPUTPCSliceOutCluster* clo;
-    int row, index;
+    int32_t row, index;
     if (merger->Param().rec.tpc.mergerReadFromTrackerDirectly) {
       const GPUTPCTracker& trk = merger->GetConstantMem()->tpcTrackers[iSlice];
       const GPUTPCHitId& ic = trk.TrackHits()[mOrigTrack->FirstHitID() + mOrigTrack->NHits() - 1];
@@ -121,9 +121,9 @@ GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int i
     GPUTPCConvertImpl::convert(*merger->GetConstantMem(), iSlice, row, cl.getPad(), cl.getTime(), lastX, y, z);
   }
 
-  const int N = 3;
+  const int32_t N = 3;
 
-  float bz = -merger->Param().par.constBz;
+  float bz = -merger->Param().bzCLight;
 
   float k = mParam.mQPt * bz;
   float dx = (1.f / N) * (lastX - mParam.mX);
@@ -132,15 +132,17 @@ GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int i
   float kdx205 = 2.f + kdx * kdx * 0.5f;
 
   {
-    merger->Param().GetClusterErrors2(0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, mParam.mC0, mParam.mC2);
+    merger->Param().GetClusterErrors2(iSlice, 0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, -1.f, 0.f, 0.f, mParam.mC0, mParam.mC2); // TODO: provide correct time and row
+#ifndef GPUCA_TPC_GEOMETRY_O2
     float C0a, C2a;
-    merger->Param().GetClusterRMS2(0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, C0a, C2a);
+    merger->Param().GetClusterErrorsSeeding2(iSlice, 0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, -1.f, C0a, C2a);
     if (C0a > mParam.mC0) {
       mParam.mC0 = C0a;
     }
     if (C2a > mParam.mC2) {
       mParam.mC2 = C2a;
     }
+#endif
 
     mParam.mC3 = 0;
     mParam.mC5 = 1;
@@ -151,7 +153,7 @@ GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int i
     mParam.mC14 = 10;
   }
 
-  for (int iStep = 0; iStep < N; iStep++) {
+  for (int32_t iStep = 0; iStep < N; iStep++) {
     float err2Y, err2Z;
 
     { // transport block
@@ -160,23 +162,23 @@ GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int i
       float ey1 = kdx + ey;
       if (CAMath::Abs(ey1) > maxSinPhi) {
         if (ey1 > maxSinPhi && ey1 < maxSinPhi + sinPhiMargin) {
-          ey1 = maxSinPhi - 0.01;
+          ey1 = maxSinPhi - 0.01f;
         } else if (ey1 > -maxSinPhi - sinPhiMargin) {
-          ey1 = -maxSinPhi + 0.01;
+          ey1 = -maxSinPhi + 0.01f;
         } else {
           return 0;
         }
       }
 
       float ss = ey + ey1;
-      float ex1 = sqrt(1.f - ey1 * ey1);
+      float ex1 = CAMath::Sqrt(1.f - ey1 * ey1);
 
       float cc = ex + ex1;
       float dxcci = dx / cc;
 
       float dy = dxcci * ss;
       float norm2 = 1.f + ey * ey1 + ex * ex1;
-      float dl = dxcci * sqrt(norm2 + norm2);
+      float dl = dxcci * CAMath::Sqrt(norm2 + norm2);
 
       float dS;
       {
@@ -190,15 +192,17 @@ GPUd() bool GPUTPCGMSliceTrack::FilterErrors(const GPUTPCGMMerger* merger, int i
       float dz = dS * mParam.mDzDs;
       float ex1i = 1.f / ex1;
       {
-        merger->Param().GetClusterErrors2(0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, err2Y, err2Z);
+        merger->Param().GetClusterErrors2(iSlice, 0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, -1.f, 0.f, 0.f, err2Y, err2Z); // TODO: Provide correct time / row
+#ifndef GPUCA_TPC_GEOMETRY_O2
         float C0a, C2a;
-        merger->Param().GetClusterRMS2(0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, C0a, C2a);
+        merger->Param().GetClusterErrorsSeeding2(iSlice, 0, mParam.mZ, mParam.mSinPhi, mParam.mDzDs, -1.f, C0a, C2a);
         if (C0a > err2Y) {
           err2Y = C0a;
         }
         if (C2a > err2Z) {
           err2Z = C2a;
         }
+#endif
       }
 
       float hh = kdx205 * dxcci * ex1i;
@@ -299,7 +303,7 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToX(GPUTPCGMMerger* merger, float x, fl
     return 0;
   }
 
-  float ex1 = sqrt(1.f - ey1 * ey1);
+  float ex1 = CAMath::Sqrt(1.f - ey1 * ey1);
   float dxBz = dx * Bz;
 
   float ss = ey + ey1;
@@ -311,7 +315,7 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToX(GPUTPCGMMerger* merger, float x, fl
 
   float dS;
   {
-    float dl = dxcci * sqrt(norm2 + norm2);
+    float dl = dxcci * CAMath::Sqrt(norm2 + norm2);
     float dSin = 0.5f * k * dl;
     float a = dSin * dSin;
     const float k2 = 1.f / 6.f;
@@ -330,7 +334,7 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToX(GPUTPCGMMerger* merger, float x, fl
   if (merger->Param().par.earlyTpcTransform) {
     b.SetZOffsetLinear(mTZOffset);
   } else {
-    b.SetZOffsetLinear(merger->GetConstantMem()->calibObjects.fastTransform->convVertexTimeToZOffset(mSlice, mTZOffset, merger->Param().par.continuousMaxTimeBin));
+    b.SetZOffsetLinear(merger->GetConstantMem()->calibObjects.fastTransformHelper->getCorrMap()->convVertexTimeToZOffset(mSlice, mTZOffset, merger->Param().continuousMaxTimeBin));
   }
 
   if (!doCov) {
@@ -355,7 +359,7 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToX(GPUTPCGMMerger* merger, float x, fl
   float h4c44 = h4 * c44;
   float n7 = c31 + dS * c33;
 
-  if (CAMath::Abs(mParam.mQPt) > 6.66) // Special treatment for low Pt
+  if (CAMath::Abs(mParam.mQPt) > 6.66f) // Special treatment for low Pt
   {
     b.SetCov(0, CAMath::Max(mParam.mC0, mParam.mC0 + h2 * h2c22 + h4 * h4c44 + 2.f * (h2 * c20ph4c42 + h4 * c40))); // Do not decrease Y cov for matching!
     float C2tmp = dS * 2.f * c31;
@@ -406,11 +410,11 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToXAlpha(GPUTPCGMMerger* merger, float 
     cosPhi = cP * cosAlpha + sP * sinAlpha;
     sinPhi = -cP * sinAlpha + sP * cosAlpha;
 
-    if (CAMath::Abs(sinPhi) > GPUCA_MAX_SIN_PHI || CAMath::Abs(cP) < 1.e-2) {
+    if (CAMath::Abs(sinPhi) > GPUCA_MAX_SIN_PHI || CAMath::Abs(cP) < 1.e-2f) {
       return 0;
     }
 
-    secPhi = 1. / cosPhi;
+    secPhi = 1.f / cosPhi;
     float j0 = cP * secPhi;
     float j2 = cosPhi / cP;
     x = mParam.mX * cosAlpha + mParam.mY * sinAlpha;
@@ -444,7 +448,7 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToXAlpha(GPUTPCGMMerger* merger, float 
     return 0;
   }
 
-  float ex1 = sqrt(1.f - ey1 * ey1);
+  float ex1 = CAMath::Sqrt(1.f - ey1 * ey1);
 
   float dxBz = dx * Bz;
 
@@ -457,7 +461,7 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToXAlpha(GPUTPCGMMerger* merger, float 
 
   float dS;
   {
-    float dl = dxcci * sqrt(norm2 + norm2);
+    float dl = dxcci * CAMath::Sqrt(norm2 + norm2);
     float dSin = 0.5f * k * dl;
     float a = dSin * dSin;
     const float k2 = 1.f / 6.f;
@@ -486,7 +490,7 @@ GPUd() bool GPUTPCGMSliceTrack::TransportToXAlpha(GPUTPCGMMerger* merger, float 
   if (merger->Param().par.earlyTpcTransform) {
     b.SetZOffsetLinear(mTZOffset);
   } else {
-    b.SetZOffsetLinear(merger->GetConstantMem()->calibObjects.fastTransform->convVertexTimeToZOffset(mSlice, mTZOffset, merger->Param().par.continuousMaxTimeBin));
+    b.SetZOffsetLinear(merger->GetConstantMem()->calibObjects.fastTransformHelper->getCorrMap()->convVertexTimeToZOffset(mSlice, mTZOffset, merger->Param().continuousMaxTimeBin));
   }
 
   b.SetCov(0, c00 + h2 * h2c22 + h4 * h4c44 + 2.f * (h2 * c20ph4c42 + h4 * c40));

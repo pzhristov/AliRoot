@@ -39,7 +39,7 @@ namespace gpu
 class GPUTPCGMPhysicalTrackModel
 {
  public:
-  GPUdDefault() GPUTPCGMPhysicalTrackModel() CON_DEFAULT;
+  GPUdDefault() GPUTPCGMPhysicalTrackModel() = default;
   GPUd() GPUTPCGMPhysicalTrackModel(const GPUTPCGMTrackParam& t);
 
   GPUd() void Set(const GPUTPCGMTrackParam& t);
@@ -127,12 +127,12 @@ class GPUTPCGMPhysicalTrackModel
   GPUd() float GetP() const { return mP; }
   GPUd() float GetPt() const { return mPt; }
 
-  GPUd() int PropagateToXBzLightNoUpdate(float x, float Bz, float& dLp);
-  GPUd() int PropagateToXBzLight(float x, float Bz, float& dLp);
+  GPUd() int32_t PropagateToXBzLightNoUpdate(float x, float Bz, float& dLp);
+  GPUd() int32_t PropagateToXBzLight(float x, float Bz, float& dLp);
 
-  GPUd() int PropagateToXBxByBz(float x, float Bx, float By, float Bz, float& dLp);
+  GPUd() int32_t PropagateToXBxByBz(float x, float Bx, float By, float Bz, float& dLp);
 
-  GPUd() int PropagateToLpBz(float Lp, float Bz);
+  GPUd() int32_t PropagateToLpBz(float Lp, float Bz);
 
   GPUd() bool SetDirectionAlongX();
 
@@ -189,10 +189,10 @@ GPUdi() void GPUTPCGMPhysicalTrackModel::Set(const GPUTPCGMTrackParam& GPUrestri
   if (mSinPhi < -GPUCA_MAX_SIN_PHI) {
     mSinPhi = -GPUCA_MAX_SIN_PHI;
   }
-  mCosPhi = sqrt((1.f - mSinPhi) * (1.f + mSinPhi));
+  mCosPhi = CAMath::Sqrt((1.f - mSinPhi) * (1.f + mSinPhi));
   mSecPhi = 1.f / mCosPhi;
   mDzDs = t.GetDzDs();
-  mDlDs = sqrt(1.f + mDzDs * mDzDs);
+  mDlDs = CAMath::Sqrt(1.f + mDzDs * mDzDs);
   mP = mPt * mDlDs;
 
   mPy = mPt * mSinPhi;
@@ -220,9 +220,9 @@ GPUdi() void GPUTPCGMPhysicalTrackModel::UpdateValues()
     px = copysign(1.e-4f, px);
   }
 
-  mPt = sqrt(px * px + mPy * mPy);
+  mPt = CAMath::Sqrt(px * px + mPy * mPy);
   float pti = 1.f / mPt;
-  mP = sqrt(px * px + mPy * mPy + mPz * mPz);
+  mP = CAMath::Sqrt(px * px + mPy * mPy + mPz * mPz);
   mSinPhi = mPy * pti;
   mCosPhi = px * pti;
   mSecPhi = mPt / px;

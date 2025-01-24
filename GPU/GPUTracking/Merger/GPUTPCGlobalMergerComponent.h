@@ -75,7 +75,7 @@ class GPUTPCGlobalMergerComponent : public AliHLTProcessor
  * @copydoc AliHLTComponent::GetInputDataTypes
  */
   void GetInputDataTypes(AliHLTComponentDataTypeList& list);
-  int GetOutputDataTypes(AliHLTComponentDataTypeList& tgtList);
+  int32_t GetOutputDataTypes(AliHLTComponentDataTypeList& tgtList);
 
   /**
  * @copydoc AliHLTComponent::GetOutputDataType
@@ -102,20 +102,20 @@ class GPUTPCGlobalMergerComponent : public AliHLTProcessor
   /**
  * @copydoc AliHLTComponent::DoInit
  */
-  int DoInit(int argc, const char** argv);
+  int32_t DoInit(int argc, const char** argv);
 
   /**
  * @copydoc AliHLTComponent::DoDeinit
  */
-  int DoDeinit();
+  int32_t DoDeinit();
 
   /** reconfigure **/
-  int Reconfigure(const char* cdbEntry, const char* chainId);
+  int32_t Reconfigure(const char* cdbEntry, const char* chainId);
 
   /**
  * @copydoc @ref AliHLTProcessor::DoEvent
  */
-  int DoEvent(const AliHLTComponentEventData& evtData, const AliHLTComponentBlockData* blocks, AliHLTComponentTriggerData& trigData, AliHLTUInt8_t* outputPtr, AliHLTUInt32_t& size, AliHLTComponentBlockDataList& outputBlocks);
+  int32_t DoEvent(const AliHLTComponentEventData& evtData, const AliHLTComponentBlockData* blocks, AliHLTComponentTriggerData& trigData, AliHLTUInt8_t* outputPtr, AliHLTUInt32_t& size, AliHLTComponentBlockDataList& outputBlocks);
 
   using AliHLTProcessor::DoEvent;
 
@@ -128,17 +128,17 @@ class GPUTPCGlobalMergerComponent : public AliHLTProcessor
 
   /** set configuration parameters **/
   void SetDefaultConfiguration();
-  int ReadConfigurationString(const char* arguments);
-  int ReadCDBEntry(const char* cdbEntry, const char* chainId);
-  int Configure(const char* cdbEntry, const char* chainId, const char* commandLine);
+  int32_t ReadConfigurationString(const char* arguments);
+  int32_t ReadCDBEntry(const char* cdbEntry, const char* chainId);
+  int32_t Configure(const char* cdbEntry, const char* chainId, const char* commandLine);
 
   /** the global merger object */
 
   double fSolenoidBz;                                                                 // magnetic field
   double fClusterErrorCorrectionY;                                                    // correction for the cluster error during pre-fit
   double fClusterErrorCorrectionZ;                                                    // correction for the cluster error during pre-fit
-  int fNWays;                                                                         // Setting for merger
-  char fNWaysOuter;                                                                   // Store outer param after n-way fit
+  int32_t fNWays;                                                                     // Setting for merger
+  int8_t fNWaysOuter;                                                                 // Store outer param after n-way fit
   bool fNoClear;                                                                      // Do not clear memory after processing an event
   static const GPUCA_NAMESPACE::gpu::GPUChainTracking* fgCurrentMergerReconstruction; // Pointer to current merger in case memory is not cleared after processing the event
   AliHLTComponentBenchmark fBenchmark;                                                // benchmark

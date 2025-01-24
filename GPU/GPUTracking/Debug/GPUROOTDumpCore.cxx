@@ -35,7 +35,7 @@ GPUROOTDumpCore::GPUROOTDumpCore(GPUROOTDumpCore::GPUROOTDumpCorePrivate)
 GPUROOTDumpCore::~GPUROOTDumpCore()
 {
   if (mFile) {
-    for (unsigned int i = 0; i < mBranches.size(); i++) {
+    for (uint32_t i = 0; i < mBranches.size(); i++) {
       mBranches[i]->write();
     }
     mFile->Close();
@@ -64,6 +64,7 @@ GPUROOTDumpBase::GPUROOTDumpBase()
   }
   p->mBranches.emplace_back(this);
   if (!p->mFile) {
+    std::remove("gpudebug.root");
     p->mFile.reset(new TFile("gpudebug.root", "recreate"));
   }
   p->mFile->cd();

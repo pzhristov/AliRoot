@@ -27,8 +27,6 @@
 #include <vector>
 #include <string>
 #include <cmath>
-#include <TTree.h>
-#include <TFile.h>
 
 #define KNRM "\x1B[0m"
 #define KRED "\x1B[31m"
@@ -48,6 +46,11 @@
   printf("error: TEST FAILED\n%s", KNRM); \
   exit(EXIT_FAILURE);
 #endif
+
+template <typename T>
+void discardResult(const T&)
+{
+}
 
 enum class Test {
   Read,
@@ -134,14 +137,14 @@ inline std::ostream& operator<<(std::ostream& os, KernelConfig config)
 template <class T>
 inline std::string getType()
 {
-  if (typeid(T).name() == typeid(char).name()) {
-    return std::string{"char"};
+  if (typeid(T).name() == typeid(int8_t).name()) {
+    return std::string{"int8_t"};
   }
   if (typeid(T).name() == typeid(size_t).name()) {
-    return std::string{"unsigned_long"};
+    return std::string{"uint64_t"};
   }
-  if (typeid(T).name() == typeid(int).name()) {
-    return std::string{"int"};
+  if (typeid(T).name() == typeid(int32_t).name()) {
+    return std::string{"int32_t"};
   }
   if (typeid(T).name() == typeid(int4).name()) {
     return std::string{"int4"};
@@ -166,7 +169,7 @@ inline chunk_t* getCustomPtr(chunk_t* scratchPtr, float startGB)
   return reinterpret_cast<chunk_t*>(reinterpret_cast<char*>(scratchPtr) + (static_cast<size_t>(GB * startGB) & 0xFFFFFFFFFFFFF000));
 }
 
-inline float computeThroughput(Test test, float result, float chunkSizeGB, int ntests)
+inline float computeThroughput(Test test, float result, float chunkSizeGB, int32_t ntests)
 {
   // https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html
   // Eff_bandwidth (GB/s) = (B_r + B_w) / (~1e9 * Time (s))
@@ -175,7 +178,7 @@ inline float computeThroughput(Test test, float result, float chunkSizeGB, int n
 }
 
 template <class chunk_t>
-inline size_t getBufferCapacity(float chunkSizeGB, int prime)
+inline size_t getBufferCapacity(float chunkSizeGB, int32_t prime)
 {
   auto chunkCapacity = (static_cast<size_t>(GB * chunkSizeGB) & 0xFFFFFFFFFFFFF000) / sizeof(chunk_t);
   if (!prime) {
@@ -185,13 +188,13 @@ inline size_t getBufferCapacity(float chunkSizeGB, int prime)
   }
 }
 
-inline bool is_prime(const int n)
+inline bool is_prime(const int32_t n)
 {
   bool isPrime = true;
   if (n == 0 || n == 1) {
     isPrime = false;
   } else {
-    for (int i = 2; i <= sqrt(n); ++i) {
+    for (int32_t i = 2; i <= sqrt(n); ++i) {
       if (n % i == 0) {
         isPrime = false;
         break;
@@ -209,40 +212,40 @@ namespace benchmark
 struct benchmarkOpts {
   benchmarkOpts() = default;
 
-  int deviceId = 0;
+  int32_t deviceId = 0;
   std::vector<Test> tests = {Test::Read, Test::Write, Test::Copy};
   std::vector<Mode> modes = {Mode::Sequential, Mode::Concurrent};
   std::vector<KernelConfig> pools = {KernelConfig::Single, KernelConfig::Multi};
-  std::vector<std::string> dtypes = {"char", "int", "ulong"};
+  std::vector<std::string> dtypes = {"int8_t", "int32_t", "uint64_t"};
   std::vector<std::pair<float, float>> testChunks;
   float chunkReservedGB = 1.f;
   float threadPoolFraction = 1.f;
   float freeMemoryFractionToAllocate = 0.95f;
-  int numThreads = -1;
-  int numBlocks = -1;
-  int kernelLaunches = 1;
-  int nTests = 1;
+  int32_t numThreads = -1;
+  int32_t numBlocks = -1;
+  int32_t kernelLaunches = 1;
+  int32_t nTests = 1;
   bool raw = false;
-  int streams = 8;
-  int prime = 0;
+  int32_t streams = 8;
+  int32_t prime = 0;
   std::string outFileName = "benchmark_result";
   bool dumpChunks = false;
 };
 
 template <class chunk_t>
 struct gpuState {
-  int getMaxChunks()
+  int32_t getMaxChunks()
   {
     return (double)scratchSize / (chunkReservedGB * GB);
   }
 
-  int getNKernelLaunches() { return iterations; }
-  int getStreamsPoolSize() { return streams; }
+  int32_t getNKernelLaunches() { return iterations; }
+  int32_t getStreamsPoolSize() { return streams; }
 
   // Configuration
   size_t nMaxThreadsPerDimension;
-  int iterations;
-  int streams;
+  int32_t iterations;
+  int32_t streams;
 
   float chunkReservedGB; // Size of each partition (GB)
 
@@ -257,67 +260,6 @@ struct gpuState {
   size_t nMultiprocessors;
   size_t nMaxThreadsPerBlock;
 };
-
-// Interface class to stream results to root file
-class ResultWriter
-{
- public:
-  explicit ResultWriter(const std::string resultsTreeFilename = "benchmark_results.root");
-  ~ResultWriter() = default;
-  void storeBenchmarkEntry(Test test, int chunk, float entry, float chunkSizeGB, int nLaunches);
-  void addBenchmarkEntry(const std::string bName, const std::string type, const int nChunks);
-  void snapshotBenchmark();
-  void saveToFile();
-
- private:
-  std::vector<float> mTimeResults;
-  std::vector<TTree*> mTimeTrees;
-  std::vector<float> mThroughputResults;
-  std::vector<TTree*> mThroughputTrees;
-  TFile* mOutfile;
-};
-
-inline ResultWriter::ResultWriter(const std::string resultsTreeFilename)
-{
-  mOutfile = TFile::Open(resultsTreeFilename.data(), "recreate");
-}
-
-inline void ResultWriter::addBenchmarkEntry(const std::string bName, const std::string type, const int nChunks)
-{
-  mTimeTrees.emplace_back(new TTree((bName + "_" + type).data(), (bName + "_" + type).data()));
-  mTimeResults.clear();
-  mTimeResults.resize(nChunks);
-  mTimeTrees.back()->Branch("elapsed", &mTimeResults);
-
-  mThroughputTrees.emplace_back(new TTree((bName + "_" + type + "_TP").data(), (bName + "_" + type + "_TP").data()));
-  mThroughputResults.clear();
-  mThroughputResults.resize(nChunks);
-  mThroughputTrees.back()->Branch("throughput", &mThroughputResults);
-}
-
-inline void ResultWriter::storeBenchmarkEntry(Test test, int chunk, float entry, float chunkSizeGB, int nLaunches)
-{
-  mTimeResults[chunk] = entry;
-  mThroughputResults[chunk] = computeThroughput(test, entry, chunkSizeGB, nLaunches);
-}
-
-inline void ResultWriter::snapshotBenchmark()
-{
-  mTimeTrees.back()->Fill();
-  mThroughputTrees.back()->Fill();
-}
-
-inline void ResultWriter::saveToFile()
-{
-  mOutfile->cd();
-  for (auto t : mTimeTrees) {
-    t->Write();
-  }
-  for (auto t : mThroughputTrees) {
-    t->Write();
-  }
-  mOutfile->Close();
-}
 
 } // namespace benchmark
 } // namespace o2

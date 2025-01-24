@@ -37,7 +37,6 @@ class GPUTPCTrackLinearisation;
  * which is used by the GPUTPCTracker slice tracker.
  *
  */
-MEM_CLASS_PRE()
 class GPUTPCTrackParam
 {
  public:
@@ -45,8 +44,8 @@ class GPUTPCTrackParam
     float bethe, e, theta2, EP2, sigmadE2, k22, k33, k43, k44; // parameters
   };
 
-  GPUd() MakeType(const MEM_LG(GPUTPCBaseTrackParam) &) GetParam() const { return mParam; }
-  GPUd() void SetParam(const MEM_LG(GPUTPCBaseTrackParam) & v) { mParam = v; }
+  GPUd() const GPUTPCBaseTrackParam& GetParam() const { return mParam; }
+  GPUd() void SetParam(const GPUTPCBaseTrackParam& v) { mParam = v; }
   GPUd() void InitParam();
 
   GPUd() float X() const { return mParam.X(); }
@@ -58,7 +57,7 @@ class GPUTPCTrackParam
   GPUd() float ZOffset() const { return mParam.ZOffset(); }
   GPUd() float SignCosPhi() const { return mSignCosPhi; }
   GPUd() float Chi2() const { return mChi2; }
-  GPUd() int NDF() const { return mNDF; }
+  GPUd() int32_t NDF() const { return mNDF; }
 
   GPUd() float Err2Y() const { return mParam.Err2Y(); }
   GPUd() float Err2Z() const { return mParam.Err2Z(); }
@@ -74,20 +73,20 @@ class GPUTPCTrackParam
   GPUd() float GetQPt() const { return mParam.GetQPt(); }
   GPUd() float GetSignCosPhi() const { return mSignCosPhi; }
   GPUd() float GetChi2() const { return mChi2; }
-  GPUd() int GetNDF() const { return mNDF; }
+  GPUd() int32_t GetNDF() const { return mNDF; }
 
   GPUd() float GetKappa(float Bz) const { return mParam.GetKappa(Bz); }
   GPUd() float GetCosPhi() const { return mSignCosPhi * CAMath::Sqrt(1 - SinPhi() * SinPhi()); }
 
-  GPUhd() MakeType(const float*) Par() const { return mParam.Par(); }
+  GPUhd() const float* Par() const { return mParam.Par(); }
   GPUhd() const float* Cov() const { return mParam.Cov(); }
 
   GPUd() const float* GetPar() const { return mParam.GetPar(); }
-  GPUd() float GetPar(int i) const { return (mParam.GetPar(i)); }
-  GPUd() float GetCov(int i) const { return mParam.GetCov(i); }
+  GPUd() float GetPar(int32_t i) const { return (mParam.GetPar(i)); }
+  GPUd() float GetCov(int32_t i) const { return mParam.GetCov(i); }
 
-  GPUhd() void SetPar(int i, float v) { mParam.SetPar(i, v); }
-  GPUhd() void SetCov(int i, float v) { mParam.SetCov(i, v); }
+  GPUhd() void SetPar(int32_t i, float v) { mParam.SetPar(i, v); }
+  GPUhd() void SetCov(int32_t i, float v) { mParam.SetCov(i, v); }
 
   GPUd() void SetX(float v) { mParam.SetX(v); }
   GPUd() void SetY(float v) { mParam.SetY(v); }
@@ -98,7 +97,7 @@ class GPUTPCTrackParam
   GPUd() void SetZOffset(float v) { mParam.SetZOffset(v); }
   GPUd() void SetSignCosPhi(float v) { mSignCosPhi = v >= 0 ? 1 : -1; }
   GPUd() void SetChi2(float v) { mChi2 = v; }
-  GPUd() void SetNDF(int v) { mNDF = v; }
+  GPUd() void SetNDF(int32_t v) { mNDF = v; }
 
   GPUd() float GetDist2(const GPUTPCTrackParam& t) const;
   GPUd() float GetDistXZ2(const GPUTPCTrackParam& t) const;
@@ -132,6 +131,10 @@ class GPUTPCTrackParam
 
   GPUd() bool CheckNumericalQuality() const;
 
+  GPUd() void ShiftZ(float z1, float z2, float x1, float x2, float bz, float defaultZOffsetOverR);
+  GPUd() void ConstrainZ(float& z, int32_t sector, float& z0, float& lastZ);
+  GPUd() int32_t GetPropagatedYZ(float bz, float x, float& projY, float& projZ) const;
+
   GPUdi() void ConstrainSinPhi(float limit = GPUCA_MAX_SIN_PHI)
   {
     if (GetSinPhi() > limit) {
@@ -146,8 +149,7 @@ class GPUTPCTrackParam
 #ifndef GPUCA_GPUCODE
  private:
 #endif //! GPUCA_GPUCODE
-  MEM_LG(GPUTPCBaseTrackParam)
-  mParam; // Track Parameters
+  GPUTPCBaseTrackParam mParam; // Track Parameters
 
  private:
   // WARNING, Track Param Data is copied in the GPU Tracklet Constructor element by element instead of using copy constructor!!!
@@ -155,10 +157,10 @@ class GPUTPCTrackParam
   // Changes to Elements of this class therefore must also be applied to TrackletConstructor!!!
   float mSignCosPhi; // sign of cosPhi
   float mChi2;       // the chi^2 value
-  int mNDF;          // the Number of Degrees of Freedom
+  int32_t mNDF;      // the Number of Degrees of Freedom
 };
 
-GPUd() MEM_CLASS_PRE() inline void MEM_LG(GPUTPCTrackParam)::InitParam()
+GPUdi() void GPUTPCTrackParam::InitParam()
 {
   // Initialize Tracklet Parameters using default values
   SetSinPhi(0);

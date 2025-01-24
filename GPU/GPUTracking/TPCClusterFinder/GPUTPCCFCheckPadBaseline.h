@@ -50,17 +50,17 @@ class GPUTPCCFCheckPadBaseline : public GPUKernelTemplate
   }
 #endif
 
-  GPUhdi() CONSTEXPR static GPUDataTypes::RecoStep GetRecoStep()
+  GPUhdi() constexpr static GPUDataTypes::RecoStep GetRecoStep()
   {
     return GPUDataTypes::RecoStep::TPCClusterFinding;
   }
 
-  template <int iKernel = defaultKernel>
-  GPUd() static void Thread(int nBlocks, int nThreads, int iBlock, int iThread, GPUSharedMemory& smem, processorType& clusterer);
+  template <int32_t iKernel = defaultKernel>
+  GPUd() static void Thread(int32_t nBlocks, int32_t nThreads, int32_t iBlock, int32_t iThread, GPUSharedMemory& smem, processorType& clusterer);
 
  private:
-  GPUd() static ChargePos padToChargePos(int& pad, const GPUTPCClusterFinder&);
-  GPUd() static void updatePadBaseline(int pad, const GPUTPCClusterFinder&, int totalCharges, int consecCharges);
+  GPUd() static ChargePos padToChargePos(int32_t& pad, const GPUTPCClusterFinder&);
+  GPUd() static void updatePadBaseline(int32_t pad, const GPUTPCClusterFinder&, int32_t totalCharges, int32_t consecCharges, tpccf::Charge maxCharge);
 };
 
 } // namespace GPUCA_NAMESPACE::gpu

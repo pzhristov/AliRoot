@@ -29,7 +29,7 @@ struct AliHLTTPCClusterMCWeight {
   //* constructor **/
   AliHLTTPCClusterMCWeight() : fMCID(-1), fWeight(0) {}
 
-  int fMCID;     // MC track ID
+  int32_t fMCID; // MC track ID
   float fWeight; // weight of the track ID
 };
 
@@ -52,7 +52,7 @@ typedef struct AliHLTTPCClusterMCLabel AliHLTTPCClusterMCLabel;
  * @ingroup alihlt_tpc
  */
 struct AliHLTTPCClusterMCData {
-  int fCount;
+  int32_t fCount;
 #if defined(__HP_aCC) || defined(__DECCXX) || defined(__SUNPRO_CC)
   AliHLTTPCClusterMCLabel fLabels[1];
 #else
