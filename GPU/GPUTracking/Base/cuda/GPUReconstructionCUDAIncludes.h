@@ -14,17 +14,19 @@
 //* provided "as is" without express or implied warranty.                  *\
 //**************************************************************************
 
-/// \file GPUReconstructionCUDIncludes.h
+/// \file GPUReconstructionCUDAIncludes.h
 /// \author David Rohr
 
 #ifndef O2_GPU_GPURECONSTRUCTIONCUDAINCLUDES_H
 #define O2_GPU_GPURECONSTRUCTIONCUDAINCLUDES_H
 
 #include <cstdint>
+#include <type_traits>
+#include <string>
 #include <cuda_runtime.h>
 #include <cuda.h>
 #include <cooperative_groups.h>
-#pragma GCC diagnostic push
+#pragma GCC diagnostic push // FIXME: Is this still needed?
 #pragma GCC diagnostic ignored "-Wshadow"
 #include <cub/cub.cuh>
 #include <cub/block/block_scan.cuh>
@@ -34,7 +36,5 @@
 #pragma GCC diagnostic pop
 #include <sm_20_atomic_functions.h>
 #include <cuda_fp16.h>
-#include <type_traits>
-#include <string>
 
 #endif

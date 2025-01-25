@@ -43,13 +43,12 @@ struct GPUOutputControl;
 class GPUTPCSliceOutput
 {
  public:
-  GPUhd() unsigned int NTracks() const
+  GPUhd() uint32_t NTracks() const
   {
     return mNTracks;
   }
-  GPUhd() unsigned int NLocalTracks() const { return mNLocalTracks; }
-  GPUhd() unsigned int NTrackClusters() const { return mNTrackClusters; }
-#if !defined(__OPENCL__) || defined(__OPENCLCPP__)
+  GPUhd() uint32_t NLocalTracks() const { return mNLocalTracks; }
+  GPUhd() uint32_t NTrackClusters() const { return mNTrackClusters; }
   GPUhd() const GPUTPCTrack* GetFirstTrack() const
   {
     return (const GPUTPCTrack*)((const char*)this + sizeof(*this));
@@ -58,30 +57,29 @@ class GPUTPCSliceOutput
   {
     return (GPUTPCTrack*)((char*)this + sizeof(*this));
   }
-#endif
   GPUhd() size_t Size() const
   {
     return (mMemorySize);
   }
 
-  static unsigned int EstimateSize(unsigned int nOfTracks, unsigned int nOfTrackClusters);
-  static void Allocate(GPUTPCSliceOutput*& ptrOutput, int nTracks, int nTrackHits, GPUOutputControl* outputControl, void*& internalMemory);
+  static uint32_t EstimateSize(uint32_t nOfTracks, uint32_t nOfTrackClusters);
+  static void Allocate(GPUTPCSliceOutput*& ptrOutput, int32_t nTracks, int32_t nTrackHits, GPUOutputControl* outputControl, void*& internalMemory);
 
-  GPUhd() void SetNTracks(unsigned int v) { mNTracks = v; }
-  GPUhd() void SetNLocalTracks(unsigned int v) { mNLocalTracks = v; }
-  GPUhd() void SetNTrackClusters(unsigned int v) { mNTrackClusters = v; }
+  GPUhd() void SetNTracks(uint32_t v) { mNTracks = v; }
+  GPUhd() void SetNLocalTracks(uint32_t v) { mNLocalTracks = v; }
+  GPUhd() void SetNTrackClusters(uint32_t v) { mNTrackClusters = v; }
 
  private:
-  GPUTPCSliceOutput() CON_DELETE;                                    // NOLINT: Must be private or ROOT tries to use them!
-  ~GPUTPCSliceOutput() CON_DELETE;                                   // NOLINT
-  GPUTPCSliceOutput(const GPUTPCSliceOutput&) CON_DELETE;            // NOLINT
-  GPUTPCSliceOutput& operator=(const GPUTPCSliceOutput&) CON_DELETE; // NOLINT
+  GPUTPCSliceOutput() = delete;                                    // NOLINT: Must be private or ROOT tries to use them!
+  ~GPUTPCSliceOutput() = delete;                                   // NOLINT
+  GPUTPCSliceOutput(const GPUTPCSliceOutput&) = delete;            // NOLINT
+  GPUTPCSliceOutput& operator=(const GPUTPCSliceOutput&) = delete; // NOLINT
 
   GPUhd() void SetMemorySize(size_t val) { mMemorySize = val; }
 
-  unsigned int mNTracks; // number of reconstructed tracks
-  unsigned int mNLocalTracks;
-  unsigned int mNTrackClusters; // total number of track clusters
+  uint32_t mNTracks; // number of reconstructed tracks
+  uint32_t mNLocalTracks;
+  uint32_t mNTrackClusters;     // total number of track clusters
   size_t mMemorySize;           // Amount of memory really used
 };
 } // namespace gpu

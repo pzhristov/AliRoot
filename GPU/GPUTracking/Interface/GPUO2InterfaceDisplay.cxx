@@ -40,14 +40,14 @@ GPUO2InterfaceDisplay::GPUO2InterfaceDisplay(const GPUO2InterfaceConfiguration* 
     mQA.reset(new GPUQA(nullptr, &config->configQA, mParam.get()));
     mQA->InitO2MCData();
   }
-  mDisplay.reset(GPUDisplayInterface::getDisplay(mFrontend.get(), nullptr, nullptr, mParam.get(), &mConfig->configCalib, &mConfig->configDisplay));
+  mDisplay.reset(GPUDisplayInterface::getDisplay(mFrontend.get(), nullptr, mQA.get(), mParam.get(), &mConfig->configCalib, &mConfig->configDisplay));
 }
 
 GPUO2InterfaceDisplay::~GPUO2InterfaceDisplay() = default;
 
-int GPUO2InterfaceDisplay::startDisplay()
+int32_t GPUO2InterfaceDisplay::startDisplay()
 {
-  int retVal = mDisplay->StartDisplay();
+  int32_t retVal = mDisplay->StartDisplay();
   if (retVal) {
     return retVal;
   }
@@ -55,7 +55,7 @@ int GPUO2InterfaceDisplay::startDisplay()
   return 0;
 }
 
-int GPUO2InterfaceDisplay::show(const GPUTrackingInOutPointers* ptrs)
+int32_t GPUO2InterfaceDisplay::show(const GPUTrackingInOutPointers* ptrs)
 {
   std::unique_ptr<GPUTrackingInOutPointers> tmpPtr;
   if (mConfig->configProcessing.runMC) {
@@ -67,12 +67,31 @@ int GPUO2InterfaceDisplay::show(const GPUTrackingInOutPointers* ptrs)
   do {
     usleep(10000);
   } while (mFrontend->getDisplayControl() == 0);
+  if (mFrontend->getDisplayControl() == 2) {
+    return 1;
+  }
+  mFrontend->setDisplayControl(0);
   mDisplay->WaitForNextEvent();
   return 0;
 }
 
-int GPUO2InterfaceDisplay::endDisplay()
+int32_t GPUO2InterfaceDisplay::endDisplay()
 {
   mFrontend->DisplayExit();
   return 0;
+}
+
+void GPUO2InterfaceDisplay::UpdateCalib(const GPUCalibObjectsConst* calib)
+{
+  mDisplay->UpdateCalib(calib);
+}
+
+void GPUO2InterfaceDisplay::UpdateGRP(const GPUSettingsGRP* grp)
+{
+  mConfig->configGRP = *grp;
+  mParam->UpdateSettings(&mConfig->configGRP);
+  mDisplay->UpdateParam(mParam.get());
+  if (mConfig->configProcessing.runMC) {
+    mQA->UpdateParam(mParam.get());
+  }
 }

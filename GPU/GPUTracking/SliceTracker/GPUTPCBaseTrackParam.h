@@ -26,7 +26,6 @@ namespace GPUCA_NAMESPACE
 {
 namespace gpu
 {
-MEM_CLASS_PRE()
 class GPUTPCTrackParam;
 
 /**
@@ -36,7 +35,6 @@ class GPUTPCTrackParam;
  * used in output of the GPUTPCTracker slice tracker.
  * This class is used for transfer between tracker and merger and does not contain the covariance matrice
  */
-MEM_CLASS_PRE()
 struct GPUTPCBaseTrackParam {
   GPUd() float X() const { return mX; }
   GPUd() float Y() const { return mP[0]; }
@@ -52,8 +50,8 @@ struct GPUTPCBaseTrackParam {
   GPUd() float Err2DzDs() const { return mC[9]; }
   GPUd() float Err2QPt() const { return mC[14]; }
   GPUhd() const float* Cov() const { return mC; }
-  GPUd() float GetCov(int i) const { return mC[i]; }
-  GPUhd() void SetCov(int i, float v) { mC[i] = v; }
+  GPUd() float GetCov(int32_t i) const { return mC[i]; }
+  GPUhd() void SetCov(int32_t i, float v) { mC[i] = v; }
 
   GPUhd() float GetX() const { return mX; }
   GPUhd() float GetY() const { return mP[0]; }
@@ -65,11 +63,11 @@ struct GPUTPCBaseTrackParam {
 
   GPUd() float GetKappa(float Bz) const { return -mP[4] * Bz; }
 
-  GPUhd() MakeType(const float*) Par() const { return mP; }
-  GPUd() const MakeType(float*) GetPar() const { return mP; }
-  GPUd() float GetPar(int i) const { return (mP[i]); }
+  GPUhd() const float* Par() const { return mP; }
+  GPUd() const float* GetPar() const { return mP; }
+  GPUd() float GetPar(int32_t i) const { return (mP[i]); }
 
-  GPUhd() void SetPar(int i, float v) { mP[i] = v; }
+  GPUhd() void SetPar(int32_t i, float v) { mP[i] = v; }
 
   GPUd() void SetX(float v) { mX = v; }
   GPUd() void SetY(float v) { mP[0] = v; }

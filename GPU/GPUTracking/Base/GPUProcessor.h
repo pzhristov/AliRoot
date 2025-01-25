@@ -34,9 +34,7 @@ namespace gpu
 {
 struct GPUTrackingInOutPointers;
 class GPUReconstruction;
-MEM_CLASS_PRE()
 struct GPUParam;
-MEM_CLASS_PRE()
 struct GPUConstantMem;
 
 class GPUProcessor
@@ -53,13 +51,13 @@ class GPUProcessor
 #ifndef GPUCA_GPUCODE
   GPUProcessor();
   ~GPUProcessor();
-  GPUProcessor(const GPUProcessor&) CON_DELETE;
-  GPUProcessor& operator=(const GPUProcessor&) CON_DELETE;
+  GPUProcessor(const GPUProcessor&) = delete;
+  GPUProcessor& operator=(const GPUProcessor&) = delete;
 #endif
 
-  GPUd() GPUconstantref() const MEM_CONSTANT(GPUConstantMem) * GetConstantMem() const; // Body in GPUConstantMem.h to avoid circular headers
-  GPUd() GPUconstantref() const MEM_CONSTANT(GPUParam) & Param() const;                // ...
-  GPUd() void raiseError(unsigned int code, unsigned int param1 = 0, unsigned int param2 = 0, unsigned int param3 = 0) const;
+  GPUd() GPUconstantref() const GPUConstantMem* GetConstantMem() const; // Body in GPUConstantMem.h to avoid circular headers
+  GPUd() GPUconstantref() const GPUParam& Param() const;                // ...
+  GPUd() void raiseError(uint32_t code, uint32_t param1 = 0, uint32_t param2 = 0, uint32_t param3 = 0) const;
   const GPUReconstruction& GetRec() const { return *mRec; }
 
 #ifndef __OPENCL__
@@ -115,7 +113,7 @@ class GPUProcessor
     if (basePtr == 0) {
       basePtr = 1;
     }
-    CONSTEXPR size_t maxAlign = (alignof(S) > alignment) ? alignof(S) : alignment;
+    constexpr const size_t maxAlign = (alignof(S) > alignment) ? alignof(S) : alignment;
     basePtr += getAlignment<maxAlign>(basePtr);
     S* retVal = (S*)(basePtr);
     basePtr += nEntries * sizeof(S);
@@ -157,7 +155,7 @@ class GPUProcessor
   GPUReconstruction* mRec;
   ProcessorType mGPUProcessorType;
   GPUProcessor* mLinkedProcessor;
-  GPUconstantref() const MEM_CONSTANT(GPUConstantMem) * mConstantMem;
+  GPUconstantref() const GPUConstantMem* mConstantMem;
 
  private:
   bool mAllocateAndInitializeLate;

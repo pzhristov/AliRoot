@@ -43,5 +43,4 @@ template <typename T, size_t N>
 using array = std::array<T, N>;
 #endif
 } // namespace o2::gpu::gpustd
-
 #endif

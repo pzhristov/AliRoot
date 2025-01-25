@@ -29,7 +29,7 @@ namespace GPUCA_NAMESPACE::gpu
 class PackedCharge
 {
  public:
-  using BasicType = unsigned short;
+  using BasicType = uint16_t;
   static_assert(sizeof(BasicType) == 2);
 
   enum Constants : BasicType {
@@ -43,7 +43,7 @@ class PackedCharge
     IsSplitMask = 1 << (ChargeBits + 1),
   };
 
-  GPUdDefault() PackedCharge() CON_DEFAULT;
+  GPUdDefault() PackedCharge() = default;
   GPUdi() explicit PackedCharge(tpccf::Charge q) : PackedCharge(q, false, false) {}
   GPUdi() PackedCharge(tpccf::Charge q, bool peak3x3, bool wasSplit)
   {

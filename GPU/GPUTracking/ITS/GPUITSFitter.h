@@ -25,6 +25,7 @@
 
 namespace o2::its
 {
+template <uint8_t N>
 class Road;
 struct TrackingFrameInfo;
 struct Cluster;
@@ -48,23 +49,23 @@ class GPUITSFitter : public GPUProcessor
   void* SetPointersMemory(void* mem);
 #endif
 
-  GPUd() o2::its::Road* roads()
+  GPUd() o2::its::Road<5>* roads()
   {
     return mRoads;
   }
-  GPUd() void SetNumberOfRoads(int v) { mNumberOfRoads = v; }
-  GPUd() int NumberOfRoads() { return mNumberOfRoads; }
+  GPUd() void SetNumberOfRoads(int32_t v) { mNumberOfRoads = v; }
+  GPUd() int32_t NumberOfRoads() { return mNumberOfRoads; }
   GPUd() GPUITSTrack* tracks()
   {
     return mTracks;
   }
-  GPUd() GPUAtomic(unsigned int) & NumberOfTracks()
+  GPUd() GPUAtomic(uint32_t) & NumberOfTracks()
   {
     return mMemory->mNumberOfTracks;
   }
-  GPUd() void SetNumberOfLayers(int i) { mNumberOfLayers = i; }
-  GPUd() int NumberOfLayers() { return mNumberOfLayers; }
-  GPUd() void SetNumberTF(int i, int v) { mNTF[i] = v; }
+  GPUd() void SetNumberOfLayers(int32_t i) { mNumberOfLayers = i; }
+  GPUd() int32_t NumberOfLayers() { return mNumberOfLayers; }
+  GPUd() void SetNumberTF(int32_t i, int32_t v) { mNTF[i] = v; }
   GPUd() o2::its::TrackingFrameInfo** trackingFrame()
   {
     return mTF;
@@ -81,25 +82,25 @@ class GPUITSFitter : public GPUProcessor
   void clearMemory();
 
   struct Memory {
-    GPUAtomic(unsigned int) mNumberOfTracks = 0;
+    GPUAtomic(uint32_t) mNumberOfTracks = 0;
   };
 
  protected:
-  int mNumberOfLayers;
-  int mNumberOfRoads = 0;
-  int mNMaxTracks = 0;
-  int* mNTF = nullptr;
+  int32_t mNumberOfLayers;
+  int32_t mNumberOfRoads = 0;
+  int32_t mNMaxTracks = 0;
+  int32_t* mNTF = nullptr;
   Memory* mMemory = nullptr;
-  o2::its::Road* mRoads = nullptr;
+  o2::its::Road<5>* mRoads = nullptr;
   o2::its::TrackingFrameInfo** mTF = {nullptr};
   GPUITSTrack* mTracks = nullptr;
 
   const o2::its::Cluster** mClusterPtrs;
   const o2::its::Cell** mCellPtrs;
 
-  short mMemoryResInput = -1;
-  short mMemoryResTracks = -1;
-  short mMemoryResMemory = -1;
+  int16_t mMemoryResInput = -1;
+  int16_t mMemoryResTracks = -1;
+  int16_t mMemoryResMemory = -1;
 };
 } // namespace GPUCA_NAMESPACE::gpu
 
