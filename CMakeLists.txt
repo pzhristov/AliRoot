@@ -17,7 +17,7 @@
 # Set Basic CMake Configuration                                            #
 #--------------------------------------------------------------------------#
 
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 # AliRoot will refuse to compile against a wrong ROOT version
 set(ROOT_VERSION_MIN_5 "5.34.30")
